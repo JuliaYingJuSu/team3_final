@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import UserIcon from '@/components/icons/user-icon'
-import Logo from '@/public/images/logo.png'
+import Logo from '@/public/images/薯哥去背.png'
 
 
 export default function MyNavbar() {
@@ -27,7 +27,7 @@ export default function MyNavbar() {
               </li>
             </div>
               <div className='d-flex px-5'>
-                <Image height={150} width={170} src={Logo} alt='Logo'></Image>
+                <Image height={150} width={200} src={Logo} alt='Logo'></Image>
               </div>
               
               <div className='d-flex'>
