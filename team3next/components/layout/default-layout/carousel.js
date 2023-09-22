@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 
 export default function Carousel() {
-  function SampleNextArrow(props) {
+  function NextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
@@ -13,13 +15,13 @@ export default function Carousel() {
       />
     );
   }
-  
-  function SamplePrevArrow(props) {
+
+  function PrevArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "black" }}
+        style={{ ...style, display: "block", background: "black",right:"1rem"}}
         onClick={onClick}
       />
     );
@@ -28,37 +30,110 @@ export default function Carousel() {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    prevArrow: <SamplePrevArrow />,
-    nextArrow: <SampleNextArrow />,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
   };
 
   return (
     <>
-      <div className="container w1200 my-3">
+      <div className="container my-4">
         <div>
           <Slider {...settings}>
-            <div>
-              <div className="c-card middle">1</div>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">台式</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>2</h3>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div className="middle">
+                  <span className="c-card-text fs18b pb-4">中式</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>3</h3>
+            <div className="middle c-card ">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">日式</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>4</h3>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">台式</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>5</h3>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">韓式</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3>6</h3>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">港式</span>
+                </div>
+              </div>
+            </div>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="./images/food-1106513_1920.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">美式</span>
+                </div>
+              </div>
             </div>
           </Slider>
         </div>
@@ -72,7 +147,16 @@ export default function Carousel() {
           }
           .c-card {
             height: 220px;
-            width: 160px;
+            width: 170px;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .c-card-text {
+            display: flex;
+            width: 43px;
+            height: 49px;
+            flex-direction: column;
+            justify-content: center;
           }
         `}
       </style>
