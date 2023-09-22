@@ -3,7 +3,7 @@
   border-radius: 40px;
   padding: 15px 20px;
   background: #ebd8a9;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   color:#3F4c5c;
 }
@@ -26,11 +26,17 @@
   color:#3F4c5c;
 }
 
-.fsb{
+.fs18b{
   font-size: 18px;
   font-weight: bold;
 }
 
-.w1440{
-  width: 1440px;
+.w1200{
+  width: 1200px;
+}
+
+.middle{
+  display: flex;
+  justify-content: center;
+  align-self: center;
 }

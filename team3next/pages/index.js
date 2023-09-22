@@ -9,7 +9,7 @@ export default function Index() {
     <Head>
         <title>食食嗑嗑</title>
     </Head>
-    <Navbar></Navbar>
+    <Navbar className={"h150 d-flex position-static navbar navbar-expand-lg justify-content-center"}></Navbar>
     <Banner></Banner>
     <Footer></Footer>  
     </>

@@ -1,12 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import { useEffect } from 'react'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
+import Styles from "@/styles/globals.css"
 
 export default function App({ Component, pageProps }) {
-  useEffect(()=>{
-    import("bootstrap/dist/js/bootstrap.bundle.min")
-  },[])
   useEffect(() => {
-    typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null
-  }, [])
-  return <Component {...pageProps} />
+    require("bootstrap/dist/js/bootstrap.bundle.min.js");
+  }, []);
+  return <Component {...pageProps} />;
 }

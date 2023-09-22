@@ -12,9 +12,9 @@ export default function MyNavbar() {
 
   return (
     <>
-      <navbar className="h150 d-flex position-static navbar navbar-expand-lg justify-content-center">
-        <ul className="nav nav-underline align-items-center d-flex w1440 justify-content-between">
-          <div className="d-flex pe-5 me-5">
+      <div className="container">
+        <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap">
+          <div className="d-flex me-auto">
             <li className="nav-item pe-3">
               <Link
                 className="nav-link active fs-5"
@@ -35,11 +35,11 @@ export default function MyNavbar() {
               </Link>
             </li>
           </div>
-          <div className="d-flex px-5">
+          <div className="d-flex px-3">
             <Image height={150} width={200} src={Logo} alt="Logo"></Image>
           </div>
 
-          <div className="d-flex ms-5 ps-5">
+          <div className="d-flex ms-auto">
             <li className="nav-item pe-3">
               <Link className="nav-link" aria-current="page" href="#">
                 <UserIcon />
@@ -57,7 +57,7 @@ export default function MyNavbar() {
             </li>
           </div>
         </ul>
-      </navbar>
+      </div>
       <style global jsx>
         {`
           .h150 {
