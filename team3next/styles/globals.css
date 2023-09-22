@@ -1,3 +1,4 @@
+/* 大按鈕 */
 .btn-big{
   width: 150px;
   border-radius: 40px;
@@ -8,6 +9,7 @@
   color:#3F4c5c;
 }
 
+/* 中按鈕 */
 .btn-middle{
   width:120px;
   border-radius: 40px;
@@ -17,6 +19,7 @@
   color:#3F4c5c;
 }
 
+/* 小按鈕 */
 .btn-small{
   width: 100px;
   border-radius: 40px;
@@ -26,6 +29,7 @@
   color:#3F4c5c;
 }
 
+/* 18粗體 */
 .fs18b{
   font-size: 18px;
   font-weight: bold;
@@ -35,8 +39,20 @@
   width: 1200px;
 }
 
+.w1440{
+  width: 1440px;
+}
+
+/* 置中 */
 .middle{
   display: flex;
   justify-content: center;
-  align-self: center;
+  align-items: center;
+}
+
+/* 引入Noto Sans Traditional Chinese */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
+
+body{
+  font-family: 'jf-openhuninn-2.0','Zen Maru Gothic', sans-serif;
 }

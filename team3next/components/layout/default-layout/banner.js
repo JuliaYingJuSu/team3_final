@@ -4,8 +4,8 @@ import React from "react";
 export default function Banner() {
   return (
     <>
-      <div className="w-100 h400 d-flex align-items-end justify-content-center banner pb-5">
-        <div className="w1440 d-flex">
+      <div className="w-100 h400 d-flex align-items-end banner pb-5">
+        <div className="container d-flex justify-content-center">
           <div className="dropdown me-5 mb-4">
             <button
               className="btn dropdown-toggle btn-big"

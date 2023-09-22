@@ -12,51 +12,52 @@ export default function MyNavbar() {
 
   return (
     <>
-      <div className="container">
-        <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap">
-          <div className="d-flex me-auto">
-            <li className="nav-item pe-3">
-              <Link
-                className="nav-link active fs-5"
-                aria-current="page"
-                href="#"
-              >
-                食好料
-              </Link>
-            </li>
-            <li className="nav-item pe-3">
-              <Link className="nav-link text-dark fs-5" href="#">
-                食在推
-              </Link>
-            </li>
-            <li className="nav-item pe-3">
-              <Link className="nav-link text-dark fs-5" href="#">
-                嗑零食
-              </Link>
-            </li>
-          </div>
-          <div className="d-flex px-3">
-            <Image height={150} width={200} src={Logo} alt="Logo"></Image>
-          </div>
+      <div className="sticky-top bg-white">
+        <div className="container">
+          <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap">
+            <div className="d-flex me-auto">
+              <li className="nav-item pe-3">
+                <Link
+                  className="nav-link active fs-5"
+                  aria-current="page"
+                  href="#">
+                  食好料
+                </Link>
+              </li>
+              <li className="nav-item pe-3">
+                <Link className="nav-link text-dark fs-5" href="#">
+                  食在推
+                </Link>
+              </li>
+              <li className="nav-item pe-3">
+                <Link className="nav-link text-dark fs-5" href="#">
+                  嗑零食
+                </Link>
+              </li>
+            </div>
+            <div className="d-flex px-3">
+              <Image height={150} width={200} src={Logo} alt="Logo"></Image>
+            </div>
 
-          <div className="d-flex ms-auto">
-            <li className="nav-item pe-3">
-              <Link className="nav-link" aria-current="page" href="#">
-                <UserIcon />
-              </Link>
-            </li>
-            <li className="nav-item pe-3">
-              <Link className="nav-link" aria-current="page" href="#">
-                食好料
-              </Link>
-            </li>
-            <li className="nav-item pe-3">
-              <Link className="nav-link" aria-current="page" href="#">
-                食好料
-              </Link>
-            </li>
-          </div>
-        </ul>
+            <div className="d-flex ms-auto">
+              <li className="nav-item pe-3">
+                <Link className="nav-link" aria-current="page" href="#">
+                  <UserIcon />
+                </Link>
+              </li>
+              <li className="nav-item pe-3">
+                <Link className="nav-link" aria-current="page" href="#">
+                  食好料
+                </Link>
+              </li>
+              <li className="nav-item pe-3">
+                <Link className="nav-link" aria-current="page" href="#">
+                  食好料
+                </Link>
+              </li>
+            </div>
+          </ul>
+        </div>
       </div>
       <style global jsx>
         {`
