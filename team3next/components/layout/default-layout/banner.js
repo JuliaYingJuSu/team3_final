@@ -7,6 +7,7 @@ export default function Banner() {
       <div className="w-100 h400 d-flex align-items-end banner pb-5">
         <div className="container d-flex justify-content-center">
           <div className="dropdown me-5 mb-4">
+          {/* 下拉選單 */}
             <button
               className="btn dropdown-toggle btn-big"
               type="button"
@@ -32,6 +33,7 @@ export default function Banner() {
               </li>
             </ul>
           </div>
+          {/* 搜尋條 */}
           <form className="d-flex" role="search">
             <input
               className="form-control me-2 searchbar ps-4"
