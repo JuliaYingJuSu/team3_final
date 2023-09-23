@@ -56,7 +56,8 @@ export default function Banner() {
             border-radius: 40px;
           }
           .banner {
-            background-color: #b6705e;
+            background-image: url("./images/index-image.jpg");
+            background-size: cover;
           }
         `}
       </style>

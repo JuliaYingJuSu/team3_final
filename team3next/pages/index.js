@@ -7,6 +7,7 @@ import CarouselProduct from "@/components/layout/default-layout/carousel-product
 import Section01 from "@/components/layout/default-layout/section01";
 import Section02 from "@/components/layout/default-layout/section02";
 import CardR from "@/components/layout/card-r";
+import Section03 from "@/components/layout/default-layout/section03";
 
 
 export default function Index() {
@@ -20,7 +21,7 @@ export default function Index() {
     <Carousel></Carousel>
     <Section01></Section01>
     <Section02></Section02>
-    <CardR></CardR>
+    <Section03></Section03>
     <CarouselProduct></CarouselProduct>
     <Footer></Footer>  
     </>
