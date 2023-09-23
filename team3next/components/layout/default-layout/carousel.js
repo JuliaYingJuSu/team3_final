@@ -5,6 +5,7 @@ import Image from "next/image";
 import Slider from "react-slick";
 
 export default function Carousel() {
+  //修改左右箭頭樣式
   function NextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -27,6 +28,7 @@ export default function Carousel() {
     );
   }
 
+  //調整輪播牆設定
   const settings = {
     dots: false,
     infinite: true,

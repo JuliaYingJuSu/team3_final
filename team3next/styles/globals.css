@@ -1,3 +1,4 @@
+/* 共用的樣式放這邊 */
 /* 大按鈕 */
 .btn-big{
   width: 150px;
@@ -27,6 +28,47 @@
   background: #ebd8a9;
   font-size: 12px;
   color:#3F4c5c;
+}
+
+h1{
+  font-size: 64px;
+  font-weight: 600;
+}
+
+h2{
+  font-size: 58px;
+  font-weight: 700;
+}
+
+h3{
+  font-size: 46px;
+  font-weight: 700;
+}
+
+h4{
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h5{
+  font-size: 22px;
+  font-weight: 700;
+}
+
+h6{
+  font-size: 18px;
+  font-weight: 700;
+}
+
+p{
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* 12小字 */
+.fs{
+  font-size: 12px;
+  font-weight: 400;
 }
 
 /* 18粗體 */
