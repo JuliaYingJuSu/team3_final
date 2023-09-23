@@ -16,6 +16,7 @@ export default function MyNavbar() {
         <div className="container">
           <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap">
             <div className="d-flex me-auto">
+            {/* 左側連結區 */}
               <li className="nav-item pe-3">
                 <Link
                   className="nav-link active fs-5"
@@ -35,12 +36,13 @@ export default function MyNavbar() {
                 </Link>
               </li>
             </div>
+            {/* Logo區塊 */}
             <div className="d-flex px-3">
               <Link href="/">
                 <Image height={150} width={200} src={Logo} alt="Logo"></Image>
               </Link>
             </div>
-
+            {/* 右側ICON區 */}
             <div className="d-flex ms-auto">
               <li className="nav-item pe-3">
                 <Link className="nav-link" aria-current="page" href="#">
