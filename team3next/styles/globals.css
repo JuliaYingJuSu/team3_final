@@ -77,6 +77,13 @@ p{
   font-weight: bold;
 }
 
+/* 32首頁標題 */
+.h4-title
+{
+  color: var(--985637, #AE4818);
+  text-align: center;
+}
+
 .w1200{
   width: 1200px;
 }

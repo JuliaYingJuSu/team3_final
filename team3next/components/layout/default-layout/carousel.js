@@ -44,6 +44,7 @@ export default function Carousel() {
   return (
     <>
       <div className="container my-4">
+      {/* 輪播牆區塊 */}
         <div>
           <Slider {...settings}>
             <div className="middle">
@@ -142,6 +143,7 @@ export default function Carousel() {
       </div>
       <style global jsx>
         {`
+        {/* 輪播牆卡片樣式 */}
           .c-card-img {
             width: 164px;
             height: 164px;

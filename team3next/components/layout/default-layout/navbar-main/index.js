@@ -36,7 +36,9 @@ export default function MyNavbar() {
               </li>
             </div>
             <div className="d-flex px-3">
-              <Image height={150} width={200} src={Logo} alt="Logo"></Image>
+              <Link href="/">
+                <Image height={150} width={200} src={Logo} alt="Logo"></Image>
+              </Link>
             </div>
 
             <div className="d-flex ms-auto">
