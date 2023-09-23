@@ -59,7 +59,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/chocolate.png"
                     alt="商品1"
                     className="c-card-img"></img>
               </div>
@@ -67,7 +67,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/coffee01.jpg"
                     alt="商品2"
                     className="c-card-img"></img>
               </div>
@@ -75,7 +75,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/cookie01.png"
                     alt="商品3"
                     className="c-card-img"></img>
               </div>
@@ -83,7 +83,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/cookie02.png"
                     alt="商品4"
                     className="c-card-img"></img>
               </div>
@@ -91,7 +91,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/granola.png"
                     alt="商品5"
                     className="c-card-img"></img>
               </div>
@@ -99,7 +99,7 @@ export default function Carousel() {
             <div className="middle">
               <div className="middle mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="./images/product/spark.jpg"
                     alt="商品6"
                     className="c-card-img"></img>
               </div>
