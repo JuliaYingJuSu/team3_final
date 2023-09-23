@@ -148,6 +148,7 @@ export default function Carousel() {
             width: 164px;
             height: 164px;
             border-radius: 164px;
+            object-fit: cover;
           }
           .c-card {
             height: 220px;

@@ -107,15 +107,6 @@ export default function Carousel() {
           </Slider>
         </div>
       </div>
-      <style global jsx>
-        {`
-          .c-card-img {
-            width: 164px;
-            height: 164px;
-            border-radius: 164px;
-          }
-        `}
-      </style>
     </>
   );
 }

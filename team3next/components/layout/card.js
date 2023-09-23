@@ -8,7 +8,7 @@ export default function Card() {
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <img
-            src="./images/product/chocolate.png"
+            src="./images/post/3188.jpg"
             className="card-img"
             alt="..."
           />
@@ -61,7 +61,7 @@ export default function Card() {
               </p>
               <button className="btn btn-little ms-auto">追蹤</button>
             </div>
-            <span className="fs12 mt-2">2023.9.6</span>
+            <span className="fs12 mt-2 mb-3">2023.9.6</span>
           </div>
         </div>
       </div>
