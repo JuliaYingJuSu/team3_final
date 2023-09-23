@@ -13,7 +13,7 @@ export default function Card() {
             alt="..."
           />
           <div className="card-body d-flex flex-column w-100">
-            <div className="d-flex w-100 justify-content-end align-items-center fs14 grey">
+            <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
                 <button className="btn btn-sm btn-i">
                 <i class="fa-regular fa-heart"></i>
@@ -47,10 +47,10 @@ export default function Card() {
                 美式
               </a>
             </div>
-            <h6 className="card-title w-100 mt-2">
+            <h6 className="card-title w-100 mt-3">
               朋友說這是台北最好吃的滷肉飯
             </h6>
-            <div className="d-flex align-items-center mt-1 w-100">
+            <div className="d-flex align-items-center w-100">
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"

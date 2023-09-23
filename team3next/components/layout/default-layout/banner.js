@@ -9,7 +9,7 @@ export default function Banner() {
           <div className="dropdown me-5 mb-4">
           {/* 下拉選單 */}
             <button
-              className="btn dropdown-toggle btn-big"
+              className="btn dropdown-toggle btn-lg"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false">
