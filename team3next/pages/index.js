@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index"
 import Banner from "@/components/layout/default-layout/banner";
 import Carousel from "@/components/layout/default-layout/carousel";
 import CarouselProduct from "@/components/layout/default-layout/carousel-product"
+import Card from "@/components/layout/card"
 
 
 export default function Index() {
@@ -15,6 +16,7 @@ export default function Index() {
     <Navbar></Navbar>
     <Banner></Banner>
     <Carousel></Carousel>
+    <Card></Card>
     <CarouselProduct></CarouselProduct>
     <Footer></Footer>  
     </>

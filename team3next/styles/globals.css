@@ -1,4 +1,9 @@
 /* 共用的樣式放這邊 */
+*{
+  margin: 0;
+  padding: 0;
+}
+
 /* 大按鈕 */
 .btn-big{
   width: 150px;
@@ -29,6 +34,26 @@
   font-size: 12px;
   color:#3F4c5c;
 }
+
+/* 超小按鈕 */
+.btn-little{
+  height: 30px;
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 40px;
+  background: var(--ebd-8-a-9, #EBD8A9);
+  color: var(--3F4C5C, var(--3F4C5C, #3F4C5C));
+  font-size: 16px;
+}
+
+/* ICON按鈕*/
+.btn-i{
+  color: #808080;
+}
+
 
 h1{
   font-size: 64px;
@@ -66,9 +91,22 @@ p{
 }
 
 /* 12小字 */
-.fs{
+.fs12{
   font-size: 12px;
   font-weight: 400;
+  color: #808080;
+}
+
+/* 14字 */
+.fs14{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 16粗體 */
+.fs16b{
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /* 18粗體 */
@@ -83,6 +121,13 @@ p{
   color: var(--985637, #AE4818);
   text-align: center;
 }
+
+/* 灰色 */
+.grey{
+  color:#808080 ;
+}
+
+
 
 .w1200{
   width: 1200px;
@@ -99,9 +144,70 @@ p{
   align-items: center;
 }
 
+a{
+  text-decoration: none;
+}
+
 /* 引入Noto Sans Traditional Chinese */
 @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
 
 body{
   font-family: 'jf-openhuninn-2.0','Zen Maru Gothic', sans-serif;
+}
+
+.card-img{
+  display: flex;
+  width: 100%;
+  height: 350px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.card{
+  display: flex;
+  width: 348px;
+  height: 526px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #FFF;
+  box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
+}
+
+.headshot-small{
+  display: flex;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* 重要的tag */
+.tag-i{
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #AE4818;
+  display: flex;
+  justify-content: center;
+  color: #AE4818;
+  align-items: center;
+  padding:0 5px ;
+}
+
+/* 食物tag */
+.tag-f{
+  height: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  color: #666666;
+  align-items: center; 
+  background-color: #5C5C5C1A;
+  padding:0 5px ;
 }
