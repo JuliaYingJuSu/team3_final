@@ -5,7 +5,7 @@ import React from "react";
 export default function Card() {
   return (
     <>
-      <div className="col">
+      <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <img
             src="./images/product/chocolate.png"

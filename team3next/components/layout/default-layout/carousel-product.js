@@ -51,7 +51,7 @@ export default function Carousel() {
 
   return (
     <>
-      <div className="container my-4">
+      <div className="container my-5">
       <h4 className="h4-title mb-4">熱門商品</h4>
         <div>
         {/* 輪播牆區塊 */}
