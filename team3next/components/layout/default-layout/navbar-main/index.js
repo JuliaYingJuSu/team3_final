@@ -49,7 +49,7 @@ export default function MyNavbar() {
                   className="nav-link icon-search text-dark"
                   aria-current="page"
                   href="#"
-                  style={{fontSize:30}}></Link>
+                  style={{ fontSize: 30 }}></Link>
               </li>
 
               {/* 會員下拉選單 */}
@@ -98,16 +98,17 @@ export default function MyNavbar() {
                   data-bs-target="#offcanvasRight"
                   aria-controls="offcanvasRight"
                   href="#offcanvasRight"
-                  style={{fontSize:30}}></Link>
+                  style={{ fontSize: 30 }}></Link>
               </li>
               <div
                 className="offcanvas offcanvas-end"
                 tabindex="-1"
                 id="offcanvasRight"
-                aria-labelledby="offcanvasRightLabel">
+                aria-labelledby="offcanvasRightLabel"
+                style={{ backgroundColor: "#FBF9EF" }}>
                 <div className="offcanvas-header">
-                  <h5 className="offcanvas-title" id="offcanvasRightLabel">
-                    Offcanvas right
+                  <h5 className="offcanvas-title ms-4" id="offcanvasRightLabel">
+                    購物車
                   </h5>
                   <button
                     type="button"
@@ -115,7 +116,9 @@ export default function MyNavbar() {
                     data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
                 </div>
-                <div className="offcanvas-body">...</div>
+                <div
+                  className="offcanvas-body"
+                  style={{ backgroundColor: "#FBF9EF" }}></div>
               </div>
             </div>
           </ul>
