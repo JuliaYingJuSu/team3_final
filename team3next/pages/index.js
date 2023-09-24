@@ -6,7 +6,6 @@ import Carousel from "@/components/layout/default-layout/carousel";
 import CarouselProduct from "@/components/layout/default-layout/carousel-product"
 import Section01 from "@/components/layout/default-layout/section01";
 import Section02 from "@/components/layout/default-layout/section02";
-import CardR from "@/components/layout/card-r";
 import Section03 from "@/components/layout/default-layout/section03";
 
 

@@ -227,6 +227,13 @@ body{
   object-fit: cover;
 }
 
+/* 大頭照-中 */
+.headshot-middle{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
 /* 重要的tag */
 .tag-i{
   height: 20px;
@@ -250,3 +257,8 @@ body{
   background-color: #5C5C5C1A;
   padding:0 5px ;
 }
+
+.icon-member{
+  font-size: 30px;
+}
+
