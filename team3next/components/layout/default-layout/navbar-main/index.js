@@ -74,7 +74,7 @@ export default function MyNavbar() {
                       <p className="mt-2 fs-5 fw-bolder">薯哥</p>
                     </li>
                     <li>
-                      <a className="dropdown-item fs18b" href="#">
+                      <a className="dropdown-item fs18b" href="./user">
                         會員資訊
                       </a>
                     </li>
