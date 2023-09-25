@@ -9,10 +9,11 @@ export default function Banner() {
           <div className="dropdown ms-5 pe-4">
             {/* 下拉選單 */}
             <button
-              className="btn dropdown-toggle btn-lg"
+              className="btn dropdown-toggle btn-lg middle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false">
+              <span className="icon-map fs-5 pe-2 fw-bold"></span>
               不分地區
             </button>
             <ul className="dropdown-menu">
@@ -35,20 +36,12 @@ export default function Banner() {
           </div>
           {/* 搜尋條 */}
           <form className="d-flex" role="search">
-            <table>
-              <tr>
-                <td>
-                  <input
-                    className="form-control me-2 searchbar ps-4"
-                    type="search"
-                    placeholder="輸入「早午餐」或「甜點」找尋美食!"
-                    aria-label="Search"></input>
-                </td>
-                <td className="position-relative">
-                  <span className="icon-search position-absolute" style={{ right: 30, cursor: 'pointer', zIndex: 100,top:21}}></span>
-                </td>
-              </tr>
-            </table>
+            <input
+              className="form-control me-2 searchbar ps-4"
+              type="search"
+              placeholder="輸入「早午餐」或「甜點」找尋美食!"
+              aria-label="Search"></input>
+            <span className="icon-search search-banner"></span>
           </form>
         </div>
       </div>
@@ -62,6 +55,15 @@ export default function Banner() {
             width: 655px;
             height: 60px;
             border-radius: 40px;
+          }
+          .search-banner {
+            position: relative;
+            font-size: 24px;
+          }
+          .search-banner:before {
+            position: absolute;
+            right: 25px;
+            top: 18px;
           }
           .banner {
             background-image: url("./images/index-image.jpg");
