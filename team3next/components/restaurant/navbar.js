@@ -5,103 +5,33 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 
-export default function RestaurantNavbar() {
+export default function MyNavbar() {
   // currentRoute是用來套用active樣式(目前區域對應選單項目)，需傳入MainMenu中
   const router = useRouter();
   const currentRoute = router.pathname;
 
   return (
     <>
-      <div className="bg-white">
-        <div className="container">
-          <ul className="nav nav-underline align-items-center d-flex justify-content-evenly flex-nowrap w-100">
-            <div className="d-flex justify-content-start px-3">
+      <nav className="bg-white">
+        <div className="d-flex justify-content-end">
+          <div style={{ flex: 1 }}></div>
+          <ul
+            className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap"
+            style={{ width: "60rem", flex: 1, flexBasis: 0 }}
+          >
+            {/* Logo區塊 */}
+            <div className="d-flex px-3 justify-content-between">
               <Link href="/">
                 <Image height={150} width={200} src={Logo} alt="Logo"></Image>
               </Link>
             </div>
             {/* 右側ICON區 */}
-            <div className="middle ms-auto gap-4">
-              <li className="nav-item pe-3">
-                <Link
-                  className="nav-link icon-search text-dark"
-                  aria-current="page"
-                  href="#"
-                  style={{ fontSize: 30 }}></Link>
-              </li>
-
-              {/* 會員下拉選單 */}
-              <li className="nav-item pe-3">
-                <div className="dropdown-center">
-                  <div
-                    type="button"
-                    className="dropdown nav-link text-dark"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <span className="icon-member"></span>
-                  </div>
-                  <ul className="dropdown-menu text-center">
-                    <li>
-                      <span>
-                        <img
-                          src="/images/logo.png"
-                          className="rounded-circle img-thumbnail headshot-middle"
-                          alt="大頭照"
-                        />
-                      </span>
-                      <p className="mt-2 fs-5 fw-bolder">薯哥</p>
-                    </li>
-                    <li>
-                      <a className="dropdown-item fs18b" href="#">
-                        會員資訊
-                      </a>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <a className="dropdown-item fs18b" href="#">
-                        登出
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              {/* 購物車 */}
-              <li className="nav-item pe-3">
-                <Link
-                  className="nav-link icon-cark text-dark"
-                  role="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasRight"
-                  aria-controls="offcanvasRight"
-                  href="#offcanvasRight"
-                  style={{ fontSize: 30 }}></Link>
-              </li>
-              <div
-                className="offcanvas offcanvas-end"
-                tabindex="-1"
-                id="offcanvasRight"
-                aria-labelledby="offcanvasRightLabel"
-                style={{ backgroundColor: "#FBF9EF" }}>
-                <div className="offcanvas-header">
-                  <h5 className="offcanvas-title ms-4" id="offcanvasRightLabel">
-                    購物車
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-                </div>
-                <div
-                  className="offcanvas-body"
-                  style={{ backgroundColor: "#FBF9EF" }}></div>
-              </div>
+            <div className="" style={{}}>
+              歡迎回來，XXX
             </div>
           </ul>
         </div>
-      </div>
+      </nav>
       <style global jsx>
         {`
           .h150 {
@@ -110,7 +40,7 @@ export default function RestaurantNavbar() {
         `}
       </style>
       {/* hover動畫(下底線)，需要覆蓋原本global.scss樣式 */}
-      <style global jsx>{`
+      {/* <style global jsx>{`
         @media screen and (min-width: 992px) {
           .navbar {
             padding: 0;
@@ -142,7 +72,7 @@ export default function RestaurantNavbar() {
         .navbar .navbar-nav .nav-item:hover::after {
           width: 100%;
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 }
