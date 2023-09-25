@@ -1,0 +1,48 @@
+.bread {
+  font-size: 16px;
+  font-weight: 400;
+  margin-right: 10px;
+}
+.leftBox {
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color:#526565 ; */
+}
+.left {
+  width: 180px;
+  padding: 10px;
+  /* display: flex;
+    flex-direction: column; */
+}
+.left div {
+  text-align: center;
+  width: 180px;
+  padding: 10px;
+  /* display: flex;
+    flex-direction: column; */
+}
+
+.left button {
+  background-color: #fff;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 0%;
+  display: flex;
+  justify-content: center;
+  /* width: 80%; */
+}
+.left > button {
+  font-size: 18px;
+  font-weight: 700;
+}
+.left button:hover {
+  border-bottom: 3px solid #b6705e;
+}
+.typeListBtn {
+  font-size: 1px;
+  font-weight: 400;
+  color: blue;
+  background-color: aquamarine;
+}
