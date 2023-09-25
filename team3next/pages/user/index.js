@@ -7,8 +7,8 @@ export default function UserIndex() {
       <MyNavbar></MyNavbar>
       <body>
         <main className="container">
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <div className="middle flex-column ">
+          <div className="d-flex justify-content-between align-items-center mt-3" style={{paddingInline:250}}>
+            <div className="middle flex-column">
                 <h4>會員暱稱</h4>
                 <div className="mt-2">
                     <span>110人</span>
