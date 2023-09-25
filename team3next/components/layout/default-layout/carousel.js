@@ -11,9 +11,10 @@ export default function Carousel() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
+        style={{ ...style, display: "block", fontSize: 33 }}
+        onClick={onClick}>
+        <span className="icon-arrow-s-right"></span>
+      </div>
     );
   }
 
@@ -22,9 +23,14 @@ export default function Carousel() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "black",right:"1rem"}}
-        onClick={onClick}
-      />
+        style={{
+          ...style,
+          display: "block",
+          fontSize: 33,
+        }}
+        onClick={onClick}>
+        <span className="icon-arrow-s-left"></span>
+      </div>
     );
   }
 
@@ -44,7 +50,7 @@ export default function Carousel() {
   return (
     <>
       <div className="container my-4">
-      {/* 輪播牆區塊 */}
+        {/* 輪播牆區塊 */}
         <div>
           <Slider {...settings}>
             <div className="middle">
@@ -143,7 +149,9 @@ export default function Carousel() {
       </div>
       <style global jsx>
         {`
-        {/* 輪播牆卡片樣式 */}
+           {
+            /* 輪播牆卡片樣式 */
+          }
           .c-card-img {
             width: 164px;
             height: 164px;
@@ -162,6 +170,13 @@ export default function Carousel() {
             height: 49px;
             flex-direction: column;
             justify-content: center;
+          }
+          .slick-arrow.slick-next:before {
+            content: "";
+          }
+
+          .slick-arrow.slick-prev:before {
+            content: "";
           }
         `}
       </style>
