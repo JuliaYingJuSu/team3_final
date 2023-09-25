@@ -1,5 +1,6 @@
 import React from "react";
-import Styles from "@/components/user/user-information.module.scss";
+import UserButtonGroup from "./user-button-group";
+import Styles from "./user-information.module.scss";
 
 export default function UserInformation() {
   return (
@@ -10,68 +11,77 @@ export default function UserInformation() {
             <dvi>
               <h4>會員資訊</h4>
             </dvi>
-            <form>
+            <form className="mt-4">
               <fieldset disabled>
                 <div className="mb-3">
-                  <label for="disabledTextInput" className="form-label">
+                  <label for="disabledTextInput" className="form-label fs18b">
                     電子信箱( 此欄位不能變更){" "}
                   </label>
                   <input
                     type="text"
                     id="disabledTextInput"
-                    className="form-control"
+                    className="form-control input-f"
                     placeholder="test@gmail.com"
                   />
                 </div>
               </fieldset>
               <div className="mb-3">
-                <label for="exampleInputEmail1" className="form-label">
-                  teat@gmail.com
+                <label for="InputName" className="form-label fs18b">
+                  姓名
+                  <span style={{ color: "red" }} className="ps-1">
+                    *
+                  </span>
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
+                  id="InputName"
+                  placeholder="請輸入姓名"
                 />
-                <div id="emailHelp" className="form-text">
-                 
-                </div>
               </div>
               <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">
-                  Password
+                <label for="InputNickName" className="form-label fs18b">
+                  暱稱
+                  <span style={{ color: "red" }} className="ps-1">
+                    *
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="InputNickName"
+                  placeholder="請輸入暱稱"
+                />
+              </div>
+              <div className="mb-3">
+                <label for="InputPassword" className="form-label fs18b">
+                  密碼
+                  <span style={{ color: "red" }} className="ps-1">
+                    *
+                  </span>
                 </label>
                 <input
                   type="password"
                   className="form-control"
-                  id="exampleInputPassword1"
+                  id="InputPassword"
+                  placeholder="請輸入英文+數字至少8碼"
                 />
               </div>
               <div className="mb-3">
-                <label for="exampleInputEmail1" className="form-label">
-                  Email address
+                <label for="InputPhone" className="form-label fs18b">
+                  手機號碼
+                  <span style={{ color: "red" }} className="ps-1">
+                    *
+                  </span>
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
+                  id="InputPhone"
+                  placeholder="請輸入09開頭共10碼的數字"
                 />
-                <div id="emailHelp" className="form-text">
-                  
-                </div>
-              </div>
-              <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="exampleInputPassword1"
-                />
-              </div>
+              </div> 
+                <UserButtonGroup />
               <button type="submit" className="btn btn-primary">
                 Submit
               </button>

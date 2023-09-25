@@ -282,4 +282,7 @@ body{
 .input-f{
   width: 500px;
   height: 42px;
+  border-radius: 10px;
+  border: 1px solid #D9D9D9;
+  background: #FFF;
 }
