@@ -132,7 +132,7 @@ export default function MyNavbar() {
         `}
       </style>
       {/* hover動畫(下底線)，需要覆蓋原本global.scss樣式 */}
-      <style global jsx>{`
+      {/* <style global jsx>{`
         @media screen and (min-width: 992px) {
           .navbar {
             padding: 0;
@@ -164,7 +164,7 @@ export default function MyNavbar() {
         .navbar .navbar-nav .nav-item:hover::after {
           width: 100%;
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 }

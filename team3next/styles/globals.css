@@ -237,6 +237,14 @@ body{
   object-fit: cover;
 }
 
+/* 大頭照-大 */
+.headshot-big{
+  background-image: url(../public/images/logo.png);
+  width: 180px;
+  height: 180px;
+
+}
+
 /* 重要的tag */
 .tag-i{
   height: 20px;
@@ -265,3 +273,13 @@ body{
   font-size: 30px;
 }
 
+/* 框架下低線 */
+.bottom-line{
+  border-bottom: 1px solid #000;
+}
+
+/* 輸入框格式 */
+.input-f{
+  width: 500px;
+  height: 42px;
+}
