@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?791m73');
-  src:  url('fonts/icomoon.eot?791m73#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?791m73') format('truetype'),
-    url('fonts/icomoon.woff?791m73') format('woff'),
-    url('fonts/icomoon.svg?791m73#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?81wcyt');
+  src:  url('fonts/icomoon.eot?81wcyt#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?81wcyt') format('truetype'),
+    url('fonts/icomoon.woff?81wcyt') format('woff'),
+    url('fonts/icomoon.svg?81wcyt#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -25,12 +24,80 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-search:before {
-  content: "\e900";
+.icon-trash:before {
+  content: "\e901";
   color: #666;
 }
 .icon-bell:before {
-  content: "\e901";
+  content: "\e91c";
+  color: #666;
+}
+.icon-list:before {
+  content: "\e91d";
+  color: #3f4c5c;
+}
+.icon-check:before {
+  content: "\e90a";
+  color: #666;
+}
+.icon-multi:before {
+  content: "\e90b";
+  color: #fff;
+}
+.icon-upload:before {
+  content: "\e90c";
+  color: #666;
+}
+.icon-edit:before {
+  content: "\e90d";
+  color: #666;
+}
+.icon-calender:before {
+  content: "\e90f";
+  color: #666;
+}
+.icon-payment:before {
+  content: "\e910";
+  color: #666;
+}
+.icon-Star-fill:before {
+  content: "\e911";
+  color: #dc8b76;
+}
+.icon-Star:before {
+  content: "\e912";
+  color: #d9d9d9;
+}
+.icon-tag:before {
+  content: "\e913";
+  color: #666;
+}
+.icon-pan:before {
+  content: "\e914";
+  color: #666;
+}
+.icon-square:before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-arrow-big-left:before {
+  content: "\e918";
+  color: #666;
+}
+.icon-arrow-big-right:before {
+  content: "\e919";
+  color: #666;
+}
+.icon-arrow-s-left:before {
+  content: "\e91a";
+  color: #666;
+}
+.icon-arrow-s-right:before {
+  content: "\e91b";
+  color: #666;
+}
+.icon-search:before {
+  content: "\e900";
   color: #666;
 }
 .icon-Call:before {
@@ -64,4 +131,13 @@
 .icon-heart:before {
   content: "\e909";
   color: #dc8b76;
+}
+.icon-eye-blocked:before {
+  content: "\e9d1";
+}
+.icon-plus:before {
+  content: "\ea0a";
+}
+.icon-minus:before {
+  content: "\ea0b";
 }

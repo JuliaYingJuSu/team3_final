@@ -26,10 +26,12 @@
   font-size: 18px;
   font-weight: bold;
   color:#3F4c5c;
+  text-align: center;
 }
 
 /* 中按鈕 */
 .btn-middle{
+  text-align: center;
   width:120px;
   border-radius: 40px;
   padding: 10px 20px;
@@ -46,6 +48,7 @@
   background: #ebd8a9;
   font-size: 12px;
   color:#3F4c5c;
+  text-align: center;
 }
 
 /* 超小按鈕 */
@@ -234,6 +237,14 @@ body{
   object-fit: cover;
 }
 
+/* 大頭照-大 */
+.headshot-big{
+  background-image: url(../public/images/logo.png);
+  width: 180px;
+  height: 180px;
+  
+}
+
 /* 重要的tag */
 .tag-i{
   height: 20px;
@@ -262,3 +273,7 @@ body{
   font-size: 30px;
 }
 
+/* 框架下低線 */
+.bottom-line{
+  border-bottom: 1px solid #000;
+}

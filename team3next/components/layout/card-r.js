@@ -39,7 +39,7 @@ export default function CardR() {
               <div className="d-flex flex-column">
                 <div>
                   <span className="pe-2">
-                    <i class="fa-solid fa-location-dot"></i>
+                    <span className="icon-map fw-bold"></span>
                   </span>
                   <span>
                     <span className="fs16b">700台南市中西區尊王路140號</span>
@@ -47,7 +47,7 @@ export default function CardR() {
                 </div>
                 <div>
                   <span className="pe-2">
-                    <i class="fa-solid fa-phone"></i>
+                    <span className="icon-Call fw-bold"></span>
                   </span>
                   <span>
                     <span className="fs16b">06 221 0699</span>
@@ -55,7 +55,7 @@ export default function CardR() {
                 </div>
                 <div>
                   <span className="pe-2">
-                    <i class="fa-solid fa-bed"></i>
+                    <span className="icon-bell fw-bold"></span>
                   </span>
                   <span>
                     <span className="fs-6 fw-semibold text-black-75">每週一、週二休息</span>

@@ -5,39 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 
-export default function MyNavbar() {
+export default function RestaurantNavbar() {
   // currentRoute是用來套用active樣式(目前區域對應選單項目)，需傳入MainMenu中
   const router = useRouter();
   const currentRoute = router.pathname;
 
   return (
     <>
-      <div className="sticky-top bg-white">
+      <div className="bg-white">
         <div className="container">
-          <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap">
-            <div className="d-flex me-auto">
-              {/* 左側連結區 */}
-              <li className="nav-item pe-3">
-                <Link
-                  className="nav-link active fs-5"
-                  aria-current="page"
-                  href="#">
-                  食好料
-                </Link>
-              </li>
-              <li className="nav-item pe-3">
-                <Link className="nav-link text-dark fs-5" href="#">
-                  食在推
-                </Link>
-              </li>
-              <li className="nav-item pe-3">
-                <Link className="nav-link text-dark fs-5" href="#">
-                  嗑零食
-                </Link>
-              </li>
-            </div>
-            {/* Logo區塊 */}
-            <div className="d-flex px-3">
+          <ul className="nav nav-underline align-items-center d-flex justify-content-evenly flex-nowrap w-100">
+            <div className="d-flex justify-content-start px-3">
               <Link href="/">
                 <Image height={150} width={200} src={Logo} alt="Logo"></Image>
               </Link>
@@ -74,7 +52,7 @@ export default function MyNavbar() {
                       <p className="mt-2 fs-5 fw-bolder">薯哥</p>
                     </li>
                     <li>
-                      <a className="dropdown-item fs18b" href="./user">
+                      <a className="dropdown-item fs18b" href="#">
                         會員資訊
                       </a>
                     </li>
@@ -132,7 +110,7 @@ export default function MyNavbar() {
         `}
       </style>
       {/* hover動畫(下底線)，需要覆蓋原本global.scss樣式 */}
-      {/* <style global jsx>{`
+      <style global jsx>{`
         @media screen and (min-width: 992px) {
           .navbar {
             padding: 0;
@@ -164,7 +142,7 @@ export default function MyNavbar() {
         .navbar .navbar-nav .nav-item:hover::after {
           width: 100%;
         }
-      `}</style> */}
+      `}</style>
     </>
   );
 }
