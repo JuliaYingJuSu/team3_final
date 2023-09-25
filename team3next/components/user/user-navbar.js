@@ -11,7 +11,7 @@ export default function UserNavbar() {
               <Link
                 className="nav-link active fs-5"
                 aria-current="page"
-                href="#">
+                href="./user">
                 會員資訊
               </Link>
             </li>
