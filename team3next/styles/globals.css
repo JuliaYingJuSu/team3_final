@@ -237,6 +237,13 @@ body{
   object-fit: cover;
 }
 
+/* 大頭照-大 */
+.headshot-big{
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+}
+
 /* 重要的tag */
 .tag-i{
   height: 20px;
