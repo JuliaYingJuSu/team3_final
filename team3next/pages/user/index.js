@@ -3,6 +3,7 @@ import React from "react";
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
+import UserInformation from "@/components/user/user-information";
 
 export default function UserIndex() {
   return (
@@ -36,6 +37,7 @@ export default function UserIndex() {
         </div>
       </main>
       <UserNavbar />
+      <UserInformation />
       <Head>
         <title>會員資訊</title>
     </Head>
