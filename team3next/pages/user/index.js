@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
+import UserNavbar from "@/components/user/user-navbar";
+import Head from "next/head";
 
 export default function UserIndex() {
   return (
@@ -33,6 +35,10 @@ export default function UserIndex() {
           </div>
         </div>
       </main>
+      <UserNavbar />
+      <Head>
+        <title>會員資訊</title>
+    </Head>
     </>
   );
 }
