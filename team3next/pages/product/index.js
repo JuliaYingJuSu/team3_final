@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
+import Footer from "@/components/layout/default-layout/footer";
 
 export default function index() {
   return (
@@ -158,9 +159,46 @@ export default function index() {
                 </button>
               </form>
             </div>
+            <div className="container-fluid">
+              <div className="row mb-3  d-flex justify-content-center align-items-center">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>1</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>2</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>3</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>4</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>5</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>6</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>7</div>{" "}
+                </div>
+                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 bg-warning  d-flex justify-content-center align-items-center ">
+                  {" "}
+                  <div className={styles.cardP}>8</div>{" "}
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
