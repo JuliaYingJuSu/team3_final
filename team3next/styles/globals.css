@@ -239,9 +239,10 @@ body{
 
 /* 大頭照-大 */
 .headshot-big{
+  background-image: url(../public/images/logo.png);
   width: 180px;
   height: 180px;
-  object-fit: cover;
+  
 }
 
 /* 重要的tag */
@@ -272,3 +273,7 @@ body{
   font-size: 30px;
 }
 
+/* 框架下低線 */
+.bottom-line{
+  border-bottom: 1px solid #000;
+}
