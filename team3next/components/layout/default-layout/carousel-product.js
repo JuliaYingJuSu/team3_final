@@ -11,9 +11,10 @@ export default function Carousel() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
+        style={{ ...style, display: "block", fontSize: 33 }}
+        onClick={onClick}>
+        <span className="icon-arrow-s-right"></span>
+      </div>
     );
   }
 
@@ -25,11 +26,11 @@ export default function Carousel() {
         style={{
           ...style,
           display: "block",
-          background: "black",
-          right: "1rem",
+          fontSize: 33,
         }}
-        onClick={onClick}
-      />
+        onClick={onClick}>
+        <span className="icon-arrow-s-left"></span>
+      </div>
     );
   }
 
