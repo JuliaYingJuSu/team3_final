@@ -80,11 +80,13 @@ export default function UserInformation() {
                   id="InputPhone"
                   placeholder="請輸入09開頭共10碼的數字"
                 />
-              </div> 
-                <UserButtonGroup />
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
+              </div>
+              <UserButtonGroup />
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-middle fs18b">
+                  確認修改
+                </button>
+              </div>
             </form>
           </div>
         </div>
