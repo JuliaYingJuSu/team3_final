@@ -7,22 +7,20 @@ export default function Card() {
     <>
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
-          <img
-            src="./images/post/3188.jpg"
-            className="card-img"
-            alt="..."
-          />
+          <a href="#">
+            <img src="./images/post/3188.jpg" className="card-img" alt="..." />
+          </a>
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
                 <button className="btn btn-sm btn-i">
-                <i class="fa-regular fa-heart"></i>
+                  <i class="fa-regular fa-heart"></i>
                 </button>
                 <span>1</span>
               </span>
               <span className="middle">
                 <button className="btn btn-sm btn-i">
-                <i class="fa-regular fa-comment"></i>
+                  <i class="fa-regular fa-comment"></i>
                 </button>
                 <span>1</span>
               </span>
@@ -57,7 +55,9 @@ export default function Card() {
                   src="./images/logo.png"></img>
               </div>
               <p className="middle">
-                <span className="fs16b pt-3">會員暱稱</span>
+                <a className="fs16b pt-3 text-dark" href="#">
+                  會員暱稱
+                </a>
               </p>
               <button className="btn btn-little ms-auto">追蹤</button>
             </div>
