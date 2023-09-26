@@ -3,7 +3,7 @@
   align-items: center;
   font-size: 14px;
   font-weight: 400;
-  padding: 10px;
+  padding: 15px;
 }
 .bread * {
   margin-right: 5px;
@@ -38,19 +38,18 @@
 .left button {
   background-color: #fff;
   margin-bottom: 5px;
-  border: none;
   border-radius: 0%;
   display: flex;
   align-items: center;
   justify-content: left;
-  /* width: 100%; */
+  border-color: transparent !important;
+}
+.left button:hover {
+  border-bottom: 3px solid #b6705e !important;
 }
 .left > button {
   font-size: 18px;
   font-weight: 700;
-}
-.left button:hover {
-  border-bottom: 3px solid #b6705e;
 }
 .typeListBtn {
   font-size: 15px;

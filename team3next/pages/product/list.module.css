@@ -1,3 +1,48 @@
-.topBox div {
-  border: none;
+.topBox {
+  border-bottom: 1px solid rgba(102, 102, 102, 0.5);
+  height: 45px;
+  margin-top: 33px;
+}
+
+.topBox a:hover {
+  background-color: #ebd8a9;
+}
+.topBox a:active {
+  background-color: #ebd8a9;
+  color: #3f4c5c;
+}
+.topBox button {
+  background-color: #fff;
+  margin-bottom: 5px;
+  border-radius: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-color: transparent !important;
+}
+
+.topBox button:hover {
+  border-bottom: 3px solid #b6705e !important;
+}
+
+/* main------------ */
+.productMain {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  align-self: stretch;
+}
+.btnBox * {
+  margin-bottom: 10px;
+}
+.btnBox select {
+  border-radius: 40px;
+  width: 100%;
+  height: 30px;
+  font-size: 16px;
+  margin-right: 10px;
+  text-align: center;
+  padding-left: 35px;
 }

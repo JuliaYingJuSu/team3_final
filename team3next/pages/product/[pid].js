@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import styles from "./list.module.css";
+import Form from "react-bootstrap/Form";
 
 export default function productDetail() {
   return (
@@ -9,10 +10,12 @@ export default function productDetail() {
       <Navbar />
       <div className="container">
         <Bread />
-        <div className="container topBox d-flex justify-content-around">
+        <div
+          className={styles.topBox + " container d-flex justify-content-around"}
+        >
           <div class="dropdown">
             <button
-              class="btn dropdown-toggle"
+              class="btn dropdown-toggle "
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -44,7 +47,7 @@ export default function productDetail() {
           </div>
           <div class="dropdown">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn dropdown-toggle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -76,7 +79,7 @@ export default function productDetail() {
           </div>
           <div class="dropdown">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn dropdown-toggle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -113,7 +116,7 @@ export default function productDetail() {
           </div>
           <div class="dropdown">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn dropdown-toggle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -145,7 +148,7 @@ export default function productDetail() {
           </div>
           <div class="dropdown">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn dropdown-toggle"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -161,6 +164,43 @@ export default function productDetail() {
             </ul>
           </div>
         </div>
+        <main className="bg-info">
+          <div className="productMain">
+            <div className="context">
+              <div>
+                <p>
+                  <span>【HEY YUM!】丹麥無麩質水果軟糖</span>
+                  <span className="icon-mark"></span>
+                </p>
+                <p>NT$ 1000</p>
+              </div>
+              <p>
+                ◆ 丹麥原裝進口 ◆ 不含人工香料、色素、甜味劑、防腐劑 <br />◆
+                莓果蔬食口味 (藍色包裝) 為素食者可食用
+                <br /> ◆ 不含麩質、不含乳糖
+                (優格水果口味除外)，過敏體質也不用擔心
+              </p>
+              <div className={styles.btnBox}>
+                <Form.Select
+                  className={" brounded"}
+                  size="sm"
+                  aria-label="Default select example"
+                >
+                  <option>請選擇數量</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Form.Select>
+                <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                  加入購物車
+                </button>
+                <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                  立即購買
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </>
   );
