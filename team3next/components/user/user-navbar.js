@@ -11,12 +11,12 @@ export default function UserNavbar() {
               <Link
                 className="nav-link active fs-5"
                 aria-current="page"
-                href="./user">
+                href="/user">
                 會員資訊
               </Link>
             </li>
             <li className="nav-item pe-3">
-              <Link className="nav-link text-dark fs-5" href="#">
+              <Link className="nav-link text-dark fs-5" href="/user/user-article">
                 我的文章
               </Link>
             </li>
