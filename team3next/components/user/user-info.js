@@ -13,7 +13,7 @@ export default function UserInfo() {
               <span>110人</span>
               <span>追蹤中</span>
             </div>
-            <div className="btn-middle mt-5 fw-bold">發表文章</div>
+            <button className="btn btn-middle mt-5 fw-bold">發表文章</button>
           </div>
           <div className="middle">
             <div className="rounded-circle img-thumbnail headshot-big position-relativ">

@@ -16,7 +16,7 @@ export default function UserNavbar() {
               </Link>
             </li>
             <li className="nav-item pe-3">
-              <Link className="nav-link text-dark fs-5" href="/user/user-article">
+              <Link className="nav-link text-dark fs-5" href="/user/my-article">
                 我的文章
               </Link>
             </li>
