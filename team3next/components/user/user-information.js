@@ -7,7 +7,7 @@ export default function UserInformation() {
     <>
       <div className={"container" + " " + `${Styles.bgc}`}>
         <div className={Styles.inputarea}>
-          <div className="middle flex-column w-100">
+          <div className="middle flex-column w-75">
             <dvi>
               <h4>會員資訊</h4>
             </dvi>
@@ -34,7 +34,7 @@ export default function UserInformation() {
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control input-f"
                   id="InputName"
                   placeholder="請輸入姓名"
                 />
@@ -48,7 +48,7 @@ export default function UserInformation() {
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control input-f"
                   id="InputNickName"
                   placeholder="請輸入暱稱"
                 />
@@ -62,7 +62,7 @@ export default function UserInformation() {
                 </label>
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control input-f"
                   id="InputPassword"
                   placeholder="請輸入英文+數字至少8碼"
                 />
@@ -76,7 +76,7 @@ export default function UserInformation() {
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control input-f"
                   id="InputPhone"
                   placeholder="請輸入09開頭共10碼的數字"
                 />
