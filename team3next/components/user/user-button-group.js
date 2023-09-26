@@ -16,7 +16,7 @@ export default function UserButtonGroup() {
               value="1"
             />
             <label
-              className="btn btn-outline ms-2 rounded rounded-4 fw-bold"
+              className="btn btn-outline-red ms-2 rounded rounded-4 fw-bold"
               for="btn-check-1">
               台式
             </label>

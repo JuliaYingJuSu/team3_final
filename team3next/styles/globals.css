@@ -71,6 +71,30 @@
 }
 
 
+/* 食物標籤按鈕 */
+.btn-outline-red{
+  color:#AE4818;
+  border-color: #AE4818;
+}
+
+.btn-outline-red:hover{
+  color: #DC5D03;
+  border-color:#DC5D03;
+}
+
+.btn-outline-red:focus, .btn-outline-red:active:hover{
+  color: #fff;
+  background-color: #AE4818;
+  border-color: #AE4818;
+}
+
+.btn-outline-red.active,
+.btn-outline-red.active.focus {
+  border-color: brown;
+  color: white;
+  background-color:brown;
+}
+
 h1{
   font-size: 64px;
   font-weight: 600;
