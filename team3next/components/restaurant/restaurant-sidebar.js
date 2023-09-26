@@ -5,7 +5,7 @@ export default function RestaurantSidebar() {
   return (
     <>
       <div
-        className="btn-group-vertical mt-5"
+        className=" btn-group-vertical mt-5"
         role="group"
         aria-label="Vertical button group"
       >
