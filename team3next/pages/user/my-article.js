@@ -13,7 +13,7 @@ export default function UserMyfrom() {
       <MyNavbar />
       <UserInfo></UserInfo>
       <UserNavbar></UserNavbar>
-      <div className={"container" + " " + `${Styles.wbc}`}>
+      <div className={"container mb-5" + " " + `${Styles.wbc}`}>
         <div className={Styles.wma}>XXX篇文章</div>
         <div className={Styles.imgArea}>
           <UserPictureCard></UserPictureCard>
