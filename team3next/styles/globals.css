@@ -70,6 +70,48 @@
   color: #808080;
 }
 
+/* 食物標籤按鈕 */
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-check:active + .btn-outline-warning,
+.btn-check:checked + .btn-outline-warning,
+.btn-outline-warning.active,
+.btn-outline-warning.dropdown-toggle.show,
+.btn-outline-warning:active {
+  color: #fff;
+  background-color: #ae4818;
+  border-color: #ae4818 !important;
+}
+
+/* 食物標籤按鈕 */
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-check:active + .btn-outline-warning,
+.btn-check:checked + .btn-outline-warning,
+.btn-outline-warning.active,
+.btn-outline-warning.dropdown-toggle.show,
+.btn-outline-warning:active {
+  color: #fff;
+  background-color: #ae4818;
+  border-color: #ae4818 !important;
+}
+
 .h1 {
   font-size: 64px;
   font-weight: 600;
