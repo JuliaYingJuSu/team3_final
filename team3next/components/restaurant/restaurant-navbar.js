@@ -12,20 +12,18 @@ export default function MyNavbar() {
 
   return (
     <>
-        <div className="d-flex">
-          {/* <div className="d-flex" style={{ flex: 4 }}></div> */}
           <ul
-            className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap"
-            // style={{ flex: 5 }}
+            className="nav nav-underline align-items-center justify-content-between d-flex flex-nowrap"
           >
+            <div style={{flex:9}}></div>
             {/* Logo區塊 */}
-            <div className="d-flex px-3 justify-content-between">
+            <div className="d-flex px-3 justify-content-between" style={{flex:10}}>
               <Link href="/">
                 <Image height={150} width={200} src={Logo} alt="Logo"></Image>
               </Link>
             </div>
             {/* 右側ICON區 */}
-            <div className="d-flex align-item">
+            <div className="d-flex align-item" style={{height:"50px"}}>
               <div className="dropdown">
                 <button
                   type="button"
@@ -70,7 +68,6 @@ export default function MyNavbar() {
               </div>
             </div>
           </ul>
-        </div>
       <style global jsx>
         {`
           .h150 {
