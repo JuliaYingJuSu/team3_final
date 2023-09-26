@@ -12,12 +12,11 @@ export default function MyNavbar() {
 
   return (
     <>
-      <nav className="bg-white">
-        <div className="d-flex justify-content-end">
-          <div style={{ flex: 1 }}></div>
+        <div className="d-flex">
+          {/* <div className="d-flex" style={{ flex: 4 }}></div> */}
           <ul
             className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap"
-            style={{ width: "60rem", flex: 1, flexBasis: 0 }}
+            // style={{ flex: 5 }}
           >
             {/* Logo區塊 */}
             <div className="d-flex px-3 justify-content-between">
@@ -26,12 +25,52 @@ export default function MyNavbar() {
               </Link>
             </div>
             {/* 右側ICON區 */}
-            <div className="" style={{}}>
-              歡迎回來，XXX
+            <div className="d-flex align-item">
+              <div className="dropdown">
+                <button
+                  type="button"
+                  className="btn position-relative me-3 "
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span
+                    className="icon-bell"
+                    style={{ fontSize: "32px" }}
+                  ></span>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span style={{ fontSize: "6px", color: "white" }}>2</span>
+                    <span className="visually-hidden">New alerts</span>
+                  </span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Action
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Action two
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Action three
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <img
+                className="rounded-circle"
+                src="https://placehold.co/50x50"
+                alt=""
+              />
+              <div className=" mx-3 align-self-center" style={{}}>
+                歡迎回來，XXX
+              </div>
             </div>
           </ul>
         </div>
-      </nav>
       <style global jsx>
         {`
           .h150 {
