@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
+import NavCart from '@/components/cart/nav-cart'
 
 export default function MyNavbar() {
   // currentRoute是用來套用active樣式(目前區域對應選單項目)，需傳入MainMenu中
@@ -119,7 +120,9 @@ export default function MyNavbar() {
                 </div>
                 <div
                   className="offcanvas-body"
-                  style={{ backgroundColor: "#FBF9EF" }}></div>
+                  style={{ backgroundColor: "#FBF9EF" }}>
+                    <NavCart />
+                  </div>
               </div>
             </div>
           </ul>
