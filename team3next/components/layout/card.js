@@ -67,7 +67,7 @@ export default function Card() {
                 美式
               </a>
             </div>
-            <h6 className="card-title w-100 mt-3">
+            <h6 className="card-title w-100 mt-3 fw-bolder">
               朋友說這是台北最好吃的滷肉飯
             </h6>
             <div className="d-flex align-items-center w-100">

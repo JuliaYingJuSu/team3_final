@@ -5,7 +5,7 @@ export default function UserInfo() {
     <>
       <main className="container bottom-line" style={{ paddingBottom: 40 }}>
         <div
-          className="d-flex justify-content-around align-items-center mt-3"
+          className="d-flex justify-content-around align-items-center mt-3 mb-1"
           style={{ paddingInline: 200 }}>
           <div className="middle flex-column ms-5 ps-5">
             <h4>會員暱稱</h4>
