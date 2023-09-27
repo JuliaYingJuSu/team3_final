@@ -21,12 +21,11 @@
   height: 32px;
   width: 150px;
   border-radius: 40px;
-  padding: 15px 20px;
+  padding: 0 20px;
   background: #ebd8a9;
   font-size: 18px;
   font-weight: bold;
   color: #3f4c5c;
-  text-align: center;
 }
 
 /* 中按鈕 */
@@ -312,7 +311,7 @@ body {
   font-size: 30px;
 }
 
-/* 框架下低線 */
+/* 框架下底線 */
 .bottom-line {
   border-bottom: 1px solid #000;
 }
@@ -320,6 +319,13 @@ body {
 /* 輸入框格式 */
 .input-f {
   width: 500px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}
+
+.input-res {
   height: 42px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
