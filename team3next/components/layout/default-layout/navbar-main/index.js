@@ -73,7 +73,7 @@ export default function MyNavbar() {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item fs18b" href="./user">
+                      <a className="dropdown-item fs18b" href="./user/login">
                         註冊/登入
                       </a>
                     </li>
