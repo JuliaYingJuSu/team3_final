@@ -1,48 +1,112 @@
 .bread {
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
   font-weight: 400;
-  margin-right: 10px;
+  padding: 15px;
 }
+.bread * {
+  margin-right: 5px;
+}
+.bread a:link {
+  color: #666666;
+}
+.bread a:visited {
+  color: #666666;
+}
+
 .leftBox {
   width: 230px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color:#526565 ; */
+  flex-direction: column;
 }
 .left {
   width: 180px;
-  padding: 10px;
+  /* height: 300px; */
+  padding: 30px 0 0 0;
+  border-bottom: 1px solid rgba(102, 102, 102, 0.5);
   /* display: flex;
     flex-direction: column; */
 }
 .left div {
   text-align: center;
   width: 180px;
-  padding: 10px;
   /* display: flex;
     flex-direction: column; */
 }
 
 .left button {
   background-color: #fff;
-  margin-bottom: 10px;
-  border: none;
+  margin-bottom: 5px;
   border-radius: 0%;
   display: flex;
-  justify-content: center;
-  /* width: 80%; */
+  align-items: center;
+  justify-content: left;
+  border-color: transparent !important;
+}
+.left button:hover {
+  border-bottom: 3px solid #b6705e !important;
 }
 .left > button {
   font-size: 18px;
   font-weight: 700;
 }
-.left button:hover {
-  border-bottom: 3px solid #b6705e;
-}
 .typeListBtn {
-  font-size: 1px;
+  font-size: 15px;
   font-weight: 400;
-  color: blue;
-  background-color: aquamarine;
 }
+.left input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* main--------- */
+
+.sort {
+  margin-bottom: 20px;
+}
+.sort select,
+.sort form input {
+  border-radius: 40px;
+  width: 140px;
+  height: 30px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.sort form button {
+  border-radius: 40px;
+  height: 30px;
+  width: 35px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.sort form button:hover {
+  border: 1px solid #666666;
+}
+
+.cardP {
+  display: flex;
+  max-width: 235px;
+  min-width: 180px;
+  height: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 20px 0;
+
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 8px 10px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+.imgBox {
+  border-radius: 40px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* .imgBox img{
+  width: 100%;
+  height: ;
+} */

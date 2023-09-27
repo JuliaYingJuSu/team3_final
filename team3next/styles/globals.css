@@ -1,11 +1,11 @@
 /* 共用的樣式放這邊 */
-*{
+* {
   margin: 0;
   padding: 0;
 }
 
 /* 地區按鈕 */
-.btn-lg{
+.btn-lg {
   height: 60px;
   width: 150px;
   border-radius: 40px;
@@ -13,46 +13,47 @@
   background: #ebd8a9;
   font-size: 18px;
   font-weight: bold;
-  color:#3F4c5c;
+  color: #3f4c5c;
 }
 
 /* 大按鈕 */
-.btn-big{
+.btn-big {
   height: 32px;
   width: 150px;
   border-radius: 40px;
-  padding: 15px 20px;
+  padding: 0 20px;
   background: #ebd8a9;
   font-size: 18px;
   font-weight: bold;
-  color:#3F4c5c;
-  text-align: center;
+  color: #3f4c5c;
 }
 
 /* 中按鈕 */
-.btn-middle{
+.btn-middle {
   text-align: center;
-  width:120px;
+  width: 120px;
   border-radius: 40px;
   padding: 10px 20px;
-  background:#ebd8a9 ;
+  background: #ebd8a9;
   font-size: 16px;
-  color:#3F4c5c;
+  color: #3f4c5c;
+  font-weight: bold;
 }
 
 /* 小按鈕 */
-.btn-small{
+.btn-small {
   width: 100px;
   border-radius: 40px;
   padding: 10px 20px;
   background: #ebd8a9;
   font-size: 12px;
-  color:#3F4c5c;
+  color: #3f4c5c;
   text-align: center;
+  font-weight: bold;
 }
 
 /* 超小按鈕 */
-.btn-little{
+.btn-little {
   height: 30px;
   display: flex;
   padding: 5px 10px;
@@ -60,125 +61,164 @@
   align-items: center;
   gap: 10px;
   border-radius: 40px;
-  background: var(--ebd-8-a-9, #EBD8A9);
-  color: var(--3F4C5C, var(--3F4C5C, #3F4C5C));
+  background: var(--ebd-8-a-9, #ebd8a9);
+  color: var(--3F4C5C, var(--3F4C5C, #3f4c5c));
   font-size: 16px;
+  font-weight: bold;
 }
 
 /* ICON按鈕*/
-.btn-i{
+.btn-i {
   color: #808080;
 }
 
+/* 食物標籤按鈕 */
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
 
-h1{
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-check:active + .btn-outline-warning,
+.btn-check:checked + .btn-outline-warning,
+.btn-outline-warning.active,
+.btn-outline-warning.dropdown-toggle.show,
+.btn-outline-warning:active {
+  color: #fff;
+  background-color: #ae4818;
+  border-color: #ae4818 !important;
+}
+
+/* 食物標籤按鈕 */
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-outline-warning {
+  color: #ae4818;
+  border-color: #ae4818;
+}
+
+.btn-check:active + .btn-outline-warning,
+.btn-check:checked + .btn-outline-warning,
+.btn-outline-warning.active,
+.btn-outline-warning.dropdown-toggle.show,
+.btn-outline-warning:active {
+  color: #fff;
+  background-color: #ae4818;
+  border-color: #ae4818 !important;
+}
+
+.h1 {
   font-size: 64px;
   font-weight: 600;
 }
 
-h2{
+.h2 {
   font-size: 58px;
   font-weight: 700;
 }
 
-h3{
+.h3 {
   font-size: 46px;
   font-weight: 700;
 }
 
-h4{
+.h4 {
   font-size: 32px;
   font-weight: 700;
 }
 
-h5{
+.h5 {
   font-size: 22px;
   font-weight: 700;
 }
 
-h6{
+.h6 {
   font-size: 18px;
   font-weight: 700;
 }
 
-p{
+.p {
   font-size: 16px;
   font-weight: 400;
 }
 
 /* 12小字 */
-.fs12{
+.fs12 {
   font-size: 12px;
   font-weight: 400;
   color: #808080;
 }
 
 /* 14字 */
-.fs14{
+.fs14 {
   font-size: 14px;
   font-weight: 600;
 }
 
 /* 16正常灰字 */
-.fs16g{
+.fs16g {
   font-size: 16px;
-  color:#666666
+  color: #666666;
 }
 
 /* 16粗體 */
-.fs16b{
+.fs16b {
   font-size: 16px;
   font-weight: bold;
 }
 
 /* 18粗體 */
-.fs18b{
+.fs18b {
   font-size: 18px;
   font-weight: bold;
 }
 
 /* 32首頁標題 */
-.h4-title
-{
-  color: var(--985637, #AE4818);
+.h4-title {
+  color: var(--985637, #ae4818);
   text-align: center;
 }
 
 /* 灰色 */
-.grey{
-  color:#808080 ;
+.grey {
+  color: #808080;
 }
 
-
-
-.w1200{
+.w1200 {
   width: 1200px;
 }
 
-.w1440{
+.w1440 {
   width: 1440px;
 }
 
 /* 置中 */
-.middle{
+.middle {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
 /* 引入Noto Sans Traditional Chinese */
-@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap");
 
-body{
-  font-family: 'jf-openhuninn-2.0','Zen Maru Gothic', sans-serif;
+body {
+  font-family: "jf-openhuninn-2.0", "Zen Maru Gothic", sans-serif;
 }
 
 /* 卡片圖片設定 */
-.card-img{
+.card-img {
   display: flex;
   width: 100%;
   height: 360px;
@@ -186,40 +226,38 @@ body{
   justify-content: center;
   align-items: center;
   object-fit: cover;
-  border-radius:0;
+  border-radius: 0;
 }
 
 /* 一般卡片設定 */
-.card{
+.card {
   display: flex;
   width: 350px;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
 }
 
-
 /* 餐廳卡片設定 */
-.card-r{
+.card-r {
   display: flex;
   width: 530px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   border-radius: 10px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
 }
 
-.card-body{
+.card-body {
   padding: 0 20px;
-
 }
 
 /* 大頭照-小 */
-.headshot-small{
+.headshot-small {
   display: flex;
   width: 45px;
   height: 45px;
@@ -231,55 +269,64 @@ body{
 }
 
 /* 大頭照-中 */
-.headshot-middle{
+.headshot-middle {
   width: 80px;
   height: 80px;
   object-fit: cover;
 }
 
 /* 大頭照-大 */
-.headshot-big{
+.headshot-big {
   background-image: url(../public/images/logo.png);
   width: 180px;
   height: 180px;
-
 }
 
 /* 重要的tag */
-.tag-i{
+.tag-i {
   height: 20px;
   border-radius: 5px;
-  border: 1px solid #AE4818;
+  border: 1px solid #ae4818;
   display: flex;
   justify-content: center;
-  color: #AE4818;
+  color: #ae4818;
   align-items: center;
-  padding:0 5px ;
+  padding: 0 5px;
 }
 
 /* 食物tag */
-.tag-f{
+.tag-f {
   height: 20px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   color: #666666;
-  align-items: center; 
-  background-color: #5C5C5C1A;
-  padding:0 5px ;
+  align-items: center;
+  background-color: #5c5c5c1a;
+  padding: 0 5px;
 }
 
-.icon-member{
+.icon-member {
   font-size: 30px;
 }
 
-/* 框架下低線 */
-.bottom-line{
+/* 框架下底線 */
+.bottom-line {
   border-bottom: 1px solid #000;
 }
 
 /* 輸入框格式 */
-.input-f{
+.input-f {
   width: 500px;
   height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}
+
+.input-res {
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
 }

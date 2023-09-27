@@ -107,7 +107,7 @@ export default function RegisterForm() {
           />
         </label>
         <br />
-        <button type="submit">送出</button>
+        <button className="btn-lg" type="submit">送出</button>
       </form>
     </>
   );

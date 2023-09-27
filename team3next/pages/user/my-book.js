@@ -1,23 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React from 'react'
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
-import UserInformation from "@/components/user/user-information";
 import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 
-export default function UserIndex() {
+
+export default function MyBook() {
   return (
     <>
-      <MyNavbar></MyNavbar>
-      <UserInfo></UserInfo>
+    <MyNavbar></MyNavbar>
+    <UserInfo></UserInfo>
       <UserNavbar />
-      <UserInformation />
       <Footer></Footer>
       <Head>
-        <title>會員資訊</title>
-    </Head>
+        <title>訂位紀錄</title>
+      </Head>
     </>
-  );
+  )
 }
