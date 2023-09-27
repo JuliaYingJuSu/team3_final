@@ -71,6 +71,11 @@ export default function MyNavbar() {
                       </a>
                     </li>
                     <li>
+                      <a className="dropdown-item fs18b" href="./user">
+                        註冊/登入
+                      </a>
+                    </li>
+                    <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
