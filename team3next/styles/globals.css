@@ -135,6 +135,7 @@
 }
 
 .h5 {
+  line-height: 22px;
   font-size: 22px;
   font-weight: 700;
 }
@@ -160,6 +161,11 @@
 .fs14 {
   font-size: 14px;
   font-weight: 600;
+}
+
+/* 18正常字 */
+.fs18 {
+  font-size: 18px;
 }
 
 /* 16正常灰字 */
