@@ -29,10 +29,25 @@
 .productMain {
   display: flex;
   padding: 10px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 30px;
-  align-self: stretch;
+  /* height: 600px; */
+  /* max-width: 100%; */
+  /* gap: 20px; */
+}
+.imgs {
+  /* position: relative; */
+  /* max-width: 55%; */
+  /* height: 100%; */
+  /*background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0; */
+}
+.context {
+  /* width: 100%; */
 }
 .btnBox * {
   margin-bottom: 10px;
@@ -46,3 +61,5 @@
   text-align: center;
   padding-left: 35px;
 }
+
+/* swiper---------- */

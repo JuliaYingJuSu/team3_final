@@ -4,6 +4,15 @@ import Bread from "@/components/product/bread";
 import styles from "./list.module.css";
 import Form from "react-bootstrap/Form";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+// import "swiper/css/pagination";
+// import ProductCarousel from "@/components/product/ProductCarousel";
+// import Carousel from "react-bootstrap/Carousel";
+// import ExampleCarouselImage from "components/ExampleCarouselImage";
+
 export default function productDetail() {
   return (
     <>
@@ -13,6 +22,9 @@ export default function productDetail() {
         <div
           className={styles.topBox + " container d-flex justify-content-around"}
         >
+          <button class="btn" type="button">
+            全部商品
+          </button>
           <div class="dropdown">
             <button
               class="btn dropdown-toggle "
@@ -164,11 +176,49 @@ export default function productDetail() {
             </ul>
           </div>
         </div>
-        <main className="bg-info">
-          <div className="productMain">
-            <div className="context">
+        <main className="bg-info w-100 container">
+          <div className={styles.productMain + " row"}>
+            <div
+              className={
+                styles.imgs +
+                " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
+              }
+            >
+              {/* <ProductCarousel /> */}
+              <Swiper
+                spaceBetween={50}
+                slidesPerView={1}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                <SwiperSlide>
+                  {
+                    <img
+                      className="w-100 h-100"
+                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                      alt=""
+                    />
+                  }
+                </SwiperSlide>
+                <SwiperSlide>Slide 2</SwiperSlide>
+                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide>Slide 4</SwiperSlide>
+                <SwiperSlide>Slide 5</SwiperSlide>
+                <SwiperSlide>Slide 6</SwiperSlide>
+                <SwiperSlide>Slide 7</SwiperSlide>
+                <SwiperSlide>Slide 8</SwiperSlide>
+                <SwiperSlide>Slide 9</SwiperSlide>
+              </Swiper>
+            </div>
+            <div
+              className={
+                styles.context +
+                "col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
+              }
+            >
               <div>
-                <p>
+                <p d-flex>
                   <span>【HEY YUM!】丹麥無麩質水果軟糖</span>
                   <span className="icon-mark"></span>
                 </p>
