@@ -15,7 +15,12 @@ export default function Article() {
       <UserNavbar />
       <div className={"container mb-5" + " " + `${Styles.wbc}`}>
         <div className={Styles.wma}>XXX篇文章</div>
-        <div className={Styles.imgArea}>
+        <div className="row row-cols-1 row-cols-xl-3 container mx-1 my-3 px-5 mb-5 ">
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
         <Card></Card>
         </div>
       </div>

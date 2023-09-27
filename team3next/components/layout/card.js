@@ -27,7 +27,7 @@ export default function Card() {
           </div>
         </div>
       </div>
-      <div className="col mt-2">
+      <div className="col mt-2 mb-4">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img src="/images/post/3188.jpg" className="card-img" alt="..." />
