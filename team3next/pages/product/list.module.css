@@ -26,40 +26,88 @@
 }
 
 /* main------------ */
+
 .productMain {
   display: flex;
   padding: 10px;
   justify-content: space-between;
-  align-items: center;
-  /* height: 600px; */
-  /* max-width: 100%; */
-  /* gap: 20px; */
 }
-.imgs {
-  /* position: relative; */
-  /* max-width: 55%; */
-  /* height: 100%; */
-  /*background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0; */
-}
-.context {
-  /* width: 100%; */
-}
+
 .btnBox * {
   margin-bottom: 10px;
 }
 .btnBox select {
+  color: #3f4c5c;
+  line-height: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px #808080 solid;
   border-radius: 40px;
   width: 100%;
-  height: 30px;
-  font-size: 16px;
-  margin-right: 10px;
+  height: 33px;
+  /* margin-right: 10px; */
   text-align: center;
   padding-left: 35px;
 }
 
-/* swiper---------- */
+/* infoBox------------- */
+.infoBox {
+  display: flex;
+  padding: 0px 10px;
+  flex-direction: column;
+  align-items: center;
+  /* align-self: stretch; */
+}
+.infoItem {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 60px;
+}
+.infoItem .head {
+  width: 200px;
+  padding: 10px 0px;
+  text-align: center;
+  border-bottom: 3px #808080 solid;
+}
+.infoItem .text {
+  text-align: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.infoItem .commentBox {
+  display: flex;
+  width: 80%;
+  padding: 10px 30px 10px 30px;
+  border-bottom: 1px #808080 solid;
+  align-items: flex-start;
+  justify-content: start;
+}
+
+.commentBox .pic {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: aquamarine;
+}
+.comment p {
+  margin: 0px;
+  font-weight: 600;
+}
+.recommendBox {
+  display: flex;
+  padding: 0px 10px;
+  flex-direction: column;
+  align-items: center;
+}
+.recommendBox .head {
+  /* width: 200px; */
+  padding: 10px 0px;
+  text-align: center;
+  border-bottom: 3px #808080 solid;
+}

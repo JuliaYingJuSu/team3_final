@@ -292,175 +292,39 @@ export default function index() {
                   <button class="btn icon-search" type="submit"></button>
                 </form>
               </div>
-              <div className="row mb-3  d-flex justify-content-center align-items-center">
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
+
+              <div className="row mb-3 d-flex justify-content-center align-items-center">
+                {Array(8)
+                  .fill(1)
+                  .map((v, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                      >
+                        <div className={styles.cardP}>
+                          <div className={styles.imgBox}>
+                            <img
+                              src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
+                              alt=""
+                              className="w-100 h-100 object-fit-cover "
+                            />
+                          </div>
+                          <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
+                            <span>品牌名 產品名</span>
+                            <span className="icon-mark"></span>
+                          </div>
+                          <div
+                            className="priceBox px-2 w-100
                      d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
-                  <div className={styles.cardP}>
-                    <div className={styles.imgBox}>
-                      <img
-                        src="images/product/螢幕擷取畫面 2023-09-26 101926.png"
-                        alt=""
-                        className="w-100 h-100 object-fit-cover "
-                      />
-                    </div>
-                    <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                      <span>品牌名 產品名</span>
-                      <span className="icon-mark"></span>
-                    </div>
-                    <div
-                      className="priceBox px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                    >
-                      <span>NT$ 1000</span> <span className="icon-cark"></span>
-                    </div>
-                  </div>
-                </div>
+                          >
+                            <span>NT$ 1000</span>{" "}
+                            <span className="icon-cark"></span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </main>

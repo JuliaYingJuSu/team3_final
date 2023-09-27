@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import CarouselProduct from "@/components/layout/default-layout/carousel-product";
 // import "swiper/css/pagination";
 // import ProductCarousel from "@/components/product/ProductCarousel";
 // import Carousel from "react-bootstrap/Carousel";
@@ -17,7 +18,7 @@ export default function productDetail() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="container ">
         <Bread />
         <div
           className={styles.topBox + " container d-flex justify-content-around"}
@@ -176,7 +177,7 @@ export default function productDetail() {
             </ul>
           </div>
         </div>
-        <main className="bg-info w-100 container">
+        <main className=" w-100 mt-4 ">
           <div className={styles.productMain + " row"}>
             <div
               className={
@@ -184,7 +185,6 @@ export default function productDetail() {
                 " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
-              {/* <ProductCarousel /> */}
               <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
@@ -201,30 +201,51 @@ export default function productDetail() {
                     />
                   }
                 </SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
-                <SwiperSlide>Slide 5</SwiperSlide>
-                <SwiperSlide>Slide 6</SwiperSlide>
-                <SwiperSlide>Slide 7</SwiperSlide>
-                <SwiperSlide>Slide 8</SwiperSlide>
-                <SwiperSlide>Slide 9</SwiperSlide>
+                <SwiperSlide>
+                  {
+                    <img
+                      className="w-100 h-100"
+                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                      alt=""
+                    />
+                  }
+                </SwiperSlide>
+                <SwiperSlide>
+                  {
+                    <img
+                      className="w-100 h-100"
+                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                      alt=""
+                    />
+                  }
+                </SwiperSlide>
+                <SwiperSlide>
+                  {
+                    <img
+                      className="w-100 h-100"
+                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                      alt=""
+                    />
+                  }
+                </SwiperSlide>
               </Swiper>
             </div>
             <div
               className={
                 styles.context +
-                "col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
+                " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
-              <div>
-                <p d-flex>
-                  <span>【HEY YUM!】丹麥無麩質水果軟糖</span>
+              <div className="mb-auto h5 ">
+                <p className="d-flex ">
+                  <span className="me-auto">
+                    【HEY YUM!】丹麥無麩質水果軟糖
+                  </span>
                   <span className="icon-mark"></span>
                 </p>
-                <p>NT$ 1000</p>
+                <p className="ps-3">NT$ 1000</p>
               </div>
-              <p>
+              <p className="mb-auto fs16b">
                 ◆ 丹麥原裝進口 ◆ 不含人工香料、色素、甜味劑、防腐劑 <br />◆
                 莓果蔬食口味 (藍色包裝) 為素食者可食用
                 <br /> ◆ 不含麩質、不含乳糖
@@ -249,6 +270,103 @@ export default function productDetail() {
                 </button>
               </div>
             </div>
+          </div>
+          <div className={styles.infoBox + " w-100"}>
+            <div className={styles.infoItem}>
+              <p className={styles.head + " h4"}>商品介紹</p>
+              <p className={styles.text}>
+                使用天然果汁🍋、蜂蜜🍯製作的水果軟糖
+                曾被ELLE、BAZAAR、GQ等時尚雜誌推薦，多位藝人也讚不絕口的美味
+                聚會時、出遊時、在家追劇時，來上一顆有夠享受😋😋
+                <br />
+                <br />◆ 丹麥原裝進口 <br />◆
+                巴黎潮流指標選品店Colette選用及肯定的可愛療癒系包裝 <br />◆
+                無添加人工色素、防腐劑、香料 <br />◆ 不含麩質、不含乳糖
+                (優格水果口味除外)，過敏體質不擔心 <br />◆ 莓果蔬食口味為Vegan
+              </p>
+            </div>
+            <div className={styles.infoItem}>
+              <p className={styles.head + " h4"}>商品規格</p>
+              <p className={styles.text}>
+                商品產地 : 丹麥
+                <br />
+                賞味期限 : 製造日期後 365 天
+                <br />
+                內容量 : 100g x 6<br />
+                素食者可食用
+              </p>
+            </div>
+            <div className={styles.infoItem}>
+              <p className={styles.head + " h4"}>商品評論</p>
+              <div className={styles.commentBox}>
+                <div className={styles.pic}></div>
+                <div className={styles.comment}>
+                  <p>名字</p>
+                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
+                </div>
+              </div>
+              <div className={styles.commentBox}>
+                <div className={styles.pic}></div>
+                <div className={styles.comment}>
+                  <p>名字</p>
+                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
+                </div>
+              </div>
+              <div className={styles.commentBox}>
+                <div className={styles.pic}></div>
+                <div className={styles.comment}>
+                  <p>名字</p>
+                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.recommendBox}>
+            <p className={styles.head + " h4"}>推薦商品</p>
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={1}
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              <SwiperSlide>
+                {
+                  <img
+                    className="w-100 h-100"
+                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                    alt=""
+                  />
+                }
+              </SwiperSlide>
+              <SwiperSlide>
+                {
+                  <img
+                    className="w-100 h-100"
+                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                    alt=""
+                  />
+                }
+              </SwiperSlide>
+              <SwiperSlide>
+                {
+                  <img
+                    className="w-100 h-100"
+                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                    alt=""
+                  />
+                }
+              </SwiperSlide>
+              <SwiperSlide>
+                {
+                  <img
+                    className="w-100 h-100"
+                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
+                    alt=""
+                  />
+                }
+              </SwiperSlide>
+            </Swiper>
           </div>
         </main>
       </div>
