@@ -27,10 +27,10 @@ export default function Card() {
           </div>
         </div>
       </div>
-      <div className="col mt-2">
+      <div className="col mt-2 mb-4">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <img src="./images/post/3188.jpg" className="card-img" alt="..." />
+            <img src="/images/post/3188.jpg" className="card-img" alt="..." />
           </a>
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
@@ -67,14 +67,14 @@ export default function Card() {
                 美式
               </a>
             </div>
-            <h6 className="card-title w-100 mt-3">
+            <h6 className="card-title w-100 mt-3 fw-bolder">
               朋友說這是台北最好吃的滷肉飯
             </h6>
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="./images/logo.png"></img>
+                  src="/images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">

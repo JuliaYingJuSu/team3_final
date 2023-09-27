@@ -44,6 +44,8 @@ export default function MyNavbar() {
             </div>
             {/* 右側ICON區 */}
             <div className="middle ms-auto gap-4">
+              <li></li>
+              <li></li>
               {/* 會員下拉選單 */}
               <li className="nav-item pe-3">
                 <div className="dropdown-center">
@@ -71,6 +73,11 @@ export default function MyNavbar() {
                       </a>
                     </li>
                     <li>
+                      <a className="dropdown-item fs18b" href="./user/login">
+                        註冊/登入
+                      </a>
+                    </li>
+                    <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
@@ -92,6 +99,8 @@ export default function MyNavbar() {
                   href="#offcanvasRight"
                   style={{ fontSize: 30 }}></Link>
               </li>
+              <li></li>
+              <li></li>
               <div
                 className="offcanvas offcanvas-end"
                 tabindex="-1"
