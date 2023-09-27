@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ClassicForm() {
   const [input, SetInput] = useState({ account: "", password: "" });
@@ -19,6 +19,11 @@ export default function ClassicForm() {
       console.error("Error:", error);
     }
   };
+
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, [input]);
+  // 傳送資料不需要
 
   return (
     <form onSubmit={handleSubmit}>
