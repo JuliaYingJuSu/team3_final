@@ -18,7 +18,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-1">
+                htmlFor="btn-check-1">
                 台式
               </label>
             </div>
@@ -32,7 +32,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-2">
+                htmlFor="btn-check-2">
                 中式
               </label>
             </div>
@@ -46,7 +46,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-3">
+                htmlFor="btn-check-3">
                 日式
               </label>
             </div>
@@ -60,7 +60,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-4">
+                htmlFor="btn-check-4">
                 韓式
               </label>
             </div>
@@ -74,7 +74,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-5">
+                htmlFor="btn-check-5">
                 港式
               </label>
             </div>
@@ -88,7 +88,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-6">
+                htmlFor="btn-check-6">
                 美式
               </label>
             </div>
@@ -102,7 +102,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-7">
+                htmlFor="btn-check-7">
                 義式
               </label>
             </div>
@@ -116,7 +116,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-8">
+                htmlFor="btn-check-8">
                 法式
               </label>
             </div>
@@ -130,7 +130,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-9">
+                htmlFor="btn-check-9">
                 西式
               </label>
             </div>
@@ -144,7 +144,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-10">
+                htmlFor="btn-check-10">
                 泰式
               </label>
             </div>
@@ -158,7 +158,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-11">
+                htmlFor="btn-check-11">
                 越式
               </label>
             </div>
@@ -172,7 +172,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-12">
+                htmlFor="btn-check-12">
                 火鍋
               </label>
             </div>
@@ -186,7 +186,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-13">
+                htmlFor="btn-check-13">
                 燒烤
               </label>
             </div>
@@ -200,7 +200,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-14">
+                htmlFor="btn-check-14">
                 牛排
               </label>
             </div>
@@ -214,7 +214,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-15">
+                htmlFor="btn-check-15">
                 熱炒
               </label>
             </div>
@@ -228,7 +228,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-16">
+                htmlFor="btn-check-16">
                 素食
               </label>
             </div>
@@ -242,7 +242,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-17">
+                htmlFor="btn-check-17">
                 飲品
               </label>
             </div>
@@ -256,7 +256,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-18">
+                htmlFor="btn-check-18">
                 酒吧
               </label>
             </div>
@@ -270,7 +270,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-19">
+                htmlFor="btn-check-19">
                 咖啡廳
               </label>
             </div>
@@ -284,7 +284,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-20">
+                htmlFor="btn-check-20">
                 炸物
               </label>
             </div>
@@ -298,7 +298,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-21">
+                htmlFor="btn-check-21">
                 吃到飽
               </label>
             </div>
@@ -312,7 +312,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-22">
+                htmlFor="btn-check-22">
                 小吃
               </label>
             </div>
@@ -326,7 +326,7 @@ export default function UserButtonGroup() {
               />
               <label
                 className="btn btn-outline-warning rounded rounded-4 fw-bold"
-                for="btn-check-23">
+                htmlFor="btn-check-23">
                 甜點
               </label>
             </div>

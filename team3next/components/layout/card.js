@@ -5,22 +5,44 @@ import React from "react";
 export default function Card() {
   return (
     <>
-      <div className="col mt-2">
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Modal title
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div className="modal-body">...</div>
+          </div>
+        </div>
+      </div>
+      <div className="col mt-2 mb-4">
         <div className="card h-100 overflow-hidden">
-          <a href="#">
-            <img src="./images/post/3188.jpg" className="card-img" alt="..." />
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img src="/images/post/3188.jpg" className="card-img" alt="..." />
           </a>
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
                 <button className="btn btn-sm btn-i">
-                  <i class="fa-regular fa-heart"></i>
+                  <i className="fa-regular fa-heart"></i>
                 </button>
                 <span>1</span>
               </span>
               <span className="middle">
                 <button className="btn btn-sm btn-i">
-                  <i class="fa-regular fa-comment"></i>
+                  <i className="fa-regular fa-comment"></i>
                 </button>
                 <span>1</span>
               </span>
@@ -52,7 +74,7 @@ export default function Card() {
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="./images/logo.png"></img>
+                  src="/images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">

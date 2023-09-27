@@ -38,6 +38,7 @@
   background: #ebd8a9;
   font-size: 16px;
   color: #3f4c5c;
+  font-weight: bold;
 }
 
 /* 小按鈕 */
@@ -49,6 +50,7 @@
   font-size: 12px;
   color: #3f4c5c;
   text-align: center;
+  font-weight: bold;
 }
 
 /* 超小按鈕 */
@@ -63,6 +65,7 @@
   background: var(--ebd-8-a-9, #ebd8a9);
   color: var(--3F4C5C, var(--3F4C5C, #3f4c5c));
   font-size: 16px;
+  font-weight: bold;
 }
 
 /* ICON按鈕*/
