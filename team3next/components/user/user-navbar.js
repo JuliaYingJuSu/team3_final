@@ -9,7 +9,7 @@ export default function UserNavbar() {
           <ul className="nav nav-underline align-items-center d-flex justify-content-between flex-nowrap container">
             <li className="nav-item pe-3">
               <Link
-                className="nav-link active fs-5"
+                className="nav-link fs-5 text-dark" 
                 aria-current="page"
                 href="/user">
                 會員資訊
