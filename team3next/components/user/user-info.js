@@ -16,7 +16,7 @@ export default function UserInfo() {
             <button className="btn btn-middle mt-5 fw-bold">發表文章</button>
           </div>
           <div className="middle">
-            <div className="rounded-circle img-thumbnail headshot-big position-relativ">
+            <div className="rounded-circle img-thumbnail headshot-big position-relative">
               <span
                 className="d-block position-absolute z-3"
                 style={{ paddingInlineStart: 130, paddingTop: 140 }}>
