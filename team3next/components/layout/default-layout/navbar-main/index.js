@@ -44,14 +44,6 @@ export default function MyNavbar() {
             </div>
             {/* 右側ICON區 */}
             <div className="middle ms-auto gap-4">
-              <li className="nav-item pe-3">
-                <Link
-                  className="nav-link icon-search text-dark"
-                  aria-current="page"
-                  href="#"
-                  style={{ fontSize: 30 }}></Link>
-              </li>
-
               {/* 會員下拉選單 */}
               <li className="nav-item pe-3">
                 <div className="dropdown-center">
@@ -92,7 +84,7 @@ export default function MyNavbar() {
               {/* 購物車 */}
               <li className="nav-item pe-3">
                 <Link
-                  className="nav-link icon-cark text-dark"
+                  className="nav-link icon-cart text-dark"
                   role="button"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#offcanvasRight"
