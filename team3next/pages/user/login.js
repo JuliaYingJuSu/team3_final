@@ -30,24 +30,7 @@ export default function Login() {
           <div className="position-relativ">
             <div className="position-absolute" style={{ right: 600, top: 130 }}>
               <div className="d-flex">
-                <div className="form-check form-switch">
-                  <label class="form-check-label" for="flexSwitchCheckReverse">
-                    Reverse switch checkbox input
-                  </label>
-                  <div>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="flexSwitchCheckReverse"
-                    />
-                  </div>
-                  <label
-                    className="form-check-label"
-                    for="flexSwitchCheckReverse">
-                    廠商登入
-                  </label>
-                </div>
+               
               </div>
             </div>
           </div>
