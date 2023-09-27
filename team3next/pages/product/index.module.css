@@ -87,7 +87,7 @@
 .cardP {
   display: flex;
   max-width: 235px;
-  min-width: 180px;
+  min-width: 170px;
   height: 300px;
   flex-direction: column;
   justify-content: center;
