@@ -10,9 +10,10 @@ export default function index() {
   return (
     <>
       <Navbar />
-      <Breadcrumb/>
-      <Banner />
-      <Articles/>
+      <div className='container'>
+        <Breadcrumb/>
+      </div>
+      <Banner/>
       <Footer/>
     </>
   );
