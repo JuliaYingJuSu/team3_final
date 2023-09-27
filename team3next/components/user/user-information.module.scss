@@ -49,7 +49,7 @@
 
 .wma{
     display: flex;
-    padding: 20px 100px 0px 110px;
+    padding: 20px 100px 0px 70px;
     align-items: center;
     gap: 10px;
     align-self: stretch;
@@ -76,4 +76,46 @@
     border-radius: 10px;
     /* 陰影 */
     box-shadow: 10px 15px 4px 0px rgba(0, 0, 0, 0.25);  
+}
+
+
+// 追蹤作者外框設定
+.afs{
+    display: flex;
+    height: 800px;
+    padding: 0px 10px 20px 100px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 20px 100px;
+    flex-wrap: wrap;
+    border-radius: 0px 0px 10px 10px;
+    border-right: 1px solid rgba(0, 0, 0, 0.20);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+    border-left: 1px solid rgba(0, 0, 0, 0.20);
+    background: #FFF;
+
+    /* 陰影 */
+    box-shadow: 10px 15px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.authorCard{
+    display: flex;
+    width: 300px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+}
+
+.authorText{
+    display: flex;
+    margin-bottom: 20px;
+    padding: 20px 100px 0px 10px;
+    color: #808080;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: normal;  
 }

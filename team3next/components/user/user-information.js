@@ -14,7 +14,7 @@ export default function UserInformation() {
             <form className="mt-4">
               <fieldset disabled>
                 <div className="mb-3">
-                  <label for="disabledTextInput" className="form-label fs18b">
+                  <label htmlFor="disabledTextInput" className="form-label fs18b">
                     電子信箱( 此欄位不能變更){" "}
                   </label>
                   <input
@@ -26,7 +26,7 @@ export default function UserInformation() {
                 </div>
               </fieldset>
               <div className="mb-3">
-                <label for="InputName" className="form-label fs18b">
+                <label htmlFor="InputName" className="form-label fs18b">
                   姓名
                   <span style={{ color: "red" }} className="ps-1">
                     *
@@ -40,7 +40,7 @@ export default function UserInformation() {
                 />
               </div>
               <div className="mb-3">
-                <label for="InputNickName" className="form-label fs18b">
+                <label htmlFor="InputNickName" className="form-label fs18b">
                   暱稱
                   <span style={{ color: "red" }} className="ps-1">
                     *
@@ -54,7 +54,7 @@ export default function UserInformation() {
                 />
               </div>
               <div className="mb-3">
-                <label for="InputPassword" className="form-label fs18b">
+                <label htmlFor="InputPassword" className="form-label fs18b">
                   密碼
                   <span style={{ color: "red" }} className="ps-1">
                     *
@@ -68,7 +68,7 @@ export default function UserInformation() {
                 />
               </div>
               <div className="mb-3">
-                <label for="InputPhone" className="form-label fs18b">
+                <label htmlFor="InputPhone" className="form-label fs18b">
                   手機號碼
                   <span style={{ color: "red" }} className="ps-1">
                     *
