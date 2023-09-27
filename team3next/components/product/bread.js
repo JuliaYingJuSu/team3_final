@@ -6,12 +6,12 @@ export default function Bread() {
     <>
       <div className={styles.bread}>
         <span className="icon-home"></span>
-        <span className="icon-home"></span>
+        <span className="icon-arrow-s-right"></span>
         <a href="#">嗑零食</a>
-        <span className="icon-home"></span>
-        <a href="#">type</a>
-        <span className="icon-home"></span>
-        <a href="#">typeList</a>
+        <span className="icon-arrow-s-right"></span>
+        <a href="#">嗑零食</a>
+        <span className="icon-arrow-s-right"></span>
+        <a href="#">嗑零食</a>
       </div>
     </>
   );

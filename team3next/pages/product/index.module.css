@@ -1,20 +1,30 @@
 .bread {
+  display: flex;
+  align-items: center;
   font-size: 14px;
   font-weight: 400;
-  padding: 10px;
+  padding: 15px;
 }
 .bread * {
   margin-right: 5px;
 }
+.bread a:link {
+  color: #666666;
+}
+.bread a:visited {
+  color: #666666;
+}
+
 .leftBox {
   width: 230px;
   display: flex;
-  justify-content: center;
-  /* background-color:#526565 ; */
+  flex-direction: column;
 }
 .left {
-  width: 200px;
-  padding: 10px 0 10px 0;
+  width: 180px;
+  /* height: 300px; */
+  padding: 30px 0 0 0;
+  border-bottom: 1px solid rgba(102, 102, 102, 0.5);
   /* display: flex;
     flex-direction: column; */
 }
@@ -28,23 +38,25 @@
 .left button {
   background-color: #fff;
   margin-bottom: 5px;
-  border: none;
   border-radius: 0%;
   display: flex;
   align-items: center;
   justify-content: left;
-  /* width: 100%; */
+  border-color: transparent !important;
+}
+.left button:hover {
+  border-bottom: 3px solid #b6705e !important;
 }
 .left > button {
   font-size: 18px;
   font-weight: 700;
 }
-.left button:hover {
-  border-bottom: 3px solid #b6705e;
-}
 .typeListBtn {
   font-size: 15px;
   font-weight: 400;
+}
+.left input[type="checkbox"] {
+  margin-right: 10px;
 }
 
 /* main--------- */
@@ -61,19 +73,20 @@
   margin-right: 10px;
 }
 .sort form button {
-  border: none;
   border-radius: 40px;
   height: 30px;
+  width: 35px;
   text-align: center;
-  color: #666666;
+  display: flex;
+  justify-content: center;
 }
 .sort form button:hover {
-  background-color: #666666;
+  border: 1px solid #666666;
 }
 
 .cardP {
   display: flex;
-  width: 200px;
+  max-width: 235px;
   min-width: 180px;
   height: 300px;
   flex-direction: column;
@@ -85,3 +98,15 @@
   background: #fff;
   box-shadow: 8px 10px 20px 0px rgba(0, 0, 0, 0.25);
 }
+
+.imgBox {
+  border-radius: 40px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* .imgBox img{
+  width: 100%;
+  height: ;
+} */
