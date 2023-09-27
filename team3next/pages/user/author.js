@@ -15,8 +15,8 @@ export default function Author() {
       <UserNavbar />
       <div className={"container mb-5" + " " + `${Styles.afs}`}>
         <div className={Styles.authorText}>共有 XXX 位追蹤</div>
-        <div className="container">
-          <div className="row row-cols-3 row-cols-sm-1">
+        <div className="container mt-4">
+          <div className="row row-cols-auto g-4">
             <div className="col">
               <UserSCard></UserSCard>
             </div>
