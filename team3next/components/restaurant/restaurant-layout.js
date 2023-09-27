@@ -20,10 +20,8 @@ export default function RestaurantLayout({ children }) {
             <nav className="bg-white sticky-top">
               <RestaurantNavbar />
             </nav>
-            <section className="d-flex w-100">
-              <div className="row">
-                <div className="col-12">{children}</div>
-              </div>
+            <section className="w-100 mt-5">
+              {children}
             </section>
           </div>
         </div>

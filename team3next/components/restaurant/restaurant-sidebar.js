@@ -12,13 +12,13 @@ export default function RestaurantSidebar() {
         <button type="button" className="btn d-flex justify-content-center px-4 mb-3">
           <div className="d-flex justify-content-between w-100 ">
             <span className='icon-member me-2' style={{fontSize:"32px"}}></span>
-            <div className="option justify-content-center" style={{ width:"140px" }}><Link className='stretched-link text-dark' href="/restaurant/profile">會員資料管理</Link></div>
+            <div className="option justify-content-center" style={{ width:"140px" }}><Link className='stretched-link text-dark' href="/restaurant-member/profile">會員資料管理</Link></div>
           </div>
         </button>
         <button type="button" className="btn d-flex justify-content-center px-4 mb-3">
           <div className="d-flex justify-content-between w-100">
           <span className='icon-edit me-2' style={{fontSize:"32px"}}></span>
-            <div className="option justify-content-center" style={{ width:"140px" }}><Link className='stretched-link text-dark' href="#">餐廳資料維護</Link></div>
+            <div className="option justify-content-center" style={{ width:"140px" }}><Link className='stretched-link text-dark' href="/restaurant-member/page-content">餐廳資料維護</Link></div>
           </div>
         </button>
         <button type="button" className="btn d-flex justify-content-center px-4 mb-3">
