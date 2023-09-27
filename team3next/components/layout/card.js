@@ -30,7 +30,7 @@ export default function Card() {
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <img src="./images/post/3188.jpg" className="card-img" alt="..." />
+            <img src="/images/post/3188.jpg" className="card-img" alt="..." />
           </a>
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
@@ -74,7 +74,7 @@ export default function Card() {
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="./images/logo.png"></img>
+                  src="/images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">
