@@ -25,7 +25,8 @@ export default function index() {
                   aria-expanded="false"
                   aria-controls="type1"
                 >
-                  飲品/沖泡類 <span className="icon-home"></span>
+                  飲品/沖泡類{" "}
+                  <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type1">
                   <button className={styles.typeListBtn + " btn"} type="button">
@@ -58,7 +59,8 @@ export default function index() {
                   aria-expanded="false"
                   aria-controls="type2"
                 >
-                  烘焙食品/甜點
+                  烘焙食品/甜點{" "}
+                  <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type2">
                   <button
@@ -94,7 +96,7 @@ export default function index() {
                   aria-expanded="false"
                   aria-controls="type3"
                 >
-                  休閒零食
+                  休閒零食 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type3">
                   <button
@@ -136,7 +138,7 @@ export default function index() {
                   aria-expanded="false"
                   aria-controls="type4"
                 >
-                  烹料料理
+                  烹料料理 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type4">
                   <button
@@ -172,7 +174,7 @@ export default function index() {
                   aria-expanded="false"
                   aria-controls="type5"
                 >
-                  其他
+                  其他 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type5">
                   <button
