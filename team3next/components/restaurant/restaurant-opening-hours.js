@@ -17,12 +17,19 @@ export default function OpeningHours() {
       <div className="row">
         <div className="col-2"></div>
         <div className="col-8">
-          <h2 style={{ color: "#985637" }}>會員資料管理</h2>
-          <form>
+          <h2 style={{ color: "#985637" }}>營業時間管理</h2>
+          <form
+            onSubmit={() => {
+              handleSubmit;
+            }}
+          >
             {daysOfWeek.map((v, i) => {
-              <label htmlFor="opening">
-                <input type="checkbox" name="opening" value={i} />
-              </label>;
+              return (
+                <label key={i} htmlFor="opening">
+                  <input type="checkbox" {...register("opening")} value={i} />
+                  {v}
+                </label>
+              );
             })}
           </form>
         </div>
