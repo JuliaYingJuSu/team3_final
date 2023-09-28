@@ -330,6 +330,7 @@ export default function index() {
           </main>
         </div>
       </div>
+
       <Footer />
     </>
   );

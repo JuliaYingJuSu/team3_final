@@ -3,6 +3,7 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Banner from "@/components/book/banner";
 import Carousel from "@/components/layout/default-layout/carousel";
 import Footer from "@/components/layout/default-layout/footer";
+import styles from "./restaurant.module.css";
 
 export default function Index() {
   return (
@@ -31,7 +32,7 @@ export default function Index() {
       </div>
       <br />
       <div className="container" style={{ Width: "1320px" }}>
-        <h3 style={{ fontWeight: "bold" }}>Cin Cin Osteria 請請義大利餐廳</h3>
+        <p className="h3 mb-3">Cin Cin Osteria 請請義大利餐廳</p>
         <div className="fs18">
           <div className="d-flex">
             <span className="pe-2">
@@ -91,7 +92,7 @@ export default function Index() {
             className="fs18 align-self-center"
             style={{ marginRight: "100px" }}
           >
-            <h4>營業時間</h4>
+            <p className="h5">營業時間</p>
             <br />
             <p>
               週二至週五
@@ -123,16 +124,287 @@ export default function Index() {
         <hr className="grey" style={{ width: "1320px" }} />
         <br />
         <br />
-        <br />
-        <h4>美味饗宴</h4>
+        <p className="h5">美味饗宴</p>
         <br />
         <br />
         <img src="../../images/book/menu.png" alt="" />
         <br />
+        <br />
+        <br />
         <hr className="grey" style={{ width: "1320px" }} />
         <br />
+        <br />
+        <div className="d-flex justify-content-between">
+          {/* 人數 */}
+          <div className="row mb-2">
+            <label
+              htmlFor="readdress"
+              className="form-label col-12 col-form-label h5"
+            >
+              用餐人數
+            </label>
+            <div className={styles.sortnum + " me-4"}>
+              <br />
+              <br />
+              <select className={styles.selectbox + " fs18"}>
+                <option value="2">2 位 大人</option>
+                <option value="3">3 位 大人</option>
+                <option value="4">4 位 大人</option>
+              </select>
+            </div>
+            <div className={styles.sortnum + " me-3"}>
+              <br />
+              <br />
+              <select className={styles.selectbox + " fs18"}>
+                <option value="0">0 位 孩童</option>
+                <option value="1">1 位 孩童</option>
+                <option value="2">2 位 孩童</option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <br />
+          {/* 日期 */}
+          <div style={{ width: "400px" }} className="row mb-2">
+            <label
+              htmlFor="readdress"
+              className="form-label col-12 col-form-label h5"
+            >
+              用餐日期
+            </label>
+            <div className={styles.sortnum + " me-4 w-100"}>
+              <br />
+              <br />
+              <select className={styles.selectbox + " fs18 w-100"}>
+                <option value="2">10 月 25 日 週三</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <img src="../../images/book/date-cut.png" alt="..." />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p className="h5">用餐時段</p>
+        <br />
+        <br />
+        <div className="mb-4">
+          <input name="id" type="hidden" />
+          <div className="mt-2">
+            <div className="row row-cols-sm-3 row-cols-md-6 g-1 gy-4">
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-1"
+                  name="selectTime[]"
+                  value="1"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-1"
+                >
+                  11:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-2"
+                  name="selectTime[]"
+                  value="2"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-2"
+                >
+                  12:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-3"
+                  name="selectTime[]"
+                  value="3"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-3"
+                >
+                  13:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-4"
+                  name="selectTime[]"
+                  value="4"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-4"
+                >
+                  14:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-5"
+                  name="selectTime[]"
+                  value="5"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-5"
+                >
+                  15:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-6"
+                  name="selectTime[]"
+                  value="6"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-6"
+                >
+                  16:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-7"
+                  name="selectTime[]"
+                  value="7"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-7"
+                >
+                  17:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-8"
+                  name="selectTime[]"
+                  value="8"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-8"
+                >
+                  18:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-9"
+                  name="selectTime[]"
+                  value="9"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-9"
+                >
+                  19:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-10"
+                  name="selectTime[]"
+                  value="10"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-10"
+                >
+                  20:00
+                </label>
+              </div>
+              <div className="col">
+                <input
+                  type="checkbox"
+                  className="btn-check"
+                  id="btn-check-11"
+                  name="selectTime[]"
+                  value="11"
+                />
+                <label
+                  className={
+                    styles.btnLg +
+                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
+                  }
+                  htmlFor="btn-check-11"
+                >
+                  21:00
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div className="container d-flex justify-content-center my-5">
+          <button className="btn btn-middle">立即訂位</button>
+        </div>
+        <br />
       </div>
-
       <Footer></Footer>
     </>
   );
