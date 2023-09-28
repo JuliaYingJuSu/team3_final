@@ -1,7 +1,12 @@
-import React from "react";
+import { useState } from "react";
 
 export default function SelectFoodStyle() {
-  
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxClick = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
     <>
       <div className="middle sfsbc">
@@ -10,13 +15,13 @@ export default function SelectFoodStyle() {
           <div className="middle">
             <div className="c-card middle">
               <div className="mt-2">
-                <div class="custom-control custom-checkbox image-checkbox">
+                <div className="custom-control custom-checkbox image-checkbox">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    className="custom-control-input"
                     id="ck1a"
                   />
-                  <label class="custom-control-label" for="ck1a">
+                  <label className="custom-control-label" for="ck1a">
                     <img
                       src="/images/food-1106513_1920.jpg"
                       alt="台式"
@@ -30,7 +35,35 @@ export default function SelectFoodStyle() {
             </div>
           </div>
         </div>
+
+        <div className="c-card middle">
+          <div className="mt-2">
+            <div className="custom-control custom-checkbox image-checkbox">
+              <input
+                type="checkbox"
+                className="custom-control-input"
+                id="test"
+                checked={isChecked}
+                onChange={() => {}}
+              />
+              <label
+                className={`custom-icon-checkbox ${isChecked ? "checked" : ""}`}
+                htmlFor="test"
+                onClick={handleCheckboxClick}>
+                <img
+                  src="/images/food-1106513_1920.jpg"
+                  alt="台式"
+                  className="w-100 c-card-img"></img>
+                <i className={`${isChecked ? "icon-heart-fill" : ""}`}></i>
+              </label>
+            </div>
+            <div>
+              <span className="c-card-text fs18b pb-4">台式</span>
+            </div>
+          </div>
+        </div>
       </div>
+
       <style jsx>{`
         .sfsbc {
           display: flex;
@@ -73,6 +106,38 @@ export default function SelectFoodStyle() {
           flex-direction: column;
           justify-content: center;
         }
+
+        /* 隐藏原始的多選框 */
+        .custom-control-input {
+          position: absolute;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        /* 设置label的样式，例如图标和边框 */
+        .custom-icon-checkbox {
+          display: inline-block;
+          cursor: pointer;
+          position: relative; /* 为了定位图标 */
+          border: 2px solid transparent; /* 初始状态下，边框透明 */
+          transition: border-color 0.2s; /* 边框颜色渐变效果 */
+        }
+
+        /* 添加图标字体样式 */
+        .custom-icon-checkbox i {
+          font-size: 24px; /* 设置图标的大小 */
+          position: absolute; /* 使图标相对于父元素定位 */
+          bottom: 5px; /* 距离底部的距离 */
+          right: 5px; /* 距离右边的距离 */
+        }
+
+        /* 当复选框被选中时，修改图标的样式和外框颜色 */
+        .custom-control-input:checked + .custom-icon-checkbox {
+          border-radius: 164px;
+          border: 3px solid var(--FF4F00, #ff4f00); /* 选中时的外框颜色 */
+        }
+        /* /* 当复选框被选中时，修改图标的样式 */
+        
       `}</style>
     </>
   );

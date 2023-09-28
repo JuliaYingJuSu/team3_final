@@ -1,33 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import PostModal from "../post/post-modal";
+
 
 export default function Card() {
   return (
     <>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"></button>
-            </div>
-            <div className="modal-body">...</div>
-          </div>
-        </div>
-      </div>
-      <div className="col mt-2 mb-4">
+    <PostModal/>
+      <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img src="/images/post/3188.jpg" className="card-img" alt="..." />
@@ -74,7 +55,7 @@ export default function Card() {
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="/images/logo.png"></img>
+                  src="./images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">
