@@ -8,6 +8,30 @@ export default function DelDetail() {
   return (
    <>
         <MyNavbar/>
+
+        <div className={styles.sectionBar + " mt-4"}>
+            {/* <div className="w-75 d-flex justify-content-between"> */}
+                <a href="" className={styles.step}>
+                    <p className="text-start">顧客</p>
+                </a>
+
+                <div className={styles.step}>
+                    <p className="text-start">配送</p>
+                </div>
+
+                <div className={styles.step}>
+                    <p className="text-start">付款</p>
+                </div>
+
+                <div className={styles.lastStep}>
+                    <p className="text-start">檢視</p>
+                </div>
+
+            {/* </div> */}
+
+        </div>
+
+       
         
             <div className={styles.buyerinfo + " container mt-5 w-50"}>
                 <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
