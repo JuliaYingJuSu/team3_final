@@ -3,7 +3,10 @@
   height: 45px;
   margin-top: 33px;
 }
-
+.topBox a {
+  font-weight: 200;
+  font-size: 20px;
+}
 .topBox a:hover {
   background-color: #ebd8a9;
 }
@@ -12,6 +15,8 @@
   color: #3f4c5c;
 }
 .topBox button {
+  font-size: 20px;
+  font-weight: 400;
   background-color: #fff;
   margin-bottom: 5px;
   border-radius: 0%;
@@ -85,7 +90,7 @@
   padding: 10px 30px 10px 30px;
   border-bottom: 1px #808080 solid;
   align-items: flex-start;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .commentBox .pic {
@@ -100,14 +105,26 @@
   font-weight: 600;
 }
 .recommendBox {
+  font-size: 14px;
+  font-weight: 600;
   display: flex;
+  gap: 30px;
+  /* max-height: 250px; */
   padding: 0px 10px;
+  margin-bottom: 30px;
   flex-direction: column;
   align-items: center;
 }
 .recommendBox .head {
-  /* width: 200px; */
+  width: 200px;
   padding: 10px 0px;
   text-align: center;
   border-bottom: 3px #808080 solid;
+}
+
+.test > div div:nth-child(3) {
+  color: #3f4c5c;
+}
+.test > div div:nth-child(2) {
+  color: #3f4c5c;
 }

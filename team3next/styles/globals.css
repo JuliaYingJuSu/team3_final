@@ -31,7 +31,6 @@
 /* 中按鈕 */
 .btn-middle {
   text-align: center;
-  width: 120px;
   border-radius: 40px;
   padding: 10px 20px;
   background: #ebd8a9;
@@ -197,6 +196,15 @@
   color: #808080;
 }
 
+.grey-ae{
+  color:#aeaeae
+}
+
+/* 重要紅標 */
+.red-i{
+  color:#ae4818
+}
+
 .w1200 {
   width: 1200px;
 }
@@ -319,6 +327,10 @@ body {
 /* 框架下底線 */
 .bottom-line {
   border-bottom: 1px solid #000;
+}
+
+.bottom-line-g {
+  border-bottom: 1px solid #cdcdcd;
 }
 
 /* 輸入框格式 */

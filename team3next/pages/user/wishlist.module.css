@@ -1,0 +1,33 @@
+.wishBox {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* gap: 10px; */
+}
+.head {
+  font-size: 22px;
+  font-weight: 500;
+  color: #808080;
+  margin-bottom: 30px;
+}
+.wishItem {
+  border-bottom: 1px solid rgba(102, 102, 102, 0.5);
+}
+.wishItem .pic {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
+}
+.wishItem .content span {
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: auto;
+}
+.wishItem .content p:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+}
+.wishItem .content {
+}
