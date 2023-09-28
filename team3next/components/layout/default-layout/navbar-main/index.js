@@ -68,14 +68,14 @@ export default function MyNavbar() {
                       <p className="mt-2 fs-5 fw-bolder">薯哥</p>
                     </li>
                     <li>
-                      <a className="dropdown-item fs18b" href="./user">
+                      <Link className="dropdown-item fs18b" href="/user">
                         會員資訊
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a className="dropdown-item fs18b" href="./user/login">
+                      <Link className="dropdown-item fs18b" href="/user/login">
                         註冊/登入
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <hr className="dropdown-divider" />
