@@ -1,6 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import PostModol from "../post/post-modol";
+import AddArticle from "../post/add-article";
+import MyArticle from "../post/my-article";
+
+
 
 export default function Card() {
   return (
@@ -27,7 +32,7 @@ export default function Card() {
           </div>
         </div>
       </div>
-      <div className="col mt-2 mb-4">
+      <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img src="/images/post/3188.jpg" className="card-img" alt="..." />
@@ -74,7 +79,7 @@ export default function Card() {
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="/images/logo.png"></img>
+                  src="./images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">

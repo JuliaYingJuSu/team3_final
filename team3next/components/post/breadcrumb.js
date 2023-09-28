@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/pages/post/index.module.css";
+
 
 export default function Breadcrumb() {
   return (
@@ -8,15 +8,15 @@ export default function Breadcrumb() {
         <span className="icon-home"></span>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#" className={styles.Breadcrumb}>食好料</a>
+          <a href="#">食好料</a>
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#" className={styles.Breadcrumb}>台北市</a>
+          <a href="#">台北市</a>
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#" className={styles.Breadcrumb}>義式</a>
+          <a href="#">義式</a>
         </span>
         {/* <nav
           // style={{--bs-breadcrumb-divider= '>'}}

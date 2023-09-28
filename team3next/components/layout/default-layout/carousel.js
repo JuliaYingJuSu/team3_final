@@ -57,7 +57,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -70,7 +70,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -83,7 +83,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -96,7 +96,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -109,7 +109,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -122,7 +122,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
@@ -135,7 +135,7 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="./images/food-1106513_1920.jpg"
+                    src="/images/food-1106513_1920.jpg"
                     alt="台式"
                     className="w-100 c-card-img"></img>
                 </div>
