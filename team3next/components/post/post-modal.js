@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PostModol() {
+export default function PostModal() {
   return (
     <>
       <div

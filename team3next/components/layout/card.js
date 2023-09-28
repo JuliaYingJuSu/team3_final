@@ -1,17 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import PostModol from "../post/post-modol";
-import AddArticle from "../post/add-article";
-import MyArticle from "../post/my-article";
-
+import PostModal from "../post/post-modal";
 
 
 export default function Card() {
   return (
     <>
-    <PostModol/>
-      
+    <PostModal/>
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
