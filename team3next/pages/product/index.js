@@ -274,13 +274,13 @@ export default function index() {
                 }
               >
                 <select
-                  class="form-select form-select-sm d-inline-block"
+                  class=" form-select form-select-sm d-inline-block"
                   aria-label="Small select example"
                 >
                   <option selected>排序</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
                 </select>
                 <form class="d-flex align-items-center" role="search">
                   <input
@@ -310,12 +310,12 @@ export default function index() {
                               className="w-100 h-100 object-fit-cover "
                             />
                           </div>
-                          <div className="nameBox px-2 w-100 d-flex justify-content-between pt-2 pb-2">
+                          <div className=" px-2 w-100 d-flex justify-content-between pt-2 pb-2">
                             <span>品牌名 產品名</span>
                             <span className="icon-mark"></span>
                           </div>
                           <div
-                            className="priceBox px-2 w-100
+                            className=" px-2 w-100
                      d-flex justify-content-between pt-2 pb-2"
                           >
                             <span>NT$ 1000</span>{" "}

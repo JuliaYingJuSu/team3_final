@@ -59,7 +59,7 @@
   margin-right: 10px;
 }
 
-/* main--------- */
+/* search--------- */
 
 .sort {
   margin-bottom: 20px;
@@ -67,11 +67,20 @@
 .sort select,
 .sort form input {
   border-radius: 40px;
+
+  color: #666666;
   width: 140px;
   height: 30px;
   font-size: 14px;
   margin-right: 10px;
 }
+
+.sort select:focus,
+.sort form input:focus {
+  box-shadow: none;
+  border-color: #666666;
+}
+
 .sort form button {
   border-radius: 40px;
   height: 30px;
@@ -83,6 +92,8 @@
 .sort form button:hover {
   border: 1px solid #666666;
 }
+
+/* main--------- */
 
 .cardP {
   display: flex;
