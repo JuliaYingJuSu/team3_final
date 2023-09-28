@@ -69,6 +69,10 @@ export default function Login() {
                   <label for="floatingPassword" className="fs-5 grey">
                     請輸入密碼
                   </label>
+                  <i
+                    type="button"
+                    className="far fa-eye-slash no-see-eye"
+                    style={{ color: "#787878" }}></i>
                 </div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <Link
@@ -124,6 +128,14 @@ export default function Login() {
             font-size: 0px;
             line-height: 0px;
             margin: 0px 30px;
+          }
+          .no-see-eye {
+            position: relative;
+          }
+          .no-see-eye:before{
+            position: absolute;
+            left:555px;
+            bottom: 35px;
           }
         `}
       </style>
