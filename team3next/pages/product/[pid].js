@@ -1,7 +1,9 @@
 import React from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
+import Footer from "@/components/layout/default-layout/footer";
 import styles from "./list.module.css";
+// import indexStyles from "./index.module.css";
 import Form from "react-bootstrap/Form";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -181,7 +183,7 @@ export default function productDetail() {
           <div className={styles.productMain + " row"}>
             <div
               className={
-                styles.imgs +
+                styles.test +
                 " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
@@ -321,55 +323,51 @@ export default function productDetail() {
               </div>
             </div>
           </div>
-          <div className={styles.recommendBox}>
+          <div className={styles.recommendBox + " row pb-5 "}>
             <p className={styles.head + " h4"}>推薦商品</p>
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-            >
-              <SwiperSlide>
-                {
-                  <img
-                    className="w-100 h-100"
-                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                    alt=""
-                  />
-                }
-              </SwiperSlide>
-              <SwiperSlide>
-                {
-                  <img
-                    className="w-100 h-100"
-                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                    alt=""
-                  />
-                }
-              </SwiperSlide>
-              <SwiperSlide>
-                {
-                  <img
-                    className="w-100 h-100"
-                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                    alt=""
-                  />
-                }
-              </SwiperSlide>
-              <SwiperSlide>
-                {
-                  <img
-                    className="w-100 h-100"
-                    src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                    alt=""
-                  />
-                }
-              </SwiperSlide>
-            </Swiper>
+            <div className={styles.test + " w-75"}>
+              <Swiper
+                spaceBetween={40}
+                slidesPerView={4}
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                {Array(5)
+                  .fill(1)
+                  .map((v, i) => {
+                    return (
+                      <SwiperSlide key={i}>
+                        {
+                          <div
+                            className="
+                  justify-content-center align-items-center "
+                          >
+                            <div>
+                              <img
+                                src="/images/product/螢幕擷取畫面 2023-09-26 101926.png"
+                                alt=""
+                                className="object-fit-cover w-100 h-100"
+                              />
+                            </div>
+                            <div>
+                              <span>品牌名 產品名</span>
+                            </div>
+                            <div>
+                              <span>NT$ 1000</span>{" "}
+                              <span className="icon-cark"></span>
+                            </div>
+                          </div>
+                        }
+                      </SwiperSlide>
+                    );
+                  })}
+              </Swiper>
+            </div>
           </div>
         </main>
       </div>
+      <Footer />
     </>
   );
 }
