@@ -2,10 +2,10 @@
   border-bottom: 1px solid rgba(102, 102, 102, 0.5);
   height: 45px;
   margin-top: 33px;
-  font-weight: 600;
 }
 .topBox a {
-  font-weight: 600;
+  font-weight: 200;
+  font-size: 20px;
 }
 .topBox a:hover {
   background-color: #ebd8a9;
@@ -15,7 +15,8 @@
   color: #3f4c5c;
 }
 .topBox button {
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
   background-color: #fff;
   margin-bottom: 5px;
   border-radius: 0%;
