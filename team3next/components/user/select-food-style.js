@@ -19,46 +19,32 @@ export default function SelectFoodStyle() {
                   <input
                     type="checkbox"
                     className="custom-control-input"
-                    id="ck1a"
+                    id="test"
+                    checked={isChecked}
+                    onChange={() => {}}
                   />
-                  <label className="custom-control-label" for="ck1a">
+                  <label
+                    className={`custom-icon-checkbox ${
+                      isChecked ? "checked" : ""
+                    }`}
+                    htmlFor="test"
+                    onClick={handleCheckboxClick}>
                     <img
                       src="/images/food-1106513_1920.jpg"
                       alt="台式"
-                      className="w-100 c-card-img image-checkbox"></img>
+                      className="w-100 c-card-img"></img>
+                    <i
+                      className={`${
+                        isChecked
+                          ? "icon-heart-fill rounded-circle img-thumbnail"
+                          : ""
+                      }`}></i>
                   </label>
                 </div>
-                <div>
-                  <span className="c-card-text fs18b pb-4">台式</span>
+                <div className="text-center pt-2">
+                  <span className="fs18b pb-4">台式</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="c-card middle">
-          <div className="mt-2">
-            <div className="custom-control custom-checkbox image-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="test"
-                checked={isChecked}
-                onChange={() => {}}
-              />
-              <label
-                className={`custom-icon-checkbox ${isChecked ? "checked" : ""}`}
-                htmlFor="test"
-                onClick={handleCheckboxClick}>
-                <img
-                  src="/images/food-1106513_1920.jpg"
-                  alt="台式"
-                  className="w-100 c-card-img"></img>
-                <i className={`${isChecked ? "icon-heart-fill" : ""}`}></i>
-              </label>
-            </div>
-            <div>
-              <span className="c-card-text fs18b pb-4">台式</span>
             </div>
           </div>
         </div>
@@ -99,13 +85,6 @@ export default function SelectFoodStyle() {
           flex-direction: column;
           gap: 10px;
         }
-        .c-card-text {
-          display: flex;
-          width: 43px;
-          height: 49px;
-          flex-direction: column;
-          justify-content: center;
-        }
 
         /* 隐藏原始的多選框 */
         .custom-control-input {
@@ -114,30 +93,27 @@ export default function SelectFoodStyle() {
           pointer-events: none;
         }
 
-        /* 设置label的样式，例如图标和边框 */
+        /* 變更label的樣式，邊框 */
         .custom-icon-checkbox {
           display: inline-block;
           cursor: pointer;
-          position: relative; /* 为了定位图标 */
-          border: 2px solid transparent; /* 初始状态下，边框透明 */
-          transition: border-color 0.2s; /* 边框颜色渐变效果 */
+          position: relative; /* 定位圖示 */
+          border: 3px solid transparent; /* 一開始邊框透明 */
         }
 
-        /* 添加图标字体样式 */
+        /* 變更ICON樣式 */
         .custom-icon-checkbox i {
-          font-size: 24px; /* 设置图标的大小 */
-          position: absolute; /* 使图标相对于父元素定位 */
-          bottom: 5px; /* 距离底部的距离 */
-          right: 5px; /* 距离右边的距离 */
+          font-size: 24px; /* ICON大小 */
+          position: absolute; /* 定位ICON圖示 */
+          bottom: 5px; /* 底部的間隔 */
+          right: 10px; /* 右邊的間隔 */
         }
 
-        /* 当复选框被选中时，修改图标的样式和外框颜色 */
+        /* 選取圖片時外框的樣式 */
         .custom-control-input:checked + .custom-icon-checkbox {
           border-radius: 164px;
-          border: 3px solid var(--FF4F00, #ff4f00); /* 选中时的外框颜色 */
+          border: 5px solid #dc8b76; /* 選取時的外框顏色 */
         }
-        /* /* 当复选框被选中时，修改图标的样式 */
-        
       `}</style>
     </>
   );
