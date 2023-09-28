@@ -16,7 +16,7 @@ export default function Toggle() {
             onChange={handleChange}
             checked={checked}
             className="react-switch"
-            onColor="#AEAEAE"
+            onColor="rgb(205, 205, 205)"
             onHandleColor="#3F4C5C"
             offHandleColor="#AE4818"
             handleDiameter={30}
