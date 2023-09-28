@@ -163,6 +163,11 @@
   font-weight: 600;
 }
 
+/* 18正常字 */
+.fs18 {
+  font-size: 18px;
+}
+
 /* 16正常灰字 */
 .fs16g {
   font-size: 16px;
