@@ -9,10 +9,6 @@ export default function SelectFoodStyle() {
 
   return (
     <>
-      <div className="middle sfsbc">
-        <h4>請先選擇您喜愛的食物樣式(可多選)</h4>
-        <div className="ficb">
-          <div className="middle">
             <div className="c-card middle">
               <div className="mt-2">
                 <div className="custom-control custom-checkbox image-checkbox">
@@ -46,10 +42,6 @@ export default function SelectFoodStyle() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
       <style jsx>{`
         .sfsbc {
           display: flex;
@@ -86,7 +78,7 @@ export default function SelectFoodStyle() {
           gap: 10px;
         }
 
-        /* 隐藏原始的多選框 */
+        /* 隱藏原始的多選框 */
         .custom-control-input {
           position: absolute;
           opacity: 0;
