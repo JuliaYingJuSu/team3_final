@@ -2,6 +2,7 @@ import React from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Register2() {
   return (
@@ -10,11 +11,23 @@ export default function Register2() {
         <span className="z-1">
           <Wave01></Wave01>
         </span>
-        <span className="z-2 position-absolute top-0 start-50 translate-middle">
+        <span
+          className="z-2 position-absolute start-50 translate-middle"
+          style={{ top: 65 }}>
           <Wave02></Wave02>
         </span>
-        <div className="title"></div>
+        <div className="z-3 position-absolute" style={{ top: 130 }}>
+          <h1 className="fw-bold">會員註冊</h1>
+        </div>
+        <span className="bgi position-absolute opacity-25"></span>
+        <div className="d-flex fw-semibold fs-6" style={{paddingLeft:500}}>
+          有 <span className="px-1" style={{color:"red"}}>*</span> 的欄位為必填
+        </div>
       </div>
+      
+      <Head>
+        <title>會員註冊</title>
+      </Head>
       <style jsx>
         {`
           .backgs {
@@ -30,7 +43,7 @@ export default function Register2() {
           }
           .wave01 {
             width: 800px;
-            height: 338.667px;
+            height: 300px;
             position: absolute;
             top: 0px;
             fill: linear-gradient(
@@ -56,13 +69,14 @@ export default function Register2() {
               0px -213px 85px 0px rgba(249, 231, 166, 0.04) inset,
               0px -333px 93px 0px rgba(249, 231, 166, 0.01) inset;
           }
-          .title {
-            display: flex;
-            padding-top: 140px;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            align-self: stretch;
+          .bgi {
+            width: 390px;
+            height: 440px;
+            right: 400px;
+            top: 146px;
+            background:no-repeat;
+            background-image: url("/images/onlybro.png");
+            background
           }
         `}
       </style>

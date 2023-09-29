@@ -1,6 +1,7 @@
 import React from "react";
 import SelectFoodStyle from "@/components/user/select-food-style";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Register2() {
   return (
@@ -81,6 +82,9 @@ export default function Register2() {
           }
         `}
       </style>
+      <Head>
+        <title>會員註冊</title>
+      </Head>
     </>
   );
 }
