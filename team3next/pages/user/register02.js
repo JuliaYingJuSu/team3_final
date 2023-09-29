@@ -16,15 +16,123 @@ export default function Register2() {
           style={{ top: 65 }}>
           <Wave02></Wave02>
         </span>
-        <div className="z-3 position-absolute" style={{ top: 130 }}>
-          <h1 className="fw-bold">會員註冊</h1>
-        </div>
-        <span className="bgi position-absolute opacity-25"></span>
-        <div className="d-flex fw-semibold fs-6" style={{paddingLeft:500}}>
-          有 <span className="px-1" style={{color:"red"}}>*</span> 的欄位為必填
+        <div className="container middle flex-column">
+          <div className="z-3 position-absolute" style={{ top: 130 }}>
+            <h1 className="fw-bold">會員註冊</h1>
+          </div>
+          <span className="bgi position-absolute opacity-25"></span>
+          <div
+            className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
+            style={{ paddingRight: 350 }}>
+            有{" "}
+            <span className="px-1" style={{ color: "red" }}>
+              *
+            </span>{" "}
+            的欄位為必填
+          </div>
+
+          <form className="mt-4">
+            <div className="mb-3">
+              <label htmlFor="InputName" className="form-label fs18b">
+                姓名
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="text"
+                className="form-control input-f"
+                id="InputName"
+                placeholder="請輸入姓名"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputNickName" className="form-label fs18b">
+                暱稱
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="text"
+                className="form-control input-f"
+                id="InputNickName"
+                placeholder="請輸入暱稱"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputEmail" className="form-label fs18b">
+                電子信箱
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="email"
+                id="InputEmail"
+                className="form-control input-f"
+                placeholder="請輸入E-mail"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputPassword" className="form-label fs18b">
+                密碼
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="password"
+                className="form-control input-f"
+                id="InputPassword"
+                placeholder="請輸入英文+數字至少8碼"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputPassword2" className="form-label fs18b">
+                密碼確認
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="password"
+                className="form-control input-f"
+                id="InputPassword2"
+                placeholder="請再次輸入密碼"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="InputPhone" className="form-label fs18b">
+                手機號碼
+                <span style={{ color: "red" }} className="ps-1">
+                  *
+                </span>
+              </label>
+              <input
+                type="text"
+                className="form-control input-f"
+                id="InputPhone"
+                placeholder="請輸入09開頭共10碼的數字"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlForor="FormTextarea" className="form-label fs18b">
+              個人簡介  :
+              </label>
+              <textarea
+                className="form-control input-area"
+                id="FormTextarea1"
+                rows="3"></textarea>
+            </div>
+            <div className="d-flex justify-content-end">
+              <button type="submit" className="btn btn-middle fs18b">
+                註冊
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      
       <Head>
         <title>會員註冊</title>
       </Head>
