@@ -9,39 +9,37 @@ export default function SelectFoodStyle() {
 
   return (
     <>
-            <div className="c-card middle">
-              <div className="mt-2">
-                <div className="custom-control custom-checkbox image-checkbox">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="test"
-                    checked={isChecked}
-                    onChange={() => {}}
-                  />
-                  <label
-                    className={`custom-icon-checkbox ${
-                      isChecked ? "checked" : ""
-                    }`}
-                    htmlFor="test"
-                    onClick={handleCheckboxClick}>
-                    <img
-                      src="/images/food-1106513_1920.jpg"
-                      alt="台式"
-                      className="w-100 c-card-img"></img>
-                    <i
-                      className={`${
-                        isChecked
-                          ? "icon-heart-fill rounded-circle img-thumbnail"
-                          : ""
-                      }`}></i>
-                  </label>
-                </div>
-                <div className="text-center pt-2">
-                  <span className="fs18b pb-4">台式</span>
-                </div>
-              </div>
-            </div>
+      <div className="c-card middle">
+        <div className="mt-2">
+          <div className="custom-control custom-checkbox image-checkbox">
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              id="test"
+              checked={isChecked}
+              onChange={() => {}}
+            />
+            <label
+              className={`custom-icon-checkbox ${isChecked ? "checked" : ""}`}
+              htmlFor="test"
+              onClick={handleCheckboxClick}>
+              <img
+                src="/images/food-1106513_1920.jpg"
+                alt="台式"
+                className="w-100 c-card-img"></img>
+              <i
+                className={`${
+                  isChecked
+                    ? "icon-heart-fill rounded-circle img-thumbnail"
+                    : ""
+                }`}></i>
+            </label>
+          </div>
+          <div className="text-center pt-2">
+            <span className="fs-5 fw-bold">台式</span>
+          </div>
+        </div>
+      </div>
       <style jsx>{`
         .sfsbc {
           display: flex;
