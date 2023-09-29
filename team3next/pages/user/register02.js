@@ -16,9 +16,9 @@ export default function Register2() {
           style={{ top: 65 }}>
           <Wave02></Wave02>
         </span>
-        <div className="container middle flex-column">
+        <div className="container middle flex-column mb-4">
           <div className="z-3 position-absolute" style={{ top: 130 }}>
-            <h1 className="fw-bold">會員註冊</h1>
+            <h1 className="fw-bold ps-5">會員註冊</h1>
           </div>
           <span className="bgi position-absolute opacity-25"></span>
           <div
@@ -30,8 +30,18 @@ export default function Register2() {
             </span>{" "}
             的欄位為必填
           </div>
-
+          {/* 輸入區 */}
           <form className="mt-4">
+            {/* 大頭照 */}
+            <div className="middle ms-5">
+              <div className="rounded-circle img-thumbnail headshot-big position-relative">
+                <span
+                  className="d-block position-absolute z-3"
+                  style={{ paddingInlineStart: 130, paddingTop: 140 }}>
+                  <button className="icon-plus fs-4 img-thumbnail rounded-circle"></button>
+                </span>
+              </div>
+            </div>
             <div className="mb-3">
               <label htmlFor="InputName" className="form-label fs18b">
                 姓名
@@ -74,6 +84,7 @@ export default function Register2() {
                 placeholder="請輸入E-mail"
               />
             </div>
+            {/* 密碼區 */}
             <div className="mb-3">
               <label htmlFor="InputPassword" className="form-label fs18b">
                 密碼
@@ -87,6 +98,10 @@ export default function Register2() {
                 id="InputPassword"
                 placeholder="請輸入英文+數字至少8碼"
               />
+               <i
+                    type="button"
+                    className="far fa-eye-slash no-see-eye"
+                    style={{ color: "#787878" }}></i>
             </div>
             <div className="mb-3">
               <label htmlFor="InputPassword2" className="form-label fs18b">
@@ -101,7 +116,12 @@ export default function Register2() {
                 id="InputPassword2"
                 placeholder="請再次輸入密碼"
               />
+               <i
+                    type="button"
+                    className="far fa-eye-slash no-see-eye"
+                    style={{ color: "#787878" }}></i>
             </div>
+            {/* 手機 */}
             <div className="mb-3">
               <label htmlFor="InputPhone" className="form-label fs18b">
                 手機號碼
@@ -118,17 +138,20 @@ export default function Register2() {
             </div>
             <div className="mb-3">
               <label htmlForor="FormTextarea" className="form-label fs18b">
-              個人簡介  :
+                個人簡介 :
               </label>
               <textarea
                 className="form-control input-area"
                 id="FormTextarea1"
-                rows="3"></textarea>
+                rows="3"
+                placeholder="寫下自我的話，100字內"></textarea>
             </div>
-            <div className="d-flex justify-content-end">
-              <button type="submit" className="btn btn-middle fs18b">
-                註冊
-              </button>
+            <div className="d-flex justify-content-end mt-5">
+              <Link href="/user/login">
+                <button type="submit" className="btn btn-big fs18b">
+                  註冊
+                </button>
+              </Link>
             </div>
           </form>
         </div>
@@ -182,9 +205,16 @@ export default function Register2() {
             height: 440px;
             right: 400px;
             top: 146px;
-            background:no-repeat;
+            background: no-repeat;
             background-image: url("/images/onlybro.png");
-            background
+          }
+          .no-see-eye {
+            position: relative;
+          }
+          .no-see-eye:before{
+            position: absolute;
+            left:465px;
+            bottom: 32px;
           }
         `}
       </style>
