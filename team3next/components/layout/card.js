@@ -55,7 +55,7 @@ export default function Card() {
               <div className="pe-2">
                 <img
                   className="rounded-circle headshot-small img-thumbnail"
-                  src="./images/logo.png"></img>
+                  src="/images/logo.png"></img>
               </div>
               <p className="middle">
                 <a className="fs16b pt-3 text-dark" href="#">
