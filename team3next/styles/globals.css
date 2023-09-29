@@ -66,6 +66,20 @@
   font-weight: bold;
 }
 
+/* 按鈕hover效果 */
+.btn-lg:hover,.btn-big:hover,.btn-middle:hover,.btn-small:hover,.btn-little:hover{
+  color: #ae4818;
+  background: #ebd8a9;
+  border-color:#ebd8a9 ;
+}
+/* 按鈕按下效果 */
+.btn-lg:focus,.btn-big:focus,.btn-middle:focus,.btn-small:focus,.btn-little:focus{
+  color: #ae4818;
+  background: #ebd8a9;
+  border-color:#ebd8a9 ;
+}
+
+
 /* ICON按鈕*/
 .btn-i {
   color: #808080;
