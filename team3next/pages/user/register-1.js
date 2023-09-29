@@ -34,7 +34,6 @@ export default function Register() {
             justify-content: center;
             align-items: center;
             align-content: center;
-            gap: 40px;
             flex-wrap: wrap;
           }
         `}
