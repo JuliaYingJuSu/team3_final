@@ -2,7 +2,7 @@ import React from "react";
 import SelectFoodStyle from "@/components/user/select-food-style";
 import Link from "next/link";
 
-export default function Register() {
+export default function Register2() {
   return (
     <>
       <div className="sfsbc middle">
@@ -40,8 +40,10 @@ export default function Register() {
                 </div>
               </div>
               <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
-              <div className="me-4">
-                  <Link href="#" className="grey">下次一定選</Link>
+                <div className="me-4">
+                  <Link href="/user/register02" className="grey">
+                    下次一定選
+                  </Link>
                 </div>
                 <div className="me-2">
                   <button type="submit" className="btn btn-middle fs-5">

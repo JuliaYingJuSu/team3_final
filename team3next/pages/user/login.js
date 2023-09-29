@@ -94,7 +94,7 @@ export default function Login() {
                   <p className="middle mt-3">
                     <span className="bottom-line-g fs-5 grey-ae">
                       沒有帳號？
-                      <Link href="/user/register-1" className="red-i">
+                      <Link href="/user/register01" className="red-i">
                         註冊
                       </Link>
                     </span>
