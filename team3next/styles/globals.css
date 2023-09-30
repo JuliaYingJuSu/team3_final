@@ -66,6 +66,29 @@
   font-weight: bold;
 }
 
+/* 追蹤按鈕 */
+.btn-follow{
+  border-radius: 40px;
+  border-color: #ae4818;
+  padding: 5px 10px;
+  background: white;
+  font-size: 14px;
+  color: #ae4818;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.btn-follow:hover{
+  color: chocolate;
+  border-color: chocolate;
+}
+
+.btn-follow:active{
+  color: chocolate !important;
+  border-color: chocolate !important;
+}
+
+
 /* 按鈕hover效果 */
 .btn-lg:hover,.btn-big:hover,.btn-middle:hover,.btn-small:hover,.btn-little:hover{
   color: #ae4818;
