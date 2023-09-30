@@ -7,16 +7,45 @@ export default function CartDetail() {
   return (
     <>
        <MyNavbar/>
-            <div className={styles.cartContainer+ " container"} >
-                <div className="fs-6">購物車(1)</div>
+
+       {/* 購物進度條 */}
+       <div className={styles.sectionBar + " mt-5"}>
+            {/* <div className="w-75 d-flex justify-content-between"> */}
+                <a href="" className={styles.firstStep}>
+                    <p className="text-start">顧客</p>
+                </a>
+
+                <div className={styles.step}>
+                    <p className="text-start">配送</p>
+                </div>
+
+                <div className={styles.step}>
+                    <p className="text-start">付款</p>
+                </div>
+
+                <div className={styles.lastStep}>
+                    <p className="text-start">檢視</p>
+                </div>
+
+            {/* </div> */}
+
+        </div>
+
+        {/* 購物車細項 -- START */}
+            <div className={styles.cartContainer+ " container mt-2"} >
+                {/* <div className="fs-6">購物車(1)</div> */}
                 <table className={styles.cutBorder + " table"}>
                     <thead>
+                        {/* 若購物車要對齊 className={styles.productTitle + " border-0"} */}
+                        <tr>
+                            <th scope="col" className={styles.cartNum + " border-0"}>購物車(1)</th>
+                        </tr>
                         <tr className={styles.productTitle}>
-                        <th scope="col">商品資訊</th>
-                        <th scope="col"></th>
-                        <th scope="col">數量</th>
-                        <th scope="col">單價</th>
-                        <th scope="col">小計</th>
+                            <th scope="col">商品資訊</th>
+                            <th scope="col"></th>
+                            <th scope="col">數量</th>
+                            <th scope="col">單價</th>
+                            <th scope="col">小計</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,10 +53,10 @@ export default function CartDetail() {
                             <td className={styles.imgWidth + " w-20"}>
                                 <img className="img-fluid rounded-1" src="https://rs.joo.com.tw/website/uploads_product/website_1060/P0106000282607_3_1674263.jpg?_4431" alt="" />
                             </td>
-                            <td className={styles.cutBorder}>【檸檬大叔】100%純檸檬磚(12入/盒)</td>
-                            <td className={styles.cutBorder}><span className="icon-minus me-3"></span>1<span className="icon-plus ms-3"></span></td>
-                            <td className={styles.cutBorder}>NT$320</td>
-                            <td className={styles.cutBorder}>NT$320</td>
+                            <td className={styles.cutBorder + " align-middle"}>【檸檬大叔】100%純檸檬磚(12入/盒)</td>
+                            <td className={styles.cutBorder + " align-middle"}><span className="icon-minus me-3"></span>1<span className="icon-plus ms-3"></span></td>
+                            <td className={styles.cutBorder + " align-middle"}>NT$320</td>
+                            <td className={styles.cutBorder + " align-middle"}>NT$320</td>
                         </tr>
 
                         <tr className="container">
@@ -35,7 +64,7 @@ export default function CartDetail() {
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><span className="icon-trash"></span></td> 
+                            <td><span className="icon-trash d-flex justify-content-end"></span></td> 
                         </tr>
                     </tbody>
                 </table>
@@ -57,16 +86,16 @@ export default function CartDetail() {
 
                     {/* 總額計算 */}
                     <div className="w-100 d-flex justify-content-end">
-                    <div className="w-25">
-                        <div className="row">
-                            <div className="col-6">小計</div>
-                            <div className="col-6">NT$320</div>
-                            <div className="col-6 pt-2">運費</div>
-                            <div className="col-6 pt-2">NT$60</div>
-                            <div className="col-6 pt-2 border-top">總計</div>
-                            <div className="col-6 pt-2 border-top">NT$380</div>
+                        <div className="w-25">
+                            <div className="row">
+                                <div className="col-6">小計</div>
+                                <div className="col-6">NT$320</div>
+                                <div className="col-6 py-2">運費</div>
+                                <div className="col-6 py-2">NT$60</div>
+                                <div className="col-6 pt-2 border-top">總計</div>
+                                <div className="col-6 pt-2 border-top">NT$380</div>
+                            </div>
                         </div>
-                    </div>
                    </div>
                 </div>
 
@@ -77,7 +106,7 @@ export default function CartDetail() {
                     </div>
                 </div>
 
-                <div className="d-flex justify-content-center"><button className="btn btn-middle mt-5 mb-5">前往結帳</button></div>
+                <a href="/cart/del-detail" className={styles.linkText}><div className="d-flex justify-content-center"><button className="btn btn-middle mt-5 mb-5">前往結帳</button></div></a>
 
             </div>
         <Footer/>

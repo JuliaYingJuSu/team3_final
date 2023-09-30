@@ -40,8 +40,18 @@ export default function App() {
         />
         <p>{errors.lastName?.message}</p>
         <input {...register("checkbox")} type="checkbox" value="A" />
-      <input {...register("checkbox")} type="checkbox" value="B" />
-      <input {...register("checkbox")} type="checkbox" value="C" />
+        <input {...register("checkbox")} type="checkbox" value="B" />
+        <input {...register("checkbox")} type="checkbox" value="C" />
+        <select {...register("category")}>
+          <option value="">Select...</option>
+          <option value="A">Category A</option>
+          <option value="B">Category B</option>
+        </select>
+        <select {...register("category1")}>
+          <option value="">Select...</option>
+          <option value="A">Category A</option>
+          <option value="B">Category B</option>
+        </select>
         <input type="submit" />
       </form>
     </div>

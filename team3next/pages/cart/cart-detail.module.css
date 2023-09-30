@@ -1,3 +1,149 @@
+/* 購物進度條 */
+
+.sectionBar{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    /* background-color: #9d7a7a; */
+    width: 70%;
+    padding-left: 550px;
+    
+}
+
+.firstStep{
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 30%;
+    position: relative;
+    /* 用於重置css計數器 */
+   /* counter-reset: none; */
+    color: #111;
+}
+
+.firstStep:before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    font-size: 15px;
+    background-color: #8e8e8e;
+    border-radius: 50%;
+    /* margin: 5px; */
+    transition: transform 0.3s ease;
+    }
+
+    .firstStep:after{
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: rgb(181, 179, 179);
+        position: absolute;
+        left: 5%;
+        top: 16px;
+        z-index: -1;
+      }
+
+      .firstStep:after{
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: rgb(181, 179, 179);
+        position: absolute;
+        left: 5%;
+        top: 16px;
+        z-index: -1;
+      }
+
+
+
+.step{
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 30%;
+    position: relative;
+    /* 用於重置css計數器 */
+   /* counter-reset: none; */
+    color: #111;
+}
+
+.step:before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    font-size: 15px;
+    background-color: #d3d3d3;
+    border-radius: 50%;
+    /* margin: 5px; */
+    transition: transform 0.3s ease;
+    }
+
+       .step:after{
+      content: "";
+      width: 100%;
+      height: 2px;
+      background-color: #d3d3d3;
+      position: absolute;
+      left: 5%;
+      top: 16px;
+      z-index: -1;
+    }
+
+
+    .step:hover{
+       /* border-bottom: pink; */
+       /* font-size: 17px; */
+       transform: scale(1.1);
+    } 
+
+
+    /* 購物車進度條 --> 線 */
+    .step:after{
+      content: "";
+      width: 100%;
+      height: 2px;
+      background-color: #d3d3d3;
+      position: absolute;
+      left: 5%;
+      top: 16px;
+      z-index: -1;
+    }
+
+    .lastStep{
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        width: 30%;
+        position: relative;
+        /* 用於重置css計數器 */
+       /* counter-reset: none; */
+        color: #111;
+    }
+
+    .lastStep:before {
+        content: "";
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: block;
+        font-size: 15px;
+        background-color: #d3d3d3;
+        border-radius: 50%;
+        /* margin: 5px; */
+        }
+
+
+        .lastStep:hover{
+            transform: scale(1.1);
+         } 
+
+
+
 .cutBorder{
     /* 去掉表格的框線 <table> / <tr> / <td>都需要下 */
     border: none;
@@ -7,10 +153,15 @@
     width: 1200px;
 }
 
+.cartNum{
+    font-size: 20px;
+}
+
 .productTitle{
     padding: 0;
-    background-color: pink;
+    /* background-color: pink; */
     text-align: center;
+    font-size: 17px;
 }
 
 .productDetail{
@@ -51,6 +202,15 @@
     background-color: #FBF9EF;
     width: 400px;
 }
+
+/* 中按鈕 */
+.linkText {
+    text-align: center;
+    background: #ebd8a9;
+    font-size: 17px;
+    color: #3f4c5c;
+    font-weight: bold;
+  }
 
 
 
