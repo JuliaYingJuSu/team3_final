@@ -169,15 +169,39 @@ export default function OrderComplete() {
             </ul>
           </div>
         </div>
+
+    {/* 購物進度條 */}
+        <div className={styles.sectionBar + " mt-5"}>
+            {/* <div className="w-75 d-flex justify-content-between"> */}
+                <a href="" className={styles.step}>
+                    <p className="text-start ">顧客</p>
+                </a>
+
+                <a href="" className={styles.step}>
+                    <p className="text-start">配送</p>
+                </a>
+ 
+                <a href="" className={styles.step}>
+                    <p className="text-start">付款</p>
+                </a>
+
+                <a href="" className={styles.lastStep}>
+                    <p className="text-start">檢視</p>
+                </a>
+
+            {/* </div> */}
+
+        </div>
         
         <div className="container text-center">
             {/* check文字 */}
-            <div className="icon-check mt-5">
+            <div className="icon-check mt-4">
             </div>
             <div className="my-5 h5">
             謝謝您！您的訂單已經成立！
             </div>
         </div>
+
 
         {/* 底下訂單資訊 */}
         <div className="container w-50 d-flex border p-5 mb-5 justify-content-between">
