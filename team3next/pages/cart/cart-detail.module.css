@@ -7,10 +7,15 @@
     width: 1200px;
 }
 
+.cartNum{
+    font-size: 20px;
+}
+
 .productTitle{
     padding: 0;
-    background-color: pink;
+    /* background-color: pink; */
     text-align: center;
+    font-size: 17px;
 }
 
 .productDetail{
@@ -51,6 +56,15 @@
     background-color: #FBF9EF;
     width: 400px;
 }
+
+/* 中按鈕 */
+.linkText {
+    text-align: center;
+    background: #ebd8a9;
+    font-size: 17px;
+    color: #3f4c5c;
+    font-weight: bold;
+  }
 
 
 

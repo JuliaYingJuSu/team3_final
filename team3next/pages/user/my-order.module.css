@@ -1,0 +1,37 @@
+.recordBox{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  /* align-items: stretch; */
+  /* justify-content: center;  */
+  /* align-items: flex-start;  */
+}
+
+.head {
+    font-size: 22px;
+    font-weight: 500;
+    color: #808080;
+    margin-bottom: 30px;
+  }
+
+  .buyRecord {
+    border-bottom: 1px solid rgba(102, 102, 102, 0.5);
+  }
+
+
+
+  /* start from here */
+.titleBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.hhh{
+    
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center;
+    text-align: center; */
+}

@@ -33,7 +33,16 @@
     background-color: rgb(181, 179, 179);
     border-radius: 50%;
     /* margin: 5px; */
+    transition: transform 0.3s ease;
     }
+
+
+    .step:hover{
+       /* border-bottom: pink; */
+       /* font-size: 17px; */
+       transform: scale(1.1);
+    } 
+
 
     /* 購物車進度條 --> 線 */
     .step:after{
@@ -72,7 +81,9 @@
         }
 
 
-
+        .lastStep:hover{
+            transform: scale(1.1);
+         } 
 
 
 
