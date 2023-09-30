@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "./order-d.module.css"
 import MyNavbar from '@/components/layout/default-layout/navbar-main/index'
 import Footer from '@/components/layout/default-layout/footer'
+import style from '@/pages/product/list.module.css'
 import productDetail from '@/pages/product/[pid]'
 
 
@@ -10,7 +11,7 @@ export default function OrderComplete() {
     <>
     <MyNavbar/>
         <div
-            className={styles.topBox + " container d-flex justify-content-around"}
+            className={style.topBox + " container d-flex justify-content-around"}
             >
             <button class="btn" type="button">
                 全部商品
@@ -190,10 +191,10 @@ export default function OrderComplete() {
                                 <td className={styles.imgWidth + " w-20"}>
                                     <img className="img-fluid rounded-1" src="https://rs.joo.com.tw/website/uploads_product/website_1060/P0106000282607_3_1674263.jpg?_4431" alt="" />
                                 </td>
-                                <td className={styles.cutBorder}>【檸檬大叔】100%純檸檬磚(12入/盒)</td>
-                                <td className={styles.cutBorder}><span className="icon-minus me-3"></span>1<span className="icon-plus ms-3"></span></td>
-                                <td className={styles.cutBorder}>NT$320</td>
-                                <td className={styles.cutBorder}>NT$320</td>
+                                <td className={styles.cutBorder + " align-middle"}>【檸檬大叔】100%純檸檬磚(12入/盒)</td>
+                                <td className={styles.cutBorder + " align-middle"}><span className="icon-minus me-3"></span>1<span className="icon-plus ms-3"></span></td>
+                                <td className={styles.cutBorder + " align-middle"}>NT$320</td>
+                                <td className={styles.cutBorder + " align-middle"}>NT$320</td>
                             </tr>
                         </tbody>
             </table>
