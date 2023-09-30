@@ -2,12 +2,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import PostModal from "../post/post-modal";
-
+import Link from "next/link";
 
 export default function Card() {
   return (
     <>
-    <PostModal/>
+      <PostModal />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -53,14 +53,16 @@ export default function Card() {
             </h6>
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
-                <img
-                  className="rounded-circle headshot-small img-thumbnail"
-                  src="/images/logo.png"></img>
+                <Link href="/user/user-my-article-i">
+                  <img
+                    className="rounded-circle headshot-small img-thumbnail"
+                    src="/images/logo.png"></img>
+                </Link>
               </div>
               <p className="middle">
-                <a className="fs16b pt-3 text-dark" href="#">
+                <Link className="fs16b pt-3 text-dark" href="/user/user-my-article-i">
                   會員暱稱
-                </a>
+                </Link>
               </p>
               <button className="btn btn-little ms-auto">追蹤</button>
             </div>
