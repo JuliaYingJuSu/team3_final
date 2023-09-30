@@ -2,15 +2,16 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-export default function CardR2() {
+export default function CardR3() {
   return (
     <>
-      <div className="col mt-2" style={{ height: "790px" }}>
-        <div className="card h-100 overflow-hidden">
-          <img src="./images/post/3188.jpg" className="card-img" alt="..." />
-          <div className="card-body d-flex flex-column w-100">
-            <div className="w-100 mt-1" style={{ height: "31px" }}></div>
-            <div className="d-flex fs14 gap-2 mt-2">
+      <div className="mt-5 mb-4 container d-flex justify-content-center">
+        <div className="card3 d-flex">
+          <div>
+            <img src="../images/book/card3-2.png" className="r-img" alt="..." />
+          </div>
+          <div className="card-body">
+            <div className="d-flex fs14 gap-2">
               <a href="#" className="tag-i">
                 {" "}
                 台南市{" "}
@@ -34,14 +35,11 @@ export default function CardR2() {
             <div className="card-title w-100 grey fs16 mb-0 mt-3">
               義大利籍顧問傳授的「經典傳統」為基底，融合日籍主廚傳授的「細膩和心」來提味，每一步均遵循義大利正統料理方式，製作道地的義式美味。每一步均遵循義大利正統料理方式，製作道地的義式美味。
             </div>
-            <div
-              className="card-title w-100 fs16b mb-0 mt-2"
-              style={{ height: "80px" }}
-            >
-              更多內容...
-            </div>
             <div className="d-flex w-100">
               <div className="fs16b">
+                <div className="card-title w-100 fs16b mb-0 mt-2 mb-3">
+                  更多內容...
+                </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-map"></span>
@@ -62,12 +60,31 @@ export default function CardR2() {
                 </div>
               </div>
               <button className="btn btn-little fs16 ms-auto align-self-end">
-                訂位
+                我要訂位 →
               </button>
             </div>
           </div>
         </div>
       </div>
+      <style jsx>
+        {`
+          .card3 {
+            height: 330px;
+            width: 80%;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
+          }
+          .card-body {
+            padding: 30px;
+            width: 60%;
+          }
+          .r-img {
+            width: 100%;
+            height: 100%;
+          }
+        `}
+      </style>
     </>
   );
 }
