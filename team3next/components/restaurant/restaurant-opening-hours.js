@@ -47,34 +47,59 @@ export default function OpeningHours() {
           <form onSubmit={handleSubmit(onSubmit)}>
             {daysOfWeek.map((v, i) => {
               return (
-                <div key={i}>
-                  <label htmlFor={`day${i}`}>
+                <div
+                  className="row d-flex align-items-center flex-row bottom-line-g"
+                  style={{ height: "100px" }}
+                  key={i}
+                >
+                  <label
+                    className="d-flex align-items-center flex-row d-block w-100 h-100"
+                    htmlFor={`day${i}`}
+                  >
                     <input
                       type="checkbox"
                       id={`day${i}`}
-                      {...register(`weekday${i}`)}
+                      {...register(`weekday${i == 6 ? i - 6 : i + 1}`)}
                       value={i == 6 ? i - 6 : i + 1}
                     />
-                    {v}
-                    <select {...register(`startTime${i}`)}>
-                      {/*修正bug： 因為 startime 名稱相同，所以只會傳送最後一筆名為 starttime 的資料。 */}
-                      {hoursOption.map((v, i) => {
-                        return (
-                          <option key={i} value={v}>
-                            {v}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <select {...register(`endTime${i}`)}>
-                      {hoursOption.map((v, i) => {
-                        return (
-                          <option key={i} value={v}>
-                            {v}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    <span
+                      className="col-3"
+                      style={{ color: "#666666", fontSize: "22px" }}
+                    >
+                      {v}
+                    </span>
+                    <div className="col-2"></div>
+                    <div className="col-7 d-flex align-items-center justify-content-evenly flex-row">
+                      <div className="d-flex flex-column">
+                        <span className="fs16g">開始營業時間：</span>
+                        <select
+                          {...register(`startTime${i == 6 ? i - 6 : i + 1}`)}
+                        >
+                          {/*修正bug： 因為 startime 名稱相同，所以只會傳送最後一筆名為 starttime 的資料。 */}
+                          {hoursOption.map((v, i) => {
+                            return (
+                              <option key={i} value={v}>
+                                {v}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="d-flex flex-column">
+                        <span className="fs16g">結束營業時間：</span>
+                        <select
+                          {...register(`endTime${i == 6 ? i - 6 : i + 1}`)}
+                        >
+                          {hoursOption.map((v, i) => {
+                            return (
+                              <option key={i} value={v}>
+                                {v}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </div>
                   </label>
                 </div>
               );
@@ -84,6 +109,13 @@ export default function OpeningHours() {
         </div>
         <div className="col-2"></div>
       </div>
+      <style jsx>
+        {`
+          input[type="checkbox"] {
+            display: none;
+          }
+        `}
+      </style>
     </>
   );
 }
