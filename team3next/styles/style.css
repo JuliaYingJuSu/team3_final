@@ -154,3 +154,18 @@
 .icon-minus:before {
   content: "\ea0b";
 }
+.icon-square:hover::before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list:hover::before {
+  content: "\e91d";
+  color: #ebd8a9;}
+.icon-square-active:before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list-active:before {
+  content: "\e91d";
+  color: #ebd8a9;
+}

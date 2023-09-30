@@ -16,7 +16,7 @@ export default function UserMyArticleI() {
         <div className="container d-flex justify-content-around align-items-center my-3">
           <Link
             href="/user/user-my-article-i"
-            className="icon-square"
+            className="icon-square-active"
             style={{ fontSize: 35 }}></Link>
 
           <Link
