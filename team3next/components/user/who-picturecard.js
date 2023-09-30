@@ -3,7 +3,7 @@
 import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 
-export default function UserPictureCard() {
+export default function WhoPictureCard() {
   return (
     <>
       <p>
