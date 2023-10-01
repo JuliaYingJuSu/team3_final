@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import PostModal from "../post/post-modal";
-import Link from "next/link";import AddPost from "../post/add-post";
+import Link from "next/link";
 
 
 export default function Card() {
