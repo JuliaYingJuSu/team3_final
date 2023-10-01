@@ -11,7 +11,7 @@ export default function Index() {
       </Head>
       <Navbar></Navbar>
       <br />
-      <div className="container">
+      <div className="container mt-3">
         <div className="d-flex" style={{ marginLeft: "200px" }}>
           <div
             className="fs18 align-self-center"

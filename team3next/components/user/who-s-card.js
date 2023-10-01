@@ -4,7 +4,7 @@ import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import Link from "next/link";
 
-export default function UserSCard() {
+export default function WhoSCard() {
   return (
     <>
       <div className={Styles.authorCard}>
