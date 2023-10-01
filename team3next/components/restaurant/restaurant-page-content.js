@@ -14,10 +14,11 @@ export default function Profile() {
   return (
     <>
       <div className="row">
-      <div className="col-3"></div>
+        <div className="col-3"></div>
         <div className="col-6">
-          <h2 style={{ color: "#985637" }}>會員資料管理</h2>
-          <form className="d-flex flex-column justify-content-center" 
+          <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
+          <form
+            className="d-flex flex-column justify-content-center"
             onSubmit={handleSubmit((data) => {
               console.log(data);
             })}
