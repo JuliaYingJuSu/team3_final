@@ -22,28 +22,28 @@ export default function MyOrder() {
 <div className={styles.recordBox +" container p-5 w-100"}>
   <p className={styles.head + " grey"}>消費紀錄</p>
 
-  <table>
+  <table className="table table-hover">
     <thead className=" bottom-line-g">
       <tr>
-      <th scope="col" className="align-middle">訂單號碼</th>
-      <th scope="col" className="align-middle">訂單日期</th>
-      <th scope="col" className="align-middle">合計</th>
-      <th scope="col" className="align-middle">訂單狀態</th>
-      <th scope="col" className="align-middle d-flex justify-content-end">雲之羽</th>
+      <th className="align-middle">訂單號碼</th>
+      <th className="align-middle">訂單日期</th>
+      <th className="align-middle">合計</th>
+      <th className="align-middle">訂單狀態</th>
+      <th className="align-middle"></th>
       </tr>
     </thead>
 
     <tbody>
       {data.map((i)=>{
-      return(<tr key={i.order_id} className="mb-1">
-          <td className="align-middle">{i.order_id}</td>
-          <td className="align-middle">{i.order_date}</td>
-          <td className="align-middle">NT$380</td>
-          <td className="align-middle">{i.order_status}</td>
-          <td className="align-middle">
-          <div className="my-1 d-flex justify-content-end">
-              <div className="me-3 btn btn-middle">立即購買</div>
-              <div className="btn btn-middle">加入購物車</div>
+      return(<tr key={i.order_id} className={styles.topLine}>
+          <td className="align-middle pt-2">{i.order_id}</td>
+          <td className="align-middle pt-2">{i.order_date}</td>
+          <td className="align-middle pt-2">NT$380</td>
+          <td className="align-middle pt-2">{i.order_status}</td>
+          <td className="align-middle pt-2">
+          <div className="my-1 d-flex justify-content-end a">
+              <div className="me-3 btn btn-big">編輯訂單</div>
+              <div className="btn btn-big">查閱</div>
           </div>
 
           </td>

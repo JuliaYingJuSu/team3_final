@@ -4,6 +4,7 @@ import React from "react";
 import PostModal from "../post/post-modal";
 import Link from "next/link";
 
+
 export default function Card() {
   return (
     <>

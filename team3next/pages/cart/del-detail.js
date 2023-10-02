@@ -172,11 +172,11 @@ export default function DelDetail() {
 {/* 購物進度條 */}
         <div className={styles.sectionBar + " mt-5"}>
             {/* <div className="w-75 d-flex justify-content-between"> */}
-                <a href="" className={styles.step}>
+                <a href="" className={styles.firstStep}>
                     <p className="text-start ">顧客</p>
                 </a>
 
-                <a href="" className={styles.step}>
+                <a href="" className={styles.firstStep}>
                     <p className="text-start">配送</p>
                 </a>
  

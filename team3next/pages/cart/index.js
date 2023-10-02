@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from "./cart-detail.module.css"
 import MyNavbar from '@/components/layout/default-layout/navbar-main/index'
-import style from './del-detail.module.css'
 import Footer from '@/components/layout/default-layout/footer'
 
 export default function CartDetail() {
@@ -10,21 +9,21 @@ export default function CartDetail() {
        <MyNavbar/>
 
        {/* 購物進度條 */}
-       <div className={style.sectionBar + " mt-5"}>
+       <div className={styles.sectionBar + " mt-5"}>
             {/* <div className="w-75 d-flex justify-content-between"> */}
-                <a href="" className={style.step}>
+                <a href="" className={styles.firstStep}>
                     <p className="text-start">顧客</p>
                 </a>
 
-                <div className={style.step}>
+                <div className={styles.step}>
                     <p className="text-start">配送</p>
                 </div>
 
-                <div className={style.step}>
+                <div className={styles.step}>
                     <p className="text-start">付款</p>
                 </div>
 
-                <div className={style.lastStep}>
+                <div className={styles.lastStep}>
                     <p className="text-start">檢視</p>
                 </div>
 

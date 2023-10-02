@@ -10,7 +10,7 @@ export default function RestaurantLayout({ children }) {
         <div className="row">
           <aside
             className="h-100 fixed-top"
-            style={{ backgroundColor: "#EFD6C5", width: "250px" }}
+            style={{ backgroundColor: "#EFD6C5", maxWidth: "250px" }}
           >
             <RestaurantSidebar />
           </aside>
@@ -20,9 +20,7 @@ export default function RestaurantLayout({ children }) {
             <nav className="bg-white sticky-top">
               <RestaurantNavbar />
             </nav>
-            <section className="w-100 mt-5">
-              {children}
-            </section>
+            <section className="w-100 mt-5">{children}</section>
           </div>
         </div>
       </section>

@@ -174,15 +174,15 @@ export default function PayMethod() {
 {/* 購物進度條 */}
         <div className={secstyle.sectionBar + " mt-5"}>
             {/* <div className="w-75 d-flex justify-content-between"> */}
-                <a href="" className={secstyle.step}>
+                <a href="" className={secstyle.firstStep}>
                     <p className="text-start ">顧客</p>
                 </a>
 
-                <a href="" className={secstyle.step}>
+                <a href="" className={secstyle.firstStep}>
                     <p className="text-start">配送</p>
                 </a>
  
-                <a href="" className={secstyle.step}>
+                <a href="" className={secstyle.firstStep}>
                     <p className="text-start">付款</p>
                 </a>
 
