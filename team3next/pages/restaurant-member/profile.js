@@ -1,8 +1,8 @@
 import React from "react";
-import RestaurantLayout from "@/components/restaurant/restaurant-layout";
-import Profile from "@/components/restaurant/restaurant-profile";
+import RestaurantLayout from "@/components/restaurant-member/restaurant-layout";
+import Profile from "@/components/restaurant-member/restaurant-profile";
 
-export default function Home() {
+export default function ProfilePage() {
   return (
     <RestaurantLayout>
       <Profile />

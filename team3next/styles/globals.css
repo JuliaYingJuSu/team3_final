@@ -33,6 +33,7 @@
   text-align: center;
   border-radius: 40px;
   padding: 10px 20px;
+  border-color: #ebd8a9;
   background: #ebd8a9;
   font-size: 16px;
   color: #3f4c5c;
@@ -67,7 +68,7 @@
 }
 
 /* 追蹤按鈕 */
-.btn-follow{
+.btn-follow {
   border-radius: 40px;
   border-color: #ae4818;
   padding: 5px 10px;
@@ -78,28 +79,45 @@
   font-weight: bolder;
 }
 
-.btn-follow:hover{
+.btn-follow:hover {
   color: chocolate;
   border-color: chocolate;
 }
 
-.btn-follow:active{
+.btn-follow:active {
   color: chocolate !important;
   border-color: chocolate !important;
 }
 
-
 /* 按鈕hover效果 */
-.btn-lg:hover,.btn-big:hover,.btn-middle:hover,.btn-small:hover,.btn-little:hover{
+.btn-lg:hover,
+.btn-big:hover,
+.btn-middle:hover,
+.btn-small:hover,
+.btn-little:hover {
   color: #ae4818;
   background: #ebd8a9;
-  border-color:#ebd8a9 ;
+  border-color: #ebd8a9;
 }
 /* 按鈕按下效果 */
-.btn-lg:focus,.btn-big:focus,.btn-middle:focus,.btn-small:focus,.btn-little:focus{
-  color: #ae4818;
+.btn-lg:focus,
+.btn-big:focus,
+.btn-middle:focus,
+.btn-small:focus,
+.btn-little:focus {
+  color: #3f4c5c;
   background: #ebd8a9;
-  border-color:#ebd8a9 ;
+  border-color: #ebd8a9;
+}
+/* 按鈕按下效果 */
+.btn-lg:active,
+.btn-big:active,
+.btn-middle:active,
+.btn-small:active,
+.btn-little:active {
+  color: #ae4818 !important;
+  background: #ebd8a9 !important;
+  border-color: #ebd8a9 !important;
 }
 
 /* ICON按鈕*/
@@ -232,13 +250,13 @@
   color: #808080;
 }
 
-.grey-ae{
-  color:#aeaeae
+.grey-ae {
+  color: #aeaeae;
 }
 
 /* 重要紅標 */
-.red-i{
-  color:#ae4818
+.red-i {
+  color: #ae4818;
 }
 
 .w1200 {
@@ -385,7 +403,7 @@ body {
   background: #fff;
 }
 
-.input-area{
+.input-area {
   border-radius: 10px;
   border: 1px solid #d9d9d9;
   background: #fff;

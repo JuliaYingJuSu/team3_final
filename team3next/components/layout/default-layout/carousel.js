@@ -178,6 +178,20 @@ export default function Carousel() {
           .slick-arrow.slick-prev:before {
             content: "";
           }
+          @media screen and (max-width: 500px) {
+            .c-card-img {
+              width: 80px;
+              height: 80px;
+            }
+            .c-card {
+              height: 110px;
+              width: 80px;
+            }
+            .c-card-text {
+              width: 36px;
+              height: 22px;
+            }
+          }
         `}
       </style>
     </>

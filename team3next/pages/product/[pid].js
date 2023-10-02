@@ -238,7 +238,7 @@ export default function productDetail() {
                 " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
-              <div className="mb-auto h5 ">
+              <div className="my-2 h5 ">
                 <p className="d-flex ">
                   <span className="me-auto">
                     【HEY YUM!】丹麥無麩質水果軟糖
@@ -246,6 +246,13 @@ export default function productDetail() {
                   <span className="icon-mark"></span>
                 </p>
                 <p className="ps-3">NT$ 1000</p>
+              </div>
+              <div className="fs-3 my-2">
+                <span className="icon-Star"></span>
+                <span className="icon-Star"></span>
+                <span className="icon-Star"></span>
+                <span className="icon-Star"></span>
+                <span className="icon-Star"></span>
               </div>
               <p className="mb-auto fs16b">
                 ◆ 丹麥原裝進口 ◆ 不含人工香料、色素、甜味劑、防腐劑 <br />◆

@@ -85,7 +85,7 @@ export default function RestaurantSidebar() {
               className="option justify-content-center"
               style={{ width: "140px" }}
             >
-              <Link className="stretched-link text-dark" href="#">
+              <Link className="stretched-link text-dark" href="/restaurant-member/opening-hours">
                 營業時間管理
               </Link>
             </div>
