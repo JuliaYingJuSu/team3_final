@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
+import PhoneNavbar from "./phone-navbar";
 import NavCart from "@/components/cart/nav-cart";
 
 export default function MyNavbar() {
@@ -33,7 +34,10 @@ export default function MyNavbar() {
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="nav nav-underline">
+              <div className="hidden-max">
+                <PhoneNavbar></PhoneNavbar>
+              </div>
+              <ul className="nav nav-underline hidden-nav">
                 <div className="d-flex me-auto">
                   {/* 左側連結區 */}
                   <li className="nav-item pe-3">
@@ -67,7 +71,7 @@ export default function MyNavbar() {
                         aria-expanded="false">
                         <span className="icon-member"></span>
                       </div>
-                      <ul className="dropdown-menu text-center">
+                      <ul className="dropdown-menu text-center dropdown-menu-lg-end">
                         <li>
                           <span>
                             <img
@@ -148,22 +152,31 @@ export default function MyNavbar() {
           .logo-i {
             height: 150px;
             width: 200px;
-            position:absolute;
-            left:45%;
-            top:5%;
+            position: absolute;
+            left: 45%;
+            top: 5%;
           }
-          .right-menu{
-            position:absolute;
-            right:15%
+          .right-menu {
+            position: absolute;
+            right: 15%;
+          }
+          .hidden-max {
+            display: none;
           }
 
           @media screen and (max-width: 500px) {
             .logo-i {
               height: 100px;
               width: 150px;
-              position:relative;
-              left:5%;
+              position: relative;
+              left: 5%;
             }
+            .hidden-nav {
+              display: none;
+            }
+            .hidden-max {
+            display: block;
+          }
           }
         `}
       </style>
