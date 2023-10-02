@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import CitySelector from "./city-selector";
 
 export default function PageContent() {
   const {
@@ -14,10 +15,11 @@ export default function PageContent() {
   return (
     <>
       <div className="row">
-      <div className="col-3"></div>
+        <div className="col-3"></div>
         <div className="col-6">
           <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
-          <form className="d-flex flex-column justify-content-center" 
+          <form
+            className="d-flex flex-column justify-content-center"
             onSubmit={handleSubmit((data) => {
               console.log(data);
             })}
@@ -40,25 +42,14 @@ export default function PageContent() {
                 placeholder=""
               />
             </div>
-            <div className="d-flex flex-column mb-3">
+            <div className="d-flex flex-column  mb-3">
               <label className="fs18b" htmlFor="password">
                 店家地址
                 <span className="ps-1" style={{ color: "red" }}>
                   {errors.password?.message}
                 </span>
               </label>
-              <input
-                className="input-res"
-                type="password"
-                {...register("password", { required: "*" })}
-                id="password"
-              />
-              <input
-                className="input-res"
-                type="password"
-                {...register("password", { required: "*" })}
-                id="password"
-              />
+              <CitySelector />
               <input
                 className="input-res"
                 type="password"
