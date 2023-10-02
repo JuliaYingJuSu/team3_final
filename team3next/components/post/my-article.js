@@ -59,21 +59,21 @@ export default function MyArticle() {
                 <div className="carousel-inner">
                   <div className="carousel-item active">
                     <img
-                      src="./images/post/3188.jpg"
+                      src="/images/post/3188.jpg"
                       className="d-block w-100"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="./images/post/3188.jpg"
+                      src="/images/post/3188.jpg"
                       className="d-block w-100"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="./images/post/3188.jpg"
+                      src="/images/post/3188.jpg"
                       className="d-block w-100"
                       alt="..."
                     />
