@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function Profile() {
+export default function PageContent() {
   const {
     register,
     handleSubmit,
@@ -23,27 +23,42 @@ export default function Profile() {
             })}
           >
             <div className="d-flex flex-column my-3">
-              <label className="fs18b" htmlFor="email">
-                電子信箱
+              <label className="fs18b" htmlFor="name">
+                店家名稱
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.email?.message}
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.name?.message}
                 </span>
               </label>
               <input
                 className="input-res"
                 type="text"
-                {...register("email", { required: "*" })}
-                id="email"
-                placeholder="test@gmail.com"
+                {...register("name", { required: "請輸入資料" })}
+                id="name"
+                placeholder=""
               />
             </div>
             <div className="d-flex flex-column mb-3">
               <label className="fs18b" htmlFor="password">
-                密碼
+                店家地址
                 <span className="ps-1" style={{ color: "red" }}>
                   {errors.password?.message}
                 </span>
               </label>
+              <input
+                className="input-res"
+                type="password"
+                {...register("password", { required: "*" })}
+                id="password"
+              />
+              <input
+                className="input-res"
+                type="password"
+                {...register("password", { required: "*" })}
+                id="password"
+              />
               <input
                 className="input-res"
                 type="password"
