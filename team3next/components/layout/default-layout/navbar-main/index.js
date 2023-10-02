@@ -45,17 +45,17 @@ export default function MyNavbar() {
                     <Link
                       className="nav-link active fs-5"
                       aria-current="page"
-                      href="#">
+                      href="/post">
                       食好料
                     </Link>
                   </li>
                   <li className="nav-item pe-3">
-                    <Link className="nav-link text-dark fs-5" href="#">
+                    <Link className="nav-link text-dark fs-5" href="/book">
                       食在推
                     </Link>
                   </li>
                   <li className="nav-item pe-3">
-                    <Link className="nav-link text-dark fs-5" href="#">
+                    <Link className="nav-link text-dark fs-5" href="/product">
                       嗑零食
                     </Link>
                   </li>
