@@ -34,16 +34,16 @@ export default function MyArticle() {
                 </div>
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
-                    <a className=" me-1">
+                    <a className="me-1 restaurant" href="#">
                       Cin Cin Osteria請請義大利餐廳 (慶城店)
                     </a>
                   </p>
 
                   <p className="me-1">
-                    <a href="#">台北市</a>
+                    <a href="#" className="text-dark">台北市</a>
                   </p>
                   <p className="me-1">
-                    <a href="#">松山區</a>
+                    <a href="#" className="text-dark">松山區</a>
                   </p>
                 </div>
               </h5>
@@ -127,11 +127,11 @@ export default function MyArticle() {
                 </div>
               </div>
               <p className="icon-tag">
-                <a className="ms-2" href="#">
+                <a className="ms-2" href="#" style={{ color: "#666666" }}>
                   義式
                 </a>
                 <span className="ms-2">|</span>
-                <a className="ms-2" href="#">
+                <a className="ms-2" href="#"  style={{ color: "#666666" }}>
                   午餐
                 </a>
               </p>
@@ -190,16 +190,16 @@ export default function MyArticle() {
                 </div>
               </div>
               <hr />
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="新增留言"
                   aria-label="Recipient's username"
                   aria-describedby="button-addon2"
                 />
                 <button
-                  class="btn btn-outline-secondary"
+                  className="btn btn-outline-secondary"
                   type="button"
                   id="button-addon2"
                 >
@@ -210,6 +210,17 @@ export default function MyArticle() {
           </div>
         </div>
       </div>
+      <style jsx>
+        {`
+          .icon-map:before {
+            color: #ae4818;
+          }
+          .restaurant {
+            color: #ae4818;
+          }
+          
+        `}
+      </style>
     </>
   );
 }

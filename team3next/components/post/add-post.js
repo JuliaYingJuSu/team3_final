@@ -110,6 +110,7 @@ export default function AddPost() {
                     class="form-control"
                     aria-label="With textarea"
                     placeholder="撰寫內文..."
+                    rows="5"
                   ></textarea>
                 </div>
                 <div class="row align-items-end">

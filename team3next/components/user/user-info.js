@@ -14,6 +14,7 @@ export default function UserInfo() {
               <span>追蹤中</span>
             </div>
             <button className="btn btn-middle mt-4 fw-bold">發表文章</button>
+            
           </div>
           <div className="middle ms-5">
             <div className="rounded-circle img-thumbnail headshot-big position-relative">

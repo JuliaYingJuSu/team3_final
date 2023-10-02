@@ -109,8 +109,10 @@ export default function Banner() {
           }
           .tags {
             border-radius: 40px;
-            border: 0.5px solid;
+            border: 0.5px solid #666666;
             margin-right: 5px;
+            color:#666666;
+            font-size:16px;
           }
         `}
       </style>

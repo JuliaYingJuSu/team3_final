@@ -1,10 +1,11 @@
 import React from "react";
+import styles from "@/pages/product/index.module.css";
 
 
 export default function Breadcrumb() {
   return (
     <>
-      <div className="container">
+      <div className={styles.bread}>
         <span className="icon-home"></span>
         <span className="icon-arrow-s-right"></span>
         <span>
