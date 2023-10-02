@@ -1,10 +1,19 @@
 import React from "react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import dayjs from "dayjs";
+import index from "@/pages/post";
+import { set } from "lodash";
 
 export default function OpeningHours() {
+  const [checkedArray,setCheckedArray] = useState(Array(7).fill(false)) 
+  const toggleCheckboxStates = (index) =>{
+    const newcheckedArray = [...checkedArray]
+    newcheckedArray[index] = !checkedArray[index]
+    setCheckedArray(newcheckedArray)
+  }
   const {
     register,
     handleSubmit,
@@ -37,7 +46,7 @@ export default function OpeningHours() {
     hoursOption.push(hm.format("HH:mm"));
   }
   //  算出24小時陣列
-  console.log(hoursOption);
+  // console.log(hoursOption);
   return (
     <>
       <div className="row">
@@ -47,10 +56,13 @@ export default function OpeningHours() {
           <form onSubmit={handleSubmit(onSubmit)}>
             {daysOfWeek.map((v, i) => {
               return (
-                <div
+                <motion.div
                   className="row d-flex align-items-center flex-row bottom-line-g"
                   style={{ height: "100px" }}
                   key={i}
+                  initial={{ backgroundColor: "#FFFFFF",height: "100px"}}
+                  animate={checkedArray[i]?{ backgroundColor: "#FBF9EF",height: "125px"}:{ backgroundColor: "#FFFFFF",height: "100px"}}
+                  transition={{ type: "spring", stiffness: 30 }}
                 >
                   <label
                     className="d-flex align-items-center flex-row d-block w-100 h-100"
@@ -58,6 +70,8 @@ export default function OpeningHours() {
                   >
                     <input
                       type="checkbox"
+                      onClick={()=>toggleCheckboxStates(i)}
+                      checked={checkedArray[i]}
                       id={`day${i}`}
                       {...register(`weekday${i == 6 ? i - 6 : i + 1}`)}
                       value={i == 6 ? i - 6 : i + 1}
@@ -101,10 +115,12 @@ export default function OpeningHours() {
                       </div>
                     </div>
                   </label>
-                </div>
+                </motion.div>
               );
             })}
-            <button type="submit">Send</button>
+            <button className="btn btn-big mt-4 ms-auto" type="submit">
+              確認修改
+            </button>
           </form>
         </div>
         <div className="col-2"></div>
