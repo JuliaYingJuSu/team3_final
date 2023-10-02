@@ -24,7 +24,7 @@ export default function UserMyfrom() {
           <UserPictureCard></UserPictureCard>
           <UserPictureCard></UserPictureCard>
           <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
+          <UserPictureCard></UserPictureCard>        
         </div>
       </div>
       <Footer></Footer>

@@ -7,7 +7,7 @@ export default function Section02() {
     <>
       <div className="container mt-5">
         <h4 className="h4-title mb-4">台北市食記</h4>
-        <div className="row row-cols-1 row-cols-md-3 container mx-auto">
+        <div className="row row-cols-1 row-cols-lg-3 container mx-auto">
           <Card></Card>
           <Card></Card>
           <Card></Card>
