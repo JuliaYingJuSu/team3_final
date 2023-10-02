@@ -28,6 +28,22 @@ export default function SearchBar() {
             right: 25px;
             top: 18px;
           }
+          @media screen and (max-width: 500px) {
+            .searchbar {
+              display: flex;
+              width: 360px;
+              height: 40px;
+              padding: 0px 5px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+            }
+            .search-banner:before {
+              position: absolute;
+              right: 25px;
+              top: 9px;
+            }
+          }
         `}
       </style>
     </>
