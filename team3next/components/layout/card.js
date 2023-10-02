@@ -3,12 +3,14 @@
 import React from "react";
 import PostModal from "../post/post-modal";
 import Link from "next/link";
+import AddPost from "../post/add-post";
 
 
 export default function Card() {
   return (
     <>
       <PostModal />
+      {/* <AddPost/> */}
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
