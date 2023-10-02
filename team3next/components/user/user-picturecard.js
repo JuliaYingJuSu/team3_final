@@ -14,19 +14,14 @@ export default function UserPictureCard() {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal">
           <img src="/images/post/ifood01.jpg" className={Styles.imgStyle}></img>
-          <button
-            type="button"
-            className="btn-close position-absolute z-1 fs-4"
-            aria-label="Close"
-            style={{ right: 12, marginTop: 15 }}></button>
           <span
             className="icon-multi position-absolute z-1 fs-4 top-50"
             style={{ right: 20, marginTop: 155 }}></span>
         </a>
-      </p>
-      <div>
+        <span>
         <MyArticle></MyArticle>
-      </div>
+      </span>
+      </p>
     </>
   );
 }
