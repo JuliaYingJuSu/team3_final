@@ -4,7 +4,7 @@ export default function LocationSelect() {
   return (
     <>
         <button
-              className="btn dropdown-toggle btn-lg middle"
+              className="btn dropdown-toggle btn-lg middle locat-b"
               type="button"
               data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -28,6 +28,15 @@ export default function LocationSelect() {
                 </a>
               </li>
             </ul>
+            <style jsx>
+        {`
+          @media screen and (max-width: 500px) {
+            .locat-b {
+              display:none;
+            }
+          }
+        `}
+      </style>
     </>
   )
 }

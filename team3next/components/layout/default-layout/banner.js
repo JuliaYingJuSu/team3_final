@@ -13,7 +13,7 @@ export default function Banner() {
             <LocationSelect />
           </div>
           {/* 搜尋條 */}
-          <SearchBar/>
+          <SearchBar />
         </div>
       </div>
 
@@ -25,6 +25,12 @@ export default function Banner() {
           .banner {
             background-image: url("./images/index-image.jpg");
             background-size: cover;
+          }
+          @media screen and (max-width: 500px) {
+            .banner {
+              height:150px;
+              background-image:none;
+            }
           }
         `}
       </style>
