@@ -4,6 +4,7 @@ import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
+import ProductComment from "@/components/cart/product-comment";
 
 export default function OrderComplete() {
   return (
@@ -190,6 +191,7 @@ export default function OrderComplete() {
               <th className={styles.cutBorder} scope="col">
                 小計
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -210,6 +212,9 @@ export default function OrderComplete() {
               </td>
               <td className={styles.cutBorder + " align-middle"}>NT$320</td>
               <td className={styles.cutBorder + " align-middle"}>NT$320</td>
+              <td className={styles.cutBorder + " align-middle"}>
+                {<ProductComment />}
+              </td>
             </tr>
           </tbody>
         </table>
