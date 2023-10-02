@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function MyArticle() {
@@ -161,7 +162,7 @@ export default function MyArticle() {
                 </span>
                 <span className="middle">
                   <button className="btn btn-sm btn-i">
-                    <i className="far icon-edit"></i>
+                    <Link className="far icon-edit" href="/post/edit-post"></Link>
                   </button>
                 </span>
               </div>
