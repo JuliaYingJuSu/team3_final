@@ -60,7 +60,9 @@
 }
 
 /* search--------- */
-
+.barBtn {
+  display: none;
+}
 .sort {
   margin-bottom: 20px;
 }
@@ -121,3 +123,18 @@
   width: 100%;
   height: ;
 } */
+
+@media screen and (max-width: 787px) {
+  .leftBox {
+    display: none;
+  }
+  .barBtn {
+    display: inline;
+  }
+}
+.display {
+  display: block !important;
+}
+.notDisplay {
+  display: none !important;
+}

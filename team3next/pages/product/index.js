@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
+import { Form } from "react-bootstrap";
 
 export default function index() {
+  // const [down, setDown] = useState(false);
+
+  // const a = () => {
+  //   const b = document.querySelector("#leftBox");
+  //   // b.classList.add("display");
+  //   // };
+  //   console.log(b);
+  // };
+
+  useEffect();
+
   return (
     <>
       <Navbar />
@@ -12,7 +24,7 @@ export default function index() {
         <Bread />
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
-            <div className={styles.leftBox}>
+            <div id="leftBox" className={styles.leftBox}>
               <div className={styles.left}>
                 <button className="btn" type="button">
                   全部商品
@@ -187,53 +199,48 @@ export default function index() {
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
-                <form className="d-flex flex-column px-2">
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType1"
-                      id="priceType1"
-                    />
-                    300以下
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType2"
-                      id="priceType2"
-                    />
-                    301-500
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType3"
-                      id="priceType3"
-                    />
-                    501-800
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType4"
-                      id="priceType4"
-                    />
-                    801-1500
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType5"
-                      id="priceType5"
-                    />
-                    1500以上
-                  </label>
-                </form>
+
+                <Form className="d-flex flex-column px-2 justify-content-start">
+                  {["radio"].map((type) => (
+                    <div key={`inline-${type}`} className="mb-3">
+                      <Form.Check
+                        inline
+                        label="300以下"
+                        name="price"
+                        type={type}
+                        id={`inline-${type}-1`}
+                      />
+                      <Form.Check
+                        inline
+                        label="300 - 500"
+                        name="price"
+                        type={type}
+                        id={`inline-${type}-2`}
+                      />
+                      <Form.Check
+                        inline
+                        label="500 - 800"
+                        name="price"
+                        type={type}
+                        id={`inline-${type}-2`}
+                      />
+                      <Form.Check
+                        inline
+                        label="800 - 1000"
+                        name="price"
+                        type={type}
+                        id={`inline-${type}-2`}
+                      />
+                      <Form.Check
+                        inline
+                        label="1000以上"
+                        name="price"
+                        type={type}
+                        id={`inline-${type}-2`}
+                      />
+                    </div>
+                  ))}
+                </Form>
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">篩選條件</p>
@@ -269,14 +276,26 @@ export default function index() {
               </div>
             </div>
 
-            <div className="container-fluid">
+            <div className="container">
               <div
                 className={
-                  styles.sort + " d-flex justify-content-end align-items-center"
+                  styles.sort +
+                  " row d-flex justify-content-end align-items-center"
                 }
               >
+                <button
+                  className={
+                    styles.barBtn + " col-auto btn btn-sm btn-warning me-auto"
+                  }
+                  // onClick={() => {
+                  //   setDown(true);
+                  // }}
+                  onClick={a}
+                >
+                  分類
+                </button>
                 <select
-                  class=" form-select form-select-sm d-inline-block"
+                  class=" col-2 form-select form-select-sm d-inline-block"
                   aria-label="Small select example"
                 >
                   <option selected>排序</option>
@@ -284,9 +303,9 @@ export default function index() {
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
-                <form class="d-flex align-items-center" role="search">
+                <form class="col-auto d-flex " role="search">
                   <input
-                    class="form-control me-2"
+                    class="form-control me-1"
                     type="search"
                     placeholder="搜尋"
                     aria-label="Search"
