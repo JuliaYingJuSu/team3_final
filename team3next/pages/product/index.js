@@ -4,9 +4,12 @@ import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
 import { Form } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
+import Link from "next/link";
+import axios from "axios";
 
 export default function index() {
-  // const [down, setDown] = useState(false);
+  const [data, setData] = useState([]);
 
   // const a = () => {
   //   const b = document.querySelector("#leftBox");
@@ -15,7 +18,16 @@ export default function index() {
   //   console.log(b);
   // };
 
-  // useEffect();
+  useEffect(() => {
+    // axios.get("");
+
+    fetch("http://localhost:3002/product")
+      .then((r) => r.json())
+      .then((data) => {
+        setData(data);
+        console.log(data[0]);
+      });
+  }, []);
 
   return (
     <>
@@ -26,9 +38,11 @@ export default function index() {
           <main className="w-100 d-flex">
             <div id="leftBox" className={styles.leftBox}>
               <div className={styles.left}>
-                <button className="btn" type="button">
-                  全部商品
-                </button>
+                <Link href="#/product">
+                  <button className={styles.leftA + " btn"} type="button">
+                    全部商品
+                  </button>
+                </Link>
                 <button
                   className="btn"
                   type="button"
@@ -283,25 +297,33 @@ export default function index() {
                   " row d-flex justify-content-end align-items-center"
                 }
               >
-                <button
-                  className={
-                    styles.barBtn + " col-auto btn btn-sm btn-warning me-auto"
-                  }
-                  // onClick={() => {
-                  //   setDown(true);
-                  // }}
-                  // onClick={a}
-                >
-                  分類
-                </button>
+                <Dropdown className=" col-auto me-auto">
+                  <Dropdown.Toggle
+                    id="dropdown-basic"
+                    className={styles.barBtn + " p-1 btn-small border-0 "}
+                  >
+                    分類
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+
                 <select
-                  class=" col-2 form-select form-select-sm d-inline-block"
+                  class=" col-2 form-select form-select-sm"
                   aria-label="Small select example"
                 >
                   <option selected>排序</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                  <option value="1">最新商品</option>
+                  <option value="2">價格高到低</option>
+                  <option value="3">價格低到高</option>
                 </select>
                 <form class="col-auto d-flex " role="search">
                   <input
@@ -315,12 +337,24 @@ export default function index() {
               </div>
 
               <div className="row mb-3 d-flex justify-content-center align-items-center">
-                {Array(8)
-                  .fill(1)
-                  .map((v, i) => {
+                {data.map(
+                  (
+                    {
+                      product_id,
+                      product_name,
+                      price,
+                      product_description,
+                      specification,
+                      product_type_id,
+                      product_type_list_id,
+                      isValid,
+                    },
+                    i
+                  ) => {
+                    console.log(product_id);
                     return (
                       <div
-                        key={i}
+                        key={product_id}
                         className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
                       >
                         <div className={styles.cardP}>
@@ -332,20 +366,21 @@ export default function index() {
                             />
                           </div>
                           <div className=" px-2 w-100 d-flex justify-content-between pt-2 pb-2">
-                            <span>品牌名 產品名</span>
+                            <span>{product_name}</span>
                             <span className="icon-mark"></span>
                           </div>
                           <div
                             className=" px-2 w-100
                      d-flex justify-content-between pt-2 pb-2"
                           >
-                            <span>NT$ 1000</span>{" "}
+                            <span>{"NT$" + price}</span>
                             <span className="icon-cark"></span>
                           </div>
                         </div>
                       </div>
                     );
-                  })}
+                  }
+                )}
               </div>
             </div>
           </main>

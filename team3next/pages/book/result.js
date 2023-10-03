@@ -23,7 +23,7 @@ export default function Index() {
               <input
                 className="form-control me-2 searchbar ps-4"
                 type="search"
-                placeholder="火鍋"
+                placeholder="日式"
                 aria-label="Search"
               ></input>
               <span className="icon-search search-banner"></span>
@@ -101,9 +101,11 @@ export default function Index() {
           早午餐
         </button>
       </div>
-      <div className="d-flex mb-5" style={{ marginLeft: "420px" }}>
-        <h5 className="fw-bolder">火鍋</h5>
-        <h6 className="align-self-end ms-2">(10篇)</h6>
+      <div className="container d-flex justify-content-center">
+        <div className="d-flex" style={{width:"80%"}}>
+          <h5 className="fw-bolder">日式</h5>
+          <h6 className="align-self-end ms-2">(10篇)</h6>
+        </div>
       </div>
       <CardR3></CardR3>
       <CardR3></CardR3>
@@ -116,6 +118,15 @@ export default function Index() {
       <Footer></Footer>
       <style jsx>
         {`
+          .form-check-input:checked {
+            background-color: #869aaa;
+            border-color: #869aaa;
+          }
+          .tags {
+            border-radius: 40px;
+            border: 0.5px solid;
+            margin-right: 5px;
+          }
           .searchbar {
             width: 655px;
             height: 60px;
@@ -130,15 +141,21 @@ export default function Index() {
             right: 25px;
             top: 18px;
           }
-          .form-check-input:checked {
-            background-color: #869aaa;
-            border-color: #869aaa;
-          }
-          .tags {
-            border-radius: 40px;
-            border: 0.5px solid;
-            margin-right: 5px;
-          }
+          @media screen and (max-width: 500px) {
+            .searchbar {
+              display: flex;
+              width: 360px;
+              height: 40px;
+              padding: 0px 5px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+            }
+            .search-banner:before {
+              position: absolute;
+              right: 25px;
+              top: 9px;
+            }
         `}
       </style>
     </>
