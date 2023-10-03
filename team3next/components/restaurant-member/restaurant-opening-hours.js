@@ -99,7 +99,7 @@ export default function OpeningHours() {
                     <div className="col-7 d-flex align-items-center justify-content-evenly flex-row">
                       <div className="d-flex flex-column">
                         <span className="fs16g">開始營業時間：</span>
-                        <select
+                        <select className="selector"
                           {...register(`startTime${i == 6 ? i - 6 : i + 1}`)}
                         >
                           <option value="">請選擇時間</option>
@@ -115,7 +115,7 @@ export default function OpeningHours() {
                       </div>
                       <div className="d-flex flex-column">
                         <span className="fs16g">結束營業時間：</span>
-                        <select
+                        <select className="selector"
                           {...register(`endTime${i == 6 ? i - 6 : i + 1}`)}
                         >
                           <option value="">請選擇時間</option>
@@ -144,9 +144,6 @@ export default function OpeningHours() {
         {`
           input[type="checkbox"] {
             display: none;
-          }
-          select {
-            border: none;
           }
         `}
       </style>

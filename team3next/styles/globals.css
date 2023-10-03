@@ -408,3 +408,19 @@ body {
   border: 1px solid #d9d9d9;
   background: #fff;
 }
+
+input[type=text]{
+  padding-left: 12px;
+}
+
+.selector {
+  height: 42px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  border-radius: 10px;
+}
+
+
+/* select:focus { 
+outline: none;
+} */
