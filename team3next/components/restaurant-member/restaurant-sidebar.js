@@ -67,7 +67,7 @@ export default function RestaurantSidebar() {
               style={{ width: "140px" }}
             >
               <Link className="stretched-link text-dark" href="#">
-                訂單管理
+                餐廳訂單管理
               </Link>
             </div>
           </div>

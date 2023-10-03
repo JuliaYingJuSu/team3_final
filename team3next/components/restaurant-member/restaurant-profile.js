@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function Profile() {
   const {
@@ -11,6 +12,16 @@ export default function Profile() {
   } = useForm();
   console.log(errors);
 
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post("http://localhost:3002/try-post", data);
+      console.log("Server Response:", response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   return (
     <>
       <div className="row">
@@ -19,9 +30,7 @@ export default function Profile() {
           <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
           <form
             className="d-flex flex-column justify-content-center"
-            onSubmit={handleSubmit((data) => {
-              console.log(data);
-            })}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <div className="d-flex flex-column my-3">
               <label className="fs18b" htmlFor="email">

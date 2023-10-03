@@ -43,23 +43,29 @@ export default function PageContent() {
               />
             </div>
             <div className="d-flex flex-column  mb-3">
-              <label className="fs18b" htmlFor="password">
+              <label className="fs18b" htmlFor="address">
                 店家地址
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.password?.message}
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.address?.message}
                 </span>
               </label>
-              <CitySelector />
-              <input
-                className="input-res"
-                type="password"
-                {...register("password", { required: "*" })}
-                id="password"
-              />
+              <div className="d-flex justify-content-start">
+                <CitySelector />
+                <input
+                  className="input-res flex-grow-1"
+                  type="text"
+                  {...register("address", { required: "請輸入資料" })}
+                  id="password"
+                  placeholder="輸入完整的地址資料"
+                />
+              </div>
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="rePassword">
-                密碼確認
+              <label className="fs18b" htmlFor="phone">
+                市內電話
                 <span className="ps-1" style={{ color: "red" }}>
                   {errors.rePassword?.message}
                 </span>
@@ -67,8 +73,8 @@ export default function PageContent() {
               <input
                 className="input-res"
                 type="password"
-                {...register("rePassword", { required: "* 請再輸入一次密碼" })}
-                id="rePassword"
+                {...register("phone", { required: "* 請再輸入一次密碼" })}
+                id="phone"
               />
             </div>
 

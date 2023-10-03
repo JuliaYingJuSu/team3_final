@@ -1,4 +1,6 @@
-import Link from "next/link";import React from "react";
+import Link from "next/link";
+import React from "react";
+import ImageItemPreview from '@/components/post/Image-Item-preview'
 
 export default function AddPost() {
   return (
