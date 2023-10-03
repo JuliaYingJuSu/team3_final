@@ -15,7 +15,7 @@ export default function index() {
   //   console.log(b);
   // };
 
-  useEffect();
+  // useEffect();
 
   return (
     <>
@@ -290,7 +290,7 @@ export default function index() {
                   // onClick={() => {
                   //   setDown(true);
                   // }}
-                  onClick={a}
+                  // onClick={a}
                 >
                   分類
                 </button>
