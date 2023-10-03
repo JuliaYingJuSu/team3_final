@@ -64,9 +64,9 @@ export default function EditPost() {
               id="inputGroupFile02"
               multiple
             />
-            <label className="input-group-text" for="inputGroupFile02">
+            {/* <label className="input-group-text" for="inputGroupFile02">
               上傳圖片
-            </label>
+            </label> */}
           </div>
           <div className="input-group mb-3">
             <span
@@ -116,7 +116,7 @@ export default function EditPost() {
             <textarea
               className="form-control"
               aria-label="With textarea"
-              placeholder="公司附近的義大利餐廳/n
+              placeholder="公司附近的義大利餐廳\n
                           餐廳的海鮮是從基隆港直接進貨非常新鮮
                           今天點了四道
                           酪梨醬辣味番茄莎莎海鮮披薩
@@ -129,12 +129,12 @@ export default function EditPost() {
             ></textarea>
           </div>
           <div className="d-flex justify-content-center mb-3">
-            <button type="submit" className="btn btn-big me-2">
-              修改文章
-            </button>
-            <Link className="btn btn-big" href="#">
+            <Link className="btn btn-big me-2" href="#">
               放棄修改
             </Link>
+            <button type="submit" className="btn btn-big">
+              修改文章
+            </button>
           </div>
         </form>
       </div>
