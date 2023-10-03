@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
 import Slider from "react-slick";
 
 export default function Carousel() {
@@ -47,6 +47,7 @@ export default function Carousel() {
     nextArrow: <NextArrow />,
   };
 
+ 
   return (
     <>
       <div className="container my-4">
@@ -56,10 +57,11 @@ export default function Carousel() {
             <div className="middle">
               <div className="c-card middle">
                 <div className="mt-2">
-                  <img
-                    src="/images/food-1106513_1920.jpg"
-                    alt="台式"
-                    className="w-100 c-card-img"></img>
+                  <Link href="#">
+                    <img
+                      src="/images/food-1106513_1920.jpg"
+                      className="w-100 c-card-img rounded-circle"></img>
+                  </Link>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">台式</span>
@@ -70,9 +72,9 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="/images/food-1106513_1920.jpg"
+                    src="/images/test/c1.jpg"
                     alt="台式"
-                    className="w-100 c-card-img"></img>
+                    className="w-100 c-card-img rounded-circle"></img>
                 </div>
                 <div className="middle">
                   <span className="c-card-text fs18b pb-4">中式</span>
@@ -83,9 +85,9 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="/images/food-1106513_1920.jpg"
+                    src="/images/test/j1.jpg"
                     alt="台式"
-                    className="w-100 c-card-img"></img>
+                    className="w-100 c-card-img rounded-circle"></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">日式</span>
@@ -96,22 +98,9 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="/images/food-1106513_1920.jpg"
+                    src="/images/test/k1.jpg"
                     alt="台式"
-                    className="w-100 c-card-img"></img>
-                </div>
-                <div>
-                  <span className="c-card-text fs18b pb-4">台式</span>
-                </div>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="c-card middle">
-                <div className="mt-2">
-                  <img
-                    src="/images/food-1106513_1920.jpg"
-                    alt="台式"
-                    className="w-100 c-card-img"></img>
+                    className="w-100 c-card-img rounded-circle"></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">韓式</span>
@@ -122,9 +111,9 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="/images/food-1106513_1920.jpg"
+                    src="/images/test/h1.jpg"
                     alt="台式"
-                    className="w-100 c-card-img"></img>
+                    className="w-100 c-card-img rounded-circle"></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">港式</span>
@@ -135,12 +124,25 @@ export default function Carousel() {
               <div className="c-card middle">
                 <div className="mt-2">
                   <img
-                    src="/images/food-1106513_1920.jpg"
+                    src="/images/test/a1.jpg"
                     alt="台式"
-                    className="w-100 c-card-img"></img>
+                    className="w-100 c-card-img rounded-circle"></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">美式</span>
+                </div>
+              </div>
+            </div>
+            <div className="middle">
+              <div className="c-card middle">
+                <div className="mt-2">
+                  <img
+                    src="/images/test/i1.jpg"
+                    alt="台式"
+                    className="w-100 c-card-img rounded-circle"></img>
+                </div>
+                <div>
+                  <span className="c-card-text fs18b pb-4">義式</span>
                 </div>
               </div>
             </div>
@@ -153,9 +155,8 @@ export default function Carousel() {
             /* 輪播牆卡片樣式 */
           }
           .c-card-img {
-            width: 164px;
-            height: 164px;
-            border-radius: 164px;
+            width: 160px;
+            height: 160px;
             object-fit: cover;
           }
           .c-card {
