@@ -11,45 +11,48 @@ export default function Index() {
       </Head>
       <Navbar></Navbar>
       <br />
+      <br />
       <div className="container mt-3">
-        <div className="d-flex" style={{ marginLeft: "200px" }}>
+        <div className="d-flex justify-content-center">
           <div
-            className="fs18 align-self-center"
-            style={{ marginRight: "80px" }}
+            className="row g-5 justify-content-around"
+            style={{ width: "70%" }}
           >
-            <p className="h4">
-              Cin Cin Osteria
+            <div className="fs18 align-self-center col-4">
+              <p className="h4">
+                Cin Cin Osteria
+                <br />
+                請請義大利餐廳
+              </p>
               <br />
-              請請義大利餐廳
-            </p>
-            <br />
-            <div className="fs18">
-              <div className="d-flex">
-                <span className="pe-2">
-                  <span className="icon-map"></span>
-                </span>
-                <div>台南市中西區尊王路140號</div>
-              </div>
-              <div className="d-flex">
-                <span className="pe-2">
-                  <span className="icon-Call"></span>
-                </span>
-                <div>06 221 0699</div>
-              </div>
-              <div className="d-flex">
-                <span className="pe-2">
-                  <span className="icon-calender"></span>
-                </span>
-                <div>每週一、週二休息</div>
+              <div className="fs18">
+                <div className="d-flex">
+                  <span className="pe-2">
+                    <span className="icon-map"></span>
+                  </span>
+                  <div>台南市中西區尊王路140號</div>
+                </div>
+                <div className="d-flex">
+                  <span className="pe-2">
+                    <span className="icon-Call"></span>
+                  </span>
+                  <div>06 221 0699</div>
+                </div>
+                <div className="d-flex">
+                  <span className="pe-2">
+                    <span className="icon-calender"></span>
+                  </span>
+                  <div>每週一、週二休息</div>
+                </div>
               </div>
             </div>
-          </div>
-          <div style={{ marginLeft: "80px" }}>
-            <img
-              style={{ width: "500px" }}
-              src="../../images/book/map-2.png"
-              alt=""
-            />
+            <div className="col-8">
+              <img
+                className="img-map"
+                src="../../images/book/map-2.png"
+                alt="..."
+              />
+            </div>
           </div>
         </div>
         <br />
@@ -57,19 +60,24 @@ export default function Index() {
         <hr />
         <br />
         <br />
-        <div className="d-flex">
-          <div style={{ marginLeft: "200px", marginRight: "400px" }}>
-            <div className="h5 mb-4">用餐人數</div>
-            <div className="d-flex">
-              <div className="fs18 me-5 ps-3">3 位 大人</div>
-              <div className="fs18 ps-3">1 位 孩童</div>
+        <div className="d-flex justify-content-center">
+          <div
+            className="d-flex justify-content-around"
+            style={{ width: "80%" }}
+          >
+            <div>
+              <div className="h5 mb-4">用餐人數</div>
+              <div className="d-flex">
+                <div className="fs18 me-5 ps-3">3 位 大人</div>
+                <div className="fs18 ps-3">1 位 孩童</div>
+              </div>
+              <div className="h5 mt-5 mb-4">用餐時段</div>
+              <div className="fs18 ps-3">17:00</div>
             </div>
-            <div className="h5 mt-5 mb-4">用餐時段</div>
-            <div className="fs18 ps-3">17:00</div>
-          </div>
-          <div>
-            <div className="h5 mb-4">用餐日期</div>
-            <div className="fs18 ps-3">11月7日 週二</div>
+            <div>
+              <div className="h5 mb-4">用餐日期</div>
+              <div className="fs18 ps-3">11月7日 週二</div>
+            </div>
           </div>
         </div>
         <br />
@@ -101,6 +109,11 @@ export default function Index() {
       <Footer></Footer>
       <style jsx>
         {`
+          .img-map {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
           .container3 {
             border: 1px solid #d9d9d9;
             border-radius: 40px;
