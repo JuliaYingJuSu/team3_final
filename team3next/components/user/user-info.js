@@ -1,7 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function UserInfo() {
+  const [userInfo,setUserInfo]=useState({
+    user_id:0,
+    nickname:"會員暱稱",
+    self_intr:"",
+  })
   return (
     <>
       <main className="container bottom-line" style={{ paddingBottom: 40 }}>

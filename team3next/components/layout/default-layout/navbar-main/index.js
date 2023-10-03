@@ -2,15 +2,19 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 import PhoneNavbar from "./phone-navbar";
 import NavCart from "@/components/cart/nav-cart";
+import { useState } from "react";
 
 export default function MyNavbar() {
-  // currentRoute是用來套用active樣式(目前區域對應選單項目)，需傳入MainMenu中
-  const router = useRouter();
-  const currentRoute = router.pathname;
+  
+  const menuItems = [
+    { id: 1, name: "食好料", href: "/post" },
+    { id: 2, name: "食在推", href: "/book" },
+    { id: 3, name: "嗑零食", href: "/product" },
+  ];
+  const [activeMenu, setActiveMenu] = useState("");
 
   return (
     <>
@@ -38,27 +42,27 @@ export default function MyNavbar() {
               <div className="hidden-max">
                 <PhoneNavbar></PhoneNavbar>
               </div>
+              {/* 左側連結區 */}
               <ul className="nav nav-underline hidden-nav">
                 <div className="d-flex me-auto">
-                  {/* 左側連結區 */}
-                  <li className="nav-item pe-3">
-                    <Link
-                      className="nav-link active fs-5"
-                      aria-current="page"
-                      href="/post">
-                      食好料
-                    </Link>
-                  </li>
-                  <li className="nav-item pe-3">
-                    <Link className="nav-link text-dark fs-5" href="/book">
-                      食在推
-                    </Link>
-                  </li>
-                  <li className="nav-item pe-3">
-                    <Link className="nav-link text-dark fs-5" href="/product">
-                      嗑零食
-                    </Link>
-                  </li>
+                  {menuItems.map((v) => {
+                    return (
+                      <li
+                        className="nav-item pe-3"
+                        key={v.id}
+                        onClick={()=>{
+                          setActiveMenu(v)
+                        }}>
+                        <Link
+                          className={`nav-link fs-5 text-dark ${
+                            activeMenu === v.href ? "active" : ""
+                          }`}
+                          href={v.href}>
+                          {v.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </div>
                 {/* 右側ICON區 */}
                 <div className="middle gap-4 right-menu">
@@ -176,8 +180,8 @@ export default function MyNavbar() {
               display: none;
             }
             .hidden-max {
-            display: table;
-          }
+              display: table;
+            }
           }
         `}
       </style>
