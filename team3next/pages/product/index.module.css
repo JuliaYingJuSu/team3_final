@@ -47,7 +47,8 @@
 .left button:hover {
   border-bottom: 3px solid #b6705e !important;
 }
-.left > button {
+.left > button,
+.leftA {
   font-size: 18px;
   font-weight: 700;
 }
@@ -60,7 +61,9 @@
 }
 
 /* search--------- */
-
+.barBtn {
+  display: none;
+}
 .sort {
   margin-bottom: 20px;
 }
@@ -120,4 +123,19 @@
 /* .imgBox img{
   width: 100%;
   height: ;
+} */
+
+@media screen and (max-width: 787px) {
+  .leftBox {
+    display: none;
+  }
+  .barBtn {
+    display: inline;
+  }
+}
+/* .display {
+  display: block !important;
+}
+.notDisplay {
+  display: none !important;
 } */
