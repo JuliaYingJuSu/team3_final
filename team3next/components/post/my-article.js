@@ -61,21 +61,21 @@ export default function MyArticle() {
                   <div className="carousel-item active">
                     <img
                       src="/images/post/3188.jpg"
-                      className="d-block w-100"
+                      className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
                       src="/images/post/3188.jpg"
-                      className="d-block w-100"
+                      className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
                       src="/images/post/3188.jpg"
-                      className="d-block w-100"
+                      className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
                   </div>
@@ -218,6 +218,9 @@ export default function MyArticle() {
           }
           .restaurant {
             color: #ae4818;
+          }
+          .object-fit-cover{
+            height:600px;
           }
           
         `}

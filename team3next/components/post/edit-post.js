@@ -1,65 +1,63 @@
+import Link from "next/link";
 import React from "react";
 
 export default function EditPost() {
   return (
     <>
-      <div className="container">
-        <div
-          className="d-flex justify-content-center mb-3"
-          style={{ heigh: 300 }}
-        >
+      <div className="container d-flex justify-content-center bg-color mb-2">
+        <div className="my-3 object-fit-cover">
           <div id="carouselExample" className="carousel slide mb-3">
-                <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <img
-                      src="/images/post/3188.jpg"
-                      className="d-block w-100 "
-                      alt="..."
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src="/images/post/3188.jpg"
-                      className="d-block w-100 "
-                      alt="..."
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src="/images/post/ifood01.JPG"
-                      className="d-block w-100"
-                      alt="..."
-                    />
-                  </div>
-                </div>
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carouselExample"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carouselExample"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Next</span>
-                </button>
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img
+                  src="/images/post/3188.jpg"
+                  className="d-block w-100 object-fit-cover"
+                  alt="..."
+                />
               </div>
+              <div className="carousel-item">
+                <img
+                  src="/images/post/3188.jpg"
+                  className="d-block w-100 object-fit-cover"
+                  alt="..."
+                />
+              </div>
+              <div className="carousel-item">
+                <img
+                  src="/images/post/ifood01.JPG"
+                  className="d-block w-100 object-fit-cover"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="prev"
+            >
+              <span
+                className="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="next"
+            >
+              <span
+                className="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
         <form action="">
-          <div className="input-group mb-3">
+          <div className="input-group my-3">
             <input
               type="file"
               className="form-control"
@@ -131,9 +129,12 @@ export default function EditPost() {
             ></textarea>
           </div>
           <div className="d-flex justify-content-center mb-3">
-            <button type="submit" className="btn btn-big">
+            <button type="submit" className="btn btn-big me-2">
               修改文章
             </button>
+            <Link className="btn btn-big" href="#">
+              放棄修改
+            </Link>
           </div>
         </form>
       </div>
@@ -141,6 +142,16 @@ export default function EditPost() {
         {`
           .btn {
             color: #ae4818;
+          }
+          .object-fit-cover {
+            width: 600px;
+            height: 520px;
+          }
+          .bg-color {
+            background-color: #fbf9ef;
+            border-radius: 10px 10px 10px 10px;
+            width: 850px;
+            height: 550px;
           }
         `}
       </style>

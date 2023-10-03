@@ -1,17 +1,15 @@
-import React from "react";
+import Link from "next/link";import React from "react";
 
 export default function AddPost() {
   return (
     <>
-      <div className="container">
+      <div className="container d-flex justify-content-center bg-color mb-2">
         <div
-          className="d-flex justify-content-center mb-3"
-          style={{ heigh: 300 }}
-        >
-          <img src="/images/post/image-gallery.png" alt="" />
+          className="my-3">
+          <img src="/images/post/image-gallery.png" alt="" className="object-fit-cover"/>
         </div>
         <form action="">
-          <div className="input-group mb-3">
+          <div className="input-group my-3">
             <input
               type="file"
               className="form-control"
@@ -72,9 +70,10 @@ export default function AddPost() {
             ></textarea>
           </div>
           <div className="d-flex justify-content-center mb-3">
-            <button type="submit" className="btn btn-big">
+            <button type="submit" className="btn btn-big me-2">
               發表文章
             </button>
+            <Link className="btn btn-big" href="#">放棄發表</Link>
           </div>
         </form>
       </div>
@@ -82,6 +81,16 @@ export default function AddPost() {
         {`
           .btn {
             color: #ae4818;
+          }
+          .object-fit-cover {
+            width: 500px;
+            height: 520px;
+          }
+          .bg-color {
+            background-color: #fbf9ef;
+            border-radius: 10px 10px 10px 10px;
+            width: 850px;
+            height: 550px;
           }
         `}
       </style>
