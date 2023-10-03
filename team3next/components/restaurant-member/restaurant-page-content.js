@@ -67,13 +67,33 @@ export default function PageContent() {
               <label className="fs18b" htmlFor="phone">
                 市內電話
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.rePassword?.message}
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.phone?.message}
                 </span>
               </label>
               <input
                 className="input-res"
-                type="password"
-                {...register("phone", { required: "* 請再輸入一次密碼" })}
+                type="text"
+                {...register("phone", { required: "請輸入資料" })}
+                id="phone"
+              />
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label className="fs18b" htmlFor="phone">
+                市內電話
+                <span className="ps-1" style={{ color: "red" }}>
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.phone?.message}
+                </span>
+              </label>
+              <textarea
+                className="input-area"
+                type="text"
+                {...register("phone", { required: "請輸入資料" })}
                 id="phone"
               />
             </div>
