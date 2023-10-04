@@ -140,8 +140,6 @@ export default function postDetail() {
                   <br />
                   每一道都好吃
                   <br />
-                  在南京復興附近不知道要吃什麼的話可以來試試看唷
-                  <br />
                 </div>
               </div>
               <p className="icon-tag">

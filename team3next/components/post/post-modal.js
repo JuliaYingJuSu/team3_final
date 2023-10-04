@@ -58,7 +58,7 @@ export default function PostModal() {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body overflow-x-hidden">
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
@@ -167,7 +167,7 @@ export default function PostModal() {
                   <span>1</span>
                 </span>
               </div>
-            <div className="ms-3" style={{ width: 500 }}>
+            <div className="ms-3" style={{ width: 375 }}>
             
               <div className="mb-3">
                 公司附近的義大利餐廳
@@ -185,8 +185,6 @@ export default function PostModal() {
                 義式烤本島現流海魚
                 <br />
                 每一道都好吃
-                <br />
-                在南京復興附近不知道要吃什麼的話可以來試試看唷
                 <br />
               </div>
               <p className="icon-tag">
