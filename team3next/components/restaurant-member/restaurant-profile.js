@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
 import axios from "axios";
+import profileSchema from "@/validation/profile-validation";
 
 export default function Profile() {
   const {
@@ -9,12 +11,16 @@ export default function Profile() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(profileSchema),
+  });
   console.log(errors);
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      // const isValid = await profileSchema.isValid(data)
+      // console.log(isValid)
       const response = await axios.post("http://localhost:3002/try-post", data);
       console.log("Server Response:", response.data);
     } catch (err) {
@@ -45,7 +51,7 @@ export default function Profile() {
               <input
                 className="input-res"
                 type="text"
-                {...register("email", { required: "請輸入資料" })}
+                {...register("email")}
                 id="email"
                 placeholder="test@gmail.com"
               />
@@ -63,7 +69,7 @@ export default function Profile() {
               <input
                 className="input-res"
                 type="password"
-                {...register("password", { required: "請輸入資料" })}
+                {...register("password")}
                 id="password"
               />
             </div>
@@ -80,7 +86,7 @@ export default function Profile() {
               <input
                 className="input-res"
                 type="password"
-                {...register("rePassword", { required: "請再輸入一次密碼" })}
+                {...register("rePassword")}
                 id="rePassword"
               />
             </div>

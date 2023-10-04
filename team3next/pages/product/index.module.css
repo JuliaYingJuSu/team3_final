@@ -35,7 +35,8 @@
     flex-direction: column; */
 }
 
-.left button {
+.left button,
+.leftA {
   background-color: #fff;
   margin-bottom: 5px;
   border-radius: 0%;
@@ -44,13 +45,19 @@
   justify-content: left;
   border-color: transparent !important;
 }
-.left button:hover {
-  border-bottom: 3px solid #b6705e !important;
-}
+
 .left > button,
 .leftA {
   font-size: 18px;
   font-weight: 700;
+}
+
+.left button:hover,
+.leftA:hover,
+.left button:focus-visible,
+.leftA:active {
+  border-bottom: 3px solid #b6705e !important;
+  color: black;
 }
 .typeListBtn {
   font-size: 15px;
@@ -100,30 +107,31 @@
 
 .cardP {
   display: flex;
-  max-width: 235px;
-  min-width: 170px;
+  width: 260px;
+  /* min-width: 210px; */
   height: 300px;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: top;
   margin: 20px 0 20px 0;
+  align-items: center;
 
+  overflow: hidden;
   border-radius: 10px;
   background: #fff;
   box-shadow: 8px 10px 20px 0px rgba(0, 0, 0, 0.25);
 }
-
+.cardP .mylink {
+  color: black;
+}
 .imgBox {
-  border-radius: 40px;
-  overflow: hidden;
+  /* border-radius: 40px; */
   width: 100%;
-  height: 100%;
+  height: 70%;
 }
 
-/* .imgBox img{
-  width: 100%;
-  height: ;
-} */
+.contentBox {
+  height: 50px;
+}
 
 @media screen and (max-width: 787px) {
   .leftBox {

@@ -7,7 +7,7 @@ export default function Banner() {
         <div className="dropdown ms-5 pe-4">
           {/* 下拉選單 */}
           <button
-            className="btn dropdown-toggle btn-lg middle"
+            className="btn dropdown-toggle btn-middle"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -36,60 +36,64 @@ export default function Banner() {
       </div>
       <div className="container d-flex justify-content-center">
         {/* 搜尋條 */}
-        <form className="d-flex" role="search">
-          <input
-            className="form-control me-2 searchbar ps-4"
-            type="search"
-            placeholder="義式"
-            aria-label="Search"
-          ></input>
-          <span className="icon-search search-banner"></span>
-        </form>
+        <div className="row">
+          <div className="col">
+            <form className="d-flex" role="search">
+              <input
+                className="form-control me-2 searchbar ps-4"
+                type="search"
+                placeholder="義式"
+                aria-label="Search"
+              ></input>
+              <span className="icon-search search-banner"></span>
+            </form>
+          </div>
+        </div>
       </div>
-      <div className="container d-flex justify-content-center">
-        {/* 搜尋條 */}
-        <button type="button" className="btn btn-sm tags">
-          台式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          中式
-        </button>
-        <button type="button" className="btn  btn-sm tags">
-          日式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          韓式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          港式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          美式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          義式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          法式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          西式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          泰式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          越式
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          早餐
-        </button>
-        <button type="button" className="btn btn-sm tags">
-          早午餐
-        </button>
-      </div>
+      <div className="container d-flex justify-content-center mb-3">
+          {/* 搜尋條 */}
+          <button type="button" className="btn btn-sm tags">
+            台式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            中式
+          </button>
+          <button type="button" className="btn  btn-sm tags">
+            日式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            韓式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            港式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            美式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            義式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            法式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            西式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            泰式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            越式
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            早餐
+          </button>
+          <button type="button" className="btn btn-sm tags">
+            早午餐
+          </button>
+        </div>
 
-      <style global jsx>
+      <style jsx>
         {`
           .searchbar {
             width: 655px;
@@ -111,8 +115,29 @@ export default function Banner() {
             border-radius: 40px;
             border: 0.5px solid #666666;
             margin-right: 5px;
-            color:#666666;
-            font-size:16px;
+            color: #666666;
+            font-size: 16px;
+          }
+          @media screen and (max-width: 500px) {
+            .tags {
+              display:none;
+            }
+          }
+          @media screen and (max-width: 500px) {
+            .searchbar {
+              display: flex;
+              width: 360px;
+              height: 40px;
+              padding: 0px 5px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+            }
+            .search-banner:before {
+              position: absolute;
+              right: 25px;
+              top: 9px;
+            }
           }
         `}
       </style>

@@ -6,7 +6,7 @@ export default function Articles() {
   return (
     <>
       <div className="container">
-        <div className="row row-cols-1 row-cols-md-3 container mx-auto my-3">
+        <div className="row row-cols-1 row-cols-lg-3 mx-auto">
           <Card />
           <Card />
           <Card />

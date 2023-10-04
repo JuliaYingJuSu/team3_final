@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
+import Link from "next/link";
 
 export default function Index() {
   return (
@@ -32,7 +33,9 @@ export default function Index() {
 
         <div className="row justify-content-center d-flex w-25">
           <div className="col-12 col-sm-12 py-1">
-            <button className="btn btn-middle w-100">訂位詳情</button>
+            <Link href="/user/my-book" className="btn btn-middle w-100">
+              訂位紀錄
+            </Link>
           </div>
           {/* <div className="col-6 col-sm-6 py-1"></div> */}
         </div>
