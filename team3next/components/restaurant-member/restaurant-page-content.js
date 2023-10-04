@@ -56,11 +56,11 @@ export default function PageContent() {
               <div className="d-flex justify-content-start">
                 <CitySelector />
                 <input
-                  className="input-res flex-grow-1"
+                  className="input-res w-100"
                   type="text"
                   {...register("address", { required: "請輸入資料" })}
                   id="password"
-                  placeholder="輸入完整的地址資料"
+                  placeholder="請輸入資料"
                 />
               </div>
             </div>
@@ -113,6 +113,25 @@ export default function PageContent() {
                 type="text"
                 {...register("description", { required: "請輸入資料" })}
                 id="description"
+                style={{ height: "150px" }}
+              />
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label className="fs18b" htmlFor="description">
+                餐廳照片
+                <span className="ps-1" style={{ color: "red" }}>
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.photo?.message}
+                </span>
+              </label>
+              <input
+                className="input-area"
+                multiple
+                type="file"
+                {...register("photo", { required: "請輸入資料" })}
+                id="photo"
                 style={{ height: "150px" }}
               />
             </div>
