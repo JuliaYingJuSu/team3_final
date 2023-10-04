@@ -104,10 +104,12 @@
 .btn-big:focus,
 .btn-middle:focus,
 .btn-small:focus,
-.btn-little:focus {
+.btn-little:focus,
+.btn-small:focus-visible {
   color: #3f4c5c;
   background: #ebd8a9;
   border-color: #ebd8a9;
+  box-shadow: none;
 }
 /* 按鈕按下效果 */
 .btn-lg:active,
@@ -409,7 +411,7 @@ body {
   background: #fff;
 }
 
-input[type=text]{
+input[type="text"] {
   padding-left: 12px;
 }
 
@@ -419,7 +421,6 @@ input[type=text]{
   background: #fff;
   border-radius: 10px;
 }
-
 
 /* select:focus { 
 outline: none;
