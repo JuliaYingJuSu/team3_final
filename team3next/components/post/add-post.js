@@ -1,14 +1,17 @@
 import Link from "next/link";
 import React from "react";
-import ImageItemPreview from '@/components/post/Image-Item-preview'
+import ImageItemPreview from "@/components/post/Image-Item-preview";
 
 export default function AddPost() {
   return (
     <>
       <div className="container d-flex justify-content-center bg-color mb-2">
-        <div
-          className="my-3">
-          <img src="/images/post/image-gallery.png" alt="" className="object-fit-cover"/>
+        <div className="my-3">
+          <img
+            src="/images/post/image-gallery.png"
+            alt=""
+            className="object-fit-cover"
+          />
         </div>
         <form action="">
           <div className="input-group my-3">
@@ -18,12 +21,15 @@ export default function AddPost() {
               id="inputGroupFile02"
               multiple
             />
-            <label className="input-group-text" for="inputGroupFile02">
+            {/* <label className="input-group-text" for="inputGroupFile02">
               上傳圖片
-            </label>
+            </label> */}
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text icon-edit" id="basic-addon1"></span>
+            <span
+              className="input-group-text icon-edit"
+              id="basic-addon1"
+            ></span>
             <input
               type="text"
               className="form-control"
@@ -72,10 +78,12 @@ export default function AddPost() {
             ></textarea>
           </div>
           <div className="d-flex justify-content-center mb-3">
-            <button type="submit" className="btn btn-big me-2">
+            <Link className="btn btn-big me-2" href="#">
+              放棄發表
+            </Link>
+            <button type="submit" className="btn btn-big">
               發表文章
             </button>
-            <Link className="btn btn-big" href="#">放棄發表</Link>
           </div>
         </form>
       </div>

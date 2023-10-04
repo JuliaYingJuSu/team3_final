@@ -85,10 +85,9 @@ export default function Index() {
         <br />
         <hr className="grey" style={{ width: "1320px" }} />
         <br />
-        <div className="d-flex">
+        <div className="row gx-5">
           <div
-            className="fs18 align-self-center"
-            style={{ marginRight: "100px" }}
+            className="fs18 align-self-center col-4"
           >
             <p className="h5">營業時間</p>
             <br />
@@ -110,9 +109,9 @@ export default function Index() {
               晚餐 17:00-21:00 (最後點餐20:00)
             </p>
           </div>
-          <div>
+          <div className="col-8">
             <img
-              style={{ width: "800px" }}
+              className="r-map"
               src="../../images/book/map.png"
               alt=""
             />
@@ -125,7 +124,7 @@ export default function Index() {
         <p className="h5">美味饗宴</p>
         <br />
         <br />
-        <img src="../../images/book/menu.png" alt="" />
+        <img src="../../images/book/menu.png" alt="" className="menu-img" />
         <br />
         <br />
         <br />
@@ -182,7 +181,7 @@ export default function Index() {
         <br />
         <br />
         <br />
-        <img src="../../images/book/date-cut.png" alt="..." />
+        <img src="../../images/book/date-cut.png" alt="..." className="calendar-img"/>
         <br />
         <br />
         <br />
@@ -404,6 +403,25 @@ export default function Index() {
         <br />
       </div>
       <Footer></Footer>
+      <style jsx>
+        {`
+        .r-map{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .menu-img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .calendar-img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        `}
+      </style>
     </>
   );
 }
