@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import CitySelector from "./city-selector";
+import Dropzone from "react-dropzone";
 
 export default function PageContent() {
   const {
@@ -126,16 +127,23 @@ export default function PageContent() {
                   {errors.photo?.message}
                 </span>
               </label>
-              <input
-                className="input-area"
-                multiple
-                type="file"
-                {...register("photo", { required: "請輸入資料" })}
-                id="photo"
-                style={{ height: "150px" }}
-              />
+              <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div className="input-area" {...getRootProps()}>
+                      <input
+                        multiple
+                        {...register("photo", { required: "請輸入資料" })}
+                        {...getInputProps()}
+                      />
+                      <p>
+                        Drag 'n' drop some files here, or click to select files
+                      </p>
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
             </div>
-
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
