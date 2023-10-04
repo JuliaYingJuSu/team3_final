@@ -27,6 +27,7 @@ export default function CitySelector() {
 
   return (
     <>
+    <div className="d-flex">
       <select className="selector me-2" {...register("city")}>
         <option value="">請選擇城市</option>
         {cityArray[0].map((v, i) => {
@@ -48,6 +49,7 @@ export default function CitySelector() {
           );
         })}
       </select>
+      </div>
     </>
   );
 }

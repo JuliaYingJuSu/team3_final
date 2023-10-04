@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
@@ -11,12 +11,37 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import CarouselProduct from "@/components/layout/default-layout/carousel-product";
-// import "swiper/css/pagination";
-// import ProductCarousel from "@/components/product/ProductCarousel";
-// import Carousel from "react-bootstrap/Carousel";
-// import ExampleCarouselImage from "components/ExampleCarouselImage";
+import { useRouter } from "next/router";
 
 export default function productDetail() {
+  const [data, setData] = useState({
+    product_id: "",
+    product_name: "",
+    price: "",
+    product_description: "",
+    specification: "",
+    product_type_id: "",
+    product_type_list_id: "",
+    isValid: "",
+    product_img_id: "",
+    product_img: "",
+    showed_1st: "",
+  });
+
+  const router = useRouter();
+  useEffect(() => {
+    if (router.isReady) {
+      const pid = router.query.pid;
+      console.log(pid);
+      fetch(`http://localhost:3002/product/${pid}`)
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r);
+          setData(r);
+        });
+    }
+  }, [router.isReady]);
+
   return (
     <>
       <Navbar />
@@ -240,12 +265,10 @@ export default function productDetail() {
             >
               <div className="my-2 h5 ">
                 <p className="d-flex ">
-                  <span className="me-auto">
-                    【HEY YUM!】丹麥無麩質水果軟糖
-                  </span>
+                  <span className="me-auto">{product_name}</span>
                   <span className="icon-mark"></span>
                 </p>
-                <p className="ps-3">NT$ 1000</p>
+                <p className="ps-3">{"NT$" + price}</p>
               </div>
               <div className="fs-3 my-2">
                 <span className="icon-Star"></span>
@@ -254,12 +277,12 @@ export default function productDetail() {
                 <span className="icon-Star"></span>
                 <span className="icon-Star"></span>
               </div>
-              <p className="mb-auto fs16b">
+              {/* <p className="mb-auto fs16b">
                 ◆ 丹麥原裝進口 ◆ 不含人工香料、色素、甜味劑、防腐劑 <br />◆
                 莓果蔬食口味 (藍色包裝) 為素食者可食用
                 <br /> ◆ 不含麩質、不含乳糖
                 (優格水果口味除外)，過敏體質也不用擔心
-              </p>
+              </p> */}
               <div className={styles.btnBox}>
                 <Form.Select
                   className={" brounded"}
@@ -283,16 +306,7 @@ export default function productDetail() {
           <div className={styles.infoBox + " w-100"}>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品介紹</p>
-              <p className={styles.text}>
-                使用天然果汁🍋、蜂蜜🍯製作的水果軟糖
-                曾被ELLE、BAZAAR、GQ等時尚雜誌推薦，多位藝人也讚不絕口的美味
-                聚會時、出遊時、在家追劇時，來上一顆有夠享受😋😋
-                <br />
-                <br />◆ 丹麥原裝進口 <br />◆
-                巴黎潮流指標選品店Colette選用及肯定的可愛療癒系包裝 <br />◆
-                無添加人工色素、防腐劑、香料 <br />◆ 不含麩質、不含乳糖
-                (優格水果口味除外)，過敏體質不擔心 <br />◆ 莓果蔬食口味為Vegan
-              </p>
+              <p className={styles.text}>{product_description}</p>
             </div>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品規格</p>

@@ -69,11 +69,11 @@ export default function NewPost() {
               aria-label="Posttag"
               aria-describedby="button-addon3"
             />
-            <button
+            {/* <button
               className="btn btn-outline-secondary icon-arrow-s-right"
               type="button"
               id="button-addon3"
-            ></button>
+            ></button> */}
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text icon-edit"></span>
@@ -105,7 +105,7 @@ export default function NewPost() {
           }
           .bg-color {
             background-color: #fbf9ef;
-            border-radius: 10px 10px 10px 10px;
+            border-radius: 10px;
             width: 850px;
             height: 550px;
           }

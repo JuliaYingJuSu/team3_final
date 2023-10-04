@@ -85,7 +85,10 @@ export default function RestaurantSidebar() {
               className="option justify-content-center"
               style={{ width: "140px" }}
             >
-              <Link className="stretched-link text-dark" href="/restaurant-member/opening-hours">
+              <Link
+                className="stretched-link text-dark"
+                href="/restaurant-member/opening-hours"
+              >
                 營業時間管理
               </Link>
             </div>
@@ -101,6 +104,10 @@ export default function RestaurantSidebar() {
         .icon-edit:before,
         .icon-payment:before {
           color: black;
+        }
+
+        button:hover {
+          border-bottom: 3px solid #b6705e !important;
         }
       `}</style>
     </>
