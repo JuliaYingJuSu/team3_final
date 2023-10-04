@@ -62,11 +62,11 @@ export default function AddPost() {
               aria-label="Posttag"
               aria-describedby="button-addon3"
             />
-            <button
+            {/* <button
               className="btn btn-outline-secondary icon-arrow-s-right"
               type="button"
               id="button-addon3"
-            ></button>
+            ></button> */}
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text icon-edit"></span>
@@ -75,6 +75,8 @@ export default function AddPost() {
               aria-label="With textarea"
               placeholder="撰寫內文..."
               rows="10"
+              cols="20"
+              maxlength="500"
             ></textarea>
           </div>
           <div className="d-flex justify-content-center mb-3">
