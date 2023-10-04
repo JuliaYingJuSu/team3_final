@@ -11,35 +11,24 @@ import axios from "axios";
 export default function index() {
   const [data, setData] = useState([]);
 
-  // const a = () => {
-  //   const b = document.querySelector("#leftBox");
-  //   // b.classList.add("display");
-  //   // };
-  //   console.log(b);
-  // };
-
   useEffect(() => {
     // axios.get("");
 
     fetch("http://localhost:3002/product")
-      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+        const a = r.json();
+        console.log(a);
+        return a;
+      })
+      //then的第一次:接收到的r >>> fetch的結果(Response {type: 'cors', url: 'http://localhost:3002/product', redirected: false, status: 200, ok: true, …})
+      //r.json() >>> response的json()會得到 >>> Promise {<pending>}
+      // [[Prototype]]: Promise [[PromiseState]]:"fulfilled" [[PromiseResult]]:Array(34)
+
+      //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
       .then((data) => {
-        setData(data);
         console.log(data);
-        // {
-        //   product_id: 27,
-        //   product_name: '圓可頌禮盒',
-        //   price: 550,
-        //   product_description:
-        //     '七入禮盒包含七種口味 : 香草可頌卷、野莓可頌卷、抹茶可頌卷、巧克力可頌卷、芒果可頌卷、鹹蛋黃可頌卷、柚子可頌卷。\n可頌卷外皮極為酥脆，內層千層柔軟口感，搭配滿滿的內餡餡料，每一口入口輕脆又爆漿!',
-        //   specification: '商品產地 : 台灣\n賞味期限 : 收到商品後 5 天\n內容量 : 735g x 1',
-        //   product_type_id: 2,
-        //   product_type_list_id: 6,
-        //   isValid: 1,
-        //   product_img_id: 159,
-        //   product_img: '2701.jpg',
-        //   showed_1st: 1
-        // }
+        setData(data);
       });
   }, []);
 
@@ -50,9 +39,9 @@ export default function index() {
         <Bread />
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
-            <div id="leftBox" className={styles.leftBox}>
+            <div className={styles.leftBox}>
               <div className={styles.left}>
-                <Link href="#/product">
+                <Link href="/product">
                   <button className={styles.leftA + " btn"} type="button">
                     全部商品
                   </button>
@@ -63,7 +52,8 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type1"
                   aria-expanded="false"
-                  aria-controls="type1">
+                  aria-controls="type1"
+                >
                   飲品/沖泡類{" "}
                   <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
@@ -79,12 +69,14 @@ export default function index() {
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     醋/水果醋
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     酒類
                   </button>
                 </div>
@@ -94,29 +86,34 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type2"
                   aria-expanded="false"
-                  aria-controls="type2">
+                  aria-controls="type2"
+                >
                   烘焙食品/甜點{" "}
                   <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type2">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     蛋糕/派
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     手工餅乾
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     麵包/吐司
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     奶酪/布丁/果凍
                   </button>
                 </div>
@@ -126,33 +123,39 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type3"
                   aria-expanded="false"
-                  aria-controls="type3">
+                  aria-controls="type3"
+                >
                   休閒零食 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type3">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     零食
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     糖果/巧克力
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     果醬/抹醬
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     果醬/抹醬
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     堅果/穀物
                   </button>
                 </div>
@@ -162,28 +165,33 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type4"
                   aria-expanded="false"
-                  aria-controls="type4">
+                  aria-controls="type4"
+                >
                   烹料料理 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type4">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     熟食/冷藏、冷凍食品
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     米/麵條
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     調理包/料理包
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button">
+                    type="button"
+                  >
                     調味料/醬料
                   </button>
                 </div>
@@ -193,13 +201,15 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type5"
                   aria-expanded="false"
-                  aria-controls="type5">
+                  aria-controls="type5"
+                >
                   其他 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type5">
                   <button
                     className={styles.typeListBtn + " btn  "}
-                    type="button">
+                    type="button"
+                  >
                     其他
                   </button>
                 </div>
@@ -259,7 +269,7 @@ export default function index() {
                       name="priceType1"
                       id="priceType1"
                     />
-                    無麩質
+                    無添加
                   </label>
                   <label>
                     <input
@@ -268,7 +278,7 @@ export default function index() {
                       name="priceType2"
                       id="priceType2"
                     />
-                    素食可用
+                    無麩質
                   </label>
                   <label>
                     <input
@@ -277,7 +287,16 @@ export default function index() {
                       name="priceType3"
                       id="priceType3"
                     />
-                    無添加
+                    蛋奶素
+                  </label>
+                  <label>
+                    <input
+                      className="mb-4"
+                      type="checkbox"
+                      name="priceType3"
+                      id="priceType3"
+                    />
+                    送禮
                   </label>
                 </form>
               </div>
@@ -290,34 +309,31 @@ export default function index() {
                   " row d-flex justify-content-end align-items-center"
                 }
               >
-                <Dropdown className=" col-auto me-auto">
-                  <Dropdown.Toggle
-                    id="dropdown-basic"
-                    className={styles.barBtn + " p-1 btn-small border-0 "}
+                {/* ------------------------------- */}
+                <div className="dropdown col-auto me-auto ">
+                  <button
+                    className={
+                      styles.barBtn + " p-1 btn-small border-0 dropdown-toggle"
+                    }
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    data-bs-target="#rwd"
                   >
                     分類
-                  </Dropdown.Toggle>
-
-                  {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                    Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item> */}
-                  <Dropdown.Menu>
-                    <div id="leftBox" className={styles.leftBox}>
+                  </button>
+                  <div className="dropdown-menu" id="rwd">
+                    <div className={styles.leftBox}>
                       <div className={styles.left}>
-                        <Dropdown.Item>
-                          <Link href="#/product">
-                            <button
-                              className={styles.leftA + " btn"}
-                              type="button"
-                            >
-                              全部商品
-                            </button>
-                          </Link>
-                        </Dropdown.Item>
+                        <Link href="#/product">
+                          <button
+                            className={styles.leftA + " btn"}
+                            type="button"
+                          >
+                            全部商品
+                          </button>
+                        </Link>
+
                         <button
                           className="btn"
                           type="button"
@@ -498,7 +514,6 @@ export default function index() {
                           </button>
                         </div>
                       </div>
-
                       <div className={styles.left}>
                         <p className="h6 px-2 pb-3">價格範圍</p>
 
@@ -554,7 +569,7 @@ export default function index() {
                               name="priceType1"
                               id="priceType1"
                             />
-                            無麩質
+                            無添加
                           </label>
                           <label>
                             <input
@@ -563,7 +578,7 @@ export default function index() {
                               name="priceType2"
                               id="priceType2"
                             />
-                            素食可用
+                            無麩質
                           </label>
                           <label>
                             <input
@@ -572,13 +587,22 @@ export default function index() {
                               name="priceType3"
                               id="priceType3"
                             />
-                            無添加
+                            蛋奶素
+                          </label>
+                          <label>
+                            <input
+                              className="mb-4"
+                              type="checkbox"
+                              name="priceType3"
+                              id="priceType3"
+                            />
+                            送禮
                           </label>
                         </form>
                       </div>
                     </div>
-                  </Dropdown.Menu>
-                </Dropdown>
+                  </div>
+                </div>
 
                 <select
                   class=" col-2 form-select form-select-sm"
@@ -626,20 +650,28 @@ export default function index() {
                       >
                         <div className={styles.cardP}>
                           <div className={styles.imgBox}>
-                            <img
-                              src={"images/product/" + product_img}
-                              alt=""
-                              className="w-100 h-100 object-fit-cover "
-                            />
+                            <Link href={"/product/" + product_id}>
+                              <img
+                                src={"images/product/" + product_img}
+                                alt=""
+                                className="w-100 h-100 object-fit-cover "
+                              />
+                            </Link>
                           </div>
                           <div
                             className={
                               styles.contentBox +
-                              " px-2 w-100 d-flex justify-content-between pt-2 pb-1"
+                              " px-2 w-100 d-flex justify-content-between pt-2 pb-1 align-items-start"
                             }
                           >
-                            <span>{product_name}</span>
-                            <span className="icon-mark"></span>
+                            <Link
+                              href={"/product/" + product_id}
+                              className={styles.mylink + " fs16b"}
+                            >
+                              <span>{product_name}</span>
+                            </Link>
+
+                            <span className="icon-mark pt-1"></span>
                           </div>
                           <div
                             className={

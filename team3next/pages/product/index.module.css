@@ -107,8 +107,8 @@
 
 .cardP {
   display: flex;
-  max-width: 275px;
-  min-width: 210px;
+  width: 260px;
+  /* min-width: 210px; */
   height: 300px;
   flex-direction: column;
   justify-content: top;
@@ -120,12 +120,12 @@
   background: #fff;
   box-shadow: 8px 10px 20px 0px rgba(0, 0, 0, 0.25);
 }
-/* .cardP span {
-  text-align: ;
-} */
+.cardP .mylink {
+  color: black;
+}
 .imgBox {
   /* border-radius: 40px; */
-  /* width: 100%; */
+  width: 100%;
   height: 70%;
 }
 
