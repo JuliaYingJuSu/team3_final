@@ -4,9 +4,24 @@ import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
 import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
+import styles from "./my-book.module.css";
 import Link from "next/link";
 
 export default function MyBook() {
+  const data = [
+    {
+      book_date: "2023/11/07",
+      book_time: "17:00",
+      book_num: "4 位",
+      r_name: "Cin Cin Osteria 請請義大利餐廳",
+    },
+    {
+      book_date: "2023/11/07",
+      book_time: "17:00",
+      book_num: "4 位",
+      r_name: "Cin Cin Osteria 請請義大利餐廳",
+    },
+  ];
   return (
     <>
       <Head>
@@ -15,54 +30,47 @@ export default function MyBook() {
       <MyNavbar></MyNavbar>
       <UserInfo></UserInfo>
       <UserNavbar />
-      <div
-        className="container"
-        style={{ marginTop: "50px", marginBottom: "80px" }}
-      >
-        <div className="msg mb-2 pb-2 fs-5 d-flex justify-content-start">
-          <div className="th">日期</div>
-          <div className="th">時間</div>
-          <div className="th">人數</div>
-          <div className="th">餐廳名稱</div>
-        </div>
-        {Array(5)
-          .fill(1)
-          .map((i) => {
-            return (
-              <div
-                key={i}
-                className="msg2 fs-6 my-1 py-3 d-flex justify-content-start"
-              >
-                <div className="th">2023/09/30</div>
-                <div className="th">18:00</div>
-                <div className="th">4 位</div>
-                <div className="th">
-                  <Link href="/book/restaurant">
-                    Cin Cin Osteria 請請義大利餐廳
-                  </Link>
-                </div>
-                <button className="btn btn-little fs16 ms-auto me-4">
-                  詳細
-                </button>
-              </div>
-            );
-          })}
+
+      {/* 訂位紀錄開始 */}
+      <div className={styles.recordBox + " container p-5 w-100"}>
+        <p className={styles.head + " grey"}>訂位紀錄</p>
+
+        <table className="table table-hover">
+          <thead className=" bottom-line-g">
+            <tr>
+              <th className="align-middle">訂位日期</th>
+              <th className="align-middle">訂位時間</th>
+              <th className="align-middle">訂位人數</th>
+              <th className="align-middle">餐廳名稱</th>
+              <th className="align-middle"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {data.map((i) => {
+              return (
+                <tr key={i.book_date} className={styles.topLine}>
+                  <td className="align-middle pt-2">{i.book_date}</td>
+                  <td className="align-middle pt-2">{i.book_time}</td>
+                  <td className="align-middle pt-2">{i.book_num}</td>
+                  <td className="align-middle pt-2">
+                    <Link href="/book/restaurant">{i.r_name}</Link>
+                  </td>
+                  <td className="align-middle pt-2">
+                    <div className="my-1 d-flex justify-content-end a">
+                      <Link href="/book/detail" className="btn btn-big">
+                        詳細
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+
       <Footer></Footer>
-      <style jsx>
-        {`
-          .msg {
-            border-bottom: 1px solid black;
-          }
-          .msg2 {
-            border-bottom: 1px solid #869aaa;
-          }
-          .th {
-            width: 250px;
-            text-align: center;
-          }
-        `}
-      </style>
     </>
   );
 }

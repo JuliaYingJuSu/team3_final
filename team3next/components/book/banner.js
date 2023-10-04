@@ -1,5 +1,6 @@
 import LocationSelect from "../layout/location-select";
 import SearchBar from "../layout/search-bar";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -12,6 +13,13 @@ export default function Banner() {
           </div>
           {/* 搜尋條 */}
           <SearchBar />
+          <Link
+            href="/book/result"
+            className="btn btn-lg"
+            style={{ width: "80px" }}
+          >
+            搜尋
+          </Link>
         </div>
       </div>
 
@@ -24,16 +32,16 @@ export default function Banner() {
             background-image: url("/images/book/banner.png");
             background-size: cover;
           }
-          .pdb-50{
-            padding-bottom:50px;
+          .pdb-50 {
+            padding-bottom: 50px;
           }
           @media screen and (max-width: 500px) {
             .banner {
-              height:50px;
-              background-image:none;
+              height: 50px;
+              background-image: none;
             }
-            .pdb-50{
-              padding-bottom:5px;
+            .pdb-50 {
+              padding-bottom: 5px;
             }
           }
         `}

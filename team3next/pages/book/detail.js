@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
+import Link from "next/link";
 
 export default function Index() {
   return (
@@ -103,7 +104,9 @@ export default function Index() {
         </div>
         <br />
         <div className="container d-flex justify-content-center my-5">
-          <button className="btn btn-middle">取消訂位</button>
+          <Link href="/user/my-book" className="btn btn-middle">
+            取消訂位
+          </Link>
         </div>
       </div>
       <Footer></Footer>

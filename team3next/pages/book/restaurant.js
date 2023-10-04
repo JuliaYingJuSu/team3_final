@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
+import Link from "next/link";
 
 export default function Index() {
   return (
@@ -86,9 +87,7 @@ export default function Index() {
         <hr className="grey" style={{ width: "1320px" }} />
         <br />
         <div className="row gx-5">
-          <div
-            className="fs18 align-self-center col-4"
-          >
+          <div className="fs18 align-self-center col-4">
             <p className="h5">營業時間</p>
             <br />
             <p>
@@ -110,11 +109,7 @@ export default function Index() {
             </p>
           </div>
           <div className="col-8">
-            <img
-              className="r-map"
-              src="../../images/book/map.png"
-              alt=""
-            />
+            <img className="r-map" src="../../images/book/map.png" alt="" />
           </div>
         </div>
         <br />
@@ -181,7 +176,11 @@ export default function Index() {
         <br />
         <br />
         <br />
-        <img src="../../images/book/date-cut.png" alt="..." className="calendar-img"/>
+        <img
+          src="../../images/book/date-cut.png"
+          alt="..."
+          className="calendar-img"
+        />
         <br />
         <br />
         <br />
@@ -398,28 +397,30 @@ export default function Index() {
         <br />
         <br />
         <div className="container d-flex justify-content-center my-5">
-          <button className="btn btn-middle">立即訂位</button>
+          <Link href="/book/customer-info" className="btn btn-middle">
+            立即訂位
+          </Link>
         </div>
         <br />
       </div>
       <Footer></Footer>
       <style jsx>
         {`
-        .r-map{
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .menu-img{
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .calendar-img{
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+          .r-map {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          .menu-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          .calendar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         `}
       </style>
     </>
