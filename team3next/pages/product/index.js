@@ -15,7 +15,7 @@ export default function index() {
   //   console.log(b);
   // };
 
-  useEffect();
+  // useEffect();
 
   return (
     <>
@@ -35,8 +35,7 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type1"
                   aria-expanded="false"
-                  aria-controls="type1"
-                >
+                  aria-controls="type1">
                   飲品/沖泡類{" "}
                   <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
@@ -52,14 +51,12 @@ export default function index() {
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     醋/水果醋
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     酒類
                   </button>
                 </div>
@@ -69,34 +66,29 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type2"
                   aria-expanded="false"
-                  aria-controls="type2"
-                >
+                  aria-controls="type2">
                   烘焙食品/甜點{" "}
                   <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type2">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     蛋糕/派
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     手工餅乾
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     麵包/吐司
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     奶酪/布丁/果凍
                   </button>
                 </div>
@@ -106,39 +98,33 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type3"
                   aria-expanded="false"
-                  aria-controls="type3"
-                >
+                  aria-controls="type3">
                   休閒零食 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type3">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     零食
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     糖果/巧克力
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     果醬/抹醬
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     果醬/抹醬
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     堅果/穀物
                   </button>
                 </div>
@@ -148,33 +134,28 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type4"
                   aria-expanded="false"
-                  aria-controls="type4"
-                >
+                  aria-controls="type4">
                   烹料料理 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type4">
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     熟食/冷藏、冷凍食品
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     米/麵條
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     調理包/料理包
                   </button>
                   <button
                     className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
+                    type="button">
                     調味料/醬料
                   </button>
                 </div>
@@ -184,15 +165,13 @@ export default function index() {
                   data-bs-toggle="collapse"
                   data-bs-target="#type5"
                   aria-expanded="false"
-                  aria-controls="type5"
-                >
+                  aria-controls="type5">
                   其他 <span className="fs-6 ms-2 icon-arrow-down"></span>
                 </button>
                 <div className="collapse" id="type5">
                   <button
                     className={styles.typeListBtn + " btn  "}
-                    type="button"
-                  >
+                    type="button">
                     其他
                   </button>
                 </div>
@@ -281,8 +260,7 @@ export default function index() {
                 className={
                   styles.sort +
                   " row d-flex justify-content-end align-items-center"
-                }
-              >
+                }>
                 <button
                   className={
                     styles.barBtn + " col-auto btn btn-sm btn-warning me-auto"
@@ -290,14 +268,13 @@ export default function index() {
                   // onClick={() => {
                   //   setDown(true);
                   // }}
-                  onClick={a}
+                  // onClick={a}
                 >
                   分類
                 </button>
                 <select
                   class=" col-2 form-select form-select-sm d-inline-block"
-                  aria-label="Small select example"
-                >
+                  aria-label="Small select example">
                   <option selected>排序</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -321,8 +298,7 @@ export default function index() {
                     return (
                       <div
                         key={i}
-                        className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
-                      >
+                        className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center ">
                         <div className={styles.cardP}>
                           <div className={styles.imgBox}>
                             <img
@@ -337,8 +313,7 @@ export default function index() {
                           </div>
                           <div
                             className=" px-2 w-100
-                     d-flex justify-content-between pt-2 pb-2"
-                          >
+                     d-flex justify-content-between pt-2 pb-2">
                             <span>NT$ 1000</span>{" "}
                             <span className="icon-cark"></span>
                           </div>
