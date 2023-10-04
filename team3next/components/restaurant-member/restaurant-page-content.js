@@ -12,6 +12,7 @@ export default function PageContent() {
   } = useForm();
   console.log(errors);
 
+  console.log(watch());
   return (
     <>
       <div className="row">
@@ -81,20 +82,38 @@ export default function PageContent() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="phone">
-                市內電話
+              <label className="fs18b" htmlFor="opening">
+                營業時間
                 <span className="ps-1" style={{ color: "red" }}>
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.phone?.message}
+                  {errors.opening?.message}
+                </span>
+              </label>
+              <input
+                className="input-res"
+                type="text"
+                {...register("opening", { required: "請輸入資料" })}
+                id="opening"
+              />
+            </div>
+            <div className="d-flex flex-column mb-3">
+              <label className="fs18b" htmlFor="description">
+                餐廳介紹
+                <span className="ps-1" style={{ color: "red" }}>
+                  *
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.description?.message}
                 </span>
               </label>
               <textarea
                 className="input-area"
                 type="text"
-                {...register("phone", { required: "請輸入資料" })}
-                id="phone"
+                {...register("description", { required: "請輸入資料" })}
+                id="description"
+                style={{ height: "150px" }}
               />
             </div>
 
