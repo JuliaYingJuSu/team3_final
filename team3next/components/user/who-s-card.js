@@ -6,7 +6,9 @@ import Link from "next/link";
 import FollowButton from "../post/followbutton";
 
 export default function WhoSCard() {
+const [follow, setFollow] = useState(false);
   return (
+    
     <>
       <div className={Styles.authorCard}>
         <div className="d-flex align-items-center justify-content-between w-100">
@@ -26,7 +28,14 @@ export default function WhoSCard() {
             </div>
           </div>
           <div className="d-flex pe-4">
-          <FollowButton/>
+          <button
+                    className="btn btn-little ms-auto"
+                    onClick={() => {
+                      setFollow(!follow);
+                    }}
+                  >
+                    {follow ? '追蹤' : '追蹤中'}
+                  </button>
             {/* <button className="btn btn-little">追蹤中</button> */}
           </div>
         </div>
