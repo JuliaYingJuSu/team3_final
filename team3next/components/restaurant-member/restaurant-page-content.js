@@ -1,26 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FormItem } from "react-hook-form-antd";
+import { Button } from "antd";
 import CitySelector from "./city-selector";
-import Btn from "@/pages/restaurant-member/dropzone";
-import {
-  Button,
-  Checkbox,
-  Col,
-  ColorPicker,
-  Form,
-  InputNumber,
-  Radio,
-  Rate,
-  Row,
-  Select,
-  Slider,
-  Space,
-  Switch,
-  Upload,
-} from "antd";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
 export default function PageContent() {
   const {
@@ -161,7 +143,7 @@ export default function PageContent() {
                   <input type="file"></input>
                 </div> */}
             </div>
-            <Btn />
+
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
