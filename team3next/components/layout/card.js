@@ -3,14 +3,13 @@
 import React from "react";
 import PostModal from "../post/post-modal";
 import Link from "next/link";
-import AddPost from "../post/add-post";
+import FollowButton from "../post/followbutton";
 
 
 export default function Card() {
   return (
     <>
       <PostModal />
-      {/* <AddPost/> */}
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -67,7 +66,8 @@ export default function Card() {
                   會員暱稱
                 </Link>
               </p>
-              <button className="btn btn-little ms-auto">追蹤</button>
+              <FollowButton/>
+              {/* <button className="btn btn-little ms-auto">追蹤</button> */}
             </div>
             <span className="fs12 mt-2 mb-3">2023.9.6</span>
           </div>

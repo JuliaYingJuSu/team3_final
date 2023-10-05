@@ -3,6 +3,7 @@
 import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import Link from "next/link";
+import FollowButton from "../post/followbutton";
 
 export default function WhoSCard() {
   return (
@@ -25,7 +26,8 @@ export default function WhoSCard() {
             </div>
           </div>
           <div className="d-flex pe-4">
-            <button className="btn btn-little">追蹤中</button>
+          <FollowButton/>
+            {/* <button className="btn btn-little">追蹤中</button> */}
           </div>
         </div>
       </div>

@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import FollowButton from "../post/followbutton";
 
 export default function PostModal() {
+  const [follow, setFollow] = useState(false);
   return (
     <>
       <div
@@ -29,7 +31,15 @@ export default function PostModal() {
                       會員暱稱
                     </a>
                   </p>
-                  <button className="btn btn-little ms-auto">追蹤</button>
+                  <FollowButton/>
+                  {/* <button
+                    className="btn btn-little ms-auto"
+                    onClick={() => {
+                      setFollow(!follow);
+                    }}
+                  >
+                    {follow ? '追蹤' : '追蹤中'}
+                  </button> */}
                 </div>
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
