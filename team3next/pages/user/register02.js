@@ -15,8 +15,6 @@ export default function Register2() {
     phone: "",
   });
 
-  const [textareaText, setTextareaText] = useState("");
-
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -43,7 +41,6 @@ export default function Register2() {
   const handleFieldChange = (e) => {
     const newUser = { ...user, [e.target.name]: e.target.value };
     setUser(newUser);
-    console.log(newUser);
   };
 
   //圖片上傳
@@ -344,17 +341,20 @@ export default function Register2() {
             <div className="mb-3">
               <label htmlFor="FormTextarea" className="form-label fs18b">
                 個人簡介 :
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.FormTextarea?.message}
+                </span>
               </label>
               <textarea
                 className="form-control input-area"
                 id="FormTextarea"
                 rows="3"
+                name="FormTextarea"
                 placeholder="寫下自我的話，100字內"
-                value={textareaText}
                 onChange={(e) => {
                   setTextareaText(e.target.value);
                 }}
-                {...register("self_info", {
+                {...register("FormTextarea", {
                   maxLength: {
                     value: 100,
                     message: "請不要超過100個字，謝謝",
