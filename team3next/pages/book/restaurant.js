@@ -3,6 +3,9 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
 import Link from "next/link";
+import BreadcrumbRestaurant from "@/components/book/breadcrumb-restaurant";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 export default function Index() {
   return (
@@ -11,6 +14,44 @@ export default function Index() {
         <title>食食嗑嗑-餐廳主頁</title>
       </Head>
       <Navbar></Navbar>
+      {/* ========輪播牆swiper========= */}
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>
+          <img
+            className="w-100"
+            src="../../images/book/r1-1cut.png"
+            alt="..."
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            className="w-100"
+            src="../../images/book/r1-2cut.png"
+            alt="..."
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            className="w-100"
+            src="../../images/book/r1-3cut.png"
+            alt="..."
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            className="w-100"
+            src="../../images/book/r1-4cut.png"
+            alt="..."
+          />
+        </SwiperSlide>
+        ...
+      </Swiper>
+      {/* ========輪播牆========= */}
       <img className="w-100" src="../../images/book/r1-1cut.png" alt="..." />
       <div className="d-flex justify-content-center my-5">
         <img
@@ -30,26 +71,31 @@ export default function Index() {
         />
       </div>
       <br />
+
+      {/* ==========麵包屑========= */}
+      <div className="container">
+        <BreadcrumbRestaurant></BreadcrumbRestaurant>
+      </div>
       <div className="container" style={{ Width: "1320px" }}>
-        <p className="h3 mb-3">Cin Cin Osteria 請請義大利餐廳</p>
+        <p className="h3 my-3">Cin Cin Osteria 請請義大利餐廳</p>
         <div className="fs18">
           <div className="d-flex">
             <span className="pe-2">
               <span className="icon-map"></span>
             </span>
-            <div>台南市中西區尊王路140號</div>
+            <div>台北市松山區慶城街16巷16號1F</div>
           </div>
           <div className="d-flex">
             <span className="pe-2">
               <span className="icon-Call"></span>
             </span>
-            <div>06 221 0699</div>
+            <div>02-2712-2050</div>
           </div>
           <div className="d-flex">
             <span className="pe-2">
               <span className="icon-calender"></span>
             </span>
-            <div>每週一、週二休息</div>
+            <div>每週一休息</div>
           </div>
         </div>
         <br />
@@ -94,18 +140,14 @@ export default function Index() {
               週二至週五
               <br />
               <br />
-              午餐 11:00-15:00 (最後點餐14:00)
-              <br />
-              晚餐 17:00-21:00 (最後點餐20:00)
+              11:00-21:00 (最後點餐20:00)
               <br />
               <br />
               <br />
               週六至週日
               <br />
               <br />
-              午餐 11:00-16:00 (最後點餐15:00)
-              <br />
-              晚餐 17:00-21:00 (最後點餐20:00)
+              11:00-21:00 (最後點餐20:00)
             </p>
           </div>
           <div className="col-8">

@@ -337,6 +337,12 @@ body {
   flex-shrink: 0;
   object-fit: cover;
 }
+/* 大頭照-中小 */
+.headshot-sm {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
 
 /* 大頭照-中 */
 .headshot-middle {

@@ -3,6 +3,7 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
 import Link from "next/link";
+import BreadcrumbDetail from "@/components/book/breadcrumb-detail";
 
 export default function Index() {
   return (
@@ -11,6 +12,9 @@ export default function Index() {
         <title>食食嗑嗑-訂位詳細頁</title>
       </Head>
       <Navbar></Navbar>
+      <div className="container">
+        <BreadcrumbDetail></BreadcrumbDetail>
+      </div>
       <br />
       <br />
       <div className="container mt-3">
