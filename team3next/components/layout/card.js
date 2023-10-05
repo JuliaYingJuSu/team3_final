@@ -4,6 +4,7 @@ import React from "react";
 import PostModal from "../post/post-modal";
 import Link from "next/link";
 import FollowButton from "../post/followbutton";
+import Like from "../post/like";
 
 
 export default function Card() {
@@ -18,9 +19,7 @@ export default function Card() {
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <button className="btn btn-sm btn-i">
-                  <i className="fa-regular fa-heart"></i>
-                </button>
+              <Like/>
                 <span>1</span>
               </span>
               <span className="middle">
@@ -67,7 +66,6 @@ export default function Card() {
                 </Link>
               </p>
               <FollowButton/>
-              {/* <button className="btn btn-little ms-auto">追蹤</button> */}
             </div>
             <span className="fs12 mt-2 mb-3">2023.9.6</span>
           </div>

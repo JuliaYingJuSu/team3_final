@@ -11,7 +11,7 @@ export default function FollowButton() {
                       setFollow(!follow);
                     }}
                   >
-                    {follow ? '追蹤' : '追蹤中'}
+                    {follow ? '追蹤中' : '追蹤'}
                   </button>
     </>
   )
