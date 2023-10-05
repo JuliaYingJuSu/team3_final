@@ -1,9 +1,26 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./city-selector";
-import BasicDemoDropzone from "@/pages/restaurant-member/dropzone";
-import { Dropzone, FileMosaic } from "@files-ui/react";
+import Btn from "@/pages/restaurant-member/dropzone";
+import {
+  Button,
+  Checkbox,
+  Col,
+  ColorPicker,
+  Form,
+  InputNumber,
+  Radio,
+  Rate,
+  Row,
+  Select,
+  Slider,
+  Space,
+  Switch,
+  Upload,
+} from "antd";
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
 export default function PageContent() {
   const {
@@ -13,9 +30,6 @@ export default function PageContent() {
     formState: { errors },
   } = useForm();
   console.log(errors);
-  const removeFile = (id) => {
-    setFiles(files.filter((x) => x.id !== id));
-  };
 
   console.log(watch());
   return (
@@ -147,30 +161,7 @@ export default function PageContent() {
                   <input type="file"></input>
                 </div> */}
             </div>
-            {/* <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div className="input-area" {...getRootProps()}>
-                      <input
-                        multiple
-                        {...register("photo", { required: "請輸入資料" })}
-                        {...getInputProps()}
-                      />
-                      <p>
-                        Drag 'n' drop some files here, or click to select files
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone> */}
-            <Dropzone
-              {...register("photo")}
-              //accept="image/*"
-            >
-                <FileMosaic
-
-                />
-            </Dropzone>
+            <Btn />
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
