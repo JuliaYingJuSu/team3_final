@@ -4,8 +4,11 @@ import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
 import Link from "next/link";
 import BreadcrumbRestaurant from "@/components/book/breadcrumb-restaurant";
+import { Navigation, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/scrollbar";
 
 export default function Index() {
   return (
@@ -16,10 +19,25 @@ export default function Index() {
       <Navbar></Navbar>
       {/* ========輪播牆swiper========= */}
       <Swiper
+        style={{
+          "--swiper-navigation-color": "#FBF9EF",
+          "--swiper-navigation-size": "70px",
+          "--swiper-navigation-sides-offset": "35px",
+          "--swiper-scrollbar-size": "6px",
+          "--swiper-scrollbar-sides-offset": "40%",
+          "--swiper-scrollbar-bottom": "50px",
+          "--swiper-scrollbar-drag-bg-color": "rgba(255, 255, 255, 0.9)",
+          "--swiper-scrollbar-bg-color": "rgba(255, 255, 255, 0.3)",
+        }}
+        modules={[Navigation, Scrollbar, A11y]}
         spaceBetween={50}
         slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
+        navigation
+        scrollbar={{
+          draggable: true,
+        }}
         onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
       >
         <SwiperSlide>
           <img
@@ -49,34 +67,13 @@ export default function Index() {
             alt="..."
           />
         </SwiperSlide>
-        ...
       </Swiper>
-      {/* ========輪播牆========= */}
-      <img className="w-100" src="../../images/book/r1-1cut.png" alt="..." />
-      <div className="d-flex justify-content-center my-5">
-        <img
-          style={{ width: "167.48px", marginRight: "50px" }}
-          src="../../images/book/r1-2cut.png"
-          alt="..."
-        />
-        <img
-          style={{ width: "167.48px", marginRight: "50px" }}
-          src="../../images/book/r1-3cut.png"
-          alt="..."
-        />
-        <img
-          style={{ width: "167.48px" }}
-          src="../../images/book/r1-4cut.png"
-          alt="..."
-        />
-      </div>
       <br />
-
       {/* ==========麵包屑========= */}
       <div className="container">
         <BreadcrumbRestaurant></BreadcrumbRestaurant>
       </div>
-      <div className="container" style={{ Width: "1320px" }}>
+      <div className="container" style={{ maxWidth: "1320px" }}>
         <p className="h3 my-3">Cin Cin Osteria 請請義大利餐廳</p>
         <div className="fs18">
           <div className="d-flex">
@@ -99,7 +96,7 @@ export default function Index() {
           </div>
         </div>
         <br />
-        <hr className="grey" style={{ width: "1320px" }} />
+        <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <div className="fs18">
           <p>
@@ -130,10 +127,10 @@ export default function Index() {
           </p>
         </div>
         <br />
-        <hr className="grey" style={{ width: "1320px" }} />
+        <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
-        <div className="row gx-5">
-          <div className="fs18 align-self-center col-4">
+        <div className="row g-5" style={{ minHeight: "450px" }}>
+          <div className="fs18 align-self-center col-12 col-xl-4">
             <p className="h5">營業時間</p>
             <br />
             <p>
@@ -150,12 +147,21 @@ export default function Index() {
               11:00-21:00 (最後點餐20:00)
             </p>
           </div>
-          <div className="col-8">
-            <img className="r-map" src="../../images/book/map.png" alt="" />
+          <div className="col-xl-8">
+            <iframe
+              width="80%"
+              height="100%"
+              style={{ minHeight: "400px" }}
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=台北市松山區慶城街16巷16號&output=embed&t="
+            ></iframe>
+            {/* <img className="r-map" src="../../images/book/map.png" alt="" />/ */}
           </div>
         </div>
         <br />
-        <hr className="grey" style={{ width: "1320px" }} />
+        <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <br />
         <p className="h5">美味饗宴</p>
@@ -165,12 +171,11 @@ export default function Index() {
         <br />
         <br />
         <br />
-        <hr className="grey" style={{ width: "1320px" }} />
+        <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
-        <br />
-        <div className="d-flex justify-content-between">
+        <div className="row justify-content-between">
           {/* 人數 */}
-          <div className="row mb-2">
+          <div className="col-auto row mb-2 mt-5">
             <label
               htmlFor="readdress"
               className="form-label col-12 col-form-label h5"
@@ -199,7 +204,10 @@ export default function Index() {
           <br />
           <br />
           {/* 日期 */}
-          <div style={{ width: "400px" }} className="row mb-2">
+          <div
+            style={{ width: "400px" }}
+            className="col row mb-2 align-self-start mt-5"
+          >
             <label
               htmlFor="readdress"
               className="form-label col-12 col-form-label h5"
