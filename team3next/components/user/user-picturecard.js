@@ -7,7 +7,7 @@ import MyArticle from "../post/my-article";
 export default function UserPictureCard() {
   return (
     <>
-      <p>
+      <div className="position-relative">
         <a
           type="button"
           className="position-relative"
@@ -18,10 +18,40 @@ export default function UserPictureCard() {
             className="icon-multi position-absolute z-1 fs-4 top-50"
             style={{ right: 20, marginTop: 155 }}></span>
         </a>
+        <div
+          className="dropstart position-absolute btn-group"
+          style={{ right: 15,marginTop: 15 }}>
+          <button
+            type="button"
+            className="btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i className="fas fa-ellipsis-v fs-4 grey"></i>
+          </button>
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a className="dropdown-item fs16b" href="#">
+                修改文章
+              </a>
+            </li>
+            <li>
+              <a className="dropdown-item fs16b" href="#">
+                刪除文章
+              </a>
+            </li>
+          </ul>
+        </div>
         <span>
-        <MyArticle></MyArticle>
-      </span>
-      </p>
+          <MyArticle></MyArticle>
+        </span>
+      </div>
+      <style jsx>{`
+        .dropdown-toggle::before {
+          display: none;
+        }
+      `}</style>
     </>
   );
 }
