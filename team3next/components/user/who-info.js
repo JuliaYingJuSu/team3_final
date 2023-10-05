@@ -1,4 +1,5 @@
 import React from "react";
+import FollowButton from "../post/followbutton";
 
 export default function WhoInfo() {
   return (
@@ -10,9 +11,10 @@ export default function WhoInfo() {
           <div className="d-flex flex-column ms-5 align-self-start mt-4">
             <div className="d-inline-flex align-items-center">
               <h2 className="fw-bold pe-3">會員暱稱</h2>
-                <button className="btn btn-follow">
+              <FollowButton/>
+                {/* <button className="btn btn-follow">
                   追蹤中
-                </button>
+                </button> */}
             </div>
             <div className="mt-2 fw-semibold ps-4">
               <span>110人</span>
