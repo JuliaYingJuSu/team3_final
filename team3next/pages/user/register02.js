@@ -30,7 +30,7 @@ export default function Register2() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:3002/try-post", data);
+      const response = await axios.post("http://localhost:3000/user", data);
       console.log("Server Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
@@ -89,7 +89,7 @@ export default function Register2() {
     formData.append("avatar", selectedFile);
 
     fetch(
-      "http://localhost:5555/upload-avatar", //server url
+      "http://localhost:3000/upload", //server url
       {
         method: "POST",
         body: formData,
@@ -98,7 +98,7 @@ export default function Register2() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl("http://localhost:5555/uploads/" + result.data.name);
+        setImgServerUrl("http://localhost:3002/try-upload" + result.data.name);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -131,7 +131,7 @@ export default function Register2() {
             的欄位為必填
           </div>
           {/* 輸入區 */}
-          <form className="mt-4" onSubmit={handleSubmit(onSubmit)}>
+          <form className="mt-4" onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
               <div className="position-relative">
