@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import CitySelector from "./city-selector";
-import Dropzone from "react-dropzone";
+import BasicDemoDropzone from "@/pages/restaurant-member/dropzone";
+import { Dropzone, FileMosaic } from "@files-ui/react";
 
 export default function PageContent() {
   const {
@@ -12,6 +13,9 @@ export default function PageContent() {
     formState: { errors },
   } = useForm();
   console.log(errors);
+  const removeFile = (id) => {
+    setFiles(files.filter((x) => x.id !== id));
+  };
 
   console.log(watch());
   return (
@@ -112,13 +116,14 @@ export default function PageContent() {
               <textarea
                 className="input-area"
                 type="text"
-                {...register("description", { required: "請輸入資料" })}
+                {...register("description")}
                 id="description"
                 style={{ height: "150px" }}
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="description">
+              <label className="fs18b" htmlFor="photo">
+                {" "}
                 餐廳照片
                 <span className="ps-1" style={{ color: "red" }}>
                   *
@@ -127,7 +132,22 @@ export default function PageContent() {
                   {errors.photo?.message}
                 </span>
               </label>
-              <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
+              {/* <div
+                  className="fs18b input-area"
+                  htmlFor="photo"
+                  style={{ height: "150px" }}
+                >
+                  <input
+                    type="file"
+                    className="w-100 h-100 hid"
+                    multiple
+                    {...register("photo", { required: "請輸入資料" })}
+                    id="photo"
+                  />
+                  <input type="file"></input>
+                </div> */}
+            </div>
+            {/* <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
                 {({ getRootProps, getInputProps }) => (
                   <section>
                     <div className="input-area" {...getRootProps()}>
@@ -142,8 +162,15 @@ export default function PageContent() {
                     </div>
                   </section>
                 )}
-              </Dropzone>
-            </div>
+              </Dropzone> */}
+            <Dropzone
+              {...register("photo")}
+              //accept="image/*"
+            >
+                <FileMosaic
+
+                />
+            </Dropzone>
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
@@ -151,6 +178,14 @@ export default function PageContent() {
         </div>
         <div className="col-3"></div>
       </div>
+      <style jsx>
+        {`
+          .hid input[type="file"] {
+            opacity: 0;
+          }
+        `}
+      </style>
+      <button></button>
     </>
   );
 }
