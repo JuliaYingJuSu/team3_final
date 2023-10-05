@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import Link from "next/link";
 
 export default function PostModal() {
   return (
@@ -16,15 +17,12 @@ export default function PostModal() {
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="51"
-                      height="50"
-                      viewBox="0 0 51 50"
-                      fill="none"
-                    >
-                      <circle cx="25.5" cy="25" r="25" fill="#DC8B76" />
-                    </svg>
+                    <Link href="/user/user-my-article-i">
+                      <img
+                        className="rounded-circle headshot-sm img-thumbnail"
+                        src="/images/logo.png"
+                      ></img>
+                    </Link>
                   </div>
                   <p className="middle me-2">
                     <a className="fs16b pt-3 text-dark" href="#">
@@ -59,10 +57,7 @@ export default function PostModal() {
               ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
-              <div
-                id="carouselExampleIndicators"
-                className="carousel slide"
-              >
+              <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
                   <button
                     type="button"
@@ -148,27 +143,26 @@ export default function PostModal() {
               </div>
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
-                <span className="middle">
-                  <button className="btn btn-sm btn-i">
-                    <i className="fa-regular fa-heart"></i>
-                  </button>
-                  <span>1</span>
-                </span>
-                <span className="middle">
-                  <button className="btn btn-sm btn-i">
-                    <i className="fa-regular fa-comment"></i>
-                  </button>
-                  <span>1</span>
-                </span>
-                <span className="middle">
-                  <button className="btn btn-sm btn-i">
-                    <i className="far fa-bookmark"></i>
-                  </button>
-                  <span>1</span>
-                </span>
-              </div>
+              <span className="middle">
+                <button className="btn btn-sm btn-i">
+                  <i className="fa-regular fa-heart"></i>
+                </button>
+                <span>1</span>
+              </span>
+              <span className="middle">
+                <button className="btn btn-sm btn-i">
+                  <i className="fa-regular fa-comment"></i>
+                </button>
+                <span>1</span>
+              </span>
+              <span className="middle">
+                <button className="btn btn-sm btn-i">
+                  <i className="far fa-bookmark"></i>
+                </button>
+                <span>1</span>
+              </span>
+            </div>
             <div className="ms-3" style={{ width: 375 }}>
-            
               <div className="mb-3">
                 公司附近的義大利餐廳
                 <br />
