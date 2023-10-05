@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import FollowButton from "../post/followbutton";
 import Like from "./like";
+import Saved from "./saved";
 
 export default function PostModal() {
   const [follow, setFollow] = useState(false);
   const [like, setLike] = useState(false);
+  const [saved, setSaved] = useState(false);
   return (
     <>
       <div
@@ -33,7 +35,7 @@ export default function PostModal() {
                       會員暱稱
                     </a>
                   </p>
-                  <FollowButton/>
+                  <FollowButton />
                   {/* <button
                     className="btn btn-little ms-auto"
                     onClick={() => {
@@ -156,7 +158,7 @@ export default function PostModal() {
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
-              <Like/>
+                <Like />
                 {/* <button className="btn btn-sm btn-i"
                 onClick={() => {
                       setLike(!like);
@@ -174,9 +176,12 @@ export default function PostModal() {
                 <span>1</span>
               </span>
               <span className="middle">
-                <button className="btn btn-sm btn-i">
-                  <i className="far fa-bookmark"></i>
-                </button>
+                <Saved />
+                {/* <button className="btn btn-sm btn-i" onClick={() => {
+                      setSaved(!saved);
+                    }}>
+                  <i className={saved ? "icon-mark-fill" : "icon-mark"}></i>
+                </button> */}
                 <span>1</span>
               </span>
             </div>
@@ -213,15 +218,12 @@ export default function PostModal() {
             <hr />
             <div className="d-flex align-items-start ms-2">
               <div className="me-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="51"
-                  height="50"
-                  viewBox="0 0 51 50"
-                  fill="none"
-                >
-                  <circle cx="25.5" cy="25" r="25" fill="#DC8B76" />
-                </svg>
+                <Link href="/user/user-my-article-i">
+                  <img
+                    className="rounded-circle headshot-sm img-thumbnail"
+                    src="/images/logo.png"
+                  ></img>
+                </Link>
               </div>
               <div className="me-auto">
                 <a className="fs16b text-dark" href="#">

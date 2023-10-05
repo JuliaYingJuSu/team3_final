@@ -5,6 +5,7 @@ import PostModal from "../post/post-modal";
 import Link from "next/link";
 import FollowButton from "../post/followbutton";
 import Like from "../post/like";
+import Saved from "../post/saved";
 
 
 export default function Card() {
@@ -29,9 +30,7 @@ export default function Card() {
                 <span>1</span>
               </span>
               <span className="middle">
-                <button className="btn btn-sm btn-i">
-                  <i className="far fa-bookmark"></i>
-                </button>
+              <Saved/>
                 <span>1</span>
               </span>
             </div>
