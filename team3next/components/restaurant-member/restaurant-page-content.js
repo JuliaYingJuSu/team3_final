@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "antd";
 import CitySelector from "./city-selector";
-import Dropzone from "react-dropzone";
 
 export default function PageContent() {
   const {
@@ -112,13 +112,14 @@ export default function PageContent() {
               <textarea
                 className="input-area"
                 type="text"
-                {...register("description", { required: "請輸入資料" })}
+                {...register("description")}
                 id="description"
                 style={{ height: "150px" }}
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="description">
+              <label className="fs18b" htmlFor="photo">
+                {" "}
                 餐廳照片
                 <span className="ps-1" style={{ color: "red" }}>
                   *
@@ -127,23 +128,22 @@ export default function PageContent() {
                   {errors.photo?.message}
                 </span>
               </label>
-              <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div className="input-area" {...getRootProps()}>
-                      <input
-                        multiple
-                        {...register("photo", { required: "請輸入資料" })}
-                        {...getInputProps()}
-                      />
-                      <p>
-                        Drag 'n' drop some files here, or click to select files
-                      </p>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
+              {/* <div
+                  className="fs18b input-area"
+                  htmlFor="photo"
+                  style={{ height: "150px" }}
+                >
+                  <input
+                    type="file"
+                    className="w-100 h-100 hid"
+                    multiple
+                    {...register("photo", { required: "請輸入資料" })}
+                    id="photo"
+                  />
+                  <input type="file"></input>
+                </div> */}
             </div>
+
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
@@ -151,6 +151,14 @@ export default function PageContent() {
         </div>
         <div className="col-3"></div>
       </div>
+      <style jsx>
+        {`
+          .hid input[type="file"] {
+            opacity: 0;
+          }
+        `}
+      </style>
+      <button></button>
     </>
   );
 }

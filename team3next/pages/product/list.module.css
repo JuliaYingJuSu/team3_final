@@ -122,9 +122,9 @@
   border-bottom: 3px #808080 solid;
 }
 
-.test > div div:nth-child(3) {
+/* .test > div div:nth-child(3) {
   color: #3f4c5c;
 }
 .test > div div:nth-child(2) {
   color: #3f4c5c;
-}
+} */

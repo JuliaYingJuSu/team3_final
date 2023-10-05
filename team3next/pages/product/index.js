@@ -642,7 +642,6 @@ export default function index() {
                     },
                     i
                   ) => {
-                    // console.log(product_id);
                     return (
                       <div
                         key={product_id}
