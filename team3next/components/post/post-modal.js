@@ -4,6 +4,7 @@ import FollowButton from "../post/followbutton";
 
 export default function PostModal() {
   const [follow, setFollow] = useState(false);
+  const [like, setLike] = useState(false);
   return (
     <>
       <div
@@ -154,8 +155,13 @@ export default function PostModal() {
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
-                <button className="btn btn-sm btn-i">
-                  <i className="fa-regular fa-heart"></i>
+                <button className="btn btn-sm btn-i"
+                onClick={() => {
+                      setLike(!like);
+                    }}
+                >
+                  <i className={like ? "icon-heart-fill" : "icon-heart"}></i>
+                  {/* <i className="icon-heart-fill"></i> */}
                 </button>
                 <span>1</span>
               </span>
