@@ -15,8 +15,11 @@ export default function Register2() {
     phone: "",
   });
 
+  const [textareaText, setTextareaText] = useState("");
+
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   const {
     register,
@@ -40,7 +43,7 @@ export default function Register2() {
   const handleFieldChange = (e) => {
     const newUser = { ...user, [e.target.name]: e.target.value };
     setUser(newUser);
-    console.log(e.target.value);
+    console.log(newUser);
   };
 
   //圖片上傳
@@ -159,7 +162,7 @@ export default function Register2() {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlFor="InputName" className="form-label fs18b">
+              <label htmlFor="name" className="form-label fs18b">
                 姓名
                 <span style={{ color: "red" }} className="ps-1">
                   *
@@ -170,8 +173,10 @@ export default function Register2() {
               </label>
               <input
                 type="text"
-                className="form-control input-f"
-                id="InputName"
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
+                id="name"
                 placeholder="請輸入姓名"
                 {...register("name", { required: "請輸入姓名" })}
                 value={user.name}
@@ -179,7 +184,7 @@ export default function Register2() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="InputNickName" className="form-label fs18b">
+              <label htmlFor="nikename" className="form-label fs18b">
                 暱稱
                 <span style={{ color: "red" }} className="ps-1">
                   *
@@ -190,8 +195,10 @@ export default function Register2() {
               </label>
               <input
                 type="text"
-                className="form-control input-f"
-                id="InputNickName"
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
+                id="nikename"
                 placeholder="請輸入暱稱"
                 {...register("nickname", { required: "請輸入暱稱" })}
                 value={user.nickname}
@@ -199,7 +206,7 @@ export default function Register2() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="InputEmail" className="form-label fs18b">
+              <label htmlFor="email" className="form-label fs18b">
                 電子信箱
                 <span style={{ color: "red" }} className="ps-1">
                   *
@@ -210,10 +217,14 @@ export default function Register2() {
               </label>
               <input
                 type="email"
-                id="InputEmail"
-                className="form-control input-f"
+                id="email"
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
                 placeholder="請輸入E-mail"
-                {...register("email", { required: "請輸入正確格式的E-Mail" })}
+                {...register("email", {
+                  required: "請輸入E-mail",
+                })}
                 value={user.email}
                 onChange={handleFieldChange}
               />
@@ -231,11 +242,21 @@ export default function Register2() {
               </label>
               <input
                 type={show ? "text" : "password"}
-                className="form-control input-f"
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
                 id="InputPassword"
-                placeholder="請輸入英文+數字至少8碼"
+                placeholder="請輸入英文+數字至少8碼最多不超過12碼"
                 {...register("password", {
-                  required: "請輸入英文+數字至少8碼",
+                  required: "請輸入英文+數字至少8碼最多不超過12碼",
+                  minLength: {
+                    value: 8,
+                    message: "請輸入英文+數字至少8碼",
+                  },
+                  maxLength: {
+                    value: 12,
+                    message: "請不要超過12碼",
+                  },
                 })}
                 value={user.password}
                 onChange={handleFieldChange}
@@ -249,7 +270,7 @@ export default function Register2() {
                 }}></i>
             </div>
             <div>
-              <label htmlFor="InputPassword2" className="form-label fs18b">
+              <label htmlFor="password2" className="form-label fs18b">
                 密碼確認
                 <span style={{ color: "red" }} className="ps-1">
                   *
@@ -259,22 +280,36 @@ export default function Register2() {
                 </span>
               </label>
               <input
-                type={show ? "text" : "password"}
-                className="form-control input-f"
-                id="InputPassword2"
+                type={show2 ? "text" : "password"}
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
+                id="password2"
                 placeholder="請再次輸入密碼"
                 {...register("password2", {
-                  required: "請再次輸入跟上一欄一樣的密碼",
+                  required: "請再次輸入密碼",
+                  minLength: {
+                    value: 8,
+                    message: "請輸入英文+數字至少8碼",
+                  },
+                  maxLength: {
+                    value: 12,
+                    message: "請不要超過12碼",
+                  },
+                  validate: (value) =>
+                    value === user.password || "與上欄輸入密碼不相同",
                 })}
                 value={user.password2}
                 onChange={handleFieldChange}
               />
               <i
                 type="button"
-                className={`far ${show ? "fa-eye" : "fa-eye-slash"} no-see-eye`}
+                className={`far ${
+                  show2 ? "fa-eye" : "fa-eye-slash"
+                } no-see-eye`}
                 style={{ color: "#787878" }}
                 onClick={() => {
-                  setShow(!show);
+                  setShow2(!show2);
                 }}></i>
             </div>
             {/* 手機 */}
@@ -290,11 +325,17 @@ export default function Register2() {
               </label>
               <input
                 type="text"
-                className="form-control input-f"
+                className={`form-control input-f ${
+                  errors.password ? "is-invalid" : ""
+                }`}
                 id="InputPhone"
                 placeholder="請輸入09開頭共10碼的數字"
                 {...register("phone", {
                   required: "請輸入09開頭共10碼的手機號碼",
+                  pattern: {
+                    value: /^(09)[0-9]{8}$/,
+                    message: "請輸入09開頭共10碼的手機號碼",
+                  },
                 })}
                 value={user.phone}
                 onChange={handleFieldChange}
@@ -308,7 +349,17 @@ export default function Register2() {
                 className="form-control input-area"
                 id="FormTextarea"
                 rows="3"
-                placeholder="寫下自我的話，100字內"></textarea>
+                placeholder="寫下自我的話，100字內"
+                value={textareaText}
+                onChange={(e) => {
+                  setTextareaText(e.target.value);
+                }}
+                {...register("self_info", {
+                  maxLength: {
+                    value: 100,
+                    message: "請不要超過100個字，謝謝",
+                  },
+                })}></textarea>
             </div>
             <div className="d-flex justify-content-end mt-5">
               {/* <Link href=""> */}
@@ -380,7 +431,7 @@ export default function Register2() {
           }
           .no-see-eye:before {
             position: absolute;
-            left: 465px;
+            left: 450px;
             bottom: 32px;
           }
           .upload_input {
