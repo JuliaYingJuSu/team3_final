@@ -1,11 +1,33 @@
 import React from "react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Button } from "antd";
+import { useForm, Controller } from "react-hook-form";
+import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./city-selector";
+import styles from "@/components/restaurant-member/styles/ant-design.module.css";
+
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+
+import {
+  Button,
+  Checkbox,
+  Col,
+  ColorPicker,
+  Form,
+  InputNumber,
+  Radio,
+  Rate,
+  Row,
+  Select,
+  Slider,
+  Space,
+  Switch,
+  Upload,
+  Input,
+} from "antd";
 
 export default function PageContent() {
   const {
+    control,
     register,
     handleSubmit,
     watch,
@@ -128,20 +150,25 @@ export default function PageContent() {
                   {errors.photo?.message}
                 </span>
               </label>
-              {/* <div
-                  className="fs18b input-area"
-                  htmlFor="photo"
-                  style={{ height: "150px" }}
-                >
-                  <input
-                    type="file"
-                    className="w-100 h-100 hid"
-                    multiple
-                    {...register("photo", { required: "請輸入資料" })}
-                    id="photo"
-                  />
-                  <input type="file"></input>
-                </div> */}
+              <FormItem
+                control={control}
+                className={styles.ant - upload - list - item - done}
+                name="photo"
+                valuePropName="fileList"
+                noStyle
+              >
+                <Upload.Dragger name="files">
+                  <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                  </p>
+                  <p className="ant-upload-text">
+                    Click or drag file to this area to upload
+                  </p>
+                  <p className="ant-upload-hint">
+                    Support for a single or bulk upload.
+                  </p>
+                </Upload.Dragger>
+              </FormItem>
             </div>
 
             <button className="btn btn-big mt-4 ms-auto" type="submit">
@@ -153,8 +180,8 @@ export default function PageContent() {
       </div>
       <style jsx>
         {`
-          .hid input[type="file"] {
-            opacity: 0;
+          .ant-upload-list-item-name {
+            color: blue;
           }
         `}
       </style>

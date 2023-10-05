@@ -36,6 +36,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.46.2",
+    "react-hook-form-antd": "^0.0.2",
     "react-icons": "^4.10.1",
     "react-slick": "^0.29.0",
     "react-switch": "^7.0.0",
