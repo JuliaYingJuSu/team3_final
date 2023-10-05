@@ -4,6 +4,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import LocationSelect from "@/components/layout/location-select";
 import CardR3 from "@/components/layout/card-r3";
 import Link from "next/link";
+import BreadcrumbResult from "@/components/book/breadcrumb-result";
 
 export default function Index() {
   return (
@@ -12,7 +13,10 @@ export default function Index() {
         <title>食食嗑嗑-餐廳搜尋</title>
       </Head>
       <Navbar></Navbar>
-      <div className="w-100 h400 d-flex align-items-end banner">
+      <div className="container">
+        <BreadcrumbResult></BreadcrumbResult>
+      </div>
+      <div className="w-100 h400 d-flex align-items-end banner mt-5">
         <div className="container d-flex justify-content-center">
           <div className="dropdown ms-5 pe-4">
             {/* 下拉選單 */}
@@ -102,7 +106,7 @@ export default function Index() {
         </button>
       </div>
       <div className="container d-flex justify-content-center">
-        <div className="d-flex" style={{width:"80%"}}>
+        <div className="d-flex" style={{ width: "80%" }}>
           <h5 className="fw-bolder">日式</h5>
           <h6 className="align-self-end ms-2">(10篇)</h6>
         </div>

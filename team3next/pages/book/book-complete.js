@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
+import BreadcrumbBookComplete from "@/components/book/breadcrumb-bookComplete";
 
 export default function Index() {
   return (
@@ -10,6 +11,11 @@ export default function Index() {
         <title>食食嗑嗑-訂位完成</title>
       </Head>
       <Navbar></Navbar>
+      <div className="container d-flex justify-content-center">
+        <div style={{ width: "90%" }}>
+          <BreadcrumbBookComplete></BreadcrumbBookComplete>
+        </div>
+      </div>
       <div className="container text-center">
         {/* check文字 */}
         <div className="icon-check my-4"></div>

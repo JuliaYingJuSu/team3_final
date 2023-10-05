@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
+import BreadcrumbCustomerInfo from "@/components/book/breadcrumb-customerInfo";
 
 export default function Index() {
   return (
@@ -10,6 +11,11 @@ export default function Index() {
         <title>食食嗑嗑-訂位人資料</title>
       </Head>
       <Navbar></Navbar>
+      <div className="container d-flex justify-content-center">
+        <div style={{ width: "90%" }}>
+          <BreadcrumbCustomerInfo></BreadcrumbCustomerInfo>
+        </div>
+      </div>
       <div className="container mt-4">
         <div className="row justify-content-center gy-5">
           <div className="col-12 col-xl-4 d-flex justify-content-center align-items-center">
