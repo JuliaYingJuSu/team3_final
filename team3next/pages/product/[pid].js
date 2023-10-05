@@ -5,7 +5,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import styles from "./list.module.css";
 // import indexStyles from "./index.module.css";
 import Form from "react-bootstrap/Form";
-
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -24,11 +24,14 @@ export default function productDetail() {
     product_type_list_id: "",
     isValid: "",
     product_img_id: "",
-    product_img: "",
+    product_img: [],
     showed_1st: "",
   });
 
+  const [wish, setWish] = useState(false);
+
   const router = useRouter();
+
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid;
@@ -38,10 +41,44 @@ export default function productDetail() {
         .then((r) => {
           console.log(r);
           setData(r);
+          setWish(r.rowsWished);
         });
     }
   }, [router.isReady]);
 
+  // data.rows && console.log(data.rows.specification);
+  console.log(data.rows?.specification.split("\\n"));
+  // const specSplit = data.rows?.specification.replace("\\n", "<br />");
+  // console.log(specSplit);
+  const specSplit = data.rows?.specification.split("\\n").map((v) => {
+    return <p>{v}</p>;
+  });
+
+  const handleWish = () => {
+    if (router.isReady) {
+      // const pathName = router.pathname; // /product/[pid]
+      const pathName = router.query; //{pid:27}
+      console.log(pathName);
+    }
+    useEffect(() => {
+      if (!wish) {
+        fetch("http://localhost:3002//product/add-wish")
+          .then((r) => r.json())
+          .then((obj) => {})
+          .catch((ex) => {
+            console.log(ex);
+          });
+      } else {
+        fetch("http://localhost:3002//product/del-wish")
+          .then((r) => r.json())
+          .then((obj) => {})
+          .catch((ex) => {
+            console.log(ex);
+          });
+      }
+    }, [wish]);
+  };
+  handleWish();
   return (
     <>
       <Navbar />
@@ -218,43 +255,19 @@ export default function productDetail() {
                 navigation={true}
                 modules={[Navigation]}
                 className="mySwiper"
+                style={{ "--swiper-navigation-color": "#3f4c5c" }}
               >
-                <SwiperSlide>
-                  {
-                    <img
-                      className="w-100 h-100"
-                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                      alt=""
-                    />
-                  }
-                </SwiperSlide>
-                <SwiperSlide>
-                  {
-                    <img
-                      className="w-100 h-100"
-                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                      alt=""
-                    />
-                  }
-                </SwiperSlide>
-                <SwiperSlide>
-                  {
-                    <img
-                      className="w-100 h-100"
-                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                      alt=""
-                    />
-                  }
-                </SwiperSlide>
-                <SwiperSlide>
-                  {
-                    <img
-                      className="w-100 h-100"
-                      src="/images/product/螢幕擷取畫面 2023-09-26 101959.png"
-                      alt=""
-                    />
-                  }
-                </SwiperSlide>
+                {data.rowsImgs?.map((v, i) => {
+                  return (
+                    <SwiperSlide key={i}>
+                      <img
+                        className="w-100 h-100"
+                        src={"/images/product/" + v.product_img}
+                        alt=""
+                      />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
             <div
@@ -265,10 +278,25 @@ export default function productDetail() {
             >
               <div className="my-2 h5 ">
                 <p className="d-flex ">
-                  <span className="me-auto">{product_name}</span>
-                  <span className="icon-mark"></span>
+                  {/* {console.log(data.rows?.product_img)}; */}
+                  <span className="me-auto">{data.rows?.product_name}</span>
+                  {/* ******************************************************** */}
+                  <Link href="/product/add-wish">
+                    <span
+                      className={wish ? "icon-mark-fill" : "icon-mark"}
+                      onClick={() => {
+                        handleWish();
+
+                        setWish(!wish);
+                        // console.log(wish);
+                      }}
+                    ></span>
+                  </Link>
                 </p>
-                <p className="ps-3">{"NT$" + price}</p>
+                <p className="ps-3">
+                  <span>NT$ </span>
+                  {data.rows?.price}
+                </p>
               </div>
               <div className="fs-3 my-2">
                 <span className="icon-Star"></span>
@@ -284,40 +312,38 @@ export default function productDetail() {
                 (優格水果口味除外)，過敏體質也不用擔心
               </p> */}
               <div className={styles.btnBox}>
-                <Form.Select
-                  className={" brounded"}
-                  size="sm"
-                  aria-label="Default select example"
-                >
-                  <option>請選擇數量</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </Form.Select>
-                <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
-                  加入購物車
-                </button>
-                <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
-                  立即購買
-                </button>
+                <form>
+                  <Form.Select
+                    className={" brounded"}
+                    size="sm"
+                    aria-label="Default select example"
+                  >
+                    <option>請選擇數量</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </Form.Select>
+                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                    加入購物車
+                  </button>
+                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                    立即購買
+                  </button>
+                </form>
               </div>
             </div>
           </div>
+          {/* ------------商品內文------------ */}
           <div className={styles.infoBox + " w-100"}>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品介紹</p>
-              <p className={styles.text}>{product_description}</p>
+              <p className={styles.text}>
+                {data.rows && data.rows.product_description}
+              </p>
             </div>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品規格</p>
-              <p className={styles.text}>
-                商品產地 : 丹麥
-                <br />
-                賞味期限 : 製造日期後 365 天
-                <br />
-                內容量 : 100g x 6<br />
-                素食者可食用
-              </p>
+              <p className={styles.text}>{data.rows && specSplit}</p>
             </div>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品評論</p>
@@ -347,12 +373,14 @@ export default function productDetail() {
           <div className={styles.recommendBox + " row pb-5 "}>
             <p className={styles.head + " h4"}>推薦商品</p>
             <div className={styles.test + " w-75"}>
+              {/* ------------推薦商品----------- */}
               <Swiper
                 spaceBetween={40}
                 slidesPerView={4}
                 navigation={true}
                 modules={[Navigation]}
                 className="mySwiper"
+                style={{ "--swiper-navigation-color": "#3f4c5c" }}
               >
                 {Array(5)
                   .fill(1)
