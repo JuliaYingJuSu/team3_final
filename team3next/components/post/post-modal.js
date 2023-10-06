@@ -5,9 +5,35 @@ import Like from "./like";
 import Saved from "./saved";
 
 export default function PostModal() {
-  const [follow, setFollow] = useState(false);
-  const [like, setLike] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [messageVal, setMessageVal] = useState({ message: "" });
+  const [errors, setErrors] =useState({});
+
+  const messageChanged = (e) => {
+    const { id, value } = e.target;
+    console.log({ id, value });
+    const newVal ={...messageVal,[id]: value};
+    setMessageVal(newVal);
+  };
+  const sendMessage = (e)=>{
+    const message_re = /.{1,}/;
+    e.preventDefault();
+
+    const newErrors = {};
+
+  if(!message_re.test(messageVal.message)){
+    newErrors.message = "請輸入留言";
+  }
+  setErrors(newErrors);
+
+  if (Object.keys(newErrors).length === 0) {
+      console.log("沒有錯誤");}
+      else{console.log("---------有錯誤");
+
+      }
+  }
+  
+
+  
   return (
     <>
       <div
@@ -170,9 +196,9 @@ export default function PostModal() {
                 <span>1</span>
               </span>
               <span className="middle">
-                <button className="btn btn-sm btn-i">
+                <a className="btn btn-sm btn-i" href="#message">
                   <i className="fa-regular fa-comment"></i>
-                </button>
+                </a>
                 <span>1</span>
               </span>
               <span className="middle">
@@ -236,22 +262,26 @@ export default function PostModal() {
               </div>
             </div>
             <hr />
-            <div className="container input-group mb-3">
+            <form className="container input-group mb-3" onSubmit={sendMessage}>
               <input
                 type="text"
                 className="form-control"
                 placeholder="新增留言"
                 aria-label="message"
                 aria-describedby="button-addon2"
+                id="message"
+                onChange={messageChanged}
+                value={messageVal.message}
               />
               <button
                 className="btn btn-outline-secondary"
-                type="button"
+                type="submit"
                 id="button-addon2"
               >
                 發送
               </button>
-            </div>
+              <p className="form-text container warning">{errors.message}</p>
+            </form>
           </div>
         </div>
       </div>
@@ -275,6 +305,10 @@ export default function PostModal() {
             width: 10px;
             height: 10px;
             border-radius: 100%;
+          }
+          .warning{
+            color:red;
+            margin-top:0;
           }
         `}
       </style>

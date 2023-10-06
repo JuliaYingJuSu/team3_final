@@ -150,9 +150,9 @@ export default function MyArticle() {
                 <span>1</span>
               </span>
               <span className="middle">
-                <button className="btn btn-sm btn-i">
+                <a className="btn btn-sm btn-i" href="#a1">
                   <i className="fa-regular fa-comment"></i>
-                </button>
+                </a>
                 <span>1</span>
               </span>
               <span className="middle">
@@ -218,6 +218,7 @@ export default function MyArticle() {
                 placeholder="新增留言"
                 aria-label="message"
                 aria-describedby="button-addon2"
+                id="a1"
               />
               <button
                 className="btn btn-outline-secondary"

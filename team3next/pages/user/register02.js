@@ -4,6 +4,7 @@ import Wave02 from "@/components/icons/wave02";
 import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
 export default function Register2() {
   const [user, setUser] = useState({
@@ -30,7 +31,7 @@ export default function Register2() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:3000/user", data);
+      const response = await axios.post("http://localhost:3002/try-post", data);
       console.log("Server Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
@@ -86,10 +87,10 @@ export default function Register2() {
     const formData = new FormData();
 
     // 對照server上的檔案名稱 req.files.avatar
-    formData.append("avatar", selectedFile);
+    formData.append("user_img", selectedFile);
 
     fetch(
-      "http://localhost:3000/upload", //server url
+      "http://localhost:3002/try-upload", //server url
       {
         method: "POST",
         body: formData,
@@ -98,7 +99,7 @@ export default function Register2() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl("http://localhost:3002/try-upload" + result.data.name);
+        setImgServerUrl("http://localhost:3002/try-upload");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -131,7 +132,7 @@ export default function Register2() {
             的欄位為必填
           </div>
           {/* 輸入區 */}
-          <form className="mt-4" onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+          <form className="mt-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
               <div className="position-relative">
@@ -366,7 +367,7 @@ export default function Register2() {
               <button
                 type="submit"
                 className="btn btn-big fs18b"
-                onClick={handleSubmission}>
+                onClick={handleSubmission(onSubmit)}>
                 註冊
               </button>
               {/* </Link> */}
