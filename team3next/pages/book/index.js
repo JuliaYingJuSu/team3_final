@@ -27,7 +27,7 @@ export default function Index() {
       <CardR3></CardR3>
       <CardR3></CardR3>
       <CardR3></CardR3>
-      <Link href={"/"} className="middle grey fs18b mt-5 mb-5">
+      <Link href={""} className="middle grey fs18b mt-5 mb-5">
         看更多
       </Link>
       <Footer></Footer>

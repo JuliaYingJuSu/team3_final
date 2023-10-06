@@ -4,7 +4,8 @@ import Wave02 from "@/components/icons/wave02";
 import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Register2() {
   const [user, setUser] = useState({
@@ -12,7 +13,6 @@ export default function Register2() {
     nickname: "",
     email: "",
     password: "",
-    password2: "",
     phone: "",
   });
 
@@ -28,13 +28,33 @@ export default function Register2() {
   } = useForm();
   console.log(errors);
 
+
+  // sweetalert設定
+  const swalTest1 = Swal.mixin({
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (swalTest1) => {
+      swalTest1.addEventListener('mouseenter', Swal.stopTimer)
+      swalTest1.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:3002/try-post", data);
+      const response = await axios.post("http://localhost:3002/user/test", data);
       console.log("Server Response:", response.data);
+      swalTest1.fire({
+        title: "註冊成功",
+        icon: "success",
+      });
     } catch (err) {
       console.error("Error:", err);
+      Swal.fire({
+        title: "註冊失敗",
+        icon: "error",
+      });
     }
   };
 
@@ -90,7 +110,7 @@ export default function Register2() {
     formData.append("user_img", selectedFile);
 
     fetch(
-      "http://localhost:3002/try-upload", //server url
+      "http://localhost:3002/upload2", //server url
       {
         method: "POST",
         body: formData,
@@ -99,7 +119,7 @@ export default function Register2() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl("http://localhost:3002/try-upload");
+        setImgServerUrl("http://localhost:3002/upload2");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -114,7 +134,8 @@ export default function Register2() {
         </span>
         <span
           className="z-2 position-absolute start-50 translate-middle"
-          style={{ top: 65 }}>
+          style={{ top: 65 }}
+        >
           <Wave02></Wave02>
         </span>
         <div className="container middle flex-column mb-4">
@@ -124,7 +145,8 @@ export default function Register2() {
           <span className="bgi position-absolute opacity-25"></span>
           <div
             className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
-            style={{ paddingRight: 350 }}>
+            style={{ paddingRight: 350 }}
+          >
             有{" "}
             <span className="px-1" style={{ color: "red" }}>
               *
@@ -132,7 +154,11 @@ export default function Register2() {
             的欄位為必填
           </div>
           {/* 輸入區 */}
-          <form className="mt-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <form
+            className="mt-4"
+            onSubmit={handleSubmit(onSubmit)}
+            encType="multipart/form-data"
+          >
             {/* 大頭照 */}
             <div className="middle ms-5">
               <div className="position-relative">
@@ -265,7 +291,8 @@ export default function Register2() {
                 style={{ color: "#787878" }}
                 onClick={() => {
                   setShow(!show);
-                }}></i>
+                }}
+              ></i>
             </div>
             <div>
               <label htmlFor="password2" className="form-label fs18b">
@@ -297,8 +324,6 @@ export default function Register2() {
                   validate: (value) =>
                     value === user.password || "與上欄輸入密碼不相同",
                 })}
-                value={user.password2}
-                onChange={handleFieldChange}
               />
               <i
                 type="button"
@@ -308,7 +333,8 @@ export default function Register2() {
                 style={{ color: "#787878" }}
                 onClick={() => {
                   setShow2(!show2);
-                }}></i>
+                }}
+              ></i>
             </div>
             {/* 手機 */}
             <div className="mb-3">
@@ -360,14 +386,16 @@ export default function Register2() {
                     value: 100,
                     message: "請不要超過100個字，謝謝",
                   },
-                })}></textarea>
+                })}
+              ></textarea>
             </div>
             <div className="d-flex justify-content-end mt-5">
               {/* <Link href=""> */}
               <button
                 type="submit"
                 className="btn btn-big fs18b"
-                onClick={handleSubmission(onSubmit)}>
+                // onClick={handleSubmission(onSubmit)}
+              >
                 註冊
               </button>
               {/* </Link> */}
