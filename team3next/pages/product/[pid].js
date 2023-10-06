@@ -28,10 +28,9 @@ export default function productDetail() {
     showed_1st: "",
   });
 
-  const [wish, setWish] = useState(false);
-
   const router = useRouter();
 
+  const [wish, setWish] = useState(false);
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid;
@@ -56,29 +55,55 @@ export default function productDetail() {
 
   const handleWish = () => {
     if (router.isReady) {
-      // const pathName = router.pathname; // /product/[pid]
-      const pathName = router.query; //{pid:27}
+      //   // const pathName = router.pathname; // /product/[pid]
+      //   // const pathName = router.query; //{pid:27}
+      const pathName = router.query.pid; //{27}
       console.log(pathName);
-    }
-    useEffect(() => {
+      // }
+
       if (!wish) {
-        fetch("http://localhost:3002//product/add-wish")
+        fetch("http://localhost:3002/product/add-wish", {
+          method: "POST",
+          body: JSON.stringify({
+            pid: pathName,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
+          // .then((r) => {
+          //   console.log(r); //defined
+          // })
           .then((r) => r.json())
-          .then((obj) => {})
-          .catch((ex) => {
-            console.log(ex);
-          });
-      } else {
-        fetch("http://localhost:3002//product/del-wish")
-          .then((r) => r.json())
-          .then((obj) => {})
+          .then((r) => {
+            console.log(r); //true
+          })
           .catch((ex) => {
             console.log(ex);
           });
       }
-    }, [wish]);
+    } else {
+      console.log("1111110");
+      fetch("http://localhost:3002/product/del-wish", {
+        method: "GET",
+        body: JSON.stringify({
+          pid: pathName,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r); //true
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
   };
-  handleWish();
+
   return (
     <>
       <Navbar />
@@ -281,17 +306,17 @@ export default function productDetail() {
                   {/* {console.log(data.rows?.product_img)}; */}
                   <span className="me-auto">{data.rows?.product_name}</span>
                   {/* ******************************************************** */}
-                  <Link href="/product/add-wish">
-                    <span
-                      className={wish ? "icon-mark-fill" : "icon-mark"}
-                      onClick={() => {
-                        handleWish();
+                  {/* <Link href="/product/add-wish/"> */}
+                  <span
+                    className={wish ? "icon-mark-fill" : "icon-mark"}
+                    onClick={() => {
+                      handleWish();
 
-                        setWish(!wish);
-                        // console.log(wish);
-                      }}
-                    ></span>
-                  </Link>
+                      setWish(!wish);
+                      // console.log(wish);
+                    }}
+                  ></span>
+                  {/* </Link> */}
                 </p>
                 <p className="ps-3">
                   <span>NT$ </span>
@@ -305,12 +330,7 @@ export default function productDetail() {
                 <span className="icon-Star"></span>
                 <span className="icon-Star"></span>
               </div>
-              {/* <p className="mb-auto fs16b">
-                ◆ 丹麥原裝進口 ◆ 不含人工香料、色素、甜味劑、防腐劑 <br />◆
-                莓果蔬食口味 (藍色包裝) 為素食者可食用
-                <br /> ◆ 不含麩質、不含乳糖
-                (優格水果口味除外)，過敏體質也不用擔心
-              </p> */}
+
               <div className={styles.btnBox}>
                 <form>
                   <Form.Select
