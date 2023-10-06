@@ -7,6 +7,17 @@ import Articles from "@/components/post/articles";
 
 
 export default function index() {
+  // const [data, setData] = useState([])
+
+  // useEffect(()=>{
+  //   fetch("http://localhost:3002/post/")
+  // console.log("hello")
+  //   .then((r)=>r.json())
+  //   .then((data) => {
+  //     console.log(data)
+  //     setData(data)
+  // })
+  // },[])
   return (
     <>
       <Navbar />

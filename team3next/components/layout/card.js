@@ -8,7 +8,10 @@ import Like from "../post/like";
 import Saved from "../post/saved";
 
 
-export default function Card() {
+export default function Card({
+  // post_id,post_image_name,likes, comment, favorite,city, food_tags, post_title
+
+}) {
   return (
     <>
       <PostModal />
@@ -36,7 +39,7 @@ export default function Card() {
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
               <a href="#" className="tag-i">
-                台北市
+                {/* {city} */}
               </a>
               <a href="#" className="tag-f">
                 早午餐
@@ -49,7 +52,7 @@ export default function Card() {
               </a>
             </div>
             <h6 className="card-title w-100 mt-3 fw-bolder">
-              朋友說這是台北最好吃的滷肉飯
+              {/* {post_title} */}
             </h6>
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
