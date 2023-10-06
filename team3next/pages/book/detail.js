@@ -20,10 +20,10 @@ export default function Index() {
       <div className="container mt-3">
         <div className="d-flex justify-content-center">
           <div
-            className="row g-5 justify-content-around"
+            className="row ps-5 g-5 justify-content-around"
             style={{ width: "70%" }}
           >
-            <div className="fs18 align-self-center col-4">
+            <div className="fs18 align-self-center col-12 col-xl-5">
               <p className="h4">
                 Cin Cin Osteria
                 <br />
@@ -35,28 +35,33 @@ export default function Index() {
                   <span className="pe-2">
                     <span className="icon-map"></span>
                   </span>
-                  <div>台南市中西區尊王路140號</div>
+                  <div>台北市松山區慶城街16巷16號1F</div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-Call"></span>
                   </span>
-                  <div>06 221 0699</div>
+                  <div>02-2712-2050</div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-calender"></span>
                   </span>
-                  <div>每週一、週二休息</div>
+                  <div>每週一休息</div>
                 </div>
               </div>
             </div>
-            <div className="col-8">
-              <img
-                className="img-map"
-                src="../../images/book/map-2.png"
-                alt="..."
-              />
+            <div className="col-xl-7">
+              <iframe
+                className="iframe-map"
+                width="80%"
+                height="100%"
+                style={{ minHeight: "300px" }}
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0"
+                src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=台北市松山區慶城街16巷16號&z=16&output=embed&t="
+              ></iframe>
             </div>
           </div>
         </div>
@@ -116,7 +121,7 @@ export default function Index() {
       <Footer></Footer>
       <style jsx>
         {`
-          .img-map {
+          .iframe-map {
             width: 100%;
             height: 100%;
             object-fit: cover;
