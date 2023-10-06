@@ -7,7 +7,6 @@ import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./city-selector";
 
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
-
 import { Upload, Modal, Form } from "antd";
 
 export default function PageContent() {
@@ -49,7 +48,7 @@ export default function PageContent() {
           >
             <div className="d-flex flex-column my-3">
               <label className="fs18b" htmlFor="name">
-                店家名稱
+                商家名稱
                 <span className="ps-1" style={{ color: "red" }}>
                   *
                 </span>
@@ -60,23 +59,31 @@ export default function PageContent() {
               <input
                 className="input-res"
                 type="text"
-                {...register("name", { required: "請輸入資料" })}
+                {...register("name")}
                 id="name"
                 placeholder=""
               />
             </div>
             <div className="d-flex flex-column  mb-3">
               <label className="fs18b" htmlFor="address">
-                店家地址
+                商家地址
                 <span className="ps-1" style={{ color: "red" }}>
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
+                  {errors.city?.message}
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
+                  {errors.district?.message}
+                </span>
+                <span className="ps-1" style={{ color: "red" }}>
                   {errors.address?.message}
                 </span>
+                
               </label>
               <div className="d-flex justify-content-start">
-                <CitySelector />
+                <CitySelector register={register} watch={watch} errors={errors}/>
+                {/* 當作PageContent是父組件,將此頁引入的useform方法接著傳遞給CitySelector作為props */}
                 <input
                   className="input-res w-100"
                   type="text"
