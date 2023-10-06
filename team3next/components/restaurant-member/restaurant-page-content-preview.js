@@ -1,14 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import infoSchema from "@/validation/info-validation";
 import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./city-selector";
 
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
-import { Upload, Modal, Form } from "antd";
+import { Upload, Modal } from "antd";
 
 export default function PageContent() {
   const {
@@ -17,12 +15,33 @@ export default function PageContent() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(infoSchema) });
+  } = useForm();
   console.log(errors);
 
   console.log(watch());
   // rhf
 
+  const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
   const props = {
     name: "files",
     multiple: true,
@@ -31,6 +50,14 @@ export default function PageContent() {
     style: {
       backgroundColor: "#FBF9EF",
       border: "none",
+    },
+    progress: {
+      strokeColor: {
+        '0%': '#108ee9',
+        '100%': '#87d068',
+      },
+      strokeWidth: 3,
+      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
     },
   };
   // antd
@@ -149,9 +176,8 @@ export default function PageContent() {
                   {errors.photo?.message}
                 </span>
               </label>
-
               <FormItem control={control} name="photo" valuePropName="fileList">
-                <Upload.Dragger {...props}>
+                <Upload.Dragger {...props} onPreview={ handlePreview }>
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined style={{ color: "#ae4818" }} />
                   </p>
@@ -163,6 +189,21 @@ export default function PageContent() {
                   </p>
                 </Upload.Dragger>
               </FormItem>
+              <Modal
+                className="z-1"
+                open={previewOpen}
+                title={previewTitle}
+                footer={null}
+                onCancel={handleCancel}
+              >
+                <img
+                  alt="example"
+                  style={{
+                    width: "100%",
+                  }}
+                  src={previewImage}
+                />
+              </Modal>
             </div>
 
             <button className="btn btn-big mt-4 ms-auto" type="submit">
