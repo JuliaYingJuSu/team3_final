@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from "axios";
 import profileSchema from "@/validation/profile-validation";
+import axios from "axios";
+
 
 export default function Profile() {
   const {
@@ -12,7 +13,7 @@ export default function Profile() {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(profileSchema),
+    resolver: yupResolver(profileSchema)
   });
   console.log(errors);
 
