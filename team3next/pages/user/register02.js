@@ -9,25 +9,25 @@ import Swal from "sweetalert2";
 
 export default function Register2() {
   const [user, setUser] = useState({
-    name: "",
+    user_name: "",
     nickname: "",
-    email: "",
-    password: "",
-    phone: "",
+    user_email: "",
+    user_password: "",
+    user_phone: "",
   });
 
   //隱藏or呈現密碼
-  const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
 
   const {
     register,
     handleSubmit,
     watch,
+    unregister,
     formState: { errors },
   } = useForm();
   console.log(errors);
-
 
   // sweetalert設定
   const swalTest1 = Swal.mixin({
@@ -35,15 +35,15 @@ export default function Register2() {
     timer: 3000,
     timerProgressBar: true,
     didOpen: (swalTest1) => {
-      swalTest1.addEventListener('mouseenter', Swal.stopTimer)
-      swalTest1.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
+      swalTest1.addEventListener("mouseenter", Swal.stopTimer);
+      swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:3002/user/test", data);
+      const response = await axios.post("http://localhost:3002/api/user", data);
       console.log("Server Response:", response.data);
       swalTest1.fire({
         title: "註冊成功",
@@ -89,6 +89,10 @@ export default function Register2() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
+  useEffect(() => {
+    register("password2","user_name");
+  }, [register]);
+
   const changeHandler = (e) => {
     const file = e.target.files[0];
 
@@ -110,7 +114,7 @@ export default function Register2() {
     formData.append("user_img", selectedFile);
 
     fetch(
-      "http://localhost:3002/upload2", //server url
+      "http://localhost:3002/try-upload", //server url
       {
         method: "POST",
         body: formData,
@@ -119,7 +123,7 @@ export default function Register2() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl("http://localhost:3002/upload2");
+        setImgServerUrl("http://localhost:3002/try-upload");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -192,18 +196,18 @@ export default function Register2() {
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.name?.message}
+                  {errors.user_name?.message}
                 </span>
               </label>
               <input
                 type="text"
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.user_name ? "is-invalid" : ""
                 }`}
                 id="name"
                 placeholder="請輸入姓名"
-                {...register("name", { required: "請輸入姓名" })}
-                value={user.name}
+                {...register("user_name", { required: "請輸入姓名" })}
+                value={user.user_name}
                 onChange={handleFieldChange}
               />
             </div>
@@ -220,7 +224,7 @@ export default function Register2() {
               <input
                 type="text"
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.nickname ? "is-invalid" : ""
                 }`}
                 id="nikename"
                 placeholder="請輸入暱稱"
@@ -236,20 +240,20 @@ export default function Register2() {
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.email?.message}
+                  {errors.user_email?.message}
                 </span>
               </label>
               <input
                 type="email"
                 id="email"
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.user_email ? "is-invalid" : ""
                 }`}
                 placeholder="請輸入E-mail"
-                {...register("email", {
+                {...register("user_email", {
                   required: "請輸入E-mail",
                 })}
-                value={user.email}
+                value={user.user_email}
                 onChange={handleFieldChange}
               />
             </div>
@@ -261,17 +265,17 @@ export default function Register2() {
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.password?.message}
+                  {errors.user_password?.message}
                 </span>
               </label>
               <input
-                type={show ? "text" : "password"}
+                type={show1 ? "text" : "password"}
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.user_password ? "is-invalid" : ""
                 }`}
                 id="InputPassword"
                 placeholder="請輸入英文+數字至少8碼最多不超過12碼"
-                {...register("password", {
+                {...register("user_password", {
                   required: "請輸入英文+數字至少8碼最多不超過12碼",
                   minLength: {
                     value: 8,
@@ -282,18 +286,21 @@ export default function Register2() {
                     message: "請不要超過12碼",
                   },
                 })}
-                value={user.password}
+                value={user.user_password}
                 onChange={handleFieldChange}
               />
               <i
                 type="button"
-                className={`far ${show ? "fa-eye" : "fa-eye-slash"} no-see-eye`}
+                className={`far ${
+                  show1 ? "fa-eye" : "fa-eye-slash"
+                } no-see-eye`}
                 style={{ color: "#787878" }}
                 onClick={() => {
-                  setShow(!show);
+                  setShow1(!show1);
                 }}
               ></i>
             </div>
+            {/* 密碼確認 */}
             <div>
               <label htmlFor="password2" className="form-label fs18b">
                 密碼確認
@@ -307,7 +314,7 @@ export default function Register2() {
               <input
                 type={show2 ? "text" : "password"}
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.password2 ? "is-invalid" : ""
                 }`}
                 id="password2"
                 placeholder="請再次輸入密碼"
@@ -322,7 +329,7 @@ export default function Register2() {
                     message: "請不要超過12碼",
                   },
                   validate: (value) =>
-                    value === user.password || "與上欄輸入密碼不相同",
+                    value === user.user_password || "與上欄輸入密碼不相同",
                 })}
               />
               <i
@@ -344,44 +351,44 @@ export default function Register2() {
                   *
                 </span>
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.phone?.message}
+                  {errors.user_phone?.message}
                 </span>
               </label>
               <input
                 type="text"
                 className={`form-control input-f ${
-                  errors.password ? "is-invalid" : ""
+                  errors.user_phone ? "is-invalid" : ""
                 }`}
                 id="InputPhone"
                 placeholder="請輸入09開頭共10碼的數字"
-                {...register("phone", {
+                {...register("user_phone", {
                   required: "請輸入09開頭共10碼的手機號碼",
                   pattern: {
                     value: /^(09)[0-9]{8}$/,
                     message: "請輸入09開頭共10碼的手機號碼",
                   },
                 })}
-                value={user.phone}
+                value={user.user_phone}
                 onChange={handleFieldChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="FormTextarea" className="form-label fs18b">
+              <label htmlFor="self_info" className="form-label fs18b">
                 個人簡介 :
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.FormTextarea?.message}
+                  {errors.self_info?.message}
                 </span>
               </label>
               <textarea
                 className="form-control input-area"
-                id="FormTextarea"
+                id="self_info"
                 rows="3"
-                name="FormTextarea"
+                name="self_info"
                 placeholder="寫下自我的話，100字內"
                 onChange={(e) => {
                   setTextareaText(e.target.value);
                 }}
-                {...register("FormTextarea", {
+                {...register("self_info", {
                   maxLength: {
                     value: 100,
                     message: "請不要超過100個字，謝謝",
@@ -395,6 +402,7 @@ export default function Register2() {
                 type="submit"
                 className="btn btn-big fs18b"
                 // onClick={handleSubmission(onSubmit)}
+                onClick={() => unregister("password2")}
               >
                 註冊
               </button>
