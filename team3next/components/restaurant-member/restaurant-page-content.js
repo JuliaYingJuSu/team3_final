@@ -20,7 +20,7 @@ export default function PageContent() {
   } = useForm({ resolver: yupResolver(infoSchema) });
   console.log(errors);
 
-  console.log(watch());
+  // console.log(watch());
   // rhf
 
   const props = {
@@ -41,9 +41,9 @@ export default function PageContent() {
         <div className="col-3"></div>
         <div className="col-6">
           <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
-          <form
+          <Form
             className="d-flex flex-column justify-content-center"
-            onSubmit={handleSubmit((data) => {
+            onFinish={handleSubmit((data) => {
               console.log(data);
             })}
           >
@@ -150,17 +150,27 @@ export default function PageContent() {
                 </span>
               </label>
 
-              <FormItem control={control} name="photo" valuePropName="fileList">
+              <FormItem
+                control={control}
+                name="photo"
+                valuePropName="fileList"
+                getValueFromEvent={(e) => {
+                  if (Array.isArray(e)) {
+                    return e;
+                  }
+                  return e && e.fileList;
+                }}
+                noStyle
+                // bug fixed用來解決filelist錯誤
+              >
                 <Upload.Dragger {...props}>
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined style={{ color: "#ae4818" }} />
                   </p>
                   <p className="ant-upload-text">
-                    Click or drag file to this area to upload
+                    請從電腦選擇照片或拖曳到這裡
                   </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
+                  <p className="ant-upload-hint">可多選，最多五張</p>
                 </Upload.Dragger>
               </FormItem>
             </div>
@@ -168,7 +178,7 @@ export default function PageContent() {
             <button className="btn btn-big mt-4 ms-auto" type="submit">
               確認修改
             </button>
-          </form>
+          </Form>
         </div>
         <div className="col-3"></div>
       </div>
