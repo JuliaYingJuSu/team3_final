@@ -1,15 +1,8 @@
 import React from "react";
 import cityArray from "@/data/city.json";
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 
-export default function CitySelector() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+export default function CitySelector({register,watch}) {
 
   // const selectedCity = watch("city");
   // console.log([selectedCity]);
