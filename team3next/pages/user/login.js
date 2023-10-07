@@ -1,12 +1,101 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Toggle from "@/components/user/toggle";
 import GoogleLogo from "@/components/icons/google-icon";
+import AuthContext from "@/hooks/AuthContext";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function Login() {
+  const { auth, setAuth } = useContext(AuthContext);
+  const router = useRouter();
+  console.log({ router });
+
+  const [formVals, setFormVals] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const inputChange = (e) => {
+    const { id, value } = e.target;
+    const newVals = { ...formVals, [id]: value };
+
+    setFormVals(newVals);
+  };
+
+  // sweetalert設定
+  const swalTest1 = Swal.mixin({
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (swalTest1) => {
+      swalTest1.addEventListener("mouseenter", Swal.stopTimer);
+      swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
+  //進來後判斷是否有登入
+  useEffect(() => {
+    if (auth.user_id && auth.user_email) {
+      if (router.query.url) {
+        router.push(router.query.url);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [router, auth.user_email, auth.user_id]);
+
+  const sendForm = (e) => {
+    const email_re = /.{8,}/;
+    const password_re = /.{4,}/;
+    e.preventDefault();
+
+    const newErrors = {};
+
+    if (!email_re.test(formVals.email)) {
+      newErrors.email = "請填寫正確的 email";
+    }
+    if (!password_re.test(formVals.password)) {
+      newErrors.password = "請填寫8個字元以上密碼";
+    }
+    setErrors(newErrors);
+
+    //表示沒有錯誤
+    if (Object.keys(newErrors).length === 0) {
+      console.log("沒有錯誤");
+
+      fetch("http://localhost:3002/login-jwt", {
+        method: "POST",
+        body: JSON.stringify(formVals),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((obj) => {
+          console.log(obj);
+          if (obj.success && obj.data?.email) {
+            localStorage.setItem("auth", JSON.stringify(obj.data));
+
+            //登入後跳轉
+            setAuth(obj.data);
+            console.log("登入成功");
+            swalTest1.fire({
+              title: "註冊成功",
+              icon: "success",
+            });
+            location.href="/"
+          }
+        });
+    } else {
+      console.log("有錯喔");
+    }
+  };
   return (
     <>
       <div
@@ -45,42 +134,42 @@ export default function Login() {
               <Toggle></Toggle>
             </div>
             <div className="middle mt-5">
-              <form>
+              <form noValidate onSubmit={sendForm}>
                 <div className="form-floating mb-4">
+                  <span className="form-text">{errors.email}</span>
                   <input
                     type="email"
                     className="form-control border-0 border-bottom rounded-0"
-                    id="floatingInput"
-                    placeholder="name@example.com"
+                    id="email"
+                    placeholder="請輸入電子郵件"
                     style={{ height: 42, width: 600, color: "#AEAEAE" }}
+                    onChange={inputChange}
+                    value={formVals.email}
                   />
-                  <label for="floatingInput" className="fs-5 grey">
-                    請輸入電子郵件
-                  </label>
                 </div>
                 <div className="form-floating">
                   <input
                     type="password"
                     className="form-control border-0 border-bottom rounded-0"
-                    id="floatingPassword"
+                    id="password"
                     placeholder="Password"
                     style={{ height: 42, width: 600, color: "#AEAEAE" }}
+                    onChange={inputChange}
+                    value={formVals.password}
                   />
-                  <label for="floatingPassword" className="fs-5 grey">
-                    請輸入密碼
-                  </label>
+                  <span className="form-text">{errors.password}</span>
                   <i
                     type="button"
                     className="far fa-eye-slash no-see-eye"
                     style={{ color: "#787878" }}></i>
                 </div>
                 <div style={{ marginTop: 100 }} className="middle">
-                  <Link
+                  <button
                     className="btn btn-big middle"
-                    href="#"
+                    type="submit"
                     style={{ height: 60, width: 500, fontSize: 25 }}>
                     登入
-                  </Link>
+                  </button>
                 </div>
                 <div className="mb-3 hr-sect">或是 第三方 登入</div>
                 <div className="row mb-2 mt-3">
@@ -132,9 +221,9 @@ export default function Login() {
           .no-see-eye {
             position: relative;
           }
-          .no-see-eye:before{
+          .no-see-eye:before {
             position: absolute;
-            left:555px;
+            left: 555px;
             bottom: 35px;
           }
         `}
