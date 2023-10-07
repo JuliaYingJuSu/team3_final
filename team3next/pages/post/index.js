@@ -3,7 +3,8 @@ import Navbar from "@/components/layout/default-layout/navbar-main";
 import Breadcrumb from "@/components/post/breadcrumb";
 import Banner from "@/components/post/banner";
 import Footer from "@/components/layout/default-layout/footer";
-import Articles from "@/components/post/articles";
+import Main from "@/components/post/main";
+
 
 
 export default function index() {
@@ -25,7 +26,7 @@ export default function index() {
         <Breadcrumb />
       </div>
       <Banner />
-      <Articles />
+      <Main />
       <Footer />
     </>
   );

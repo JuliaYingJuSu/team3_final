@@ -50,7 +50,7 @@ export default function Banner() {
           </div>
         </div>
       </div>
-      <div className="container d-flex justify-content-center mb-3">
+      <div className=" container d-flex justify-content-center mb-3">
           {/* 搜尋條 */}
           <button type="button" className="btn btn-sm tags">
             台式

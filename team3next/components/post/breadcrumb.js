@@ -11,14 +11,14 @@ export default function Breadcrumb() {
         <span>
           <a href="#">食好料</a>
         </span>
-        <span className="icon-arrow-s-right"></span>
+        {/* <span className="icon-arrow-s-right"></span>
         <span>
           <a href="#">台北市</a>
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>
           <a href="#">義式</a>
-        </span>
+        </span> */}
         {/* <nav
           // style={{--bs-breadcrumb-divider= '>'}}
           aria-label="breadcrumb"
