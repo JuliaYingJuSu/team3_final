@@ -64,7 +64,7 @@ export default function PageContent() {
                 placeholder=""
               />
             </div>
-            <div className="d-flex flex-column  mb-3">
+            <div className="d-flex flex-column mb-3">
               <label className="fs18b" htmlFor="address">
                 商家地址
                 <span className="ps-1" style={{ color: "red" }}>
@@ -79,10 +79,9 @@ export default function PageContent() {
                 <span className="ps-1" style={{ color: "red" }}>
                   {errors.address?.message}
                 </span>
-                
               </label>
               <div className="d-flex justify-content-start">
-                <CitySelector register={register} watch={watch} errors={errors}/>
+                <CitySelector register={register} watch={watch} />
                 {/* 當作PageContent是父組件,將此頁引入的useform方法接著傳遞給CitySelector作為props */}
                 <input
                   className="input-res w-100"
@@ -95,7 +94,7 @@ export default function PageContent() {
             </div>
             <div className="d-flex flex-column mb-3">
               <label className="fs18b" htmlFor="phone">
-                市內電話
+                聯絡電話
                 <span className="ps-1" style={{ color: "red" }}>
                   *
                 </span>
@@ -112,18 +111,12 @@ export default function PageContent() {
             </div>
             <div className="d-flex flex-column mb-3">
               <label className="fs18b" htmlFor="opening">
-                營業時間
-                <span className="ps-1" style={{ color: "red" }}>
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.opening?.message}
-                </span>
+                營業時間備註
               </label>
               <input
                 className="input-res"
                 type="text"
-                {...register("opening", { required: "請輸入資料" })}
+                {...register("opening")}
                 id="opening"
               />
             </div>
