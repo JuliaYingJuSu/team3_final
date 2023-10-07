@@ -41,6 +41,7 @@ export default function Register2() {
   });
 
   const onSubmit = async (data) => {
+    // 從 "data" 中移除 "password2"
     const { password2, ...formData } = data;
     console.log(formData);
     try {
