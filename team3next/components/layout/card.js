@@ -7,14 +7,31 @@ import FollowButton from "../post/followbutton";
 import Like from "../post/like";
 import Saved from "../post/saved";
 
-
 export default function Card({
-  // post_id,post_image_name,likes, comment, favorite,city, food_tags, post_title
-
+  post_id,
+  post_title,
+  post_content,
+  createTime,
+  post_image_name,
+  restaurant_city,
+  restaurant_name,
+  food_tag_name,
 }) {
+  
+
   return (
     <>
-      <PostModal />
+    
+      <PostModal
+        key={post_id}
+        post_title={post_title}
+        post_content={post_content}
+        createTime={createTime}
+        post_image_name={post_image_name}
+        restaurant_city={restaurant_city}
+        restaurant_name={restaurant_name}
+        food_tag_name={food_tag_name}
+      />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -23,7 +40,7 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-              <Like/>
+                <Like />
                 <span>1</span>
               </span>
               <span className="middle">
@@ -33,43 +50,39 @@ export default function Card({
                 <span>1</span>
               </span>
               <span className="middle">
-              <Saved/>
+                <Saved />
                 <span>1</span>
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
               <a href="#" className="tag-i">
-                {/* {city} */}
+                {restaurant_city}
               </a>
               <a href="#" className="tag-f">
-                早午餐
-              </a>
-              <a href="#" className="tag-f">
-                咖啡廳
-              </a>
-              <a href="#" className="tag-f">
-                美式
+                {food_tag_name}
               </a>
             </div>
-            <h6 className="card-title w-100 mt-3 fw-bolder">
-              {/* {post_title} */}
-            </h6>
+            <h6 className="card-title w-100 mt-3 fw-bolder">{post_title}</h6>
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
                 <Link href="/user/user-my-article-i">
                   <img
                     className="rounded-circle headshot-small img-thumbnail"
-                    src="/images/logo.png"></img>
+                    src="/images/logo.png"
+                  ></img>
                 </Link>
               </div>
               <p className="middle">
-                <Link className="fs16b pt-3 text-dark" href="/user/user-my-article-i">
+                <Link
+                  className="fs16b pt-3 text-dark"
+                  href="/user/user-my-article-i"
+                >
                   會員暱稱
                 </Link>
               </p>
-              <FollowButton/>
+              <FollowButton />
             </div>
-            <span className="fs12 mt-2 mb-3">2023.9.6</span>
+            <span className="fs12 mt-2 mb-3">{createTime}</span>
           </div>
         </div>
       </div>
