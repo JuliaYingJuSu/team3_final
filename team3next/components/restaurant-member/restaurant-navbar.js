@@ -6,10 +6,6 @@ import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 
 export default function MyNavbar() {
-  // currentRoute是用來套用active樣式(目前區域對應選單項目)，需傳入MainMenu中
-  const router = useRouter();
-  const currentRoute = router.pathname;
-
   return (
     <>
       <ul className="nav nav-underline d-flex align-items-center justify-content-between flex-nowrap">
@@ -73,40 +69,6 @@ export default function MyNavbar() {
           }
         `}
       </style>
-      {/* hover動畫(下底線)，需要覆蓋原本global.scss樣式 */}
-      {/* <style global jsx>{`
-        @media screen and (min-width: 992px) {
-          .navbar {
-            padding: 0;
-          }
-          .navbar .navbar-nav .nav-link {
-            padding: 1em 0;
-          }
-          .navbar .navbar-nav .nav-item {
-            margin: 0 1em;
-          }
-        }
-
-        .navbar .navbar-nav .nav-item {
-          position: relative;
-        }
-
-        .navbar .navbar-nav .nav-item::after {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: 0 auto;
-          content: "";
-          background-color: black;
-          width: 0%;
-          height: 2px;
-          transition: all 0.5s;
-        }
-        .navbar .navbar-nav .nav-item:hover::after {
-          width: 100%;
-        }
-      `}</style> */}
     </>
   );
 }
