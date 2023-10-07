@@ -4,38 +4,48 @@ import FollowButton from "../post/followbutton";
 import Like from "./like";
 import Saved from "./saved";
 
-export default function PostModal() {
+export default function PostModal(
+  {
+    post_id,
+    post_title,
+    post_content,
+    createTime,
+    post_image_name,
+    restaurant_city,
+    restaurant_name,
+    food_tag_name,
+  }
+) {
   const [messageVal, setMessageVal] = useState({ message: "" });
-  const [errors, setErrors] =useState({});
+  const [errors, setErrors] = useState({});
 
   const messageChanged = (e) => {
     const { id, value } = e.target;
     console.log({ id, value });
-    const newVal ={...messageVal,[id]: value};
+    const newVal = { ...messageVal, [id]: value };
     setMessageVal(newVal);
   };
-  const sendMessage = (e)=>{
+  const sendMessage = (e) => {
     const message_re = /.{1,}/;
     e.preventDefault();
 
     const newErrors = {};
 
-  if(!message_re.test(messageVal.message)){
-    newErrors.message = "請輸入留言";
-  }
-  setErrors(newErrors);
+    if (!message_re.test(messageVal.message)) {
+      newErrors.message = "請輸入留言";
+    }
+    setErrors(newErrors);
 
-  if (Object.keys(newErrors).length === 0) {
-      console.log("沒有錯誤");}
-      else{console.log("---------有錯誤");
+    if (Object.keys(newErrors).length === 0) {
+      console.log("沒有錯誤");
+    } else {
+      console.log("---------有錯誤");
+    }
+  };
 
-      }
-  }
-  
-
-  
   return (
     <>
+    
       <div
         className="modal fade"
         id="exampleModal"
@@ -74,7 +84,7 @@ export default function PostModal() {
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
                     <a className="me-1 restaurant" href="#">
-                      Cin Cin Osteria請請義大利餐廳 (慶城店)
+                    {restaurant_name}
                     </a>
                   </p>
                   {/* <p className="me-1">
@@ -211,9 +221,11 @@ export default function PostModal() {
                 <span>1</span>
               </span>
             </div>
-            <div className="ms-3" style={{ width: 375 }}>
+            <div className="ms-3" style={{ width: 470 }}>
               <div className="mb-3">
-                公司附近的義大利餐廳
+              {post_content}
+              
+                {/* 公司附近的義大利餐廳
                 <br />
                 餐廳的海鮮是從基隆港直接進貨非常新鮮
                 <br />
@@ -228,7 +240,7 @@ export default function PostModal() {
                 義式烤本島現流海魚
                 <br />
                 每一道都好吃
-                <br />
+                <br /> */}
               </div>
               <p className="icon-tag">
                 <a className="ms-2 " href="#" style={{ color: "#666666" }}>
@@ -306,9 +318,9 @@ export default function PostModal() {
             height: 10px;
             border-radius: 100%;
           }
-          .warning{
-            color:red;
-            margin-top:0;
+          .warning {
+            color: red;
+            margin-top: 0;
           }
         `}
       </style>
