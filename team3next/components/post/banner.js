@@ -13,7 +13,7 @@ export default function Banner() {
             aria-expanded="false"
           >
             <span className="icon-map fs-5 pe-2 fw-bold"></span>
-            台北市
+            不分地區
           </button>
           <ul className="dropdown-menu">
             <li>
@@ -23,12 +23,12 @@ export default function Banner() {
             </li>
             <li>
               <a className="dropdown-item" href="#/">
-                桃園市
+                新北市
               </a>
             </li>
             <li>
               <a className="dropdown-item" href="#/">
-                高雄市
+                基隆市
               </a>
             </li>
           </ul>
@@ -50,7 +50,7 @@ export default function Banner() {
           </div>
         </div>
       </div>
-      <div className="container d-flex justify-content-center mb-3">
+      <div className=" container d-flex justify-content-center mb-3">
           {/* 搜尋條 */}
           <button type="button" className="btn btn-sm tags">
             台式

@@ -12,7 +12,6 @@ export default function Articles() {
       .then((data) => {
         console.log(data);
         setData(data);
-        console.log("hello");
       })
       .catch((ex) => console.log(ex));
   }, []);
@@ -32,8 +31,6 @@ export default function Articles() {
                 restaurant_city,
                 restaurant_name,
                 food_tag_name,
-
-                
               },
               i
             ) => {
@@ -46,7 +43,6 @@ export default function Articles() {
               restaurant_city={restaurant_city} 
               restaurant_name={restaurant_name}
               food_tag_name={food_tag_name}
-              
               />;
             }
           )}
