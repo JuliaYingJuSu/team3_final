@@ -34,8 +34,12 @@ export default function productDetail() {
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
+      const uid = "10" || "";
+      // const uid = localStorage.getItem()
+
       console.log(pid);
-      fetch(`http://localhost:3002/product/${pid}`)
+
+      fetch(`http://localhost:3002/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
           console.log(r);
@@ -78,6 +82,9 @@ export default function productDetail() {
           .then((r) => r.json())
           .then((r) => {
             console.log(r); //true
+            if (r) {
+              // location.reload();
+            }
           })
           .catch((ex) => {
             console.log(ex);
@@ -109,6 +116,9 @@ export default function productDetail() {
           .then((r) => r.json())
           .then((r) => {
             console.log(r); //true
+            if (r) {
+              location.reload();
+            }
           })
           .catch((ex) => {
             console.log(ex);
