@@ -15,8 +15,8 @@ const infoSchema = yup.object().shape({
   opening: yup.string(),
   description: yup
     .string()
-    .max(300)
-    .required("請填寫介紹，讓其他用戶更好認識您的餐廳"),
+    .required("請填寫介紹，讓其他用戶更好認識您的餐廳")
+    .max(300),
   photo: yup
     .mixed()
     .test("required", "請至少上傳一張照片", (value) => {

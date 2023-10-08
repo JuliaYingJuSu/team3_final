@@ -1,12 +1,12 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function DatabaseTest() {
   const getData = async () => {
-    const res = await axios.get('http://localhost:3002/try-db');
-    await console.log(res.data);
-    await setList(res.data);
+    const res = await axios.get("http://localhost:3002/try-db");
+    console.log(res.data);
+    setList(res.data);
   };
   const [list, setList] = useState([]);
   useEffect(() => {
