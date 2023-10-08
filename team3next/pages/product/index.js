@@ -11,6 +11,14 @@ import axios from "axios";
 export default function index() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
+  const [order, setOrder] = useState("new");
+  // const [inputText, setInputText] = useState("");
+  const [search, setSearch] = useState("");
+
+  console.log(data);
+  console.log(order);
+  // console.log(inputText);
+  console.log(search);
 
   useEffect(() => {
     // axios.get("");
@@ -20,6 +28,8 @@ export default function index() {
       body: JSON.stringify({
         // uid: localStorage.getItem()||0,
         uid: 10,
+        order: order,
+        search: search,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +56,12 @@ export default function index() {
           setWish(wishList);
         }
       });
-  }, []);
+  }, [order, search]);
+
+  // const handleOrder = (e) => {
+  //   setOrder(e.target.value);
+  //   fetch();
+  // };
 
   return (
     <>
@@ -621,22 +636,35 @@ export default function index() {
                 </div>
 
                 <select
+                  value={order}
+                  onChange={(e) => {
+                    setOrder(e.target.value);
+                  }}
                   class=" col-2 form-select form-select-sm"
                   aria-label="Small select example"
                 >
-                  <option selected>排序</option>
-                  <option value="1">最新商品</option>
-                  <option value="2">價格高到低</option>
-                  <option value="3">價格低到高</option>
+                  <option value="new">最新商品</option>
+                  <option value="pHigh">價格高到低</option>
+                  <option value="pLow">價格低到高</option>
                 </select>
                 <form class="col-auto d-flex " role="search">
                   <input
                     class="form-control me-1"
-                    type="search"
+                    type="text"
                     placeholder="搜尋"
                     aria-label="Search"
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
                   />
-                  <button class="btn icon-search" type="submit"></button>
+                  {/* <button
+                    class="btn icon-search"
+                    onClick={(e) => {
+                      setSearch(inputText);
+                    }}
+                  ></button> */}
+                  {/* type="submit" */}
                 </form>
               </div>
 
