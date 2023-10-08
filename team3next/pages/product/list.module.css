@@ -99,6 +99,7 @@
   margin-right: 10px;
   border-radius: 50%;
   background-color: aquamarine;
+  overflow: hidden;
 }
 .comment p {
   margin: 0px;

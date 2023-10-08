@@ -10,11 +10,21 @@ import axios from "axios";
 
 export default function index() {
   const [data, setData] = useState([]);
+  const [wish, setWish] = useState([]);
 
   useEffect(() => {
     // axios.get("");
 
-    fetch("http://localhost:3002/product")
+    fetch("http://localhost:3002/product", {
+      method: "POST",
+      body: JSON.stringify({
+        // uid: localStorage.getItem()||0,
+        uid: 10,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => {
         console.log(r);
         const a = r.json();
@@ -28,7 +38,13 @@ export default function index() {
       //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
       .then((data) => {
         console.log(data);
-        setData(data);
+        setData(data.rows);
+
+        if (data.rowsWish.length > 0) {
+          let wishList = data.rowsWish.map((v) => v.product_id);
+          console.log(wishList);
+          setWish(wishList);
+        }
       });
   }, []);
 
@@ -625,7 +641,7 @@ export default function index() {
               </div>
 
               <div className="row mb-3 d-flex justify-content-center align-items-center">
-                {data.map(
+                {data?.map(
                   (
                     {
                       product_id,
@@ -670,7 +686,13 @@ export default function index() {
                               <span>{product_name}</span>
                             </Link>
 
-                            <span className="icon-mark pt-1"></span>
+                            <span
+                              className={
+                                wish.includes(product_id)
+                                  ? "icon-mark-fill"
+                                  : "icon-mark" + " pt-1"
+                              }
+                            ></span>
                           </div>
                           <div
                             className={
