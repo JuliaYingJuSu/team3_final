@@ -6,10 +6,12 @@ export default function Breadcrumb() {
   return (
     <>
       <div className={styles.bread}>
-        <span className="icon-home"></span>
+        <a className="icon-home" href="http://localhost:3080/">
+          
+        </a>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#">食好料</a>
+          <a href="http://localhost:3080/post">食好料</a>
         </span>
         {/* <span className="icon-arrow-s-right"></span>
         <span>

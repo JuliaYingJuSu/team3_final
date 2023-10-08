@@ -20,7 +20,7 @@ export default function Articles() {
     <>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 mx-auto">
-          {data.map(
+          {data?.map(
             (
               {
                 post_id,
