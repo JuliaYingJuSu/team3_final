@@ -15,22 +15,23 @@ export default function Card({
   post_image_name,
   restaurant_city,
   restaurant_name,
-  food_tag_name,
+  food_tag_names, // 注意这里是一个数组
 }) {
-  
+  // 使用 Set 来去重 food_tag_names 数组
+  const uniqueFoodTags = [...new Set(food_tag_names)];
 
   return (
     <>
-    
       <PostModal
         key={post_id}
+        post_id={post_id}
         post_title={post_title}
         post_content={post_content}
         createTime={createTime}
         post_image_name={post_image_name}
         restaurant_city={restaurant_city}
         restaurant_name={restaurant_name}
-        food_tag_name={food_tag_name}
+        food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組
       />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
@@ -58,9 +59,12 @@ export default function Card({
               <a href="#" className="tag-i">
                 {restaurant_city}
               </a>
-              <a href="#" className="tag-f">
-                {food_tag_name}
-              </a>
+              {/* 遍历去重后的 uniqueFoodTags 数组并呈现每个 food_tag_name */}
+              {uniqueFoodTags.map((foodTag, index) => (
+                <a href="#" className="tag-f" key={index}>
+                  {foodTag}
+                </a>
+              ))}
             </div>
             <h6 className="card-title w-100 mt-3 fw-bolder">{post_title}</h6>
             <div className="d-flex align-items-center w-100">
@@ -89,3 +93,4 @@ export default function Card({
     </>
   );
 }
+

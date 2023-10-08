@@ -6,14 +6,14 @@ import Saved from "./saved";
 
 export default function PostModal(
   {
-    post_id,
-    post_title,
-    post_content,
-    createTime,
-    post_image_name,
-    restaurant_city,
-    restaurant_name,
-    food_tag_name,
+  post_id,
+  post_title,
+  post_content,
+  createTime,
+  post_image_name,
+  restaurant_city,
+  restaurant_name,
+  food_tag_name,
   }
 ) {
   const [messageVal, setMessageVal] = useState({ message: "" });
@@ -104,6 +104,7 @@ export default function PostModal(
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                
               ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
