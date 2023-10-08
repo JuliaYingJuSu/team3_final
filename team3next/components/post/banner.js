@@ -1,6 +1,9 @@
 import React from "react";
+import { useState } from "react";
 
 export default function Banner() {
+  const [search, setSearch] = useState("");
+
   return (
     <>
       <div className="container d-flex justify-content-center">
