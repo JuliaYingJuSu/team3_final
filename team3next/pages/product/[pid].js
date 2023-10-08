@@ -33,7 +33,7 @@ export default function productDetail() {
   const [wish, setWish] = useState(false);
   useEffect(() => {
     if (router.isReady) {
-      const pid = router.query.pid;
+      const pid = router.query.pid; //***
       console.log(pid);
       fetch(`http://localhost:3002/product/${pid}`)
         .then((r) => r.json())
@@ -46,7 +46,7 @@ export default function productDetail() {
   }, [router.isReady]);
 
   // data.rows && console.log(data.rows.specification);
-  console.log(data.rows?.specification.split("\\n"));
+  // console.log(data.rows?.specification.split("\\n"));
   // const specSplit = data.rows?.specification.replace("\\n", "<br />");
   // console.log(specSplit);
   const specSplit = data.rows?.specification.split("\\n").map((v) => {
@@ -83,24 +83,37 @@ export default function productDetail() {
             console.log(ex);
           });
       }
-    } else {
-      console.log("1111110");
-      fetch("http://localhost:3002/product/del-wish", {
-        method: "GET",
-        body: JSON.stringify({
-          pid: pathName,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((r) => r.json())
-        .then((r) => {
-          console.log(r); //true
+      if (wish) {
+        console.log("1111110");
+        fetch("http://localhost:3002/product/del-wish", {
+          method: "POST",
+          body: JSON.stringify({
+            pid: pathName,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            //#region (有無"Content-Type": "application/json"與req.body的關聯)
+
+            //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
+
+            // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
+
+            //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
+
+            //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
+
+            //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
+            //#endregion
+          },
         })
-        .catch((ex) => {
-          console.log(ex);
-        });
+          .then((r) => r.json())
+          .then((r) => {
+            console.log(r); //true
+          })
+          .catch((ex) => {
+            console.log(ex);
+          });
+      }
     }
   };
 
@@ -367,27 +380,24 @@ export default function productDetail() {
             </div>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品評論</p>
-              <div className={styles.commentBox}>
-                <div className={styles.pic}></div>
-                <div className={styles.comment}>
-                  <p>名字</p>
-                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
-                </div>
-              </div>
-              <div className={styles.commentBox}>
-                <div className={styles.pic}></div>
-                <div className={styles.comment}>
-                  <p>名字</p>
-                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
-                </div>
-              </div>
-              <div className={styles.commentBox}>
-                <div className={styles.pic}></div>
-                <div className={styles.comment}>
-                  <p>名字</p>
-                  <p>好吃不膩耶耶耶耶耶耶耶耶~</p>
-                </div>
-              </div>
+              {data.rows &&
+                data.rowsComment.map((v) => {
+                  return (
+                    <div className={styles.commentBox}>
+                      <div className={styles.pic}>
+                        <img
+                          className="w-100 h-100 object-fit-cover"
+                          src="/images/logo.png"
+                          alt=""
+                        />
+                      </div>
+                      <div className={styles.comment}>
+                        <p>{v.nickname}</p>
+                        <p>{v.content}</p>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </div>
           <div className={styles.recommendBox + " row pb-5 "}>
