@@ -13,7 +13,7 @@ export default function PostModal(
   post_image_name,
   restaurant_city,
   restaurant_name,
-  food_tag_name,
+  food_tag_names,
   }
 ) {
   const [messageVal, setMessageVal] = useState({ message: "" });

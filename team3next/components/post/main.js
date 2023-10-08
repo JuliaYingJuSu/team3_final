@@ -25,9 +25,9 @@ export default function Main() {
           }
         });
 
-        // 获取每个 post_id 的第一张 post_image
+        // 獲取每個 post_id 的第一張 post_image
         const dataWithFirstImages = Object.values(groupedData).map((item) => {
-          // 如果有多个 post_image，选择第一个
+          // 如果有多個 post_image，選擇第一個
           if (Array.isArray(item.post_image_name)) {
             item.post_image_name = item.post_image_name[0];
           }
