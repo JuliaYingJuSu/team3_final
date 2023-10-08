@@ -1,19 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "@/validation/profile-validation";
 import axios from "axios";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Profile() {
+  const [inputType, setInputType] = useState("password");
+  const [reInputType, reSetInputType] = useState("password");
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(profileSchema)
+    resolver: yupResolver(profileSchema),
   });
   console.log(errors);
 
@@ -67,12 +69,25 @@ export default function Profile() {
                   {errors.password?.message}
                 </span>
               </label>
-              <input
-                className="input-res"
-                type="password"
-                {...register("password")}
-                id="password"
-              />
+              <div className="withIcon position-relative">
+                <input
+                  className="input-res w-100"
+                  type={inputType}
+                  {...register("password")}
+                  id="password"
+                />
+                <span
+                  className="eye position-absolute mt-1 me-2 end-0"
+                  style={{ fontSize: "20px", color: "#B4C5D2" }}
+                  onClick={() => {
+                    setInputType(
+                      inputType === "password" ? "text" : "password"
+                    );
+                  }}
+                >
+                  {inputType === "password" ? <FaEye /> : <FaEyeSlash />}
+                </span>
+              </div>
             </div>
             <div className="d-flex flex-column mb-3">
               <label className="fs18b" htmlFor="rePassword">
@@ -84,12 +99,25 @@ export default function Profile() {
                   {errors.rePassword?.message}
                 </span>
               </label>
-              <input
-                className="input-res"
-                type="password"
-                {...register("rePassword")}
-                id="rePassword"
-              />
+              <div className="withIcon position-relative">
+                <input
+                  className="input-res w-100"
+                  type={reInputType}
+                  {...register("rePassword")}
+                  id="rePassword"
+                />
+                <span
+                  className="eye position-absolute mt-1 me-2 end-0"
+                  style={{ fontSize: "20px", color: "#B4C5D2" }}
+                  onClick={() => {
+                    reSetInputType(
+                      reInputType === "password" ? "text" : "password"
+                    );
+                  }}
+                >
+                  {reInputType === "password" ? <FaEye /> : <FaEyeSlash />}
+                </span>
+              </div>
             </div>
 
             <button className="btn btn-big mt-4 ms-auto" type="submit">
