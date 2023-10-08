@@ -15,10 +15,20 @@ export default function Card({
   post_image_name,
   restaurant_city,
   restaurant_name,
-  food_tag_names, // 注意这里是一个数组
+  food_tag_names, // 注意這裡是一個數組
 }) {
-  // 使用 Set 来去重 food_tag_names 数组
+  // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
+  // 創建日期對象
+  const createDate = new Date(createTime);
+
+  // 獲取日期部分（年、月、日）
+  const year = createDate.getFullYear();
+  const month = (createDate.getMonth() + 1).toString().padStart(2, "0"); // +1 因為月份從 0 開始，padStart 用於補零
+  const day = createDate.getDate().toString().padStart(2, "0");
+
+  // 格式化為 "YYYY.MM.DD" 格式
+  const formattedDate = `${year}.${month}.${day}`;
 
   return (
     <>
@@ -36,7 +46,11 @@ export default function Card({
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
           <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <img src="/images/post/3188.jpg" className="card-img" alt="..." />
+            <img
+              src={`/images/post/${post_image_name}`}
+              className="card-img"
+              alt="..."
+            />
           </a>
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
@@ -59,7 +73,7 @@ export default function Card({
               <a href="#" className="tag-i">
                 {restaurant_city}
               </a>
-              {/* 遍历去重后的 uniqueFoodTags 数组并呈现每个 food_tag_name */}
+              {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
               {uniqueFoodTags.map((foodTag, index) => (
                 <a href="#" className="tag-f" key={index}>
                   {foodTag}
@@ -86,11 +100,10 @@ export default function Card({
               </p>
               <FollowButton />
             </div>
-            <span className="fs12 mt-2 mb-3">{createTime}</span>
+            <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>
         </div>
       </div>
     </>
   );
 }
-
