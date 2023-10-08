@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Main() {
   const [data, setData] = useState([]);
+  
 
   useEffect(() => {
     fetch("http://localhost:3002/post")
@@ -23,29 +24,37 @@ export default function Main() {
             };
           }
         });
-        setData(Object.values(groupedData));
+
+        // 获取每个 post_id 的第一张 post_image
+        const dataWithFirstImages = Object.values(groupedData).map((item) => {
+          // 如果有多个 post_image，选择第一个
+          if (Array.isArray(item.post_image_name)) {
+            item.post_image_name = item.post_image_name[0];
+          }
+          return item;
+        });
+
+        setData(dataWithFirstImages);
       })
       .catch((ex) => console.log(ex));
   }, []);
+
 
   return (
     <>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 mx-auto">
           {data.map(
-            (
-              {
-                post_id,
-                post_title,
-                post_content,
-                createTime,
-                post_image_name,
-                restaurant_city,
-                restaurant_name,
-                food_tag_names,
-              },
-              i
-            ) => {
+            ({
+              post_id,
+              post_title,
+              post_content,
+              createTime,
+              post_image_name,
+              restaurant_city,
+              restaurant_name,
+              food_tag_names,
+            },i) => {
               return (
                 <Card
                   key={post_id}
@@ -69,3 +78,15 @@ export default function Main() {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
