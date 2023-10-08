@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 export default function Profile() {
   const [inputType, setInputType] = useState("password");
   const [reInputType, reSetInputType] = useState("password");
+  // eyeopened
   const {
     register,
     handleSubmit,
@@ -18,7 +19,7 @@ export default function Profile() {
     resolver: yupResolver(profileSchema),
   });
   console.log(errors);
-
+  // rhf
   const onSubmit = async (data) => {
     console.log(data);
     try {
@@ -30,6 +31,7 @@ export default function Profile() {
       console.error("Error:", err);
     }
   };
+  // upload
 
   return (
     <>
