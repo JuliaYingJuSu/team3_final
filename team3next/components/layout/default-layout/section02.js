@@ -54,7 +54,7 @@ export default function Section02() {
               restaurant_city,
               restaurant_name,
               food_tag_names,
-            },i) => {
+            },i) => {              
               return (
                 <Card
                   key={post_id}
