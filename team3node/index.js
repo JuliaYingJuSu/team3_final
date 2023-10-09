@@ -77,7 +77,7 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/prouuct", productRouter);
 app.use("/api/book", bookRouter);
-app.use("/api/restaurantRouter", restaurantRouter);
+app.use("/api/restaurant", restaurantRouter);
 app.use("/api/cart",cartRouter)
 
 
