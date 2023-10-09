@@ -70,9 +70,9 @@ export default function Main() {
               );
             }
           )}
-          <Link href={"/"} className="middle grey fs18b mx-auto my-3">
+          {/* <Link href={"/"} className="middle grey fs18b mx-auto my-3">
             看更多
-          </Link>
+          </Link> */}
         </div>
       </div>
     </>
