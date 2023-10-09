@@ -7,8 +7,13 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
+import Form from "./form-component/restaurant-form";
+import StepFirst from "./form-component/step-first";
+import StepSecond from "./form-component/step-second";
+import StepThird from "./form-component/step-third";
+import <S></S>tepThird from "./form-component/step-third";
 
-export default function memberRegister() {
+export default function MemberRegister() {
   return (
     <>
       <div className="backgs">
@@ -23,7 +28,7 @@ export default function memberRegister() {
         </span>
         <div className="container middle flex-column mb-4">
           <div className="z-3 position-absolute" style={{ top: 130 }}>
-            <h1 className="fw-bold ps-5">會員註冊</h1>
+            <h1 className="fw-bold">會員註冊</h1>
           </div>
           <span className="bgi position-absolute opacity-25"></span>
           <div
@@ -36,264 +41,13 @@ export default function memberRegister() {
             </span>{" "}
             的欄位為必填
           </div>
-          {/* 輸入區 */}
-          <form
-            className="mt-4"
-            onSubmit={handleSubmit(onSubmit)}
-            encType="multipart/form-data"
-          >
-            {/* 大頭照 */}
-            <div className="middle ms-5">
-              <div className="position-relative">
-                {selectedFile ? (
-                  <img
-                    src={preview}
-                    alt="大頭照"
-                    className="rounded-circle img-thumbnail headshot-register"
-                  />
-                ) : (
-                  <img
-                    src="/images/logo.png"
-                    alt="大頭照"
-                    className="rounded-circle img-thumbnail headshot-register"
-                  />
-                )}
-                <label className="img-thumbnail rounded-circle position-absolute bottom-0 end-0">
-                  <input
-                    className="upload_input"
-                    type="file"
-                    onChange={changeHandler}
-                  />
-                  <span className="fs-5">➕</span>
-                </label>
-              </div>
-            </div>
-
-            {/* 輸入區 */}
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label fs18b">
-                姓名
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.user_name?.message}
-                </span>
-              </label>
-              <input
-                type="text"
-                className={`form-control input-f ${
-                  errors.user_name ? "is-invalid" : ""
-                }`}
-                id="name"
-                placeholder="請輸入姓名"
-                {...register("user_name", { required: "請輸入姓名" })}
-                value={user.user_name}
-                onChange={handleFieldChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="nikename" className="form-label fs18b">
-                暱稱
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.nickname?.message}
-                </span>
-              </label>
-              <input
-                type="text"
-                className={`form-control input-f ${
-                  errors.nickname ? "is-invalid" : ""
-                }`}
-                id="nikename"
-                placeholder="請輸入暱稱"
-                {...register("nickname", { required: "請輸入暱稱" })}
-                value={user.nickname}
-                onChange={handleFieldChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label fs18b">
-                電子信箱
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.user_email?.message}
-                </span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                className={`form-control input-f ${
-                  errors.user_email ? "is-invalid" : ""
-                }`}
-                placeholder="請輸入E-mail"
-                {...register("user_email", {
-                  required: "請輸入E-mail",
-                })}
-                value={user.user_email}
-                onChange={handleFieldChange}
-              />
-            </div>
-            {/* 密碼區 */}
-            <div>
-              <label htmlFor="InputPassword" className="form-label fs18b">
-                密碼
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.user_password?.message}
-                </span>
-              </label>
-              <input
-                type={show1 ? "text" : "password"}
-                className={`form-control input-f ${
-                  errors.user_password ? "is-invalid" : ""
-                }`}
-                id="InputPassword"
-                placeholder="請輸入英文+數字至少8碼最多不超過12碼"
-                {...register("user_password", {
-                  required: "請輸入英文+數字至少8碼最多不超過12碼",
-                  minLength: {
-                    value: 8,
-                    message: "請輸入英文+數字至少8碼",
-                  },
-                  maxLength: {
-                    value: 12,
-                    message: "請不要超過12碼",
-                  },
-                })}
-                value={user.user_password}
-                onChange={handleFieldChange}
-              />
-              <i
-                type="button"
-                className={`far ${
-                  show1 ? "fa-eye" : "fa-eye-slash"
-                } no-see-eye`}
-                style={{ color: "#787878" }}
-                onClick={() => {
-                  setShow1(!show1);
-                }}
-              ></i>
-            </div>
-            {/* 密碼確認 */}
-            <div>
-              <label htmlFor="password2" className="form-label fs18b">
-                密碼確認
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.password2?.message}
-                </span>
-              </label>
-              <input
-                type={show2 ? "text" : "password"}
-                className={`form-control input-f ${
-                  errors.password2 ? "is-invalid" : ""
-                }`}
-                id="password2"
-                placeholder="請再次輸入密碼"
-                {...register("password2", {
-                  required: "請再次輸入密碼",
-                  minLength: {
-                    value: 8,
-                    message: "請輸入英文+數字至少8碼",
-                  },
-                  maxLength: {
-                    value: 12,
-                    message: "請不要超過12碼",
-                  },
-                  validate: (value) =>
-                    value === user.user_password || "與上欄輸入密碼不相同",
-                })}
-              />
-              <i
-                type="button"
-                className={`far ${
-                  show2 ? "fa-eye" : "fa-eye-slash"
-                } no-see-eye`}
-                style={{ color: "#787878" }}
-                onClick={() => {
-                  setShow2(!show2);
-                }}
-              ></i>
-            </div>
-            {/* 手機 */}
-            <div className="mb-3">
-              <label htmlFor="InputPhone" className="form-label fs18b">
-                手機號碼
-                <span style={{ color: "red" }} className="ps-1">
-                  *
-                </span>
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.user_phone?.message}
-                </span>
-              </label>
-              <input
-                type="text"
-                className={`form-control input-f ${
-                  errors.user_phone ? "is-invalid" : ""
-                }`}
-                id="InputPhone"
-                placeholder="請輸入09開頭共10碼的數字"
-                {...register("user_phone", {
-                  required: "請輸入09開頭共10碼的手機號碼",
-                  pattern: {
-                    value: /^(09)[0-9]{8}$/,
-                    message: "請輸入09開頭共10碼的手機號碼",
-                  },
-                })}
-                value={user.user_phone}
-                onChange={handleFieldChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="self_info" className="form-label fs18b">
-                個人簡介 :
-                <span className="ps-1" style={{ color: "red" }}>
-                  {errors.self_info?.message}
-                </span>
-              </label>
-              <textarea
-                className="form-control input-area"
-                id="self_info"
-                rows="3"
-                name="self_info"
-                placeholder="寫下自我的話，100字內"
-                onChange={(e) => {
-                  setTextareaText(e.target.value);
-                }}
-                {...register("self_info", {
-                  maxLength: {
-                    value: 100,
-                    message: "請不要超過100個字，謝謝",
-                  },
-                })}
-              ></textarea>
-            </div>
-            <div className="d-flex justify-content-end mt-5">
-              {/* <Link href=""> */}
-              <button
-                type="submit"
-                className="btn btn-big fs18b"
-                onClick={handleSubmission(onSubmit)}
-              >
-                註冊
-              </button>
-              {/* </Link> */}
-            </div>
-          </form>
+          <Form>
+            <StepFirst/>
+            <StepSecond/>
+            <StepThird/>
+          </Form>
         </div>
       </div>
-      <Head>
-        <title>會員註冊</title>
-      </Head>
       <style jsx>
         {`
           .backgs {
@@ -348,16 +102,8 @@ export default function memberRegister() {
           }
           .no-see-eye:before {
             position: absolute;
-            left: 450px;
+            left: 465px;
             bottom: 32px;
-          }
-          .upload_input {
-            display: none;
-          }
-          .headshot-register {
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
           }
         `}
       </style>
