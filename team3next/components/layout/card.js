@@ -18,7 +18,6 @@ export default function Card({
   food_tag_names, // 注意這裡是一個數組
   user_id,
   nickname,
-  user_img,
 }) {
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -46,8 +45,7 @@ export default function Card({
         restaurant_name={restaurant_name}
         food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組
         user_id={user_id}
-        nickname={nickname}   
-        user_img={user_img}     
+        nickname={nickname}      
       />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
@@ -96,7 +94,7 @@ export default function Card({
                 <Link href="/user/user-my-article-i">
                   <img
                     className="rounded-circle headshot-small img-thumbnail"
-                    src={`/images/user/${user_img}`}
+                    src="" // 顯示用戶頭像
                   ></img>
                 </Link>
               </div>

@@ -9,15 +9,13 @@ postRouter.get("/", async(req, res)=>{
 
   // const sql2 = `SELECT * FROM post join likes on post.post_id = likes.post_id;`
 
-  const sql3 = `SELECT * FROM user join post on user.user_id = post.user_id;`
-
   // const sql4 = `SELECT * FROM post_favorite;`
 
   // const sql5 = `SELECT * FROM post_comment;`
 
   
 
-  const [data] = await db.query({sql,sql3});
+  const [data] = await db.query(sql);
   console.log(data)
   res.json(data);//回傳json格式
 })
