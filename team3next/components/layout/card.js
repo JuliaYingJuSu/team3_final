@@ -16,6 +16,8 @@ export default function Card({
   restaurant_city,
   restaurant_name,
   food_tag_names, // 注意這裡是一個數組
+  user_id,
+  nickname,
 }) {
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -42,6 +44,8 @@ export default function Card({
         restaurant_city={restaurant_city}
         restaurant_name={restaurant_name}
         food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組
+        user_id={user_id}
+        nickname={nickname}      
       />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
@@ -90,7 +94,7 @@ export default function Card({
                 <Link href="/user/user-my-article-i">
                   <img
                     className="rounded-circle headshot-small img-thumbnail"
-                    src="/images/logo.png"
+                    src="" // 顯示用戶頭像
                   ></img>
                 </Link>
               </div>
@@ -99,7 +103,7 @@ export default function Card({
                   className="fs16b pt-3 text-dark"
                   href="/user/user-my-article-i"
                 >
-                  會員暱稱
+                  {nickname}
                 </Link>
               </p>
               <FollowButton />
@@ -108,7 +112,6 @@ export default function Card({
           </div>
         </div>
       </div>
-      {/* 將PostModal放在這個卡片內 */}
     </>
   );
 }

@@ -45,7 +45,7 @@ export default function Banner() {
               <input
                 className="form-control me-2 searchbar ps-4"
                 type="search"
-                placeholder="義式"
+                placeholder=""
                 aria-label="Search"
               ></input>
               <span className="icon-search search-banner"></span>

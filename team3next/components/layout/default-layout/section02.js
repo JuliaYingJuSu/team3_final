@@ -5,7 +5,22 @@ import { useEffect, useState } from "react";
 
 export default function Section02() {
   const [data, setData] = useState([]);
-  
+  const [userData, setUserData] = useState({}); 
+
+  useEffect(() => {
+    // 取得用戶資訊，這個 fetch 的示範
+    fetch(process.env.API_SERVER + "/") 
+      .then((r) => r.json())
+      .then((users) => {
+        const usersData = {};
+        users.forEach(({ user_id, nickname}) => {
+          usersData[user_id] = nickname;
+        });
+        setUserData(usersData);
+      })
+      .catch((ex) => console.log(ex));
+  }, []); // 只在元件首次載入時執行
+
   useEffect(() => {
     fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
@@ -32,9 +47,9 @@ export default function Section02() {
           }
           return item;
         });
+        const filteredData = dataWithFirstImages.filter((item) => item.restaurant_city === "台北市").slice(4, 7);
 
-        // 只保留前三個 post_id 的資料
-        setData(dataWithFirstImages.slice(9, 12));
+        setData(filteredData);
       })
       .catch((ex) => console.log(ex));
   }, []);
@@ -54,7 +69,9 @@ export default function Section02() {
               restaurant_city,
               restaurant_name,
               food_tag_names,
-            },i) => {
+              user_id,
+            },i) => {      
+              const nickname = userData[user_id]; // 根據 user_id 查找 nickname   
               return (
                 <Card
                   key={post_id}
@@ -66,6 +83,8 @@ export default function Section02() {
                   restaurant_city={restaurant_city}
                   restaurant_name={restaurant_name}
                   food_tag_names={food_tag_names}
+                  user_id={user_id}
+                  nickname={nickname}
                 />
               );
             }
