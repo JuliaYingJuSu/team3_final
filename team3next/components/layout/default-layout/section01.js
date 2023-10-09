@@ -55,6 +55,7 @@ export default function Section01() {
               restaurant_city,
               restaurant_name,
               food_tag_names,
+              nickname,
             },i) => {
               return (
                 <Card
@@ -67,6 +68,7 @@ export default function Section01() {
                   restaurant_city={restaurant_city}
                   restaurant_name={restaurant_name}
                   food_tag_names={food_tag_names}
+                  nickname={nickname}
                 />
               );
             }
