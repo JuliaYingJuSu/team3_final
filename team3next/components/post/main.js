@@ -47,6 +47,9 @@ export default function Main() {
           return item;
         });
 
+        // 按降冪排序
+        dataWithFirstImages.sort((a, b) => b.post_id - a.post_id);
+        
         setData(dataWithFirstImages);
       })
       .catch((ex) => console.log(ex));
