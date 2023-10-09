@@ -7,7 +7,7 @@ export default function Section01() {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    fetch("http://localhost:3002/post")
+    fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
         console.log(data);
@@ -72,7 +72,7 @@ export default function Section01() {
             }
           )}
         </div>
-        <Link href={"/"} className="middle grey fs18b mt-5">
+        <Link href="/post" className="middle grey fs18b mt-5">
           看更多
         </Link>
       </div>

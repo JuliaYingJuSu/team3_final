@@ -7,7 +7,7 @@ export default function Section02() {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    fetch("http://localhost:3002/post")
+    fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
         console.log(data);

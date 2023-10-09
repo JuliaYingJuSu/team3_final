@@ -8,7 +8,7 @@ export default function Main() {
   
 
   useEffect(() => {
-    fetch(process.env.API_SERVER + "/api/post")
+    fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
         console.log(data);
