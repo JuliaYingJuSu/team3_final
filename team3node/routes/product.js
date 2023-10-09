@@ -6,6 +6,7 @@ const productRouter = express.Router();
 //---------------商品列表-------------------
 
 productRouter.post("/", async (req, res) => {
+  console.log("到底???");
   let output = {
     rows: [],
     rowsWish: [],
