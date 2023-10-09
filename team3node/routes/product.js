@@ -6,7 +6,6 @@ const productRouter = express.Router();
 //---------------商品列表-------------------
 
 productRouter.post("/", async (req, res) => {
-  console.log("到底???");
   let output = {
     rows: [],
     rowsWish: [],
@@ -23,11 +22,16 @@ productRouter.post("/", async (req, res) => {
   const search = req.body.search
     ? `AND product.product_name LIKE '%${req.body.search}%'`
     : "";
-  console.log(search);
+
+  const type = req.body.type
+    ? `AND product_type.product_type_name = '飲品/沖泡類'`
+    : req.body.typeList
+    ? `AND product_type_list.product_type_list_name = '蛋糕/甜點'`
+    : "";
 
   //#endregion
 
-  const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id WHERE showed_1st = 1 ${search} ORDER BY ${orderCondition};`;
+  const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ORDER BY ${orderCondition}`;
 
   console.log(req.body.uid);
   if (req.body.uid) {

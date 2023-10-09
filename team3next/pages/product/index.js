@@ -14,11 +14,10 @@ export default function index() {
   const [order, setOrder] = useState("new");
   // const [inputText, setInputText] = useState("");
   const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  const [typeList, setTypeList] = useState("");
 
-  console.log(data);
-  console.log(order);
-  // console.log(inputText);
-  console.log(search);
+  console.log(typeList);
 
   useEffect(() => {
     // axios.get("");
@@ -30,15 +29,15 @@ export default function index() {
         uid: 10,
         order: order,
         search: search,
+        type: type,
+        typeList: typeList,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((r) => {
-        console.log(r);
         const a = r.json();
-        console.log(a);
         return a;
       })
       //then的第一次:接收到的r >>> fetch的結果(Response {type: 'cors', url: 'http://localhost:3002/product', redirected: false, status: 200, ok: true, …})
@@ -47,16 +46,14 @@ export default function index() {
 
       //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
       .then((data) => {
-        console.log(data);
-        setData(data.rows);
+        setData(data);
 
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
-          console.log(wishList);
           setWish(wishList);
         }
       });
-  }, [order, search]);
+  }, [order, search, typeList]);
 
   // const handleOrder = (e) => {
   //   setOrder(e.target.value);
@@ -77,173 +74,49 @@ export default function index() {
                     全部商品
                   </button>
                 </Link>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type1"
-                  aria-expanded="false"
-                  aria-controls="type1"
-                >
-                  飲品/沖泡類{" "}
-                  <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type1">
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    茶類
-                  </button>
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    咖啡/咖啡豆
-                  </button>
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    果汁
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    醋/水果醋
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    酒類
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type2"
-                  aria-expanded="false"
-                  aria-controls="type2"
-                >
-                  烘焙食品/甜點{" "}
-                  <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type2">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    蛋糕/派
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    手工餅乾
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    麵包/吐司
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    奶酪/布丁/果凍
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type3"
-                  aria-expanded="false"
-                  aria-controls="type3"
-                >
-                  休閒零食 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type3">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    零食
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    糖果/巧克力
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    果醬/抹醬
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    果醬/抹醬
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    堅果/穀物
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type4"
-                  aria-expanded="false"
-                  aria-controls="type4"
-                >
-                  烹料料理 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type4">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    熟食/冷藏、冷凍食品
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    米/麵條
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    調理包/料理包
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    調味料/醬料
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type5"
-                  aria-expanded="false"
-                  aria-controls="type5"
-                >
-                  其他 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type5">
-                  <button
-                    className={styles.typeListBtn + " btn  "}
-                    type="button"
-                  >
-                    其他
-                  </button>
-                </div>
+
+                {/* -----------分類選單---------- */}
+                {data.rowsType &&
+                  data.rowsType.map((v, i) => {
+                    return (
+                      <>
+                        <button
+                          className="btn"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={"#type" + v.product_type_id}
+                          aria-expanded="false"
+                          aria-controls={"#type" + v.product_type_id}
+                        >
+                          {v.product_type_name}
+                          <span className="fs-6 ms-2 icon-arrow-down"></span>
+                        </button>
+                        <div
+                          className="collapse"
+                          id={"type" + v.product_type_id}
+                        >
+                          {data.rowsTypeList
+                            .filter(
+                              (list) =>
+                                list.product_type_id === v.product_type_id
+                            )
+                            .map((list) => {
+                              return (
+                                <button
+                                  className={styles.typeListBtn + " btn"}
+                                  type="button"
+                                  onClick={() => {
+                                    setTypeList(list.product_type_list_name);
+                                  }}
+                                >
+                                  {list.product_type_list_name}
+                                </button>
+                              );
+                            })}
+                        </div>
+                      </>
+                    );
+                  })}
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
@@ -668,8 +541,8 @@ export default function index() {
                 </form>
               </div>
 
-              <div className="row mb-3 d-flex justify-content-center align-items-center">
-                {data?.map(
+              <div className="row mb-3 d-flex justify-content-start align-items-center">
+                {data.rows?.map(
                   (
                     {
                       product_id,
