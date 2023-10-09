@@ -5,13 +5,22 @@ import { useEffect, useState } from "react";
 
 export default function Main() {
   const [data, setData] = useState([]);
-  
+  const [userData, setUserData] = useState([]); 
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + "/") 
+      .then((r) => r.json())
+      .then((userInfo) => {
+        console.log(userInfo)
+        setUserData(userInfo);
+      })
+      .catch((ex) => console.log(ex));
+  }, []); // 只在元件首次載入時執行
 
   useEffect(() => {
     fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
         const groupedData = {};
         data.forEach(({ post_id, ...rest }) => {
           if (groupedData[post_id]) {
@@ -39,7 +48,6 @@ export default function Main() {
       .catch((ex) => console.log(ex));
   }, []);
 
-
   return (
     <>
       <div className="container">
@@ -54,10 +62,8 @@ export default function Main() {
               restaurant_city,
               restaurant_name,
               food_tag_names,
-              likes,
-              post_favorite,
-              nickname,
               user_id,
+              nickname
             },i) => {
               return (
                 <Card
@@ -70,10 +76,8 @@ export default function Main() {
                   restaurant_city={restaurant_city}
                   restaurant_name={restaurant_name}
                   food_tag_names={food_tag_names}
-                  likes={likes}
-                  post_favorite={post_favorite}
-                  nickname={nickname}
                   user_id={user_id}
+                  nickname={nickname} // 傳遞用戶的 nickname 給 Card 元件
                 />
               );
             }

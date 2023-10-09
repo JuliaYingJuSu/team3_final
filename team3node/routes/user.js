@@ -26,7 +26,7 @@ userRouter.post(
   }
 );
 
-userRouter.post("/", async (req, res) => {
+userRouter.post("/upload",upload.single("user_img"), async (req, res) => {
   const output = {
     success: false,
     errors: {},

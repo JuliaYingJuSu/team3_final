@@ -41,7 +41,7 @@ export default function Card({
         post_image_name={post_image_name}
         restaurant_city={restaurant_city}
         restaurant_name={restaurant_name}
-        food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組
+        food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組        
       />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
@@ -108,7 +108,6 @@ export default function Card({
           </div>
         </div>
       </div>
-      {/* 將PostModal放在這個卡片內 */}
     </>
   );
 }
