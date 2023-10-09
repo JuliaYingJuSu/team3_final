@@ -1,8 +1,12 @@
 import React from "react";
 import UserButtonGroup from "./user-button-group";
 import Styles from "./user-information.module.scss";
+import AuthContext from "@/hooks/AuthContext";
+import { useContext } from "react";
 
 export default function UserInformation() {
+  const { auth } = useContext(AuthContext);
+
   return (
     <>
       <div className={"container" + " " + `${Styles.bgc}`}>
@@ -14,14 +18,16 @@ export default function UserInformation() {
             <form className="mt-4">
               <fieldset disabled>
                 <div className="mb-3">
-                  <label htmlFor="disabledTextInput" className="form-label fs18b">
+                  <label
+                    htmlFor="disabledTextInput"
+                    className="form-label fs18b">
                     電子信箱( 此欄位不能變更){" "}
                   </label>
                   <input
                     type="text"
                     id="disabledTextInput"
                     className="form-control input-f"
-                    placeholder="test@gmail.com"
+                    value={auth.user_email}
                   />
                 </div>
               </fieldset>
@@ -36,7 +42,7 @@ export default function UserInformation() {
                   type="text"
                   className="form-control input-f"
                   id="InputName"
-                  placeholder="請輸入姓名"
+                  value={auth.user_name}
                 />
               </div>
               <div className="mb-3">
@@ -50,7 +56,7 @@ export default function UserInformation() {
                   type="text"
                   className="form-control input-f"
                   id="InputNickName"
-                  placeholder="請輸入暱稱"
+                  value={auth.nickname}
                 />
               </div>
               <div className="mb-3">
@@ -64,7 +70,7 @@ export default function UserInformation() {
                   type="password"
                   className="form-control input-f"
                   id="InputPassword"
-                  placeholder="請輸入英文+數字至少8碼"
+                  value={auth.user_password}
                 />
               </div>
               <div className="mb-3">
@@ -78,7 +84,7 @@ export default function UserInformation() {
                   type="text"
                   className="form-control input-f"
                   id="InputPhone"
-                  placeholder="請輸入09開頭共10碼的數字"
+                  value={auth.user_phone}
                 />
               </div>
               <UserButtonGroup />

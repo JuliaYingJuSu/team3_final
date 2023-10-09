@@ -51,10 +51,12 @@ export default function Register2() {
     const { password2, ...formData } = data;
     console.log(formData);
     try {
-      const response = await axios.post(
-        "http://localhost:3002/api/user",
-        formData
-      );
+      const response = await axios({
+        method: "POST",
+        url:"http://localhost:3002/api/user",
+        data:formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       console.log("Server Response:", response.data);
       swalTest1.fire({
@@ -117,7 +119,7 @@ export default function Register2() {
     formData.append("user_img", selectedFile);
 
     fetch(
-      "http://localhost:3002/api/userupload2", //server url
+      "http://localhost:3002/api/user/upload2", //server url
       {
         method: "POST",
         body: formData,
@@ -373,22 +375,22 @@ export default function Register2() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="self_info" className="form-label fs18b">
+              <label htmlFor="self_intr" className="form-label fs18b">
                 個人簡介 :
                 <span className="ps-1" style={{ color: "red" }}>
-                  {errors.self_info?.message}
+                  {errors.self_intr?.message}
                 </span>
               </label>
               <textarea
                 className="form-control input-area"
-                id="self_info"
+                id="self_intr"
                 rows="3"
-                name="self_info"
+                name="self_intr"
                 placeholder="寫下自我的話，100字內"
                 onChange={(e) => {
                   setTextareaText(e.target.value);
                 }}
-                {...register("self_info", {
+                {...register("self_intr", {
                   maxLength: {
                     value: 100,
                     message: "請不要超過100個字，謝謝",

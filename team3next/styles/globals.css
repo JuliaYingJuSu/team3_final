@@ -353,9 +353,9 @@ body {
 
 /* 大頭照-大 */
 .headshot-big {
-  background-image: url(../public/images/logo.png);
   width: 180px;
   height: 180px;
+  object-fit: cover;
 }
 
 /* 重要的tag */
@@ -398,14 +398,14 @@ body {
 /* 輸入框格式 */
 .input-f {
   width: 500px;
-  height: 42px;
+  height: 45px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
-  background: #fff;
+  background: #fff;;
 }
 
 .input-res {
-  height: 42px;
+  height: 45px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
   background: #fff;

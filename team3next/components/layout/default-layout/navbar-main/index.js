@@ -5,16 +5,19 @@ import Link from "next/link";
 import Logo from "@/public/images/薯哥去背.png";
 import PhoneNavbar from "./phone-navbar";
 import NavCart from "@/components/cart/nav-cart";
-import { useState } from "react";
+import AuthContext from "@/hooks/AuthContext";
+import { useContext } from "react";
+import { useRouter } from "next/router";
 
 export default function MyNavbar() {
-  
+  const { auth, logout } = useContext(AuthContext);
+  const router = useRouter();
+  const pn = router.pathname;
   const menuItems = [
     { id: 1, name: "食好料", href: "/post" },
     { id: 2, name: "食在推", href: "/book" },
     { id: 3, name: "嗑零食", href: "/product" },
   ];
-  const [activeMenu, setActiveMenu] = useState("");
 
   return (
     <>
@@ -47,15 +50,10 @@ export default function MyNavbar() {
                 <div className="d-flex me-auto">
                   {menuItems.map((v) => {
                     return (
-                      <li
-                        className="nav-item pe-3"
-                        key={v.id}
-                        onClick={()=>{
-                          setActiveMenu(v)
-                        }}>
+                      <li className="nav-item pe-3" key={v.id}>
                         <Link
                           className={`nav-link fs-5 text-dark ${
-                            activeMenu === v.href ? "active" : ""
+                            pn === v.href ? "active" : ""
                           }`}
                           href={v.href}>
                           {v.name}
@@ -68,47 +66,81 @@ export default function MyNavbar() {
                 <div className="middle gap-4 right-menu">
                   {/* 會員下拉選單 */}
                   <li className="nav-item pe-3">
-                    <div className="dropdown-center">
-                      <div
-                        type="button"
-                        className="dropdown nav-link text-dark"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <span className="icon-member"></span>
+                    {auth.user_id ? (
+                      <div className="dropdown-center">
+                        <div
+                          type="button"
+                          className="dropdown nav-link text-dark"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <span
+                            className="icon-member-black"
+                            style={{ fontSize: 30 }}></span>
+                        </div>
+                        <ul className="dropdown-menu text-center dropdown-menu-lg-end">
+                          <li>
+                            <span>
+                              {auth.user_img ? (
+                                <img
+                                  src={auth.user_img}
+                                  className="rounded-circle img-thumbnail headshot-middle"
+                                  alt="大頭照"
+                                />
+                              ) : (
+                                <img
+                                  src="/images/logo.png"
+                                  className="rounded-circle img-thumbnail headshot-middle"
+                                  alt="大頭照"
+                                />
+                              )}
+                            </span>
+                            <p className="mt-2 fs-5 fw-bolder">
+                              {auth.nickname}
+                            </p>
+                          </li>
+                          <li>
+                            <Link
+                              className="dropdown-item fs18b"
+                              href="/user/:user_id">
+                              會員資訊
+                            </Link>
+                          </li>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <button
+                              className="dropdown-item fs18b"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                logout();
+                              }}>
+                              登出
+                            </button>
+                          </li>
+                        </ul>
                       </div>
-                      <ul className="dropdown-menu text-center dropdown-menu-lg-end">
-                        <li>
-                          <span>
-                            <img
-                              src="/images/logo.png"
-                              className="rounded-circle img-thumbnail headshot-middle"
-                              alt="大頭照"
-                            />
-                          </span>
-                          <p className="mt-2 fs-5 fw-bolder">薯哥</p>
-                        </li>
-                        <li>
-                          <Link className="dropdown-item fs18b" href="/user">
-                            會員資訊
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            className="dropdown-item fs18b"
-                            href="/user/login">
-                            註冊/登入
-                          </Link>
-                        </li>
-                        <li>
-                          <hr className="dropdown-divider" />
-                        </li>
-                        <li>
-                          <a className="dropdown-item fs18b" href="#">
-                            登出
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
+                    ) : (
+                      <div className="dropdown-center">
+                        <div
+                          type="button"
+                          className="dropdown nav-link text-dark"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <span className="icon-member"></span>
+                        </div>
+                        <ul className="dropdown-menu text-center dropdown-menu-lg-end">
+                          <li>
+                            <Link
+                              className="dropdown-item fs18b"
+                              href="/user/login">
+                              註冊/登入
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </li>
                   {/* 購物車 */}
                   <li className="nav-item pe-3">

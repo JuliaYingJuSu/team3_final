@@ -15,8 +15,8 @@ export default function Login() {
   console.log({ router });
 
   const [formVals, setFormVals] = useState({
-    email: "",
-    password: "",
+    user_email: "",
+    user_password: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -30,7 +30,7 @@ export default function Login() {
   // sweetalert設定
   const swalTest1 = Swal.mixin({
     showConfirmButton: false,
-    timer: 2000,
+    timer: 1000,
     timerProgressBar: true,
     didOpen: (swalTest1) => {
       swalTest1.addEventListener("mouseenter", Swal.stopTimer);
@@ -56,11 +56,11 @@ export default function Login() {
 
     const newErrors = {};
 
-    if (!email_re.test(formVals.email)) {
-      newErrors.email = "請填寫正確的 email";
+    if (!email_re.test(formVals.user_email)) {
+      newErrors.user_email = "請填寫正確的 email";
     }
-    if (!password_re.test(formVals.password)) {
-      newErrors.password = "請填寫8個字元以上密碼";
+    if (!password_re.test(formVals.user_password)) {
+      newErrors.user_password = "請填寫8個字元以上密碼";
     }
     setErrors(newErrors);
 
@@ -79,17 +79,16 @@ export default function Login() {
         .then((r) => r.json())
         .then((obj) => {
           console.log(obj);
-          if (obj.success && obj.data?.email) {
+          if (obj.success && obj.data?.user_email) {
             localStorage.setItem("auth", JSON.stringify(obj.data));
 
             //登入後跳轉
             setAuth(obj.data);
             console.log("登入成功");
             swalTest1.fire({
-              title: "註冊成功",
+              title: "登入成功",
               icon: "success",
             });
-            location.href="/"
           }
         });
     } else {
@@ -135,29 +134,33 @@ export default function Login() {
             </div>
             <div className="middle mt-5">
               <form noValidate onSubmit={sendForm}>
-                <div className="form-floating mb-4">
-                  <span className="form-text">{errors.email}</span>
+                <div className="mb-4">
+                  <span className="form-text text-danger fs-5">
+                    {errors.user_email}
+                  </span>
                   <input
                     type="email"
-                    className="form-control border-0 border-bottom rounded-0"
-                    id="email"
+                    className="form-control border-0 border-bottom rounded-0 fs-5"
+                    id="user_email"
                     placeholder="請輸入電子郵件"
-                    style={{ height: 42, width: 600, color: "#AEAEAE" }}
+                    style={{ width: 600 }}
                     onChange={inputChange}
-                    value={formVals.email}
+                    value={formVals.user_email}
                   />
                 </div>
-                <div className="form-floating">
+                <div>
+                  <span className="form-text text-danger fs-5">
+                    {errors.user_password}
+                  </span>
                   <input
                     type="password"
-                    className="form-control border-0 border-bottom rounded-0"
-                    id="password"
-                    placeholder="Password"
-                    style={{ height: 42, width: 600, color: "#AEAEAE" }}
+                    className="form-control border-0 border-bottom rounded-0 fs-5"
+                    id="user_password"
+                    placeholder="請輸入密碼"
+                    style={{ width: 600 }}
                     onChange={inputChange}
-                    value={formVals.password}
+                    value={formVals.user_password}
                   />
-                  <span className="form-text">{errors.password}</span>
                   <i
                     type="button"
                     className="far fa-eye-slash no-see-eye"
