@@ -27,10 +27,11 @@ export default function productDetail() {
     product_img: [],
     showed_1st: "",
   });
+  const [wish, setWish] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const router = useRouter();
 
-  const [wish, setWish] = useState(false);
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
@@ -82,16 +83,12 @@ export default function productDetail() {
           .then((r) => r.json())
           .then((r) => {
             console.log(r); //true
-            if (r) {
-              // location.reload();
-            }
           })
           .catch((ex) => {
             console.log(ex);
           });
       }
       if (wish) {
-        console.log("1111110");
         fetch("http://localhost:3002/product/del-wish", {
           method: "POST",
           body: JSON.stringify({
@@ -116,15 +113,73 @@ export default function productDetail() {
           .then((r) => r.json())
           .then((r) => {
             console.log(r); //true
-            if (r) {
-              location.reload();
-            }
           })
           .catch((ex) => {
             console.log(ex);
           });
       }
     }
+  };
+
+  //加入購物車
+  const handleAddCart = () => {
+    // if (router.isReady) {
+    //   const pathName = router.query.pid;
+
+    //1如果有登入
+    if (localStorage.getItem("auth")) {
+      //2如果商品已經設定到data了(防useEffect錯)
+      if (data.rows.product_id) {
+        //3如果localStorage已有購物車資料
+        if (localStorage.getItem("cart")) {
+          //拿出來找找看裡面有沒有目前頁面商品
+          let cart = JSON.parse(localStorage.getItem("cart"));
+          const existCart = cart.findIndex(
+            (v) => v.product_id == router.query.pid
+          );
+          //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
+          if (existCart >= 0) {
+            const updateQuantity = cart[existCart].quantity + quantity;
+
+            const cartUpdateIndex = {
+              ...cart[existCart],
+              quantity: updateQuantity,
+            };
+            cart[existCart] = cartUpdateIndex;
+            localStorage.setItem("cart", JSON.stringify(cart));
+          } else {
+            //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
+            cart.unshift({
+              product_id: data.rows.product_id,
+              product_img: data.rowsImgs[0].product_img,
+              quantity: quantity,
+            });
+            localStorage.setItem("cart", JSON.stringify(cart));
+          }
+        } else {
+          //3如果localStorage沒有購物車資料 >>> setItem
+          const cart = [
+            {
+              product_id: data.rows.product_id,
+              product_img: data.rowsImgs[0].product_img,
+              quantity: quantity,
+            },
+          ];
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          //????? console.log(cart) >>> {} rather than [{}]
+          // const cart = [
+          //   JSON.stringify({
+          //     product_id: data.rows.product_id,
+          //     product_img: data.rowsImgs[0].product_img,
+          //     quantity: quantity,
+          //   }),
+          // ];
+          // localStorage.setItem("cart", cart);
+        }
+      }
+    }
+    // }
   };
 
   return (
@@ -293,7 +348,6 @@ export default function productDetail() {
           <div className={styles.productMain + " row"}>
             <div
               className={
-                styles.test +
                 " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
@@ -320,7 +374,6 @@ export default function productDetail() {
             </div>
             <div
               className={
-                styles.context +
                 " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
@@ -360,13 +413,24 @@ export default function productDetail() {
                     className={" brounded"}
                     size="sm"
                     aria-label="Default select example"
+                    onChange={(e) => {
+                      setQuantity(e.target.value);
+                      // console.log(quantity); //setQuantity為異部處理所以在這console會慢一拍
+                    }}
+                    value={quantity}
                   >
-                    <option>請選擇數量</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    {Array(10)
+                      .fill(1)
+                      .map((v, i) => {
+                        return <option value={i + 1}>{i + 1}</option>;
+                      })}
                   </Form.Select>
-                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                  <button
+                    className="btn btn-big d-flex justify-content-center align-items-center w-100"
+                    onClick={() => {
+                      handleAddCart();
+                    }}
+                  >
                     加入購物車
                   </button>
                   <button className="btn btn-big d-flex justify-content-center align-items-center w-100">

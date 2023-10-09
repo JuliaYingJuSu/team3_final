@@ -17,8 +17,6 @@ export default function index() {
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
 
-  console.log(typeList);
-
   useEffect(() => {
     // axios.get("");
 
@@ -59,6 +57,68 @@ export default function index() {
   //   setOrder(e.target.value);
   //   fetch();
   // };
+
+  const handleWish = (product_id) => {
+    if (!wish.includes(product_id)) {
+      console.log(product_id);
+      fetch("http://localhost:3002/product/add-wish", {
+        method: "POST",
+        body: JSON.stringify({
+          pid: product_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
+        // .then((r) => {
+        //   console.log(r); //defined
+        // })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r); //true
+          if (r) {
+            location.reload();
+          }
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+    if (wish.includes(product_id)) {
+      fetch("http://localhost:3002/product/del-wish", {
+        method: "POST",
+        body: JSON.stringify({
+          pid: product_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          //#region (有無"Content-Type": "application/json"與req.body的關聯)
+
+          //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
+
+          // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
+
+          //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
+
+          //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
+
+          //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
+          //#endregion
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r); //true
+          if (r) {
+            location.reload();
+          }
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  };
 
   return (
     <>
@@ -593,6 +653,10 @@ export default function index() {
                                   ? "icon-mark-fill"
                                   : "icon-mark" + " pt-1"
                               }
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                handleWish(product_id);
+                              }}
                             ></span>
                           </div>
                           <div
