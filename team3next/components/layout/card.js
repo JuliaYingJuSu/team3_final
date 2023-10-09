@@ -45,7 +45,11 @@ export default function Card({
       />
       <div className="col mt-2">
         <div className="card h-100 overflow-hidden">
-          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <a
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
             <img
               src={`/images/post/${post_image_name}`}
               className="card-img"
@@ -55,7 +59,7 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <Like />
+                <Like/>
                 <span>1</span>
               </span>
               <span className="middle">
@@ -104,6 +108,7 @@ export default function Card({
           </div>
         </div>
       </div>
+      {/* 將PostModal放在這個卡片內 */}
     </>
   );
 }

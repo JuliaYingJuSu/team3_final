@@ -8,7 +8,7 @@ export default function Main() {
   
 
   useEffect(() => {
-    fetch("http://localhost:3002/post")
+    fetch(process.env.API_SERVER + "/api/post")
       .then((r) => r.json())
       .then((data) => {
         console.log(data);
@@ -54,6 +54,10 @@ export default function Main() {
               restaurant_city,
               restaurant_name,
               food_tag_names,
+              likes,
+              post_favorite,
+              nickname,
+              user_id,
             },i) => {
               return (
                 <Card
@@ -66,6 +70,10 @@ export default function Main() {
                   restaurant_city={restaurant_city}
                   restaurant_name={restaurant_name}
                   food_tag_names={food_tag_names}
+                  likes={likes}
+                  post_favorite={post_favorite}
+                  nickname={nickname}
+                  user_id={user_id}
                 />
               );
             }

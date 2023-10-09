@@ -16,6 +16,18 @@ export default function PostModal(
   food_tag_names,
   }
 ) {
+  // 使用 Set 來去重除重複的 food_tag_names 數組
+  const uniqueFoodTags = [...new Set(food_tag_names)];
+  // 創建日期對象
+  const createDate = new Date(createTime);
+
+  // 獲取日期部分（年、月、日）
+  const year = createDate.getFullYear();
+  const month = (createDate.getMonth() + 1).toString().padStart(2, "0"); // +1 因為月份從 0 開始，padStart 用於補零
+  const day = createDate.getDate().toString().padStart(2, "0");
+
+  // 格式化為 "YYYY.MM.DD" 格式
+  const formattedDate = `${year}.${month}.${day}`;
   const [messageVal, setMessageVal] = useState({ message: "" });
   const [errors, setErrors] = useState({});
 
@@ -46,7 +58,7 @@ export default function PostModal(
   return (
     <>
     
-      <div
+      <div 
         className="modal fade"
         id="exampleModal"
         tabindex="-1"
@@ -244,15 +256,20 @@ export default function PostModal(
                 <br /> */}
               </div>
               <p className="icon-tag">
-                <a className="ms-2 " href="#" style={{ color: "#666666" }}>
+                {/* <a className="ms-2 " href="#" style={{ color: "#666666" }}>
                   義式
                 </a>
                 <span className="ms-2">|</span>
                 <a className="ms-2" href="#" style={{ color: "#666666" }}>
                   午餐
+                </a> */}
+                {uniqueFoodTags.map((foodTag, index) => (
+                <a href="#" className="ms-2" style={{ color: "#666666" }} key={index} >
+                  {foodTag}
                 </a>
+              ))}
               </p>
-              <p className="fs12 mb-2">2023.9.6</p>
+              <p className="fs12 mb-2">{formattedDate}</p>
             </div>
             <hr />
             <div className="d-flex align-items-start ms-2">
