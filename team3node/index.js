@@ -84,29 +84,29 @@ app.use("/api/cart",cartRouter)
 
 
 // GET - 得到所有會員資料
-// app.get('/', async function (req, res) {
-//   const [users] = await db.query("SELECT * FROM user");
-//   res.json(users);
-// });
+app.get('/', async function (req, res) {
+  const [users] = await db.query("SELECT * FROM user");
+  res.json(users);
+});
 
 // GET - 得到所有會員資料
-app.get("/", async function (req, res, next) {
-  const sql = "SELECT * FROM user";
+// app.get("/", async function (req, res, next) {
+//   const sql = "SELECT * FROM user";
 
-  try {
-    const [rows, fields] = await promisePool.query(sql);
-    console.log(rows);
+//   try {
+//     const [rows, fields] = await promisePool.query(sql);
+//     console.log(rows);
 
-    if (rows.length > 0) {
-      return res.json({ message: "success", code: "200", users: rows });
-    } else {
-      return res.json({ message: "fail", code: "204", users: [] });
-    }
-  } catch (error) {
-    console.log("error occurred: ", error);
-    return res.json({ message: "error", code: "500" });
-  }
-});
+//     if (rows.length > 0) {
+//       return res.json({ message: "success", code: "200", users: rows });
+//     } else {
+//       return res.json({ message: "fail", code: "204", users: [] });
+//     }
+//   } catch (error) {
+//     console.log("error occurred: ", error);
+//     return res.json({ message: "error", code: "500" });
+//   }
+// });
 
 // 登出
 app.get("/logout", (req, res) => {
