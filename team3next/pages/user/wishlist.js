@@ -5,6 +5,7 @@ import Head from "next/head";
 import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./wishlist.module.css";
+import Link from "next/link";
 
 export default function WishList() {
   const [wish, setWish] = useState([]);
@@ -52,6 +53,59 @@ export default function WishList() {
       });
   };
 
+  //加入購物車
+
+  const handleAddCart = (v) => {
+    //1如果有登入
+    if (localStorage.getItem("auth")) {
+      //2如果商品已經設定到data了(防useEffect錯)
+      if (v.product_id) {
+        //3如果localStorage已有購物車資料
+        if (localStorage.getItem("cart")) {
+          //拿出來找找看裡面有沒有目前頁面商品
+          let cart = JSON.parse(localStorage.getItem("cart"));
+          const existCart = cart.findIndex(
+            (item) => item.product_id == v.product_id
+          );
+          //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
+          if (existCart >= 0) {
+            const updateQuantity = parseInt(cart[existCart].quantity) + 1;
+
+            const cartUpdateIndex = {
+              ...cart[existCart],
+              quantity: updateQuantity,
+            };
+            cart[existCart] = cartUpdateIndex;
+            localStorage.setItem("cart", JSON.stringify(cart));
+          } else {
+            //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
+            console.log(
+              "如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的"
+            );
+            cart.unshift({
+              product_id: v.product_id,
+              product_img: v.product_img,
+              quantity: 1,
+            });
+            localStorage.setItem("cart", JSON.stringify(cart));
+          }
+        } else {
+          //3如果localStorage沒有購物車資料 >>> setItem
+          console.log("如果localStorage沒有購物車資料 >>> setItem");
+          const cart = [
+            {
+              product_id: v.product_id,
+              product_img: v.product_img,
+              quantity: 1,
+            },
+          ];
+          localStorage.setItem("cart", JSON.stringify(cart));
+        }
+      }
+    }
+    // }
+  };
+
   return (
     <>
       <MyNavbar></MyNavbar>
@@ -91,8 +145,27 @@ export default function WishList() {
                   <span>{v.price}</span>
                 </p>
                 <div className="mt-5 text-end btnBox">
-                  <div className="me-2 my-1 btn btn-big">立即購買</div>
-                  <div className="me-2 my-1 btn btn-big">加入購物車</div>
+                  <div
+                    className="me-2 my-1 btn btn-big"
+                    onClick={() => {
+                      handleAddCart(v);
+                    }}
+                  >
+                    <Link
+                      href="/cart"
+                      className="btn-big w-100 h-100 d-flex justify-content-center align-items-center p-0"
+                    >
+                      立即購買
+                    </Link>
+                  </div>
+                  <div
+                    className="me-2 my-1 btn btn-big"
+                    onClick={() => {
+                      handleAddCart(v);
+                    }}
+                  >
+                    加入購物車
+                  </div>
                 </div>
               </div>
             </div>

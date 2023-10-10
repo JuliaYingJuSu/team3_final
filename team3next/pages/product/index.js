@@ -138,6 +138,7 @@ export default function index() {
                 {/* -----------分類選單---------- */}
                 {data.rowsType &&
                   data.rowsType.map((v, i) => {
+                    // console.log(v);
                     return (
                       <>
                         <button

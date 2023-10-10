@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CarouselProduct from "@/components/layout/default-layout/carousel-product";
 import { useRouter } from "next/router";
+// import handleAddCart from "@/components/product/add-cart";
 
 export default function productDetail() {
   const [data, setData] = useState({
@@ -29,7 +30,8 @@ export default function productDetail() {
   });
   const [wish, setWish] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
+  const [recommend, setRecommend] = useState([]);
+  console.log(recommend);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,6 +52,25 @@ export default function productDetail() {
     }
   }, [router.isReady]);
 
+  useEffect(() => {
+    if (data.rows) {
+      fetch(`http://localhost:3002/product-recommend`, {
+        method: "POST",
+        body: JSON.stringify({
+          tid: data.rows.product_type_list_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r);
+          setRecommend(r.rowsRecommend);
+        });
+    }
+  }, [data]);
+
   // data.rows && console.log(data.rows.specification);
   // console.log(data.rows?.specification.split("\\n"));
   // const specSplit = data.rows?.specification.replace("\\n", "<br />");
@@ -58,6 +79,7 @@ export default function productDetail() {
     return <p>{v}</p>;
   });
 
+  //增刪收藏
   const handleWish = () => {
     if (router.isReady) {
       //   // const pathName = router.pathname; // /product/[pid]
@@ -139,7 +161,8 @@ export default function productDetail() {
           );
           //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
           if (existCart >= 0) {
-            const updateQuantity = cart[existCart].quantity + quantity;
+            const updateQuantity =
+              parseInt(cart[existCart].quantity) + quantity;
 
             const cartUpdateIndex = {
               ...cart[existCart],
@@ -427,14 +450,28 @@ export default function productDetail() {
                   </Form.Select>
                   <button
                     className="btn btn-big d-flex justify-content-center align-items-center w-100"
-                    onClick={() => {
-                      handleAddCart();
-                    }}
+                    onClick={
+                      // <handleAddCart />
+                      () => {
+                        handleAddCart();
+                      }
+                    }
                   >
                     加入購物車
                   </button>
-                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
-                    立即購買
+                  <button
+                    className="btn btn-big d-flex justify-content-center w-100 overflow-hidden"
+                    onClick={() => {
+                      handleAddCart();
+                      // router.push("/cart");
+                    }}
+                  >
+                    <Link
+                      href="/cart"
+                      className="btn-big w-100 h-100 d-flex justify-content-center align-items-center"
+                    >
+                      立即購買
+                    </Link>
                   </button>
                 </form>
               </div>
@@ -486,9 +523,9 @@ export default function productDetail() {
                 className="mySwiper"
                 style={{ "--swiper-navigation-color": "#3f4c5c" }}
               >
-                {Array(5)
-                  .fill(1)
-                  .map((v, i) => {
+                {recommend &&
+                  recommend.map((v, i) => {
+                    console.log(v);
                     return (
                       <SwiperSlide key={i}>
                         {
@@ -498,17 +535,18 @@ export default function productDetail() {
                           >
                             <div>
                               <img
-                                src="/images/product/螢幕擷取畫面 2023-09-26 101926.png"
+                                src={"/images/product/" + v.product_img}
                                 alt=""
                                 className="object-fit-cover w-100 h-100"
                               />
                             </div>
                             <div>
-                              <span>品牌名 產品名</span>
+                              <span>{v.product_name}</span>
                             </div>
                             <div>
-                              <span>NT$ 1000</span>{" "}
-                              <span className="icon-cark"></span>
+                              <span>NT$</span>
+                              <span>{v.price}</span>
+                              {/* <span className="icon-cark"></span> */}
                             </div>
                           </div>
                         }
