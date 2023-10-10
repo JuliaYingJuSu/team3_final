@@ -22,8 +22,15 @@ export default function FormLayout({
   console.log(errors);
   const onSubmit = async (data) => {
     console.log(data);
-    const response = await axios.post("http://localhost:3002/try-post", data);
-    console.log(data);
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/restaurant/member-register",
+        data
+      );
+      console.log("Server Response:", response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
   return (
