@@ -40,32 +40,16 @@ export default function Index() {
         onSlideChange={() => console.log("slide change")}
       >
         <SwiperSlide>
-          <img
-            className="w-100"
-            src="../../images/book/r1-1cut.png"
-            alt="..."
-          />
+          <img className="w-100" src="../../images/book/r1-1.png" alt="..." />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            className="w-100"
-            src="../../images/book/r1-2cut.png"
-            alt="..."
-          />
+          <img className="w-100" src="../../images/book/r1-2.png" alt="..." />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            className="w-100"
-            src="../../images/book/r1-3cut.png"
-            alt="..."
-          />
+          <img className="w-100" src="../../images/book/r1-3.png" alt="..." />
         </SwiperSlide>
         <SwiperSlide>
-          <img
-            className="w-100"
-            src="../../images/book/r1-4cut.png"
-            alt="..."
-          />
+          <img className="w-100" src="../../images/book/r1-4.png" alt="..." />
         </SwiperSlide>
       </Swiper>
       <br />
