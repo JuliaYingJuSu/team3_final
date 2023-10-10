@@ -3,8 +3,17 @@
 import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import MyArticle from "../post/my-article";
+import Swal from "sweetalert2";
 
 export default function UserPictureCard() {
+  const swalButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
   return (
     <>
       <div className="position-relative">
@@ -20,7 +29,7 @@ export default function UserPictureCard() {
         </a>
         <div
           className="dropstart position-absolute btn-group"
-          style={{ right: 15,marginTop: 15 }}>
+          style={{ right: 15, marginTop: 15 }}>
           <button
             type="button"
             className="btn dropdown-toggle"
@@ -28,18 +37,34 @@ export default function UserPictureCard() {
             aria-expanded="false">
             <i className="fas fa-ellipsis-v fs-4 grey"></i>
           </button>
-          <ul
-            className="dropdown-menu"
-            aria-labelledby="dropdownMenuButton1">
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
               <a className="dropdown-item fs16b" href="#">
                 修改文章
               </a>
             </li>
             <li>
-              <a className="dropdown-item fs16b" href="#">
+              <button
+                className="dropdown-item fs16b"
+                onClick={() => {
+                  swalButtons
+                    .fire({
+                      title: "是否要刪除這篇文章?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      cancelButtonText:
+                        '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                      confirmButtonText:
+                        '<i class="far fa-check-circle fs-5"></i> 刪除',
+                    })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        swalButtons.fire("刪除成功", "", "success");
+                      }
+                    });
+                }}>
                 刪除文章
-              </a>
+              </button>
             </li>
           </ul>
         </div>
