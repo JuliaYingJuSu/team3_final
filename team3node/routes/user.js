@@ -26,7 +26,8 @@ userRouter.post(
   }
 );
 
-userRouter.post("/upload",upload.single("user_img"), async (req, res) => {
+userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
+  console.log(req.file, req.body);
   const output = {
     success: false,
     errors: {},
@@ -38,6 +39,7 @@ userRouter.post("/upload",upload.single("user_img"), async (req, res) => {
   if (req.body.user_name) {
     const { user_name, nickname, user_email, user_password, user_phone } =
       req.body;
+    const { user_img } = req.file;
 
     //檢查姓名欄位
     if (user_name.length < 2) {

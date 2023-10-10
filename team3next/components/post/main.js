@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 
 export default function Main() {
   const [data, setData] = useState([]);
-  const [userData, setUserData] = useState({}); 
-
+  const [userData, setUserData] = useState({});
+  
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
-    fetch(process.env.API_SERVER + "/") 
+    fetch(process.env.API_SERVER + "/")
       .then((r) => r.json())
       .then((users) => {
         const usersData = {};
-        users.forEach(({ user_id, nickname}) => {
-          usersData[user_id] = nickname;
+        users.forEach(({ user_id, nickname, user_img }) => {
+          usersData[user_id] = { nickname, user_img };
         });
         setUserData(usersData);
       })
@@ -47,6 +47,9 @@ export default function Main() {
           return item;
         });
 
+        // 按降冪排序
+        dataWithFirstImages.sort((a, b) => b.post_id - a.post_id);
+
         setData(dataWithFirstImages);
       })
       .catch((ex) => console.log(ex));
@@ -56,36 +59,38 @@ export default function Main() {
     <>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 mx-auto">
-        {data.map(
-          ({
-            post_id,
-            post_title,
-            post_content,
-            createTime,
-            post_image_name,
-            restaurant_city,
-            restaurant_name,
-            food_tag_names,
-            user_id, // 增加 user_id 屬性
-          }) => {
-            const nickname = userData[user_id]; // 根據 user_id 查找 nickname
-            return (
-              <Card
-                key={post_id}
-                post_id={post_id}
-                post_title={post_title}
-                post_content={post_content}
-                createTime={createTime}
-                post_image_name={post_image_name}
-                restaurant_city={restaurant_city}
-                restaurant_name={restaurant_name}
-                food_tag_names={food_tag_names}
-                user_id={user_id}
-                nickname={nickname}
-              />
-            );
-          }
-        )}
+          {data.map(
+            ({
+              post_id,
+              post_title,
+              post_content,
+              createTime,
+              post_image_name,
+              restaurant_city,
+              restaurant_name,
+              food_tag_names,
+              user_id, // 增加 user_id 屬性
+            }) => {
+              const nickname = userData[user_id].nickname ;
+              const user_img = userData[user_id].user_img ;
+              return (
+                <Card
+                  key={post_id}
+                  post_id={post_id}
+                  post_title={post_title}
+                  post_content={post_content}
+                  createTime={createTime}
+                  post_image_name={post_image_name}
+                  restaurant_city={restaurant_city}
+                  restaurant_name={restaurant_name}
+                  food_tag_names={food_tag_names}
+                  user_id={user_id}
+                  nickname={nickname}
+                  user_img={user_img}
+                />
+              );
+            }
+          )}
           {/* <Link href={"/"} className="middle grey fs18b mx-auto my-3">
             看更多
           </Link> */}
@@ -94,15 +99,3 @@ export default function Main() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-

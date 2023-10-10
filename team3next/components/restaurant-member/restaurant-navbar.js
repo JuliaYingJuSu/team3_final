@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 
-export default function MyNavbar() {
+export default function RestaurantNavbar() {
   return (
     <>
       <ul className="nav nav-underline d-flex align-items-center justify-content-between flex-nowrap">
