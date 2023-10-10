@@ -1,7 +1,15 @@
 import React from "react";
 import CitySelector from "./city-selector";
+import { useFormContext } from "react-hook-form";
 
 export default function StepSecond() {
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   return (
     <>
       <div className="d-flex flex-column mb-3">
@@ -47,6 +55,24 @@ export default function StepSecond() {
           type="text"
           {...register("phone", { required: "請輸入資料" })}
           id="phone"
+        />
+      </div>
+      <div className="d-flex flex-column mb-3">
+        <label className="fs18b" htmlFor="description">
+          餐廳介紹
+          <span className="ps-1" style={{ color: "red" }}>
+            *
+          </span>
+          <span className="ps-1" style={{ color: "red" }}>
+            {errors.description?.message}
+          </span>
+        </label>
+        <textarea
+          className="input-area"
+          type="text"
+          {...register("description")}
+          id="description"
+          style={{ height: "150px" }}
         />
       </div>
     </>

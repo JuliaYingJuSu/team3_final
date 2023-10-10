@@ -2,28 +2,29 @@ import React from "react";
 import { FormItem } from "react-hook-form-antd";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
+import { useFormContext } from "react-hook-form";
 
 export default function StepThird() {
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const props = {
+    name: "files",
+    multiple: true,
+    listType: "picture",
+    maxCount: 5,
+    style: {
+      backgroundColor: "#FBF9EF",
+      border: "none",
+    },
+  };
   return (
     <>
-      <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="description">
-          餐廳介紹
-          <span className="ps-1" style={{ color: "red" }}>
-            *
-          </span>
-          <span className="ps-1" style={{ color: "red" }}>
-            {errors.description?.message}
-          </span>
-        </label>
-        <textarea
-          className="input-area"
-          type="text"
-          {...register("description")}
-          id="description"
-          style={{ height: "150px" }}
-        />
-      </div>
       <div className="d-flex flex-column mb-3">
         <label className="fs18b" htmlFor="photo">
           {" "}

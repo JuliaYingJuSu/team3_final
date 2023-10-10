@@ -1,19 +1,30 @@
 import React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import profileSchema from "@/validation/profile-validation";
-import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
-import Form from "./form-component/restaurant-form";
+import FormLayout from "./form-component/restaurant-form";
 import StepFirst from "./form-component/step-first";
 import StepSecond from "./form-component/step-second";
 import StepThird from "./form-component/step-third";
-import <S></S>tepThird from "./form-component/step-third";
 
 export default function MemberRegister() {
+  const display = { 0: <StepFirst />, 1: <StepSecond />, 2: <StepThird /> };
+  const inputField = [
+    ["email", "password", "rePassword"],
+    ["city", "district", "address", "phone", "description"],
+    ["photo"],
+  ];
+
+  const [page, setPage] = useState(0);
+  const prevPage = () => {
+    setPage(page - 1);
+  };
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+
+  const currentField = inputField[page];
+
   return (
     <>
       <div className="backgs">
@@ -26,11 +37,11 @@ export default function MemberRegister() {
         >
           <Wave02></Wave02>
         </span>
-        <div className="container middle flex-column mb-4">
-          <div className="z-3 position-absolute" style={{ top: 130 }}>
+        <div className="container-fluid middle flex-column mb-4">
+          <div className="position-absolute" style={{ top: 130 }}>
             <h1 className="fw-bold">會員註冊</h1>
           </div>
-          <span className="bgi position-absolute opacity-25"></span>
+          <span className="bgi z-n1 position-absolute opacity-25"></span>
           <div
             className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
             style={{ paddingRight: 350 }}
@@ -41,11 +52,15 @@ export default function MemberRegister() {
             </span>{" "}
             的欄位為必填
           </div>
-          <Form>
-            <StepFirst/>
-            <StepSecond/>
-            <StepThird/>
-          </Form>
+          <FormLayout
+            prevPage={prevPage}
+            nextPage={nextPage}
+            page={page}
+            setPage={setPage}
+            currentField={currentField}
+          >
+            {display[page]}
+          </FormLayout>
         </div>
       </div>
       <style jsx>
@@ -96,14 +111,6 @@ export default function MemberRegister() {
             top: 146px;
             background: no-repeat;
             background-image: url("/images/onlybro.png");
-          }
-          .no-see-eye {
-            position: relative;
-          }
-          .no-see-eye:before {
-            position: absolute;
-            left: 465px;
-            bottom: 32px;
           }
         `}
       </style>

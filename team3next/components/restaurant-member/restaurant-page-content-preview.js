@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormItem } from "react-hook-form-antd";
-import CitySelector from "./city-selector";
+import CitySelector from "./form-component/city-selector";
 
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 
@@ -22,12 +22,12 @@ export default function PageContent() {
   // rhf
 
   const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -53,8 +53,8 @@ export default function PageContent() {
     },
     progress: {
       strokeColor: {
-        '0%': '#108ee9',
-        '100%': '#87d068',
+        "0%": "#108ee9",
+        "100%": "#87d068",
       },
       strokeWidth: 3,
       format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
@@ -177,7 +177,7 @@ export default function PageContent() {
                 </span>
               </label>
               <FormItem control={control} name="photo" valuePropName="fileList">
-                <Upload.Dragger {...props} onPreview={ handlePreview }>
+                <Upload.Dragger {...props} onPreview={handlePreview}>
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined style={{ color: "#ae4818" }} />
                   </p>

@@ -1,7 +1,18 @@
 import React from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useFormContext } from "react-hook-form";
 
 export default function StepFirst() {
+  const [inputType, setInputType] = useState("password");
+  const [reInputType, reSetInputType] = useState("password");
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   return (
     <>
       <div className="d-flex flex-column my-3">
@@ -78,10 +89,6 @@ export default function StepFirst() {
           </span>
         </div>
       </div>
-
-      <button className="btn btn-big mt-4 ms-auto" type="submit">
-        確認修改
-      </button>
     </>
   );
 }

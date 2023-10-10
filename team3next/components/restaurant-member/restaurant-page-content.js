@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import infoSchema from "@/validation/info-validation";
 import { FormItem } from "react-hook-form-antd";
-import CitySelector from "./city-selector";
+import CitySelector from "./form-component/city-selector";
 
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
