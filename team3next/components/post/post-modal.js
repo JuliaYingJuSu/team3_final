@@ -14,6 +14,9 @@ export default function PostModal(
   restaurant_city,
   restaurant_name,
   food_tag_names,
+  user_id,
+  nickname,
+  user_img,
   }
 ) {
   // 使用 Set 來去重除重複的 food_tag_names 數組
@@ -28,6 +31,7 @@ export default function PostModal(
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
+  
   const [messageVal, setMessageVal] = useState({ message: "" });
   const [errors, setErrors] = useState({});
 
@@ -64,6 +68,7 @@ export default function PostModal(
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        key={post_id}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -74,13 +79,13 @@ export default function PostModal(
                     <Link href="/user/user-my-article-i">
                       <img
                         className="rounded-circle headshot-sm img-thumbnail"
-                        src="/images/logo.png"
+                        src={user_img} 
                       ></img>
                     </Link>
                   </div>
                   <p className="middle me-2">
                     <a className="fs16b pt-3 text-dark" href="#">
-                      會員暱稱
+                    {nickname}
                     </a>
                   </p>
                   <FollowButton />
@@ -99,12 +104,12 @@ export default function PostModal(
                     {restaurant_name}
                     </a>
                   </p>
-                  {/* <p className="me-1">
+                  <p className="me-1">
                     <a href="#" className="text-dark">
-                      台北市
+                    {restaurant_city}
                     </a>
                   </p>
-                  <p className="me-1">
+                  {/* <p className="me-1">
                     <a href="#" className="text-dark">
                       松山區
                     </a>
@@ -116,10 +121,25 @@ export default function PostModal(
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                
               ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
+            {/* 使用 Carousel 顯示多個圖片 */}
+            {/* <Carousel
+                activeIndex={activeIndex}
+                onSelect={handleSelect}
+                interval={null} // 停用自動播放
+              >
+                {imageNames.map((imageName, index) => (
+                  <Carousel.Item key={index} >
+                    <img
+                      src={`/images/post/${imageName}`}
+                      className="d-block w-100 object-fit-cover"
+                      alt="..."
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel> */}
               <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
                   <button
@@ -152,7 +172,7 @@ export default function PostModal(
                 <div className="carousel-inner image-radius">
                   <div className="carousel-item active">
                     <img
-                      src="./images/post/cincin1.jpg"
+                      src={`/images/post/${post_image_name}`}
                       className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
@@ -237,32 +257,8 @@ export default function PostModal(
             <div className="ms-3" style={{ width: 470 }}>
               <div className="mb-3">
               {post_content}
-              
-                {/* 公司附近的義大利餐廳
-                <br />
-                餐廳的海鮮是從基隆港直接進貨非常新鮮
-                <br />
-                今天點了四道
-                <br />
-                酪梨醬辣味番茄莎莎海鮮披薩
-                <br />
-                烏魚子香蒜辣椒鯷魚炒白花椰
-                <br />
-                松露奶醬烤菇燉飯
-                <br />
-                義式烤本島現流海魚
-                <br />
-                每一道都好吃
-                <br /> */}
               </div>
               <p className="icon-tag">
-                {/* <a className="ms-2 " href="#" style={{ color: "#666666" }}>
-                  義式
-                </a>
-                <span className="ms-2">|</span>
-                <a className="ms-2" href="#" style={{ color: "#666666" }}>
-                  午餐
-                </a> */}
                 {uniqueFoodTags.map((foodTag, index) => (
                 <a href="#" className="ms-2" style={{ color: "#666666" }} key={index} >
                   {foodTag}
@@ -344,4 +340,5 @@ export default function PostModal(
       </style>
     </>
   );
+
 }

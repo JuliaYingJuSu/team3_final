@@ -13,8 +13,8 @@ export default function Section01() {
       .then((r) => r.json())
       .then((users) => {
         const usersData = {};
-        users.forEach(({ user_id, nickname}) => {
-          usersData[user_id] = nickname;
+        users.forEach(({ user_id, nickname, user_img}) => {
+          usersData[user_id] = {nickname, user_img};
         });
         setUserData(usersData);
       })
@@ -72,7 +72,8 @@ export default function Section01() {
               food_tag_names,
               user_id,
             },i) => {
-              const nickname = userData[user_id]; // 根據 user_id 查找 nickname
+              const nickname = userData[user_id].nickname ;
+              const user_img = userData[user_id].user_img ;
               return (
                 <Card
                   key={post_id}
@@ -86,6 +87,7 @@ export default function Section01() {
                   food_tag_names={food_tag_names}
                   user_id={user_id}
                   nickname={nickname}
+                  user_img={user_img}
                 />
               );
             }

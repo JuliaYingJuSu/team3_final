@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 export default function Banner() {
-  const [search, setSearch] = useState("");
-
+  
   return (
     <>
       <div className="container d-flex justify-content-center">
@@ -20,17 +19,17 @@ export default function Banner() {
           </button>
           <ul className="dropdown-menu">
             <li>
-              <a className="dropdown-item" href="#/">
+              <a className="dropdown-item" href="/taipei" >
                 台北市
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#/">
+              <a className="dropdown-item" href="/newtaipei" >
                 新北市
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#/">
+              <a className="dropdown-item" href="/keelung" >
                 基隆市
               </a>
             </li>
@@ -54,47 +53,47 @@ export default function Banner() {
         </div>
       </div>
       <div className=" container d-flex justify-content-center mb-3">
-          {/* 搜尋條 */}
-          <button type="button" className="btn btn-sm tags">
-            台式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            中式
-          </button>
-          <button type="button" className="btn  btn-sm tags">
-            日式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            韓式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            港式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            美式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            義式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            法式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            西式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            泰式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            越式
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            早餐
-          </button>
-          <button type="button" className="btn btn-sm tags">
-            早午餐
-          </button>
-        </div>
+        {/* 搜尋條 */}
+        <button type="button" className="btn btn-sm tags">
+          台式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          中式
+        </button>
+        <button type="button" className="btn  btn-sm tags">
+          日式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          韓式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          港式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          美式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          義式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          法式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          西式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          泰式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          越式
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          早餐
+        </button>
+        <button type="button" className="btn btn-sm tags">
+          早午餐
+        </button>
+      </div>
 
       <style jsx>
         {`
@@ -123,7 +122,7 @@ export default function Banner() {
           }
           @media screen and (max-width: 500px) {
             .tags {
-              display:none;
+              display: none;
             }
           }
           @media screen and (max-width: 500px) {
