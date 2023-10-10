@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export default function Main() {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
-
+  
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
