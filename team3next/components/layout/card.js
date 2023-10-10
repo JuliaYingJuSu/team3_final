@@ -18,6 +18,7 @@ export default function Card({
   food_tag_names, // 注意這裡是一個數組
   user_id,
   nickname,
+  user_img,
 }) {
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -45,15 +46,12 @@ export default function Card({
         restaurant_name={restaurant_name}
         food_tag_names={uniqueFoodTags} // 傳遞去重複後的數組
         user_id={user_id}
-        nickname={nickname}      
+        nickname={nickname}
+        user_img={user_img}
       />
-      <div className="col mt-2">
+      <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
-          <a
-            href="#"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
+          <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <img
               src={`/images/post/${post_image_name}`}
               className="card-img"
@@ -63,18 +61,18 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <Like/>
-                <span>1</span>
+                <Like />
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <button className="btn btn-sm btn-i">
                   <i className="fa-regular fa-comment"></i>
                 </button>
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <Saved />
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
@@ -92,10 +90,20 @@ export default function Card({
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
                 <Link href="/user/user-my-article-i">
-                  <img
-                    className="rounded-circle headshot-small img-thumbnail"
-                    src="" // 顯示用戶頭像
-                  ></img>
+                {/* 三元運算還是不成功，要如何才能使突變薯哥，如果大頭照沒有上傳的時候 */}
+                  {user_img ? (
+                    <img
+                      className="rounded-circle headshot-small img-thumbnail"
+                      src={user_img} // 顯示用戶頭像
+                      alt="大頭照"
+                    />
+                  ) : (
+                    <img
+                      className="rounded-circle headshot-small img-thumbnail"
+                      src="/images/logo/png"
+                      alt="大頭照"
+                    />
+                  )}
                 </Link>
               </div>
               <p className="middle">
