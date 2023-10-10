@@ -7,34 +7,34 @@ export default function CardR2({
   restaurant_id,
   restaurant_name,
   restaurant_city,
+  restaurant_district,
   restaurant_address,
   restaurant_phone,
   restaurant_info,
+  r_img_route,
+  food_tag_names,
 }) {
+  const uniqueFoodTags = [...new Set(food_tag_names)];
   return (
     <>
-      <div className="col mt-2" style={{ height: "790px" }}>
+      <div className="col mt-2" style={{ height: "780px" }}>
         <div className="card h-100 overflow-hidden">
-          <img src="/images/post/3188.jpg" className="card-img" alt="..." />
+          <img
+            src={`/images/book/${r_img_route}`}
+            className="card-img"
+            alt="..."
+          />
           <div className="card-body d-flex flex-column w-100">
-            <div className="w-100 mt-1" style={{ height: "31px" }}></div>
-            <div className="d-flex fs14 gap-2 mt-2">
+            <div className="w-100" style={{ height: "25px" }}></div>
+            <div className="d-flex fs14 gap-2">
               <a href="#" className="tag-i">
-                {" "}
-                台南市{" "}
+                {restaurant_city}
               </a>
-              <a href="#" className="tag-f">
-                {" "}
-                午餐{" "}
-              </a>
-              <a href="#" className="tag-f">
-                {" "}
-                晚餐{" "}
-              </a>
-              <a href="#" className="tag-f">
-                {" "}
-                義式{" "}
-              </a>
+              {uniqueFoodTags.map((foodTag, index) => (
+                <a href="#" className="tag-f" key={index}>
+                  {foodTag}
+                </a>
+              ))}
             </div>
             <h5 className="card-title w-100 mt-3 mb-0 fw-bolder">
               {restaurant_name}
@@ -48,33 +48,35 @@ export default function CardR2({
             >
               更多內容...
             </div>
-            <div className="d-flex w-100">
-              <div className="fs16b">
-                <div className="d-flex">
-                  <span className="pe-2">
-                    <span className="icon-map"></span>
-                  </span>
-                  <div>{restaurant_address}</div>
-                </div>
-                <div className="d-flex">
-                  <span className="pe-2">
-                    <span className="icon-Call"></span>
-                  </span>
-                  <div>{restaurant_phone}</div>
-                </div>
-                <div className="d-flex">
-                  <span className="pe-2">
-                    <span className="icon-calender"></span>
-                  </span>
-                  <div>每週一、週二休息</div>
+            <div className="fs16b">
+              <div className="d-flex">
+                <span className="pe-2">
+                  <span className="icon-map"></span>
+                </span>
+                <div>
+                  {restaurant_city}
+                  {restaurant_district}
+                  {restaurant_address}
                 </div>
               </div>
-              <Link
-                href="/book/restaurant"
-                className="btn btn-little fs16 ms-auto align-self-end"
-              >
-                訂位
-              </Link>
+              <div className="d-flex">
+                <span className="pe-2">
+                  <span className="icon-Call"></span>
+                </span>
+                <div>{restaurant_phone}</div>
+              </div>
+              <div className="d-flex">
+                <span className="pe-2">
+                  <span className="icon-calender"></span>
+                </span>
+                <div>每週一、週二休息</div>
+                <Link
+                  href="/book/restaurant"
+                  className="btn btn-little fs16 ms-auto align-self-end"
+                >
+                  訂位
+                </Link>
+              </div>
             </div>
           </div>
         </div>

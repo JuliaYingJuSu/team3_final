@@ -13,19 +13,25 @@ export default function Test() {
         console.log(data);
         const groupedData = {};
         data.forEach(({ restaurant_id, ...rest }) => {
-          if (!groupedData[restaurant_id]) {
+          if (groupedData[restaurant_id]) {
+            groupedData[restaurant_id].food_tag_names.push(rest.food_tag_name);
+          } else {
             groupedData[restaurant_id] = {
               restaurant_id,
               ...rest,
+              food_tag_names: [rest.food_tag_name],
             };
           }
         });
 
         const dataWithFirstImages = Object.values(groupedData).map((item) => {
+          if (Array.isArray(item.r_img_route)) {
+            item.r_img_route = item.r_img_route[0];
+          }
           return item;
         });
 
-        setData(dataWithFirstImages);
+        setData(dataWithFirstImages.slice(0, 3));
       })
       .catch((ex) => console.log(ex));
   }, []);
@@ -40,9 +46,12 @@ export default function Test() {
                 restaurant_id,
                 restaurant_name,
                 restaurant_city,
+                restaurant_district,
                 restaurant_address,
                 restaurant_phone,
                 restaurant_info,
+                r_img_route,
+                food_tag_names,
               },
               i
             ) => {
@@ -52,9 +61,12 @@ export default function Test() {
                   restaurant_id={restaurant_id}
                   restaurant_name={restaurant_name}
                   restaurant_city={restaurant_city}
+                  restaurant_district={restaurant_district}
                   restaurant_address={restaurant_address}
                   restaurant_phone={restaurant_phone}
                   restaurant_info={restaurant_info}
+                  r_img_route={r_img_route}
+                  food_tag_names={food_tag_names}
                 />
               );
             }
