@@ -1,45 +1,47 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+import React from "react";
 import Link from "next/link";
 
-export default function CardR3() {
+export default function CardR3({
+  restaurant_id,
+  restaurant_name,
+  restaurant_city,
+  restaurant_district,
+  restaurant_address,
+  restaurant_phone,
+  restaurant_info,
+  r_img_route,
+  food_tag_names,
+}) {
+  const uniqueFoodTags = [...new Set(food_tag_names)];
   return (
     <>
       <div className="mt-5 mb-4 container d-flex justify-content-center">
         <div className="card3 overflow-hidden row">
-          <div className="col-12 col-xl-5">
+          <div className="col-12 col-xl-5" style={{ padding: "0px" }}>
             <img
-              src="/images/book/card3.png"
+              src={`/images/book/${r_img_route}`}
+              className="card3-img"
               alt="..."
-              className="card3-img "
             />
           </div>
           <div className="card3-body d-flex flex-column col-xl-7">
             <div className="d-flex fs14 gap-2">
               <a href="#" className="tag-i">
-                {" "}
-                台南市{" "}
+                {restaurant_city}
               </a>
-              <a href="#" className="tag-f">
-                {" "}
-                午餐{" "}
-              </a>
-              <a href="#" className="tag-f">
-                {" "}
-                晚餐{" "}
-              </a>
-              <a href="#" className="tag-f">
-                {" "}
-                義式{" "}
-              </a>
+              {uniqueFoodTags.map((foodTag, index) => (
+                <a href="#" className="tag-f" key={index}>
+                  {foodTag}
+                </a>
+              ))}
             </div>
             <h5 className="card-title w-100 mt-3 mb-0 fw-bolder">
-              牧羊人義式料理工坊
+              {restaurant_name}
             </h5>
             <div className="truncation max-height card-title w-100 grey fs16 mb-0 mt-3">
-              義大利籍顧問傳授的「經典傳統」為基底，融合日籍主廚傳授的「細膩和心」來提味，每一步均遵循義大利正統料理方式，製作道地的義式美味。每一步均遵循義大利正統料理方式，製作道地的義式美味。
-              義大利窯烤披薩除了經典的義大利款，還融入倫敦的英式口味，非常道地的歐洲風味，也讓Solo
-              Pizza Napoletana一舉入榜榮獲全亞洲 50 大披薩的殊榮。
+              {restaurant_info}
             </div>
             <div className="d-flex w-100">
               <div className="fs16b">
@@ -50,13 +52,17 @@ export default function CardR3() {
                   <span className="pe-2">
                     <span className="icon-map"></span>
                   </span>
-                  <div>台南市中西區尊王路140號</div>
+                  <div>
+                    {restaurant_city}
+                    {restaurant_district}
+                    {restaurant_address}
+                  </div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-Call"></span>
                   </span>
-                  <div>06 221 0699</div>
+                  <div>{restaurant_phone}</div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">

@@ -22,7 +22,7 @@ export default function Index() {
             <div className="container2">
               <img
                 className="w-100"
-                src="../../images/book/r1-1cut.png"
+                src="../../images/book/r1-1.png"
                 alt="..."
               />
               <div className="h5 d-flex justify-content-center py-4 con1">
@@ -89,7 +89,7 @@ export default function Index() {
                   />
                 </div>
               </div>
-              <div className="col ms-4 my-3 fs18 d-flex align-self-end">
+              <div className="col my-3 fs18 d-flex align-self-end">
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -102,7 +102,7 @@ export default function Index() {
                     小姐
                   </label>
                 </div>
-                <div className="form-check ms-2">
+                <div className="form-check ms-3">
                   <input
                     className="form-check-input"
                     type="radio"
@@ -113,7 +113,7 @@ export default function Index() {
                     先生
                   </label>
                 </div>
-                <div className="form-check ms-2">
+                <div className="form-check ms-3">
                   <input
                     className="form-check-input"
                     type="radio"
