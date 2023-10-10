@@ -53,8 +53,8 @@ export default function Register2() {
     try {
       const response = await axios({
         method: "POST",
-        url:"http://localhost:3002/api/user",
-        data:formData,
+        url: process.env.API_SERVER + "/api/user/upload2",
+        data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -80,8 +80,6 @@ export default function Register2() {
   const [isFilePicked, setIsFilePicked] = useState(false);
   // 預覽圖片
   const [preview, setPreview] = useState("");
-  // server上的圖片網址
-  const [imgServerUrl, setImgServerUrl] = useState("");
 
   // 當選擇檔案更動時建立預覽圖
   useEffect(() => {
@@ -117,18 +115,22 @@ export default function Register2() {
 
     // 對照server上的檔案名稱 req.files.avatar
     formData.append("user_img", selectedFile);
+    formData.append("user", user);
 
     fetch(
-      "http://localhost:3002/api/user/upload2", //server url
+      process.env.API_SERVER + "/api/user/upload2", //server url
       {
         method: "POST",
         body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     )
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl("http://localhost:3002/api/user/upload2");
+        setImgServerUrl(process.env.API_SERVER + "/api/user/upload")
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -185,7 +187,10 @@ export default function Register2() {
                   <input
                     className="upload_input"
                     type="file"
-                    onChange={changeHandler}
+                    onChange={(event) => {
+                    onChange(event.target.files[0]);
+                  }}
+                    {...register("user_img")}
                   />
                   <span className="fs-5">➕</span>
                 </label>
@@ -402,8 +407,8 @@ export default function Register2() {
               <button
                 type="submit"
                 className="btn btn-big fs18b"
-                onClick={handleSubmission(onSubmit)}>
-                註冊
+                // onClick={handleSubmission(onSubmit)}
+                >註冊
               </button>
               {/* </Link> */}
             </div>
