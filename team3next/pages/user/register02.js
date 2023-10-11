@@ -8,14 +8,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function Register2() {
-  const [user, setUser] = useState({
-    user_name: "",
-    nickname: "",
-    user_email: "",
-    user_password: "",
-    user_phone: "",
-  });
-
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -23,8 +15,7 @@ export default function Register2() {
   const {
     register,
     handleSubmit,
-    watch,
-    unregister,
+    getValues,
     formState: { errors },
   } = useForm();
   console.log(errors);
@@ -40,11 +31,6 @@ export default function Register2() {
     },
   });
 
-  //欄位共用的事件函式
-  const handleFieldChange = (e) => {
-    const newUser = { ...user, [e.target.name]: e.target.value };
-    setUser(newUser);
-  };
 
   const onSubmit = async (data) => {
     // 從 "data" 中移除 "password2"
@@ -53,7 +39,7 @@ export default function Register2() {
     try {
       const response = await axios({
         method: "POST",
-        url: process.env.API_SERVER + "/api/user/upload2",
+        url: process.env.API_SERVER + "/api/user/upload",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -73,13 +59,13 @@ export default function Register2() {
     }
   };
 
-  ///圖片上傳
+  //圖片上傳
   // 選擇的檔案
   const [selectedFile, setSelectedFile] = useState(null);
-  // 是否有檔案被挑選
-  const [isFilePicked, setIsFilePicked] = useState(false);
   // 預覽圖片
   const [preview, setPreview] = useState("");
+  // server上的圖片網址
+  const [imgServerUrl, setImgServerUrl] = useState("");
 
   // 當選擇檔案更動時建立預覽圖
   useEffect(() => {
@@ -112,16 +98,17 @@ export default function Register2() {
 
   const handleSubmission = () => {
     const formData = new FormData();
+    console.log(formData);
 
     // 對照server上的檔案名稱 req.files.avatar
     formData.append("user_img", selectedFile);
-    formData.append("user", user);
 
     fetch(
-      process.env.API_SERVER + "/api/user/upload2", //server url
+      process.env.API_SERVER + "/api/user/upload", //server url
       {
         method: "POST",
         body: formData,
+        url: process.env.API_SERVER + "/api/user/upload",
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -130,7 +117,7 @@ export default function Register2() {
       .then((response) => response.json())
       .then((result) => {
         console.log("Success:", result);
-        setImgServerUrl(process.env.API_SERVER + "/api/user/upload")
+        setImgServerUrl(process.env.API_SERVER + "/api/user/upload");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -165,7 +152,7 @@ export default function Register2() {
           {/* 輸入區 */}
           <form
             className="mt-4"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(handleSubmission)}
             encType="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
@@ -187,10 +174,8 @@ export default function Register2() {
                   <input
                     className="upload_input"
                     type="file"
-                    onChange={(event) => {
-                    onChange(event.target.files[0]);
-                  }}
-                    {...register("user_img")}
+                    onChange={changeHandler}
+                    {...register("user_img", { onChange: { changeHandler } })}
                   />
                   <span className="fs-5">➕</span>
                 </label>
@@ -216,8 +201,6 @@ export default function Register2() {
                 id="name"
                 placeholder="請輸入姓名"
                 {...register("user_name", { required: "請輸入姓名" })}
-                value={user.user_name}
-                onChange={handleFieldChange}
               />
             </div>
             <div className="mb-3">
@@ -238,8 +221,6 @@ export default function Register2() {
                 id="nikename"
                 placeholder="請輸入暱稱"
                 {...register("nickname", { required: "請輸入暱稱" })}
-                value={user.nickname}
-                onChange={handleFieldChange}
               />
             </div>
             <div className="mb-3">
@@ -262,8 +243,6 @@ export default function Register2() {
                 {...register("user_email", {
                   required: "請輸入E-mail",
                 })}
-                value={user.user_email}
-                onChange={handleFieldChange}
               />
             </div>
             {/* 密碼區 */}
@@ -295,8 +274,6 @@ export default function Register2() {
                     message: "請不要超過12碼",
                   },
                 })}
-                value={user.user_password}
-                onChange={handleFieldChange}
               />
               <i
                 type="button"
@@ -336,8 +313,10 @@ export default function Register2() {
                     value: 12,
                     message: "請不要超過12碼",
                   },
-                  validate: (value) =>
-                    value === user.user_password || "與上欄輸入密碼不相同",
+                  validate: (value) => {
+                    const { user_password } = getValues();
+                    return user_password === value || "與上欄輸入密碼不相同!";
+                  },
                 })}
               />
               <i
@@ -375,8 +354,6 @@ export default function Register2() {
                     message: "請輸入09開頭共10碼的手機號碼",
                   },
                 })}
-                value={user.user_phone}
-                onChange={handleFieldChange}
               />
             </div>
             <div className="mb-3">
@@ -392,9 +369,6 @@ export default function Register2() {
                 rows="3"
                 name="self_intr"
                 placeholder="寫下自我的話，100字內"
-                onChange={(e) => {
-                  setTextareaText(e.target.value);
-                }}
                 {...register("self_intr", {
                   maxLength: {
                     value: 100,
@@ -404,11 +378,8 @@ export default function Register2() {
             </div>
             <div className="d-flex justify-content-end mt-5">
               {/* <Link href=""> */}
-              <button
-                type="submit"
-                className="btn btn-big fs18b"
-                // onClick={handleSubmission(onSubmit)}
-                >註冊
+              <button type="submit" className="btn btn-big fs18b">
+                註冊
               </button>
               {/* </Link> */}
             </div>

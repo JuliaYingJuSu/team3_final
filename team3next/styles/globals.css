@@ -421,6 +421,14 @@ input[type="text"] {
   padding-left: 12px;
 }
 
+input[type="password"] {
+  padding-left: 12px;
+}
+
+textarea{
+  padding-left: 12px;
+}
+
 .selector {
   height: 42px;
   border: 1px solid #d9d9d9;

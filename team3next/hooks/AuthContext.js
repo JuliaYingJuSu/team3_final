@@ -17,20 +17,21 @@ export const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState(noLoginState);
   console.log({ auth });
 
-    // sweetalert設定
-    const swal = Swal.mixin({
-      showConfirmButton: false,
-      timer: 1000,
-      timerProgressBar: true,
-      didOpen: (swal) => {
-        swal.addEventListener("mouseenter", Swal.stopTimer);
-        swal.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
+  // sweetalert設定
+  const swal = Swal.mixin({
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: (swal) => {
+      swal.addEventListener("mouseenter", Swal.stopTimer);
+      swal.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
 
   //登出
   const logout = () => {
     localStorage.removeItem("auth");
+    localStorage.removeItem("cart");
     setAuth(noLoginState);
     swal.fire({
       title: "登出成功",
@@ -55,4 +56,3 @@ export const AuthContextProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

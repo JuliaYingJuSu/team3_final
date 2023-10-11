@@ -24,7 +24,8 @@ export default function MyNavbar() {
       <header>
         <nav
           className="sticky-top bg-white navbar navbar-expand-lg"
-          style={{ height: 150 }}>
+          style={{ height: 150 }}
+        >
           <div className="container">
             {/* Logo區塊 */}
             <Link href="/" className="navbar-brand">
@@ -38,7 +39,8 @@ export default function MyNavbar() {
               data-bs-target="#navbarNav"
               aria-controls="navbarNav"
               aria-expanded="false"
-              aria-label="Toggle navigation">
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
@@ -55,7 +57,8 @@ export default function MyNavbar() {
                           className={`nav-link fs-5 text-dark ${
                             pn === v.href ? "active" : ""
                           }`}
-                          href={v.href}>
+                          href={v.href}
+                        >
                           {v.name}
                         </Link>
                       </li>
@@ -72,10 +75,12 @@ export default function MyNavbar() {
                           type="button"
                           className="dropdown nav-link text-dark"
                           data-bs-toggle="dropdown"
-                          aria-expanded="false">
+                          aria-expanded="false"
+                        >
                           <span
                             className="icon-member-black"
-                            style={{ fontSize: 30 }}></span>
+                            style={{ fontSize: 30 }}
+                          ></span>
                         </div>
                         <ul className="dropdown-menu text-center dropdown-menu-lg-end">
                           <li>
@@ -95,13 +100,14 @@ export default function MyNavbar() {
                               )}
                             </span>
                             <p className="mt-2 fs-5 fw-bolder">
-                              {auth.nickname}
+                              {auth && auth.nickname}
                             </p>
                           </li>
                           <li>
                             <Link
                               className="dropdown-item fs18b"
-                              href="/user/:user_id">
+                              href="/user/:user_id"
+                            >
                               會員資訊
                             </Link>
                           </li>
@@ -115,7 +121,8 @@ export default function MyNavbar() {
                                 e.stopPropagation();
                                 e.preventDefault();
                                 logout();
-                              }}>
+                              }}
+                            >
                               登出
                             </button>
                           </li>
@@ -127,14 +134,16 @@ export default function MyNavbar() {
                           type="button"
                           className="dropdown nav-link text-dark"
                           data-bs-toggle="dropdown"
-                          aria-expanded="false">
+                          aria-expanded="false"
+                        >
                           <span className="icon-member"></span>
                         </div>
                         <ul className="dropdown-menu text-center dropdown-menu-lg-end">
                           <li>
                             <Link
                               className="dropdown-item fs18b"
-                              href="/user/login">
+                              href="/user/login"
+                            >
                               註冊/登入
                             </Link>
                           </li>
@@ -151,7 +160,8 @@ export default function MyNavbar() {
                       data-bs-target="#offcanvasRight"
                       aria-controls="offcanvasRight"
                       href="#offcanvasRight"
-                      style={{ fontSize: 30 }}></Link>
+                      style={{ fontSize: 30 }}
+                    ></Link>
                   </li>
                   <li></li>
                   <li></li>
@@ -166,7 +176,8 @@ export default function MyNavbar() {
         tabindex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
-        style={{ backgroundColor: "#FBF9EF" }}>
+        style={{ backgroundColor: "#FBF9EF" }}
+      >
         <div className="offcanvas-header">
           <h5 className="offcanvas-title ms-4" id="offcanvasRightLabel">
             購物車
@@ -175,7 +186,8 @@ export default function MyNavbar() {
             type="button"
             className="btn-close"
             data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
+            aria-label="Close"
+          ></button>
         </div>
         <div className="offcanvas-body" style={{ backgroundColor: "#FBF9EF" }}>
           <NavCart />

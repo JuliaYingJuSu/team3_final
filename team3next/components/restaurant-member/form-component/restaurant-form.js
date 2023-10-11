@@ -21,17 +21,31 @@ export default function FormLayout({
   } = methods;
   console.log(errors);
   const onSubmit = async (data) => {
-    console.log(data);
+    // 一个formdata对象
+    const formData = new FormData();
+  
+    // 将表单的name加到formdata,因为rhf的data是obj，可以这么做
+    for(let key in data){
+      formData.append(key,data[key])
+    }
+    // 添加文件到 FormData，其中 "photo" 是栏位名称
+    data.photo.forEach((file) => {
+      formData.append("photo", file.originFileObj);
+    });
+        console.log(data.photo[0].originFileObj)
+  
     try {
       const response = await axios.post(
         "http://localhost:3002/api/restaurant/member-register",
-        data
+        formData,
+    
       );
       console.log("Server Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
     }
   };
+  
 
   return (
     <>

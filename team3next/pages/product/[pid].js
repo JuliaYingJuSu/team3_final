@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CarouselProduct from "@/components/layout/default-layout/carousel-product";
 import { useRouter } from "next/router";
+// import handleAddCart from "@/components/product/add-cart";
 
 export default function productDetail() {
   const [data, setData] = useState({
@@ -27,15 +28,21 @@ export default function productDetail() {
     product_img: [],
     showed_1st: "",
   });
-
+  const [wish, setWish] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [recommend, setRecommend] = useState([]);
+  console.log(recommend);
   const router = useRouter();
 
-  const [wish, setWish] = useState(false);
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
+      const uid = "10" || "";
+      // const uid = localStorage.getItem()
+
       console.log(pid);
-      fetch(`http://localhost:3002/product/${pid}`)
+
+      fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
           console.log(r);
@@ -45,6 +52,25 @@ export default function productDetail() {
     }
   }, [router.isReady]);
 
+  useEffect(() => {
+    if (data.rows) {
+      fetch(`http://localhost:3002/api/product/product-recommend`, {
+        method: "POST",
+        body: JSON.stringify({
+          tid: data.rows.product_type_list_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r);
+          setRecommend(r.rowsRecommend);
+        });
+    }
+  }, [data]);
+
   // data.rows && console.log(data.rows.specification);
   // console.log(data.rows?.specification.split("\\n"));
   // const specSplit = data.rows?.specification.replace("\\n", "<br />");
@@ -53,6 +79,7 @@ export default function productDetail() {
     return <p>{v}</p>;
   });
 
+  //增刪收藏
   const handleWish = () => {
     if (router.isReady) {
       //   // const pathName = router.pathname; // /product/[pid]
@@ -62,7 +89,7 @@ export default function productDetail() {
       // }
 
       if (!wish) {
-        fetch("http://localhost:3002/product/add-wish", {
+        fetch("http://localhost:3002/api/product/add-wish", {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,
@@ -84,8 +111,7 @@ export default function productDetail() {
           });
       }
       if (wish) {
-        console.log("1111110");
-        fetch("http://localhost:3002/product/del-wish", {
+        fetch("http://localhost:3002/api/product/del-wish", {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,
@@ -115,6 +141,75 @@ export default function productDetail() {
           });
       }
     }
+  };
+
+  //加入購物車
+  const handleAddCart = () => {
+    // if (router.isReady) {
+    //   const pathName = router.query.pid;
+
+    //1如果有登入
+    if (localStorage.getItem("auth")) {
+      //2如果商品已經設定到data了(防useEffect錯)
+      if (data.rows.product_id) {
+        //3如果localStorage已有購物車資料
+        if (localStorage.getItem("cart")) {
+          //拿出來找找看裡面有沒有目前頁面商品
+          let cart = JSON.parse(localStorage.getItem("cart"));
+          console.log(cart);
+
+          const existCart = cart.findIndex(
+            (v) => v.product_id == router.query.pid
+          );
+          //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
+          if (existCart >= 0) {
+            const updateQuantity =
+              parseInt(cart[existCart].quantity) + quantity;
+            console.log(updateQuantity);
+
+            const cartUpdateIndex = {
+              ...cart[existCart],
+              quantity: updateQuantity,
+            };
+            cart[existCart] = cartUpdateIndex;
+            localStorage.setItem("cart", JSON.stringify(cart));
+          } else {
+            //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
+            cart.unshift({
+              product_id: data.rows.product_id,
+              product_name: data.rows.product_name,
+              price: data.rows.price,
+              product_img: data.rowsImgs[0].product_img,
+              quantity: quantity,
+            });
+            localStorage.setItem("cart", JSON.stringify(cart));
+          }
+        } else {
+          //3如果localStorage沒有購物車資料 >>> setItem
+          const cart = [
+            {
+              product_id: data.rows.product_id,
+              product_name: data.rows.product_name,
+              price: data.rows.price,
+              product_img: data.rowsImgs[0].product_img,
+              quantity: quantity,
+            },
+          ];
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          //????? console.log(cart) >>> {} rather than [{}]
+          // const cart = [
+          //   JSON.stringify({
+          //     product_id: data.rows.product_id,
+          //     product_img: data.rowsImgs[0].product_img,
+          //     quantity: quantity,
+          //   }),
+          // ];
+          // localStorage.setItem("cart", cart);
+        }
+      }
+    }
+    // }
   };
 
   return (
@@ -283,7 +378,6 @@ export default function productDetail() {
           <div className={styles.productMain + " row"}>
             <div
               className={
-                styles.test +
                 " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
@@ -310,7 +404,6 @@ export default function productDetail() {
             </div>
             <div
               className={
-                styles.context +
                 " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
               }
             >
@@ -350,17 +443,42 @@ export default function productDetail() {
                     className={" brounded"}
                     size="sm"
                     aria-label="Default select example"
+                    onChange={(e) => {
+                      setQuantity(parseInt(e.target.value));
+                      // console.log(quantity); //setQuantity為異部處理所以在這console會慢一拍
+                    }}
+                    value={quantity}
                   >
-                    <option>請選擇數量</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    {Array(10)
+                      .fill(1)
+                      .map((v, i) => {
+                        return <option value={i + 1}>{i + 1}</option>;
+                      })}
                   </Form.Select>
-                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
+                  <button
+                    className="btn btn-big d-flex justify-content-center align-items-center w-100"
+                    onClick={
+                      // <handleAddCart />
+                      () => {
+                        handleAddCart();
+                      }
+                    }
+                  >
                     加入購物車
                   </button>
-                  <button className="btn btn-big d-flex justify-content-center align-items-center w-100">
-                    立即購買
+                  <button
+                    className="btn btn-big d-flex justify-content-center w-100 overflow-hidden"
+                    onClick={() => {
+                      handleAddCart();
+                      // router.push("/cart");
+                    }}
+                  >
+                    <Link
+                      href="/cart"
+                      className="btn-big w-100 h-100 d-flex justify-content-center align-items-center"
+                    >
+                      立即購買
+                    </Link>
                   </button>
                 </form>
               </div>
@@ -412,9 +530,9 @@ export default function productDetail() {
                 className="mySwiper"
                 style={{ "--swiper-navigation-color": "#3f4c5c" }}
               >
-                {Array(5)
-                  .fill(1)
-                  .map((v, i) => {
+                {recommend &&
+                  recommend.map((v, i) => {
+                    console.log(v);
                     return (
                       <SwiperSlide key={i}>
                         {
@@ -424,17 +542,18 @@ export default function productDetail() {
                           >
                             <div>
                               <img
-                                src="/images/product/螢幕擷取畫面 2023-09-26 101926.png"
+                                src={"/images/product/" + v.product_img}
                                 alt=""
                                 className="object-fit-cover w-100 h-100"
                               />
                             </div>
                             <div>
-                              <span>品牌名 產品名</span>
+                              <span>{v.product_name}</span>
                             </div>
                             <div>
-                              <span>NT$ 1000</span>{" "}
-                              <span className="icon-cark"></span>
+                              <span>NT$</span>
+                              <span>{v.price}</span>
+                              {/* <span className="icon-cark"></span> */}
                             </div>
                           </div>
                         }

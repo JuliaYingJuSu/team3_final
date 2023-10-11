@@ -1,12 +1,62 @@
-import React from "react";
-import styles from "./order-d.module.css";
+import { useState, useEffect } from "react";
+import styles from "../order-d.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import ProductComment from "@/components/cart/product-comment";
+import { useRouter } from "next/router";
 
 export default function OrderComplete() {
+  const [data, setData] = useState([]);
+  const router = useRouter();
+  console.log(data);
+  // const order_id = data.order_id;
+  // const order_id = "4354";
+  useEffect(() => {
+    if (router.isReady) {
+      const oid = router.query.order_id;
+
+      fetch(`http://localhost:3002/cart/order-d/${oid}`, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: {
+        //   order_id: "3454",
+        // },
+      })
+        .then((r) => r.json())
+        .then((obj) => {
+          setData(obj);
+          console.log(obj);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+    // router好了, 就再重新run 一次
+  }, [router.isReady]);
+
+  // 計算訂單總件數
+  // 使用物件來統計相同 order_id 的 order_quantity 總和
+  // const orderTotals = data.reduce((accumulator, currentOrder) => {
+  //   const { order_id, order_quantity } = currentOrder;
+
+  // 如果物件中已經有相同 order_id，則將 order_quantity 加總
+  //   accumulator[order_id] = (accumulator[order_id] || 0) + order_quantity;
+
+  //   return accumulator;
+  // }, {});
+
+  const orderTotals = Array.isArray(data)
+    ? data.reduce((accumulator, currentOrder) => {
+        const { order_id, order_quantity } = currentOrder;
+        accumulator[order_id] = (accumulator[order_id] || 0) + order_quantity;
+        return accumulator;
+      }, {})
+    : {};
+
   return (
     <>
       <MyNavbar />
@@ -170,8 +220,10 @@ export default function OrderComplete() {
 
       <div className="container d-flex flex-column my-5">
         <div className={styles.secondBox + " text-center py-4"}>
-          <p className="m-0">合計：NT$320</p>
-          <p className="m-0 pt-2">購物車(1件)</p>
+          <p className="m-0">
+            合計：NT${data.result && data.result[0].order_amount}
+          </p>
+          <p className="m-0 pt-2">購物車(4件)</p>
         </div>
 
         {/* 訂單細項 */}
@@ -194,28 +246,41 @@ export default function OrderComplete() {
               <th></th>
             </tr>
           </thead>
+
           <tbody>
-            <tr className={styles.productDetail + " container"}>
-              <td className={styles.imgWidth + " w-20"}>
-                <img
-                  className="img-fluid rounded-1"
-                  src="https://rs.joo.com.tw/website/uploads_product/website_1060/P0106000282607_3_1674263.jpg?_4431"
-                  alt=""
-                />
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>
-                【檸檬大叔】100%純檸檬磚(12入/盒)
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>
-                <span className="icon-minus me-3"></span>1
-                <span className="icon-plus ms-3"></span>
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>NT$320</td>
-              <td className={styles.cutBorder + " align-middle"}>NT$320</td>
-              <td className={styles.cutBorder + " align-middle"}>
-                {<ProductComment />}
-              </td>
-            </tr>
+            {data.result?.map((v, i) => {
+              console.log(v);
+              return (
+                <>
+                  <tr className={styles.productDetail + " container"} key={i}>
+                    <td className={styles.imgWidth + " w-20"}>
+                      <img
+                        className="img-fluid rounded-1"
+                        src={"images/product/" + "42.jpg"}
+                        alt=""
+                      />
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {v.product_name}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {/* <span className="icon-minus me-3"></span> */}
+                      {v.order_quantity}
+                      {/* <span className="icon-plus ms-3"></span> */}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {v.price}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {v.price * v.order_quantity}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {<ProductComment />}
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </table>
 
@@ -235,19 +300,19 @@ export default function OrderComplete() {
                 訂單號碼：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                2023071411125
+                {data.result && data.result[0].order_id}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 訂單郵件：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                fdfmnnk@gmail.com
+                {data.result && data.result[0].user_email}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 訂單日期：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                2023-09-08 10:38PM
+                {data.result && data.result[0].order_date}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 訂單狀態：
@@ -269,13 +334,13 @@ export default function OrderComplete() {
                 姓名：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                田嘉瑞
+                {data.result && data.result[0].user_name}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 電話號碼：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                0972981204
+                {data.result && data.result[0].user_phone}
               </div>
               <div className="h-100 col-xxl-12 py-1"></div>
               {/* <div className="col-xxl-12 py-1"></div> */}
@@ -300,7 +365,7 @@ export default function OrderComplete() {
                 配送地址：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                松山區興安街
+                {data.result && data.result[0].delivery_address}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 收件人中文全名：
@@ -314,6 +379,7 @@ export default function OrderComplete() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

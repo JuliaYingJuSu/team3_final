@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import FollowButton from "../post/followbutton";
+import FollowButton from "./followbutton";
 import Like from "./like";
 import Saved from "./saved";
+import { Carousel } from "react-bootstrap";
 
-export default function PostModal(
-  {
+export default function PostModal({
   post_id,
   post_title,
   post_content,
@@ -17,8 +17,7 @@ export default function PostModal(
   user_id,
   nickname,
   user_img,
-  }
-) {
+}) {
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
   // 創建日期對象
@@ -31,7 +30,7 @@ export default function PostModal(
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
-  
+
   const [messageVal, setMessageVal] = useState({ message: "" });
   const [errors, setErrors] = useState({});
 
@@ -59,16 +58,29 @@ export default function PostModal(
     }
   };
 
+  // 將所有的 post_image_name 放入一個數組中
+  const imageNames = Array.isArray(post_image_name)
+    ? post_image_name
+    : [post_image_name];
+    console.log(imageNames);
+
+  // 初始化輪播的 activeIndex
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 處理輪播的下一張圖片
+  const handleSelect = (selectedIndex) => {
+    setActiveIndex(selectedIndex);
+  };
+
   return (
     <>
-    
-      <div 
+      <div
         className="modal fade"
-        id="exampleModal"
+        id={"exampleModal"+post_id}
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby={"exampleModalLabel"+post_id}
         aria-hidden="true"
-        key={post_id}
+        // key={post_id}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -79,34 +91,26 @@ export default function PostModal(
                     <Link href="/user/user-my-article-i">
                       <img
                         className="rounded-circle headshot-sm img-thumbnail"
-                        src={user_img} 
+                        src={user_img}
                       ></img>
                     </Link>
                   </div>
                   <p className="middle me-2">
                     <a className="fs16b pt-3 text-dark" href="#">
-                    {nickname}
+                      {nickname}
                     </a>
                   </p>
                   <FollowButton />
-                  {/* <button
-                    className="btn btn-little ms-auto"
-                    onClick={() => {
-                      setFollow(!follow);
-                    }}
-                  >
-                    {follow ? '追蹤' : '追蹤中'}
-                  </button> */}
                 </div>
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
                     <a className="me-1 restaurant" href="#">
-                    {restaurant_name}
+                      {restaurant_name}
                     </a>
                   </p>
                   <p className="me-1">
                     <a href="#" className="text-dark">
-                    {restaurant_city}
+                      {restaurant_city}
                     </a>
                   </p>
                   {/* <p className="me-1">
@@ -124,8 +128,8 @@ export default function PostModal(
               ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
-            {/* 使用 Carousel 顯示多個圖片 */}
-            {/* <Carousel
+              {/* 使用 Carousel 顯示多個圖片 */}
+              <Carousel
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
@@ -139,8 +143,8 @@ export default function PostModal(
                     />
                   </Carousel.Item>
                 ))}
-              </Carousel> */}
-              <div id="carouselExampleIndicators" className="carousel slide">
+              </Carousel>
+              {/* <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
                   <button
                     type="button"
@@ -179,21 +183,21 @@ export default function PostModal(
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="./images/post/cincin2.jpg"
+                      src={`/images/post/${post_image_name}`}
                       className="d-block  object-fit-cover"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="./images/post/cincin3.jpg"
+                      src={`/images/post/${post_image_name}`}
                       className="d-block  object-fit-cover"
                       alt="..."
                     />
                   </div>
                   <div className="carousel-item">
                     <img
-                      src="./images/post/cincin4.jpg"
+                      src={`/images/post/${post_image_name}`}
                       className="d-block  object-fit-cover"
                       alt="..."
                     />
@@ -223,47 +227,37 @@ export default function PostModal(
                   ></span>
                   <span className="visually-hidden">Next</span>
                 </button>
-              </div>
+              </div> */}
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
                 <Like />
-                {/* <button className="btn btn-sm btn-i"
-                onClick={() => {
-                      setLike(!like);
-                    }}
-                >
-                  <i className={like ? "icon-heart-fill" : "icon-heart"}></i>
-                  
-                </button> */}
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <a className="btn btn-sm btn-i" href="#message">
                   <i className="fa-regular fa-comment"></i>
                 </a>
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <Saved />
-                {/* <button className="btn btn-sm btn-i" onClick={() => {
-                      setSaved(!saved);
-                    }}>
-                  <i className={saved ? "icon-mark-fill" : "icon-mark"}></i>
-                </button> */}
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
             </div>
             <div className="ms-3" style={{ width: 470 }}>
-              <div className="mb-3">
-              {post_content}
-              </div>
+              <div className="mb-3">{post_content}</div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
-                <a href="#" className="ms-2" style={{ color: "#666666" }} key={index} >
-                  {foodTag}
-                </a>
-              ))}
+                  <a
+                    href="#"
+                    className="ms-2"
+                    style={{ color: "#666666" }}
+                    key={index}
+                  >
+                    {foodTag}
+                  </a>
+                ))}
               </p>
               <p className="fs12 mb-2">{formattedDate}</p>
             </div>
@@ -340,5 +334,4 @@ export default function PostModal(
       </style>
     </>
   );
-
 }

@@ -4,6 +4,8 @@ import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import MyArticle from "../post/my-article";
 import Swal from "sweetalert2";
+import AuthContext from "@/hooks/AuthContext";
+import { useContext } from "react";
 
 export default function UserPictureCard() {
   const swalButtons = Swal.mixin({
@@ -13,7 +15,7 @@ export default function UserPictureCard() {
     },
     buttonsStyling: false,
   });
-
+  const {auth} = useContext(AuthContext)
   return (
     <>
       <div className="position-relative">

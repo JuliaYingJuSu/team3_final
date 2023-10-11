@@ -2,6 +2,11 @@ import React from "react";
 import { useState } from "react";
 
 export default function Banner() {
+  const [selectedCity, setSelectedCity] = useState("");
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.innerText); 
+  };
+  console.log(selectedCity);
   
   return (
     <>
@@ -15,23 +20,20 @@ export default function Banner() {
             aria-expanded="false"
           >
             <span className="icon-map fs-5 pe-2 fw-bold"></span>
-            不分地區
+            {selectedCity || '不分地區'}
           </button>
           <ul className="dropdown-menu">
-            <li>
-              <a className="dropdown-item" href="/taipei" >
+            <li className="dropdown-item"  onClick={handleCityChange}>        
                 台北市
-              </a>
             </li>
-            <li>
-              <a className="dropdown-item" href="/newtaipei" >
+            <li className="dropdown-item"  onClick={handleCityChange}>
+              
                 新北市
-              </a>
             </li>
-            <li>
-              <a className="dropdown-item" href="/keelung" >
+            <li className="dropdown-item"  onClick={handleCityChange}>
+              
                 基隆市
-              </a>
+              
             </li>
           </ul>
         </div>

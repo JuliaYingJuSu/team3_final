@@ -2,8 +2,11 @@ import Link from "next/link";
 import React from "react";
 import Like from "./like";
 import Saved from "./saved";
+import AuthContext from "@/hooks/AuthContext";
+import { useContext } from "react";
 
 export default function MyArticle() {
+  const { auth } = useContext(AuthContext);
   return (
     <>
       <div
@@ -11,8 +14,7 @@ export default function MyArticle() {
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -20,15 +22,20 @@ export default function MyArticle() {
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
                     <Link href="/user/user-my-article-i">
-                      <img
-                        className="rounded-circle headshot-sm img-thumbnail"
-                        src="/images/logo.png"
-                      ></img>
+                      {auth.user_img ? (
+                        <img
+                          className="rounded-circle headshot-sm img-thumbnail"
+                          src={auth.user_img}></img>
+                      ) : (
+                        <img
+                          className="rounded-circle headshot-sm img-thumbnail"
+                          src="/images/logo.png"></img>
+                      )}
                     </Link>
                   </div>
                   <p className="middle me-2">
                     <a className="fs16b pt-3 text-dark" href="#">
-                      會員暱稱
+                      {auth.nickname}
                     </a>
                   </p>
                   {/* <button className="btn btn-little ms-auto">追蹤</button> */}
@@ -55,8 +62,7 @@ export default function MyArticle() {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+                aria-label="Close"></button>
             </div>
             <div className="modal-body">
               <div id="carouselExampleIndicators" className="carousel slide">
@@ -67,26 +73,22 @@ export default function MyArticle() {
                     data-bs-slide-to="0"
                     className="active"
                     aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
+                    aria-label="Slide 1"></button>
                   <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
+                    aria-label="Slide 2"></button>
                   <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button>
+                    aria-label="Slide 3"></button>
                   <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="3"
-                    aria-label="Slide 4"
-                  ></button>
+                    aria-label="Slide 4"></button>
                 </div>
                 <div className="carousel-inner image-radius">
                   <div className="carousel-item active">
@@ -122,24 +124,20 @@ export default function MyArticle() {
                   className="carousel-control-prev"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide="prev"
-                >
+                  data-bs-slide="prev">
                   <span
                     className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
+                    aria-hidden="true"></span>
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button
                   className="carousel-control-next"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide="next"
-                >
+                  data-bs-slide="next">
                   <span
                     className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
+                    aria-hidden="true"></span>
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
@@ -196,8 +194,7 @@ export default function MyArticle() {
                 <Link href="/user/user-my-article-i">
                   <img
                     className="rounded-circle headshot-sm img-thumbnail"
-                    src="/images/logo.png"
-                  ></img>
+                    src="/images/logo.png"></img>
                 </Link>
               </div>
               <div className="me-auto">
@@ -223,8 +220,7 @@ export default function MyArticle() {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                id="button-addon2"
-              >
+                id="button-addon2">
                 發送
               </button>
             </div>
