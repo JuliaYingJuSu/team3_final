@@ -11,24 +11,31 @@ import axios from "axios";
 export default function index() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
+  const [order, setOrder] = useState("new");
+  // const [inputText, setInputText] = useState("");
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  const [typeList, setTypeList] = useState("");
 
   useEffect(() => {
     // axios.get("");
 
-    fetch("http://localhost:3002/product", {
+    fetch("http://localhost:3002/api/product", {
       method: "POST",
       body: JSON.stringify({
         // uid: localStorage.getItem()||0,
         uid: 10,
+        order: order,
+        search: search,
+        type: type,
+        typeList: typeList,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((r) => {
-        console.log(r);
         const a = r.json();
-        console.log(a);
         return a;
       })
       //then的第一次:接收到的r >>> fetch的結果(Response {type: 'cors', url: 'http://localhost:3002/product', redirected: false, status: 200, ok: true, …})
@@ -37,16 +44,81 @@ export default function index() {
 
       //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
       .then((data) => {
-        console.log(data);
-        setData(data.rows);
+        setData(data);
 
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
-          console.log(wishList);
           setWish(wishList);
         }
       });
-  }, []);
+  }, [order, search, typeList]);
+
+  // const handleOrder = (e) => {
+  //   setOrder(e.target.value);
+  //   fetch();
+  // };
+
+  const handleWish = (product_id) => {
+    if (!wish.includes(product_id)) {
+      console.log(product_id);
+      fetch("http://localhost:3002/api/product/add-wish", {
+        method: "POST",
+        body: JSON.stringify({
+          pid: product_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
+        // .then((r) => {
+        //   console.log(r); //defined
+        // })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r); //true
+          if (r) {
+            location.reload();
+          }
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+    if (wish.includes(product_id)) {
+      fetch("http://localhost:3002/api/product/del-wish", {
+        method: "POST",
+        body: JSON.stringify({
+          pid: product_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          //#region (有無"Content-Type": "application/json"與req.body的關聯)
+
+          //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
+
+          // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
+
+          //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
+
+          //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
+
+          //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
+          //#endregion
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r); //true
+          if (r) {
+            location.reload();
+          }
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  };
 
   return (
     <>
@@ -62,173 +134,50 @@ export default function index() {
                     全部商品
                   </button>
                 </Link>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type1"
-                  aria-expanded="false"
-                  aria-controls="type1"
-                >
-                  飲品/沖泡類{" "}
-                  <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type1">
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    茶類
-                  </button>
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    咖啡/咖啡豆
-                  </button>
-                  <button className={styles.typeListBtn + " btn"} type="button">
-                    果汁
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    醋/水果醋
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    酒類
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type2"
-                  aria-expanded="false"
-                  aria-controls="type2"
-                >
-                  烘焙食品/甜點{" "}
-                  <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type2">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    蛋糕/派
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    手工餅乾
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    麵包/吐司
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    奶酪/布丁/果凍
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type3"
-                  aria-expanded="false"
-                  aria-controls="type3"
-                >
-                  休閒零食 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type3">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    零食
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    糖果/巧克力
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    果醬/抹醬
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    果醬/抹醬
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    堅果/穀物
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type4"
-                  aria-expanded="false"
-                  aria-controls="type4"
-                >
-                  烹料料理 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type4">
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    熟食/冷藏、冷凍食品
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    米/麵條
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    調理包/料理包
-                  </button>
-                  <button
-                    className={styles.typeListBtn + " btn "}
-                    type="button"
-                  >
-                    調味料/醬料
-                  </button>
-                </div>
-                <button
-                  className="btn"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#type5"
-                  aria-expanded="false"
-                  aria-controls="type5"
-                >
-                  其他 <span className="fs-6 ms-2 icon-arrow-down"></span>
-                </button>
-                <div className="collapse" id="type5">
-                  <button
-                    className={styles.typeListBtn + " btn  "}
-                    type="button"
-                  >
-                    其他
-                  </button>
-                </div>
+
+                {/* -----------分類選單---------- */}
+                {data.rowsType &&
+                  data.rowsType.map((v, i) => {
+                    // console.log(v);
+                    return (
+                      <>
+                        <button
+                          className="btn"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target={"#type" + v.product_type_id}
+                          aria-expanded="false"
+                          aria-controls={"#type" + v.product_type_id}
+                        >
+                          {v.product_type_name}
+                          <span className="fs-6 ms-2 icon-arrow-down"></span>
+                        </button>
+                        <div
+                          className="collapse"
+                          id={"type" + v.product_type_id}
+                        >
+                          {data.rowsTypeList
+                            .filter(
+                              (list) =>
+                                list.product_type_id === v.product_type_id
+                            )
+                            .map((list) => {
+                              return (
+                                <button
+                                  className={styles.typeListBtn + " btn"}
+                                  type="button"
+                                  onClick={() => {
+                                    setTypeList(list.product_type_list_name);
+                                  }}
+                                >
+                                  {list.product_type_list_name}
+                                </button>
+                              );
+                            })}
+                        </div>
+                      </>
+                    );
+                  })}
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
@@ -621,27 +570,40 @@ export default function index() {
                 </div>
 
                 <select
+                  value={order}
+                  onChange={(e) => {
+                    setOrder(e.target.value);
+                  }}
                   class=" col-2 form-select form-select-sm"
                   aria-label="Small select example"
                 >
-                  <option selected>排序</option>
-                  <option value="1">最新商品</option>
-                  <option value="2">價格高到低</option>
-                  <option value="3">價格低到高</option>
+                  <option value="new">最新商品</option>
+                  <option value="pHigh">價格高到低</option>
+                  <option value="pLow">價格低到高</option>
                 </select>
                 <form class="col-auto d-flex " role="search">
                   <input
                     class="form-control me-1"
-                    type="search"
+                    type="text"
                     placeholder="搜尋"
                     aria-label="Search"
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
                   />
-                  <button class="btn icon-search" type="submit"></button>
+                  {/* <button
+                    class="btn icon-search"
+                    onClick={(e) => {
+                      setSearch(inputText);
+                    }}
+                  ></button> */}
+                  {/* type="submit" */}
                 </form>
               </div>
 
-              <div className="row mb-3 d-flex justify-content-center align-items-center">
-                {data?.map(
+              <div className="row mb-3 d-flex justify-content-start align-items-center">
+                {data.rows?.map(
                   (
                     {
                       product_id,
@@ -692,6 +654,10 @@ export default function index() {
                                   ? "icon-mark-fill"
                                   : "icon-mark" + " pt-1"
                               }
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                handleWish(product_id);
+                              }}
                             ></span>
                           </div>
                           <div

@@ -78,7 +78,7 @@ app.use((req, res, next) => {
 //路由放這邊
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
-app.use("/api/prouuct", productRouter);
+app.use("/api/product", productRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/restaurant", restaurantRouter);
 app.use("/api/cart", cartRouter);
