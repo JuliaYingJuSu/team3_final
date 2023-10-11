@@ -7,7 +7,7 @@ const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //我的文章---------------------
 userRouter.get("/my-article", async (req, res) => {
-  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=2
+  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=?
   `;
   console.log("sql");
   try {

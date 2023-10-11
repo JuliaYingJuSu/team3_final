@@ -30,15 +30,11 @@ export default function UserMyfrom() {
       <div className={"container mb-5" + " " + `${Styles.wbc}`}>
         <div className={Styles.wma}>XXX篇文章</div>
         <div className={Styles.imgArea}>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
-          <UserPictureCard></UserPictureCard>
+          {myaricle.length > 0 ? (
+            <UserPictureCard></UserPictureCard>
+          ) : (
+            "目前沒有文章喔!"
+          )}
         </div>
       </div>
       <Footer></Footer>
