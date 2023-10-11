@@ -4,6 +4,7 @@ import "dotenv/config";
 import multer from "multer"; //先載入套件
 
 import express from "express";
+import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import session from "express-session";
 import cors from "cors";
@@ -52,6 +53,8 @@ app.use(
 
 //將URL轉成JSON格式
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "20mb" }));
+// 提高payload上限
 app.use(express.json());
 
 //自訂的頂層 middlewares
@@ -78,13 +81,10 @@ app.use("/api/post", postRouter);
 app.use("/api/prouuct", productRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/restaurant", restaurantRouter);
-app.use("/api/cart",cartRouter)
-
-
-
+app.use("/api/cart", cartRouter);
 
 // GET - 得到所有會員資料
-app.get('/', async function (req, res) {
+app.get("/", async function (req, res) {
   const [users] = await db.query("SELECT * FROM user");
   res.json(users);
 });

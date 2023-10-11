@@ -12,6 +12,24 @@ export default function StepSecond() {
   } = useFormContext();
   return (
     <>
+      <div className="d-flex flex-column my-3">
+        <label className="fs18b" htmlFor="name">
+          商家名稱
+          <span className="ps-1" style={{ color: "red" }}>
+            *
+          </span>
+          <span className="ps-1" style={{ color: "red" }}>
+            {errors.name?.message}
+          </span>
+        </label>
+        <input
+          className="input-res"
+          type="text"
+          {...register("name")}
+          id="name"
+          placeholder=""
+        />
+      </div>
       <div className="d-flex flex-column mb-3">
         <label className="fs18b" htmlFor="address">
           商家地址
@@ -34,7 +52,7 @@ export default function StepSecond() {
           <input
             className="input-res w-100"
             type="text"
-            {...register("address", { required: "請輸入資料" })}
+            {...register("address")}
             id="password"
             placeholder="請輸入資料"
           />
@@ -53,7 +71,7 @@ export default function StepSecond() {
         <input
           className="input-res"
           type="text"
-          {...register("phone", { required: "請輸入資料" })}
+          {...register("phone")}
           id="phone"
         />
       </div>
