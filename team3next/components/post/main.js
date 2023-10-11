@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 export default function Main() {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
-  
+  const [selectedCity, setSelectedCity] = useState("");
+
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -37,10 +38,11 @@ export default function Main() {
             };
           }
         });
-
+        
         // 獲取每個 post_id 的第一張 post_image
         const dataWithFirstImages = Object.values(groupedData).map((item) => {
           // 如果有多個 post_image，選擇第一個
+          console.log(item.post_image_name)
           if (Array.isArray(item.post_image_name)) {
             item.post_image_name = item.post_image_name[0];
           }
@@ -53,7 +55,15 @@ export default function Main() {
         setData(dataWithFirstImages);
       })
       .catch((ex) => console.log(ex));
-  }, []);
+  },[]);
+  // useEffect(() => {
+  //   const filteredData = selectedCity
+  //     ? data.filter(
+  //         (city) => city.restaurant_city === selectedCity
+  //       ): data;
+  //   setData(filteredData);
+    
+  // });
 
   return (
     <>
@@ -71,8 +81,8 @@ export default function Main() {
               food_tag_names,
               user_id, // 增加 user_id 屬性
             }) => {
-              const nickname = userData[user_id].nickname ;
-              const user_img = userData[user_id].user_img ;
+              const nickname = userData[user_id].nickname;
+              const user_img = userData[user_id].user_img;
               return (
                 <Card
                   key={post_id}
