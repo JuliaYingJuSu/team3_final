@@ -156,6 +156,8 @@ export default function productDetail() {
         if (localStorage.getItem("cart")) {
           //拿出來找找看裡面有沒有目前頁面商品
           let cart = JSON.parse(localStorage.getItem("cart"));
+          console.log(cart);
+
           const existCart = cart.findIndex(
             (v) => v.product_id == router.query.pid
           );
@@ -163,6 +165,7 @@ export default function productDetail() {
           if (existCart >= 0) {
             const updateQuantity =
               parseInt(cart[existCart].quantity) + quantity;
+            console.log(updateQuantity);
 
             const cartUpdateIndex = {
               ...cart[existCart],
@@ -174,6 +177,8 @@ export default function productDetail() {
             //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
             cart.unshift({
               product_id: data.rows.product_id,
+              product_name: data.rows.product_name,
+              price: data.rows.price,
               product_img: data.rowsImgs[0].product_img,
               quantity: quantity,
             });
@@ -184,6 +189,8 @@ export default function productDetail() {
           const cart = [
             {
               product_id: data.rows.product_id,
+              product_name: data.rows.product_name,
+              price: data.rows.price,
               product_img: data.rowsImgs[0].product_img,
               quantity: quantity,
             },
@@ -437,7 +444,7 @@ export default function productDetail() {
                     size="sm"
                     aria-label="Default select example"
                     onChange={(e) => {
-                      setQuantity(e.target.value);
+                      setQuantity(parseInt(e.target.value));
                       // console.log(quantity); //setQuantity為異部處理所以在這console會慢一拍
                     }}
                     value={quantity}
