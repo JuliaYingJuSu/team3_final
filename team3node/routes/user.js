@@ -5,6 +5,20 @@ import upload from "../module/upload-imgs.js";
 const userRouter = express.Router();
 const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+//我的文章---------------------
+userRouter.get("/my-article", async (req, res) => {
+  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=2
+  `;
+  console.log("sql");
+  try {
+    const [rows] = await db.query(sql);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
 // POST - 上傳檔案用，使用multer
 // 注意: 使用nulter會和express-fileupload衝突，所以要先註解掉express-fileupload的使用再作測試
 // 在app.js中的app.use(fileUpload())

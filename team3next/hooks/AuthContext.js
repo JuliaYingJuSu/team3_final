@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }) => {
 
   //登出
   const logout = () => {
-    localStorage.removeItem("auth");
+    localStorage.removeItem("auth","cart");
     setAuth(noLoginState);
     swal.fire({
       title: "登出成功",
