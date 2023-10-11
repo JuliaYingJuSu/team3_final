@@ -17,7 +17,7 @@ export default function OrderComplete() {
     if (router.isReady) {
       const oid = router.query.order_id;
 
-      fetch(`http://localhost:3002/cart/order-d/${oid}`, {
+      fetch(`http://localhost:3002/api/cart/order-d/${oid}`, {
         method: "get",
         headers: {
           "Content-Type": "application/json",

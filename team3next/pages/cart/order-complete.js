@@ -9,7 +9,7 @@ export default function OrderComplete() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3002/cart/order-complete")
+    fetch("http://localhost:3002/api/cart/order-complete")
       .then((r) => r.json())
       .then((obj) => {
         setData(obj);
