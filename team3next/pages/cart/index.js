@@ -4,6 +4,56 @@ import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 
 export default function CartDetail() {
+  const [data, setData] = useState([]);
+
+  // 運送方式
+  const deliveryMethod = ["請選擇運送方式", "宅配", "7-11超商取貨"];
+  const [delivery, setDelivery] = useState(["請選擇運送方式"]);
+
+  // 更新商品數量
+  const updateCount = (data, product_id, value) => {
+    return data.map((v) => {
+      if (v.product_id === product_id)
+        return { ...v, cart_quantity: v.cart_quantity + value };
+      else return { ...v };
+    });
+  };
+
+  // 刪除商品
+  const remove = (data, product_id) => {
+    return data.filter((v) => {
+      v.product_id !== product_id;
+    });
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:3002/cart")
+      .then((r) => r.json())
+      .then((obj) => {
+        setData(obj);
+        console.log(obj);
+      });
+  }, []);
+  //
+  const delProduct = (id) => {
+    console.log("---------");
+    // const product_id = router.query.product_id;
+    console.log(id);
+    fetch(`http://localhost:3002/cart/${id}`, { method: "get" })
+      .then((r) => r.json())
+      .then((obj) => {
+        if (obj.success) {
+          location.reload();
+        } else {
+          alert("刪除發生錯誤");
+        }
+        // console.log(obj);
+      })
+      .catch((ex) => {
+        console.log(123);
+      });
+  };
+
   return (
     <>
       <MyNavbar />
@@ -50,34 +100,80 @@ export default function CartDetail() {
             </tr>
           </thead>
           <tbody>
-            <tr className={styles.productDetail + " container"}>
-              <td className={styles.imgWidth + " w-20"}>
-                <img
-                  className="img-fluid rounded-1"
-                  src="https://rs.joo.com.tw/website/uploads_product/website_1060/P0106000282607_3_1674263.jpg?_4431"
-                  alt=""
-                />
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>
-                【檸檬大叔】100%純檸檬磚(12入/盒)
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>
-                <span className="icon-minus me-3"></span>1
-                <span className="icon-plus ms-3"></span>
-              </td>
-              <td className={styles.cutBorder + " align-middle"}>NT$320</td>
-              <td className={styles.cutBorder + " align-middle"}>NT$320</td>
-            </tr>
+            {data.map((v, i) => {
+              return (
+                <>
+                  <tr
+                    className={styles.productDetail + " container"}
+                    key={v.cartproduct_id}
+                  >
+                    <td className={styles.imgWidth + " w-20"}>
+                      <imgs
+                        className=" rounded-1"
+                        src={"images/product/" + v.product_img}
+                        alt=""
+                      />
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {v.product_name}
+                      {/* <span>{v.product_id}</span> */}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      <button
+                        className={styles.minus + " btn icon-minus me-3"}
+                        onClick={() => {
+                          // 若要移除商品只有在減號按鈕按下時會發生
+                          // 臨界值信號：目前是1, 在按下減號按鈕, 會變為0, 變為0時要移除狀態
+                          if (v.cart_quantity === 1) {
+                            setData(remove(data, v.product_id));
+                          } else {
+                            setData(updateCount(data, v.product_id, -1));
+                          }
+                        }}
+                      >
+                        {/* <span className="icon-minus me-3"></span> */}
+                      </button>
+                      {v.cart_quantity}
+                      <button
+                        className={styles.minus + " btn icon-plus ms-3"}
+                        onClick={() => {
+                          setData(updateCount(data, v.product_id, 1));
+                        }}
+                      >
+                        {/* <span className="icon-plus ms-3"></span> */}
+                      </button>
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {`NT$` + v.price}
+                    </td>
+                    <td className={styles.cutBorder + " align-middle"}>
+                      {`NT$` + v.price * v.cart_quantity}
+                    </td>
+                  </tr>
 
-            <tr className="container">
-              <td>移至願望清單</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <span className="icon-trash d-flex justify-content-end"></span>
-              </td>
-            </tr>
+                  <tr className="container">
+                    <td>移至願望清單</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <a
+                      //   href={"/cart/" + v.product_id}
+                      // href={`/cart/${product_id}`}
+                      >
+                        <span
+                          className="icon-trash d-flex justify-content-end"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            delProduct(v.product_id);
+                          }}
+                        ></span>
+                      </a>
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </table>
 
@@ -86,12 +182,15 @@ export default function CartDetail() {
             <span>配送方式</span>
             {/* select外面包form是為了要做驗證, 送出表單 */}
             <div>
-              <select className={styles.delWay + " mt-1"}>
-                <option selected required>
-                  請選擇運送方式
-                </option>
-                <option value="1">宅配</option>
-                <option value="2">7-11超商取貨</option>
+              <select
+                className={styles.delWay + " mt-1"}
+                onChange={(e) => {
+                  setDelivery(e.target.value);
+                }}
+              >
+                <option required>請選擇運送方式</option>
+                <option value="宅配">宅配</option>
+                <option value="7-11超商取貨">7-11超商取貨</option>
               </select>
             </div>
           </div>
@@ -113,9 +212,14 @@ export default function CartDetail() {
 
         <div className="container mt-5">
           <div className="row">
-            <div className="col-12">※ 提醒您：</div>
             <div className="col-12">
-              當包裹送達您指定之7-11門市時，隔日將會發送簡訊到貨通知。門市純取貨之訂單，收件人務必填寫與身分證上相符的姓名，並攜帶證件至門市領取包裹
+              {delivery == "7-11超商取貨" ? " ※ 提醒您：" : ""}
+            </div>
+            <div className="col-12">
+              {delivery == "7-11超商取貨"
+                ? "當包裹送達您指定之7-11門市時，隔日將會發送簡訊到貨通知。門市純取貨之訂單，收件人務必填寫與身分證上相符的姓名，並攜帶證件至門市領取包裹"
+                : ""}
+              {console.log(delivery)}
             </div>
           </div>
         </div>
