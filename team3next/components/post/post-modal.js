@@ -18,12 +18,6 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
-  useEffect(()=>{
-    fetch(process.env.API_SERVER + "/api/post/")
-    .then((r) => r.json())
-    .then((data) => {}
-      )});
-  
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
   // 創建日期對象
@@ -107,14 +101,6 @@ export default function PostModal({
                     </a>
                   </p>
                   <FollowButton />
-                  {/* <button
-                    className="btn btn-little ms-auto"
-                    onClick={() => {
-                      setFollow(!follow);
-                    }}
-                  >
-                    {follow ? '追蹤' : '追蹤中'}
-                  </button> */}
                 </div>
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
@@ -246,30 +232,17 @@ export default function PostModal({
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
                 <Like />
-                {/* <button className="btn btn-sm btn-i"
-                onClick={() => {
-                      setLike(!like);
-                    }}
-                >
-                  <i className={like ? "icon-heart-fill" : "icon-heart"}></i>
-                  
-                </button> */}
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <a className="btn btn-sm btn-i" href="#message">
                   <i className="fa-regular fa-comment"></i>
                 </a>
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <Saved />
-                {/* <button className="btn btn-sm btn-i" onClick={() => {
-                      setSaved(!saved);
-                    }}>
-                  <i className={saved ? "icon-mark-fill" : "icon-mark"}></i>
-                </button> */}
-                <span>1</span>
+                {/* <span>1</span> */}
               </span>
             </div>
             <div className="ms-3" style={{ width: 470 }}>

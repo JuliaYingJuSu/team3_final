@@ -42,7 +42,7 @@ export default function Main() {
         // 獲取每個 post_id 的第一張 post_image
         const dataWithFirstImages = Object.values(groupedData).map((item) => {
           // 如果有多個 post_image，選擇第一個
-          console.log(item.post_image_name)
+          // console.log(item.post_image_name)
           if (Array.isArray(item.post_image_name)) {
             item.post_image_name = item.post_image_name[0];
           }
