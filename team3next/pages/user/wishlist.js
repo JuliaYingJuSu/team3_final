@@ -11,7 +11,7 @@ export default function WishList() {
   const [wish, setWish] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3002/wishList", {
+    fetch("http://localhost:3002/api/product/wishList", {
       method: "POST",
       // body: JSON.stringify({
       //   uid: localStorage.???
@@ -32,7 +32,7 @@ export default function WishList() {
 
   const handleWish = (v) => {
     console.log(v);
-    fetch("http://localhost:3002/product/del-wish", {
+    fetch("http://localhost:3002/api/product/del-wish", {
       method: "POST",
       body: JSON.stringify({
         pid: v.product_id,

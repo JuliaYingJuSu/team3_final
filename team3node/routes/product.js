@@ -3,12 +3,13 @@ import db from "../module/connect.js";
 
 const productRouter = express.Router();
 
-//---------------商品列表-------------------
-
+//--------------------商品列表--------------------
 productRouter.post("/", async (req, res) => {
   let output = {
     rows: [],
     rowsWish: [],
+    rowsType: [],
+    rowsTypeList: [],
   };
 
   //#region (商品條件)
@@ -24,16 +25,16 @@ productRouter.post("/", async (req, res) => {
     : "";
 
   const type = req.body.type
-    ? `AND product_type.product_type_name = '飲品/沖泡類'`
+    ? `AND product_type.product_type_name = '${req.body.type}'`
     : req.body.typeList
-    ? `AND product_type_list.product_type_list_name = '蛋糕/甜點'`
+    ? `AND product_type_list.product_type_list_name = '${req.body.typeList}'`
     : "";
-
   //#endregion
 
   const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ORDER BY ${orderCondition}`;
-
-  console.log(req.body.uid);
+  const sqlType = `SELECT * FROM product_type`;
+  const sqlTypeList = `SELECT * FROM product_type_list`;
+  // console.log(req.body.uid);
   if (req.body.uid) {
     const sqlWish = `SELECT * FROM product JOIN collection ON product.product_id = collection.product_id WHERE collection.user_id = 10 ORDER BY product.product_id;`;
     // const sqlWish = `SELECT * FROM product JOIN collection ON product.product_id = collection.product_id WHERE collection.user_id = ${req.body.uid} ORDER BY product.product_id;`;
@@ -44,14 +45,20 @@ productRouter.post("/", async (req, res) => {
   // `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id LEFT JOIN collection ON product.product_id = collection.product_id WHERE product_img.showed_1st = 1 ORDER BY product.product_id;`
 
   const [rows] = await db.query(sql);
+  const [rowsType] = await db.query(sqlType);
+  const [rowsTypeList] = await db.query(sqlTypeList);
+
   output.rows = rows;
+  output.rowsType = rowsType;
+  output.rowsTypeList = rowsTypeList;
 
   // console.log(output);
   res.json(output);
 });
 
 //加問號兩個param都沒給就不會跳錯
-//----------------------商品詳細頁----------------------
+
+//--------------------商品詳細頁-------------------
 productRouter.get("/:pid/:uid?", async (req, res) => {
   const pid = req.params.pid;
   const uid = req.params.uid;
@@ -84,7 +91,32 @@ productRouter.get("/:pid/:uid?", async (req, res) => {
   // console.log(output);
   res.json(output);
 });
-//-------------------收藏列表---------------------
+
+//--------------------推薦商品-------------------
+productRouter.post("/product-recommend", async (req, res) => {
+  console.log("12點了");
+  let output = {
+    rowsRecommend: [],
+    rowsRecommendFront: [],
+  };
+
+  if (req.body.tid) {
+    const sqlRecommend = `SELECT * FROM product JOIN product_img ON product_img.product_id = product.product_id WHERE product_img.showed_1st = 1 AND product_type_list_id = ${req.body.tid} LIMIT 6`;
+
+    const [rowsRecommend] = await db.query(sqlRecommend);
+    output.rowsRecommend = rowsRecommend;
+  } else {
+    const sqlRecommendFront = `SELECT oder_detail.product_id, product_img.product_img, SUM(order_quantity) FROM oder_detail JOIN product_img ON product_img.product_id = oder_detail.product_id WHERE product_img.showed_1st = 1 GROUP BY oder_detail.product_id LIMIT 8;`;
+    const [rowsRecommendFront] = await db.query(sqlRecommendFront);
+    output.rowsRecommendFront = rowsRecommendFront;
+  }
+  // console.log(req.body.tid);
+
+  console.log(output);
+  res.json(output);
+});
+
+//--------------------收藏列表---------------------
 //還沒抓到uid版
 productRouter.post("/wishList", async (req, res) => {
   // const uid = req.body.uid;
@@ -101,10 +133,11 @@ productRouter.post("/wishList", async (req, res) => {
     console.log(ex);
   }
 });
-//-------------------加入收藏---------------------
+
+//--------------------加入收藏---------------------
 productRouter.post("/add-wish", async (req, res) => {
   // const pathName = req.body.pathName;
-  // console.log("11111");
+
   const pid = req.body.pid;
   console.log(pid);
 
@@ -132,10 +165,8 @@ productRouter.post("/add-wish", async (req, res) => {
   // res.sendStatus(200);
 });
 
-//-----------------------刪除收藏--------------------
-
+//--------------------刪除收藏---------------------
 productRouter.post("/del-wish", async (req, res) => {
-  // console.log("00000");
   const pid = req.body.pid;
   console.log(pid);
 

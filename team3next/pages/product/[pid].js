@@ -42,7 +42,7 @@ export default function productDetail() {
 
       console.log(pid);
 
-      fetch(`http://localhost:3002/product/${pid}/${uid}`)
+      fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
           console.log(r);
@@ -54,7 +54,7 @@ export default function productDetail() {
 
   useEffect(() => {
     if (data.rows) {
-      fetch(`http://localhost:3002/product-recommend`, {
+      fetch(`http://localhost:3002/api/product/product-recommend`, {
         method: "POST",
         body: JSON.stringify({
           tid: data.rows.product_type_list_id,
@@ -89,7 +89,7 @@ export default function productDetail() {
       // }
 
       if (!wish) {
-        fetch("http://localhost:3002/product/add-wish", {
+        fetch("http://localhost:3002/api/product/add-wish", {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,
@@ -111,7 +111,7 @@ export default function productDetail() {
           });
       }
       if (wish) {
-        fetch("http://localhost:3002/product/del-wish", {
+        fetch("http://localhost:3002/api/product/del-wish", {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,

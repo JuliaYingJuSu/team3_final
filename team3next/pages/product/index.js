@@ -20,7 +20,7 @@ export default function index() {
   useEffect(() => {
     // axios.get("");
 
-    fetch("http://localhost:3002/product", {
+    fetch("http://localhost:3002/api/product", {
       method: "POST",
       body: JSON.stringify({
         // uid: localStorage.getItem()||0,
@@ -61,7 +61,7 @@ export default function index() {
   const handleWish = (product_id) => {
     if (!wish.includes(product_id)) {
       console.log(product_id);
-      fetch("http://localhost:3002/product/add-wish", {
+      fetch("http://localhost:3002/api/product/add-wish", {
         method: "POST",
         body: JSON.stringify({
           pid: product_id,
@@ -86,7 +86,7 @@ export default function index() {
         });
     }
     if (wish.includes(product_id)) {
-      fetch("http://localhost:3002/product/del-wish", {
+      fetch("http://localhost:3002/api/product/del-wish", {
         method: "POST",
         body: JSON.stringify({
           pid: product_id,
