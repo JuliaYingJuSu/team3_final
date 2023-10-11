@@ -15,14 +15,14 @@ export default function DelDetail() {
     purchaserEmail: "",
   });
 
-  useEffect(() => {
-    fetch("http://localhost:3002/cart/del-detail")
-      .then((r) => r.json())
-      .then((obj) => {
-        setPurchaser(obj);
-        console.log(obj);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3002/api/cart/del-detail")
+  //     .then((r) => r.json())
+  //     .then((obj) => {
+  //       setPurchaser(obj);
+  //       console.log(obj);
+  //     });
+  // }, []);
 
   // 錯誤用初始狀態
   const originErrors = {

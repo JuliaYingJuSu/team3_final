@@ -2,9 +2,17 @@ import { useState, useEffect } from "react";
 import styles from "./cart-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
+import { json } from "@files-ui/core";
 
 export default function CartDetail() {
   const [data, setData] = useState([]);
+
+  // localStorage 取資料
+  const getCartItem = JSON.parse(localStorage.getItem("cart"));
+  if (getCartItem) {
+    //setData, 非同步的關係
+    setData(getCartItem);
+  }
 
   // 運送方式
   const deliveryMethod = ["請選擇運送方式", "宅配", "7-11超商取貨"];
@@ -26,33 +34,33 @@ export default function CartDetail() {
     });
   };
 
-  useEffect(() => {
-    fetch("http://localhost:3002/cart")
-      .then((r) => r.json())
-      .then((obj) => {
-        setData(obj);
-        console.log(obj);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3002/api/cart")
+  //     .then((r) => r.json())
+  //     .then((obj) => {
+  //       setData(obj);
+  //       console.log(obj);
+  //     });
+  // }, []);
   //
-  const delProduct = (id) => {
-    console.log("---------");
-    // const product_id = router.query.product_id;
-    console.log(id);
-    fetch(`http://localhost:3002/cart/${id}`, { method: "get" })
-      .then((r) => r.json())
-      .then((obj) => {
-        if (obj.success) {
-          location.reload();
-        } else {
-          alert("刪除發生錯誤");
-        }
-        // console.log(obj);
-      })
-      .catch((ex) => {
-        console.log(123);
-      });
-  };
+  // const delProduct = (id) => {
+  //   console.log("---------");
+  //   // const product_id = router.query.product_id;
+  //   console.log(id);
+  //   fetch(`http://localhost:3002/api/cart/${id}`, { method: "get" })
+  //     .then((r) => r.json())
+  //     .then((obj) => {
+  //       if (obj.success) {
+  //         location.reload();
+  //       } else {
+  //         alert("刪除發生錯誤");
+  //       }
+  //       // console.log(obj);
+  //     })
+  //     .catch((ex) => {
+  //       console.log(123);
+  //     });
+  // };
 
   return (
     <>
@@ -101,11 +109,12 @@ export default function CartDetail() {
           </thead>
           <tbody>
             {data.map((v, i) => {
+              console.log(v);
               return (
                 <>
                   <tr
                     className={styles.productDetail + " container"}
-                    key={v.cartproduct_id}
+                    key={v.product_id}
                   >
                     <td className={styles.imgWidth + " w-20"}>
                       <imgs
@@ -147,7 +156,7 @@ export default function CartDetail() {
                       {`NT$` + v.price}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
-                      {`NT$` + v.price * v.cart_quantity}
+                      {`NT$` + v.price * v.quantity}
                     </td>
                   </tr>
 
@@ -165,7 +174,7 @@ export default function CartDetail() {
                           className="icon-trash d-flex justify-content-end"
                           onClick={(e) => {
                             e.preventDefault();
-                            delProduct(v.product_id);
+                            // delProduct(v.product_id);
                           }}
                         ></span>
                       </a>

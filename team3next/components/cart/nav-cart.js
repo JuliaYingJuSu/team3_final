@@ -4,17 +4,17 @@ import styles from "./nav-cart.module.css";
 export default function NavCart() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:3002/cart")
-      .then((r) => r.json())
-      .then((data) => {
-        setData(data);
-        console.log(data);
-      })
-      .catch((ex) => {
-        console.log(ex + "good");
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3002/cart")
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       setData(data);
+  //       console.log(data);
+  //     })
+  //     .catch((ex) => {
+  //       console.log(ex + "good");
+  //     });
+  // }, []);
 
   return (
     <>

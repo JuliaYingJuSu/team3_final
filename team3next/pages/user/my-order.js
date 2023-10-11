@@ -25,7 +25,7 @@ export default function MyOrder() {
 
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3002/user/my-order")
+    fetch("http://localhost:3002/api/cart/my-order")
       .then((r) => r.json())
       .then((obj) => {
         setData(obj);
