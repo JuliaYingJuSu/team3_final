@@ -170,7 +170,13 @@ export default function Index() {
           className="mySwiper"
         >
           <SwiperSlide>
-            <img src="/images/book/r1-menu1.png" alt="" className="menu-img" />
+            <img src="/images/book/r2-menu1.jpg" alt="" className="menu-img" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="/images/book/r2-menu2.jpg" alt="" className="menu-img" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="/images/book/r2-menu3.jpg" alt="" className="menu-img" />
           </SwiperSlide>
         </Swiper>
         <br />
