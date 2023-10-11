@@ -14,7 +14,7 @@ restaurantRouter.post(
       success: false,
       errors: {},
       result: {},
-      postData: req.body, // 除錯檢查用
+      postData: {} // 除錯檢查用
     };
 
     const sql =
@@ -39,30 +39,36 @@ restaurantRouter.post(
       // 自增ID
       const restaurantId = result.insertId;
 
-      const files = req.files;
 
+      const files = req.files;
+console.log(req.files)
       if (files && files.length > 0) {
-        files.forEach(async (f) => {
-          const { file } = f;
+        files.forEach(async (file) => {
+          const { filename } = file;
 
           const sql2 =
             "INSERT INTO `r_img` (`restaurant_id`, `r_img_route`, `r_img_isValid`) VALUES (?, ?, ?)";
 
           try {
-            [result] = await db.query(sql2, [restaurantId, file, 1]);
-            console.log(`File ${file} inserted into database.`);
+            [result] = await db.query(sql2, [restaurantId, filename, 1]);
+            console.log(`File ${filename} inserted into database.`);
           } catch (err) {
-            console.error(`Error inserting file ${file} into database: ${err}`);
+            console.error(`Error inserting file ${filename} into database: ${err}`);
           }
         });
       }
     } catch (err) {
       output.errors = "SQL 錯誤";
       output.err = err;
+
     }
 
     res.json(output);
   }
 );
+
+restaurantRouter.post("/image-upload",upload.single("image"),async (req,res) =>{
+  console.log(req.file)
+})
 
 export default restaurantRouter;
