@@ -4,6 +4,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import styles from "./restaurant.module.css";
 import Link from "next/link";
 import BreadcrumbRestaurant from "@/components/book/breadcrumb-restaurant";
+import BookCalendar from "@/components/book/book-calendar";
 import { Navigation, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -208,13 +209,7 @@ export default function Index() {
           </div>
         </div>
         <br />
-        <br />
-        <br />
-        <img
-          src="../../images/book/date-cut.png"
-          alt="..."
-          className="calendar-img"
-        />
+        <BookCalendar></BookCalendar>
         <br />
         <br />
         <br />
