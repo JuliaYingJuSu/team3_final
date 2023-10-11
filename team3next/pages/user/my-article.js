@@ -11,7 +11,15 @@ export default function UserMyfrom() {
   const [myaricle, setMyAricle] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.API_SERVER + "/api/user/my-article")
+    fetch(process.env.API_SERVER + "/api/user/my-article", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: localStorage.auth.user_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((r) => {
         setMyAricle(r);
@@ -27,16 +35,27 @@ export default function UserMyfrom() {
       <MyNavbar />
       <UserInfo></UserInfo>
       <UserNavbar></UserNavbar>
-      <div className={"container mb-5" + " " + `${Styles.wbc}`}>
-        <div className={Styles.wma}>XXX篇文章</div>
-        <div className={Styles.imgArea}>
-          {myaricle.length > 0 ? (
+      {myaricle.length > 0 ? (
+        <div className={"container mb-5" + " " + `${Styles.wbc}`}>
+          <div className={Styles.wma}>XXX篇文章</div>
+          <div className={Styles.imgArea}>
             <UserPictureCard></UserPictureCard>
-          ) : (
-            "目前沒有文章喔!"
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div
+          style={{
+            fontSize: 22,
+            color: "grey",
+            width: 800,
+            textAlign: "center",
+            marginTop: 45,
+            height: 400,
+            marginLeft: 20,
+          }}>
+          還沒有文章喔~
+        </div>
+      )}
       <Footer></Footer>
       <Head>
         <title>我的文章</title>

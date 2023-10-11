@@ -6,9 +6,10 @@ const userRouter = express.Router();
 const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //我的文章---------------------
-userRouter.get("/my-article", async (req, res) => {
-  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=?
-  `;
+userRouter.post("/my-article", async (req, res) => {
+  console.log(req.body)
+  const user_id = req.user_id;
+  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=${user_id}`;
   console.log("sql");
   try {
     const [rows] = await db.query(sql);
@@ -83,24 +84,23 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
         output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
         output.result = result;
 
-        
-
         if (files && files.length > 0) {
           files.forEach(async (f) => {
             const { file } = f;
-  
+
             const sql2 =
               "INSERT INTO `r_img` (`restaurant_id`, `r_img_route`, `r_img_isValid`) VALUES (?, ?, ?)";
-  
+
             try {
               [result] = await db.query(sql2, [restaurantId, file, 1]);
               console.log(`File ${file} inserted into database.`);
             } catch (err) {
-              console.error(`Error inserting file ${file} into database: ${err}`);
+              console.error(
+                `Error inserting file ${file} into database: ${err}`
+              );
             }
           });
         }
-
       } catch (ex) {
         output.error = "SQL寫入錯誤";
         output.ex = ex;
