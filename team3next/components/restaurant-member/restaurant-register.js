@@ -7,7 +7,7 @@ import StepFirst from "./form-component/step-first";
 import StepSecond from "./form-component/step-second";
 import StepThird from "./form-component/step-third";
 
-export default function MemberRegister() {
+export default function RestaurantRegister() {
   const display = { 0: <StepFirst />, 1: <StepSecond />, 2: <StepThird /> };
   const inputField = [
     ["email", "password", "rePassword"],

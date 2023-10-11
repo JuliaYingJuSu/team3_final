@@ -2,8 +2,7 @@ import React from "react";
 import cityArray from "@/data/city.json";
 import { useState, useEffect } from "react";
 
-export default function CitySelector({register,watch}) {
-
+export default function CitySelector({ register, watch }) {
   // const selectedCity = watch("city");
   // console.log([selectedCity]);
 
@@ -14,7 +13,7 @@ export default function CitySelector({register,watch}) {
     setCityIndex(selectedCityIndex);
   }, [watch("city")]);
   const [cityIndex, setCityIndex] = useState("");
-  // 記錄第一個input選中的city的index
+  // 記錄第一個input選中的city的index到state裡
 
   return (
     <>

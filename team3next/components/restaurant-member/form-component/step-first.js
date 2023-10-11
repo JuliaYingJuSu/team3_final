@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
 
 export default function StepFirst() {
@@ -57,7 +57,7 @@ export default function StepFirst() {
               setInputType(inputType === "password" ? "text" : "password");
             }}
           >
-            {inputType === "password" ? <FaEye /> : <FaEyeSlash />}
+            {inputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
           </span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function StepFirst() {
               reSetInputType(reInputType === "password" ? "text" : "password");
             }}
           >
-            {reInputType === "password" ? <FaEye /> : <FaEyeSlash />}
+            {reInputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
           </span>
         </div>
       </div>

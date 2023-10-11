@@ -4,7 +4,7 @@ const phoneRegex =
 const fileTypeArray = ["image/jpeg", "image/png", "image/webp"];
 
 const registerSchema = yup.object().shape({
-  email: yup.string().required("請填寫email").email("不符合email格式"),
+  email: yup.string().required("請填寫email").email("請填寫正確的email格式"),
   password: yup
     .string()
     .required("請輸入密碼")

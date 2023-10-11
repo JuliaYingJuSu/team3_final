@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "@/validation/profile-validation";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 export default function Profile() {
   const [inputType, setInputType] = useState("password");
@@ -87,7 +87,7 @@ export default function Profile() {
                     );
                   }}
                 >
-                  {inputType === "password" ? <FaEye /> : <FaEyeSlash />}
+                  {inputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
                 </span>
               </div>
             </div>
@@ -117,7 +117,11 @@ export default function Profile() {
                     );
                   }}
                 >
-                  {reInputType === "password" ? <FaEye /> : <FaEyeSlash />}
+                  {reInputType === "password" ? (
+                    <FaRegEye />
+                  ) : (
+                    <FaRegEyeSlash />
+                  )}
                 </span>
               </div>
             </div>
