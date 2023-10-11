@@ -39,7 +39,6 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   if (req.body.user_name) {
     const { user_name, nickname, user_email, user_password, user_phone } =
       req.body;
-    const { user_img } = req.file;
 
     //檢查姓名欄位
     if (user_name.length < 2) {
@@ -53,10 +52,12 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
       isPass = false;
     }
 
+    const file = req.file;
+
     let result;
     if (isPass) {
       try {
-        const sql = `INSERT INTO user ( user_name,nickname,user_email,user_password, user_phone,user_img,create_date,updatetime) VALUES (?,?,?,?,?,?,NOW(),NOW() )`;
+        const sql = `INSERT INTO user ( user_name,nickname,user_email,user_password, user_phone,create_date,updatetime) VALUES (?,?,?,?,?,NOW(),NOW() )`;
 
         [result] = await db.query(sql, [
           user_name,
@@ -64,10 +65,28 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
           user_email,
           user_password,
           user_phone,
-          user_img,
         ]); //這邊欄位要跟寫入SQL的?一樣，不然會出錯
         output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
         output.result = result;
+
+        
+
+        if (files && files.length > 0) {
+          files.forEach(async (f) => {
+            const { file } = f;
+  
+            const sql2 =
+              "INSERT INTO `r_img` (`restaurant_id`, `r_img_route`, `r_img_isValid`) VALUES (?, ?, ?)";
+  
+            try {
+              [result] = await db.query(sql2, [restaurantId, file, 1]);
+              console.log(`File ${file} inserted into database.`);
+            } catch (err) {
+              console.error(`Error inserting file ${file} into database: ${err}`);
+            }
+          });
+        }
+
       } catch (ex) {
         output.error = "SQL寫入錯誤";
         output.ex = ex;

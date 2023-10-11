@@ -4,8 +4,10 @@ import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import MyArticle from "../post/my-article";
 import Swal from "sweetalert2";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function UserPictureCard() {
+  const { auth } = useContext(AuthContext);
   const swalButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
