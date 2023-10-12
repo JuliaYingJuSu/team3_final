@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function SelectFoodStyle() {
   const [foodItems, setFoodItems] = useState([
-    { id: 1, name: "台式", img: "/images/food-1106513_1920.jpg", isChecked: false },  
+    {
+      id: 1,
+      name: "台式",
+      img: "/images/food-1106513_1920.jpg",
+      isChecked: false,
+    },
     { id: 2, name: "中式", img: "/images/test/c1.jpg", isChecked: false },
     { id: 3, name: "日式", img: "/images/test/j1.jpg", isChecked: false },
     { id: 4, name: "韓式", img: "/images/test/k1.jpg", isChecked: false },
@@ -24,6 +30,14 @@ export default function SelectFoodStyle() {
     setFoodItems(updatedFoodItems);
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+  console.log(errors);
+
   return (
     <>
       {foodItems.map((v, i) => {
@@ -32,32 +46,37 @@ export default function SelectFoodStyle() {
             <div className="c-card middle" key={v.id}>
               <div className="mt-2">
                 <div className="custom-control custom-checkbox image-checkbox">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id={`food_tag_${v.id}`}
-                    name="likefoodtag[]"
-                    value={v.id}
-                    checked={v.isChecked}
-                    onChange={() => {}}
-                  />
-                  <label
-                    className={`custom-icon-checkbox ${
-                      v.isChecked ? "checked" : ""
-                    }`}
-                    htmlFor={`food_tag_${v.id}`}
-                    onClick={()=>{handleCheckboxClick(v.id)}}>
-                    <img
-                      src={v.img}
-                      alt={v.name}
-                      className="w-100 c-card-img"></img>
-                    <i
-                      className={`${
-                        v.isChecked
-                          ? "icon-heart-fill rounded-circle img-thumbnail"
-                          : ""
-                      }`}></i>
-                  </label>
+                  <form>
+                    <input
+                      type="checkbox"
+                      className="custom-control-input"
+                      id={`food_tag_${v.id}`}
+                      name="likefoodtag[]"
+                      value={v.id}
+                      checked={v.isChecked}
+                      onChange={() => {}}
+                      {...register(`food_tag_${v.id}`)}
+                    />
+                    <label
+                      className={`custom-icon-checkbox ${
+                        v.isChecked ? "checked" : ""
+                      }`}
+                      htmlFor={`food_tag_${v.id}`}
+                      onClick={() => {
+                        handleCheckboxClick(v.id);
+                      }}>
+                      <img
+                        src={v.img}
+                        alt={v.name}
+                        className="w-100 c-card-img"></img>
+                      <i
+                        className={`${
+                          v.isChecked
+                            ? "icon-heart-fill rounded-circle img-thumbnail"
+                            : ""
+                        }`}></i>
+                    </label>
+                  </form>
                 </div>
                 <div className="text-center pt-2">
                   <span className="fs-5 fw-bold">{v.name}</span>
