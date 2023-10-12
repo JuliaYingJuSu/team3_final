@@ -92,7 +92,7 @@ productRouter.get("/:pid/:uid?", async (req, res) => {
   res.json(output);
 });
 
-//--------------------推薦商品-------------------
+//--------------------推薦商品--------------------
 productRouter.post("/product-recommend", async (req, res) => {
   console.log("12點了");
   let output = {
@@ -184,6 +184,38 @@ productRouter.post("/del-wish", async (req, res) => {
   } catch (ex) {
     console.log(ex);
   }
+});
+
+//--------------------新增評論---------------------
+productRouter.post("/add-comment", async (req, res) => {
+  const opid = req.body.opid;
+  const uid = req.body.uid;
+  const content = req.body.content;
+  // const score = req.body.score
+  const score = 4;
+
+  const sql = `UPDATE oder_detail SET score = ${score}, content = "${content}" WHERE oder_detail.orderproduct_id = ${opid}`;
+  console.log(sql);
+
+  const [result] = await db.query(sql); //''29''
+  console.log(result);
+  // {
+  //   fieldCount: 0,
+  //   affectedRows: 1,
+  //   insertId: 0,
+  //   info: 'Rows matched: 1  Changed: 1  Warnings: 0',
+  //   serverStatus: 2,
+  //   warningStatus: 0,
+  //   changedRows: 1
+  // }
+
+  //success:!!result.affectedRows
+  if (result.affectedRows) {
+    const success = true;
+    res.send(success);
+    console.log(success);
+  }
+  // res.sendStatus(200);
 });
 
 export default productRouter;
