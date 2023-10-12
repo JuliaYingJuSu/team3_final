@@ -16,7 +16,7 @@ export default function UserInfo() {
               <span>110人</span>
               <span>追蹤中</span>
             </div>
-            <Link className="btn btn-middle mt-4 fw-bold" href="/post/new-post">
+            <Link className="btn btn-middle mt-4 fw-bold" href="/post/add-post">
               發表文章
             </Link>
           </div>
