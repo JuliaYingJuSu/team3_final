@@ -7,12 +7,14 @@ import { json } from "@files-ui/core";
 export default function CartDetail() {
   const [data, setData] = useState([]);
 
-  // localStorage 取資料
-  const getCartItem = JSON.parse(localStorage.getItem("cart"));
-  if (getCartItem) {
-    //setData, 非同步的關係
-    setData(getCartItem);
-  }
+  useEffect(() => {
+    // localStorage 取資料
+    const getCartItem = JSON.parse(localStorage.getItem("cart"));
+    if (getCartItem) {
+      //setData, 非同步的關係
+      setData(getCartItem);
+    }
+  }, []);
 
   // 運送方式
   const deliveryMethod = ["請選擇運送方式", "宅配", "7-11超商取貨"];
@@ -22,7 +24,7 @@ export default function CartDetail() {
   const updateCount = (data, product_id, value) => {
     return data.map((v) => {
       if (v.product_id === product_id)
-        return { ...v, cart_quantity: v.cart_quantity + value };
+        return { ...v, quantity: v.quantity + value };
       else return { ...v };
     });
   };
@@ -133,7 +135,7 @@ export default function CartDetail() {
                         onClick={() => {
                           // 若要移除商品只有在減號按鈕按下時會發生
                           // 臨界值信號：目前是1, 在按下減號按鈕, 會變為0, 變為0時要移除狀態
-                          if (v.cart_quantity === 1) {
+                          if (v.quantity === 1) {
                             setData(remove(data, v.product_id));
                           } else {
                             setData(updateCount(data, v.product_id, -1));
@@ -142,7 +144,7 @@ export default function CartDetail() {
                       >
                         {/* <span className="icon-minus me-3"></span> */}
                       </button>
-                      {v.cart_quantity}
+                      {v.quantity}
                       <button
                         className={styles.minus + " btn icon-plus ms-3"}
                         onClick={() => {
