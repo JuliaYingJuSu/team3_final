@@ -1,12 +1,11 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Banner() {
-  const [selectedCity, setSelectedCity] = useState("");
+export default function Banner({selectedCity, setSelectedCity}) {
+
   const handleCityChange = (e) => {
     setSelectedCity(e.target.innerText); 
   };
-  console.log(selectedCity);
   
   return (
     <>
