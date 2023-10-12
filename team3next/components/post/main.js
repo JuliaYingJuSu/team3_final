@@ -3,11 +3,12 @@ import Card from "../layout/card";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Main({selectedCity}) {
+export default function Main({selectedCity,selectdStyle}) {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   //const [selectedCity, setSelectedCity] = useState("");
-  console.log('main:', {selectedCity})
+  // console.log('main:', {selectedCity})
+  console.log('main:',{selectdStyle})
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -64,6 +65,14 @@ export default function Main({selectedCity}) {
     setData(filteredData);
     
   });
+  useEffect(() => {
+    const styleselectedData = selectdStyle
+      ? data.filter(
+          (style) => style.food_tag_name === selectdStyle
+        ): data;
+    setData(styleselectedData);
+    
+  });
 
   return (
     <>
@@ -79,7 +88,8 @@ export default function Main({selectedCity}) {
               restaurant_city,
               restaurant_name,
               food_tag_names,
-              user_id, // 增加 user_id 屬性
+              user_id, 
+              food_tag_name,
             }) => {
               const nickname = userData[user_id].nickname;
               const user_img = userData[user_id].user_img;
@@ -97,6 +107,7 @@ export default function Main({selectedCity}) {
                   user_id={user_id}
                   nickname={nickname}
                   user_img={user_img}
+                  food_tag_name={food_tag_name}
                 />
               );
             }

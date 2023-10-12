@@ -1,14 +1,13 @@
-import {useState} from "react";
+import { useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Breadcrumb from "@/components/post/breadcrumb";
 import Banner from "@/components/post/banner";
 import Footer from "@/components/layout/default-layout/footer";
 import Main from "@/components/post/main";
 
-
-
 export default function index() {
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectdStyle, setSelectedStyle] = useState("");
   // const [data, setData] = useState([])
 
   // useEffect(()=>{
@@ -26,8 +25,15 @@ export default function index() {
       <div className="container">
         <Breadcrumb />
       </div>
-      <Banner selectedCity={selectedCity}  setSelectedCity={setSelectedCity} />
-      <Main selectedCity={selectedCity} />
+      <Banner
+        selectedCity={selectedCity}
+        setSelectedCity={setSelectedCity}
+        selectdStyle={selectdStyle}
+        setSelectedStyle={setSelectedStyle}
+      />
+      <Main 
+      selectedCity={selectedCity} 
+      selectdStyle={selectdStyle} />
       <Footer />
     </>
   );
