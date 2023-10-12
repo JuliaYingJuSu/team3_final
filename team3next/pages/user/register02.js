@@ -17,7 +17,9 @@ export default function Register2() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { password2: "" },
+  });
   console.log(errors);
 
   // sweetalert設定
@@ -31,37 +33,11 @@ export default function Register2() {
     },
   });
 
-
-  const onSubmit = async (data) => {
-    // 從 "data" 中移除 "password2"
-    const { password2, ...formData } = data;
-    console.log(formData);
-    try {
-      const response = await axios({
-        method: "POST",
-        url: process.env.API_SERVER + "/api/user/upload",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      console.log("Server Response:", response.data);
-      swalTest1.fire({
-        title: "註冊成功",
-        icon: "success",
-      });
-      // location.href = "/user/login";
-    } catch (err) {
-      console.error("Error:", err);
-      Swal.fire({
-        title: "註冊失敗",
-        icon: "error",
-      });
-    }
-  };
-
   //圖片上傳
   // 選擇的檔案
   const [selectedFile, setSelectedFile] = useState(null);
+  // 是否有檔案被挑選
+  const [isFilePicked, setIsFilePicked] = useState(false);
   // 預覽圖片
   const [preview, setPreview] = useState("");
   // server上的圖片網址
@@ -96,33 +72,57 @@ export default function Register2() {
     }
   };
 
-  const handleSubmission = () => {
+  const onSubmit = async () => {
     const formData = new FormData();
-    console.log(formData);
-
-    // 對照server上的檔案名稱 req.files.avatar
     formData.append("user_img", selectedFile);
-
-    fetch(
-      process.env.API_SERVER + "/api/user/upload", //server url
-      {
+    try {
+      const response = await axios({
         method: "POST",
-        body: formData,
         url: process.env.API_SERVER + "/api/user/upload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-        setImgServerUrl(process.env.API_SERVER + "/api/user/upload");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
       });
+
+      console.log("Server Response:", response.data);
+      swalTest1.fire({
+        title: "註冊成功",
+        icon: "success",
+      });
+      // location.href = "/user/login";
+    } catch (err) {
+      console.error("Error:", err);
+      Swal.fire({
+        title: "註冊失敗",
+        icon: "error",
+      });
+    }
   };
+
+  // const handleSubmission = () => {
+  //   const Data = new FormData();
+
+  //   // 對照server上的檔案名稱 req.files.avatar
+  //   formData.append("user_img", selectedFile);
+
+  //   fetch(
+  //     process.env.API_SERVER + "/api/user/upload", //server url
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       console.log("Success:", result);
+  //       setImgServerUrl(process.env.API_SERVER + "/api/user/upload");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // };
 
   return (
     <>
@@ -152,7 +152,7 @@ export default function Register2() {
           {/* 輸入區 */}
           <form
             className="mt-4"
-            onSubmit={handleSubmit(handleSubmission)}
+            onSubmit={handleSubmit(onSubmit)}
             encType="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
@@ -175,7 +175,8 @@ export default function Register2() {
                     className="upload_input"
                     type="file"
                     onChange={changeHandler}
-                    {...register("user_img", { onChange: { changeHandler } })}
+                    {...register("user_img")}
+                    // {...register("user_img", { onChange: { changeHandler } })}
                   />
                   <span className="fs-5">➕</span>
                 </label>

@@ -3,7 +3,7 @@ import styles from "./cart-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import { json } from "@files-ui/core";
-
+import { useRouter } from "next/router";
 export default function CartDetail() {
   const [data, setData] = useState([]);
 
@@ -15,6 +15,25 @@ export default function CartDetail() {
       setData(getCartItem);
     }
   }, []);
+
+  // 數量增加寫入local Storage
+
+  // ------------------------ localStorage 垃圾桶 -------------------------
+  //findIndex, 返回返回符合條件的元素的index
+  const delProduct = (v) => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    if (cart) {
+      // const delProductId = cart.findIndex((i) => i.product_id == v.product_id);
+      const trashcan = cart.filter((i) => i.product_id !== v.product_id);
+      localStorage.setItem("cart", JSON.stringify(trashcan));
+      setData(trashcan);
+    }
+  };
+
+  // if (getCartItem.quantity <= 0) {
+  //   localStorage.removeItem("product_id");
+  //   localStorage.setItem("cart", JSON.stringify(getCartItem));
+  // }
 
   // 運送方式
   const deliveryMethod = ["請選擇運送方式", "宅配", "7-11超商取貨"];
@@ -175,8 +194,8 @@ export default function CartDetail() {
                         <span
                           className="icon-trash d-flex justify-content-end"
                           onClick={(e) => {
-                            e.preventDefault();
-                            // delProduct(v.product_id);
+                            // e.preventDefault();
+                            delProduct(v);
                           }}
                         ></span>
                       </a>
