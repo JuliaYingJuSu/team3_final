@@ -33,7 +33,7 @@ export default function FormLayout({
     data.photo.forEach((file) => {
       formData.append("photo", file.originFileObj);
     });
-    console.log(data.photo[0].originFileObj);
+    // console.log(data.photo[0].originFileObj);
 
     try {
       const response = await axios.post(

@@ -5,6 +5,7 @@ import multer from "multer"; //先載入套件
 
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 import session from "express-session";
 import cors from "cors";
@@ -54,6 +55,7 @@ app.use(
 //將URL轉成JSON格式
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "20mb" }));
+app.use(cookieParser());
 // 提高payload上限
 app.use(express.json());
 
