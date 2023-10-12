@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MyNavbar from "../../components/layout/default-layout/navbar-main";
+import MyNavbar from "../../../components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
 import UserInfo from "@/components/user/user-info";
@@ -11,15 +11,7 @@ export default function UserMyfrom() {
   const [myaricle, setMyAricle] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.API_SERVER + "/api/user/my-article", {
-      method: "POST",
-      body: JSON.stringify({
-        user_id: localStorage.auth.user_id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(process.env.API_SERVER + "/api/user/my-article")
       .then((r) => r.json())
       .then((r) => {
         setMyAricle(r);

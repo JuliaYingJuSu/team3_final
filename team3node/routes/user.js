@@ -6,13 +6,12 @@ const userRouter = express.Router();
 const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //我的文章---------------------
-userRouter.post("/my-article", async (req, res) => {
-  console.log(req.body)
-  const user_id = req.user_id;
-  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=${user_id}`;
-  console.log("sql");
+userRouter.get("/my-article", async (req, res) => {
+  const user_id=req.params.user_id; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=?`;
+  
   try {
-    const [rows] = await db.query(sql);
+    const [rows] = await db.query(sql,[user_id]);
     console.log(rows);
     res.json(rows);
   } catch (ex) {
