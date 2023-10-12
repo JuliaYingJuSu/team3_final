@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import MyNavbar from "../../../components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
@@ -6,12 +6,14 @@ import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import UserPictureCard from "@/components/user/user-picturecard";
 import Styles from "@/components/user/user-information.module.scss";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function UserMyfrom() {
   const [myaricle, setMyAricle] = useState([]);
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(process.env.API_SERVER + "/api/user/my-article")
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/my-article`)
       .then((r) => r.json())
       .then((r) => {
         setMyAricle(r);
@@ -20,7 +22,7 @@ export default function UserMyfrom() {
       .catch((ex) => {
         console.log(ex);
       });
-  }, []);
+  }, [auth.user_id]);
 
   return (
     <>
@@ -30,9 +32,15 @@ export default function UserMyfrom() {
       {myaricle.length > 0 ? (
         <div className={"container mb-5" + " " + `${Styles.wbc}`}>
           <div className={Styles.wma}>XXX篇文章</div>
-          <div className={Styles.imgArea}>
-            <UserPictureCard></UserPictureCard>
-          </div>
+          {myaricle.map((v, i) => {
+            return (
+              <div key={i}>
+                <div className={Styles.imgArea}>
+                  <UserPictureCard></UserPictureCard>
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div
