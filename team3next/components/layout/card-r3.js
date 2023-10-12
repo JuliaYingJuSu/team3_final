@@ -72,7 +72,7 @@ export default function CardR3({
                 </div>
               </div>
               <Link
-                href="/book/restaurant"
+                href={`/book/${restaurant_id}`}
                 className="btn btn-little fs16 ms-auto align-self-end"
               >
                 我要訂位 →
@@ -95,6 +95,7 @@ export default function CardR3({
             max-width: 100%;
           }
           .card3 {
+            max-height: 330px;
             width: 80%;
             border-radius: 10px;
             background: #fff;
