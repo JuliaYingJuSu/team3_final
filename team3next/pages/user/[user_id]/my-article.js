@@ -1,4 +1,3 @@
-import { useEffect, useState, useContext } from "react";
 import MyNavbar from "../../../components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
@@ -7,6 +6,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import UserPictureCard from "@/components/user/user-picturecard";
 import Styles from "@/components/user/user-information.module.scss";
 import AuthContext from "@/hooks/AuthContext";
+import { useEffect, useState, useContext } from "react";
 
 export default function UserMyfrom() {
   const [myaricle, setMyAricle] = useState([]);
@@ -32,15 +32,15 @@ export default function UserMyfrom() {
       {myaricle.length > 0 ? (
         <div className={"container mb-5" + " " + `${Styles.wbc}`}>
           <div className={Styles.wma}>XXX篇文章</div>
-          {myaricle.map((v, i) => {
-            return (
-              <div key={i}>
-                <div className={Styles.imgArea}>
+          <div className={Styles.imgArea}>
+            {myaricle.map((v, i) => {
+              return (
+                <div key={i}>
                   <UserPictureCard></UserPictureCard>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div
