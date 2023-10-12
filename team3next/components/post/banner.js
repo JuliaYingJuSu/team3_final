@@ -1,12 +1,15 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Banner() {
-  const [selectedCity, setSelectedCity] = useState("");
+export default function Banner({selectedCity, setSelectedCity, selectdStyle, setSelectedStyle}) {
+
   const handleCityChange = (e) => {
     setSelectedCity(e.target.innerText); 
   };
-  console.log(selectedCity);
+
+  const handleStyleCheck = (e)=> {
+    setSelectedStyle(e.target.innerText);
+  };
   
   return (
     <>
@@ -27,13 +30,10 @@ export default function Banner() {
                 台北市
             </li>
             <li className="dropdown-item"  onClick={handleCityChange}>
-              
                 新北市
             </li>
             <li className="dropdown-item"  onClick={handleCityChange}>
-              
                 基隆市
-              
             </li>
           </ul>
         </div>
@@ -56,43 +56,43 @@ export default function Banner() {
       </div>
       <div className=" container d-flex justify-content-center mb-3">
         {/* 搜尋條 */}
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           台式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           中式
         </button>
-        <button type="button" className="btn  btn-sm tags">
+        <button type="button" className="btn  btn-sm tags" onClick={handleStyleCheck}>
           日式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           韓式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           港式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           美式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           義式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           法式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           西式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           泰式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           越式
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           早餐
         </button>
-        <button type="button" className="btn btn-sm tags">
+        <button type="button" className="btn btn-sm tags" onClick={handleStyleCheck}>
           早午餐
         </button>
       </div>

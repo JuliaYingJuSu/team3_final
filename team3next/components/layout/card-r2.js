@@ -71,7 +71,7 @@ export default function CardR2({
                 </span>
                 <div>每週一、週二休息</div>
                 <Link
-                  href="/book/restaurant"
+                  href={`/book/${restaurant_id}`}
                   className="btn btn-little fs16 ms-auto align-self-end"
                 >
                   訂位

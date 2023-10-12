@@ -7,12 +7,12 @@ export default function UserNavbar() {
   const pn = router.pathname;
   const menuItems = [
     { id: 1, name: "會員資訊", href: "/user/:user_id" },
-    { id: 2, name: "我的文章", href: "/user/my-article" },
-    { id: 3, name: "追蹤作者", href: "/user/author" },
-    { id: 4, name: "收藏文章", href: "/user/article" },
-    { id: 5, name: "收藏商品", href: "/user/wishlist" },
-    { id: 6, name: "消費紀錄", href: "/user/my-order" },
-    { id: 7, name: "訂位記錄", href: "/user/my-book" },
+    { id: 2, name: "我的文章", href: "/user/:user_id/my-article" },
+    { id: 3, name: "追蹤作者", href: "/user/:user_id/author" },
+    { id: 4, name: "收藏文章", href: "/user/:user_id/article" },
+    { id: 5, name: "收藏商品", href: "/user/:user_id/wishlist" },
+    { id: 6, name: "消費紀錄", href: "/user/:user_id/my-order" },
+    { id: 7, name: "訂位記錄", href: "/user/:user_id/my-book" },
   ];
 
   return (

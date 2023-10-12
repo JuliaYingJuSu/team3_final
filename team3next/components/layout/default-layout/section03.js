@@ -3,7 +3,7 @@ import CardR2 from "@/components/layout/card-r2";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Test() {
+export default function Section03() {
   const [data, setData] = useState([]);
 
   useEffect(() => {

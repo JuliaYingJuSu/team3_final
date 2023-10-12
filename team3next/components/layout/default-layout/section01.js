@@ -5,22 +5,22 @@ import { useEffect, useState } from "react";
 
 export default function Section01() {
   const [data, setData] = useState([]);
-  const [userData, setUserData] = useState({}); 
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
-    fetch(process.env.API_SERVER + "/") 
+    fetch(process.env.API_SERVER + "/")
       .then((r) => r.json())
       .then((users) => {
         const usersData = {};
-        users.forEach(({ user_id, nickname, user_img}) => {
-          usersData[user_id] = {nickname, user_img};
+        users.forEach(({ user_id, nickname, user_img }) => {
+          usersData[user_id] = { nickname, user_img };
         });
         setUserData(usersData);
       })
       .catch((ex) => console.log(ex));
   }, []); // 只在元件首次載入時執行
-  
+
   useEffect(() => {
     fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
@@ -54,26 +54,28 @@ export default function Section01() {
       .catch((ex) => console.log(ex));
   }, []);
 
-
   return (
     <>
       <div className="container">
         <h4 className="h4-title mb-4">熱門食記</h4>
         <div className="row row-cols-1 row-cols-lg-3 container mx-auto">
-        {data.map(
-            ({
-              post_id,
-              post_title,
-              post_content,
-              createTime,
-              post_image_name,
-              restaurant_city,
-              restaurant_name,
-              food_tag_names,
-              user_id,
-            },i) => {
-              const nickname = userData[user_id].nickname ;
-              const user_img = userData[user_id].user_img ;
+          {data.map(
+            (
+              {
+                post_id,
+                post_title,
+                post_content,
+                createTime,
+                post_image_name,
+                restaurant_city,
+                restaurant_name,
+                food_tag_names,
+                user_id,
+              },
+              i
+            ) => {
+              const nickname = userData && userData[user_id].nickname;
+              const user_img = userData && userData[user_id].user_img;
               return (
                 <Card
                   key={post_id}

@@ -31,37 +31,11 @@ export default function Register2() {
     },
   });
 
-
-  const onSubmit = async (data) => {
-    // 從 "data" 中移除 "password2"
-    const { password2, ...formData } = data;
-    console.log(formData);
-    try {
-      const response = await axios({
-        method: "POST",
-        url: process.env.API_SERVER + "/api/user/upload",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      console.log("Server Response:", response.data);
-      swalTest1.fire({
-        title: "註冊成功",
-        icon: "success",
-      });
-      // location.href = "/user/login";
-    } catch (err) {
-      console.error("Error:", err);
-      Swal.fire({
-        title: "註冊失敗",
-        icon: "error",
-      });
-    }
-  };
-
   //圖片上傳
   // 選擇的檔案
   const [selectedFile, setSelectedFile] = useState(null);
+  // 是否有檔案被挑選
+  const [isFilePicked, setIsFilePicked] = useState(false);
   // 預覽圖片
   const [preview, setPreview] = useState("");
   // server上的圖片網址
@@ -96,32 +70,40 @@ export default function Register2() {
     }
   };
 
-  const handleSubmission = () => {
+  const onSubmit = async (data) => {
+    // 從 "data" 中移除 "password2"
+    const { password2, ...fieldData } = data;
     const formData = new FormData();
-    console.log(formData);
+    formData.append("user_name", data.user_name);
+    formData.append("nickname", data.nickname);
+    formData.append("user_email", data.user_email);
+    formData.append("user_password", data.user_password);
+    formData.append("user_phone", data.user_phone);
+    formData.append("self_intr", data.self_intr);
+    formData.append("user_img", data.user_img[0]);
 
-    // 對照server上的檔案名稱 req.files.avatar
-    formData.append("user_img", selectedFile);
-
-    fetch(
-      process.env.API_SERVER + "/api/user/upload", //server url
-      {
+    try {
+      console.log(data.user_img[0]);
+      const response = await axios({
         method: "POST",
-        body: formData,
         url: process.env.API_SERVER + "/api/user/upload",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-        setImgServerUrl(process.env.API_SERVER + "/api/user/upload");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
       });
+
+      console.log("Server Response:", response.data);
+      swalTest1.fire({
+        title: "註冊成功",
+        icon: "success",
+      });
+      // location.href = "/user/login";
+    } catch (err) {
+      console.error("Error:", err);
+      Swal.fire({
+        title: "註冊失敗",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -152,7 +134,7 @@ export default function Register2() {
           {/* 輸入區 */}
           <form
             className="mt-4"
-            onSubmit={handleSubmit(handleSubmission)}
+            onSubmit={handleSubmit(onSubmit)}
             encType="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
@@ -174,8 +156,7 @@ export default function Register2() {
                   <input
                     className="upload_input"
                     type="file"
-                    onChange={changeHandler}
-                    {...register("user_img", { onChange: { changeHandler } })}
+                    {...register("user_img", { onChange: changeHandler })}
                   />
                   <span className="fs-5">➕</span>
                 </label>

@@ -62,7 +62,7 @@ export default function PostModal({
   const imageNames = Array.isArray(post_image_name)
     ? post_image_name
     : [post_image_name];
-    console.log(imageNames);
+    // console.log(imageNames);
 
   // 初始化輪播的 activeIndex
   const [activeIndex, setActiveIndex] = useState(0);

@@ -41,10 +41,10 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const str = localStorage.getItem("auth");
-    if (str) {
+    const jwt = localStorage.getItem("auth");
+    if (jwt) {
       try {
-        const myAuth = JSON.parse(str);
+        const myAuth = JSON.parse(jwt);
         setAuth(myAuth);
       } catch (ex) {}
     }
