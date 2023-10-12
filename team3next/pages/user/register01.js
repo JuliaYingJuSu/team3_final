@@ -2,6 +2,7 @@ import React from "react";
 import SelectFoodStyle from "@/components/user/select-food-style";
 import Link from "next/link";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Register2() {
   return (
@@ -11,35 +12,9 @@ export default function Register2() {
           <h3 className="text-center">請先選擇您喜愛的食物樣式(可多選)</h3>
           <div className="ficb mt-4">
             <div className="container">
-              <div className="row gy-3">
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-                <div className="col ps-4">
-                  <SelectFoodStyle></SelectFoodStyle>
-                </div>
-              </div>
+              <section className="row gy-3">
+                <SelectFoodStyle></SelectFoodStyle>
+              </section>
               <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
                 <div className="me-4">
                   <Link href="/user/register02" className="grey">
