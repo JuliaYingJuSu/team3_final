@@ -15,6 +15,9 @@ export default function CardR2({
   food_tag_names,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
+  const avoidSplit = restaurant_info.split("\\n").map((v) => {
+    return <span>{v}</span>;
+  });
   return (
     <>
       <div className="col mt-2" style={{ height: "780px" }}>
@@ -40,7 +43,7 @@ export default function CardR2({
               {restaurant_name}
             </h5>
             <div className="truncation max-height card-title w-100 grey fs16 mb-0 mt-3">
-              {restaurant_info}
+              {avoidSplit}
             </div>
             <div
               className="card-title w-100 fs16b mb-0 mt-2"

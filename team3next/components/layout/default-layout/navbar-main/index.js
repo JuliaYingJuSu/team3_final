@@ -24,7 +24,7 @@ export default function MyNavbar() {
       <header>
         <nav
           className="sticky-top bg-white navbar navbar-expand-lg forCheese"
-          style={{ height: 275 }}
+          style={{ height: 260 }}
         >
           <div className="container">
             {/* Logo區塊 */}
@@ -210,7 +210,7 @@ export default function MyNavbar() {
             height: 150px;
             width: 200px;
             position: absolute;
-            left: 45%;
+            left: 45.5%;
             top: 23%;
           }
           .right-menu {

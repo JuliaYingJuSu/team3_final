@@ -66,12 +66,12 @@ export default function Card({
                 <Like />
                 {/* <span>1</span> */}
               </span>
-              <span className="middle">
+              {/* <span className="middle">
                 <button className="btn btn-sm btn-i">
                   <i className="fa-regular fa-comment"></i>
                 </button>
-                {/* <span>1</span> */}
-              </span>
+                <span>1</span>
+              </span> */}
               <span className="middle">
                 <Saved />
                 {/* <span>1</span> */}

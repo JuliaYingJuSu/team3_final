@@ -2,6 +2,7 @@ import express from "express";
 import db from "../module/connect.js";
 import upload from "../module/upload-imgs.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const restaurantRouter = express.Router();
 
@@ -83,35 +84,40 @@ restaurantRouter.post(
 //   console.log(req.file)
 // })
 
-restaurantRouter.get("/member-login",async (req, res) => {
-  if (req.session.rows) {
+restaurantRouter.get("/member-login", async (req, res) => {
+  if (req.session.user) {
+    console.log("session ok");
     res.send({ loggedInStatus: true, user: req.session.user });
-  }
-  else(res.send({ loggedInStatus:false}))
+  } else res.send({ loggedInStatus: false });
 });
 
-
 restaurantRouter.post("/member-login", async (req, res) => {
+  // 注意自己是非同步寫法
   let { email, password } = req.body;
   const sql = "SELECT * FROM `restaurant_user` WHERE restaurant_email = ?";
   const [rows] = await db.query(sql, [email]);
+  // db.query的返回結果為一個大陣列包兩個小陣列，解構一次拿到第一個有資料的陣列
+  // 獲得email存在的用戶的那筆所有資料
   if (rows.length > 0) {
-    req.session.user = rows[0];
-    console.log(req.session.user);
+    // 確定資料長度大於1，其實用戶資料也只有一筆，然後就比對hash密碼，返回為true的結果進行之後的jwt登入狀態操作
+    console.log("email核對成功");
     const storedHash = rows[0].restaurant_password_hash;
     const isPasswordCorrect = bcrypt.compare(password, storedHash);
-    return isPasswordCorrect;
+    if (isPasswordCorrect) {
+      const id = rows[0].id;
+      const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: 300,
+      });
+      req.session.user = rows[0];
+  
+      res.json({auth:true,token:token,result:rows[0]})
+      // 只是建立token
+    }
   } else {
-    res.json("用户不存在");
+    res.json({auth:false,message:"no user exisits"})
+    // 這邊的事response
   }
-  // if (isPasswordCorrect) {
-  //   const id = rows[0].id;
-  //   // const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-  //   //   expiresIn: 300,
-  //   // });
-  // }
+
 });
-
-
 
 export default restaurantRouter;
