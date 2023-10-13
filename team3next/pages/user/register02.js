@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
 import Link from "next/link";
@@ -6,8 +6,13 @@ import Head from "next/head";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useRouter } from 'next/router';
 
 export default function Register2() {
+  const router = useRouter();
+  const foodTagIds = router.query.foodTagIds;
+
+
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -81,6 +86,7 @@ export default function Register2() {
     formData.append("user_phone", data.user_phone);
     formData.append("self_intr", data.self_intr);
     formData.append("user_img", data.user_img[0]);
+    formData.append("food_tag_id", foodTagIds);
 
     try {
       console.log(data.user_img[0]);

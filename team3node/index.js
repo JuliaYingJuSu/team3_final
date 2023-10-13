@@ -55,8 +55,8 @@ app.use(
 //將URL轉成JSON格式
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "20mb" }));
-app.use(cookieParser());
 // 提高payload上限
+app.use(cookieParser());
 app.use(express.json());
 
 //自訂的頂層 middlewares
@@ -76,6 +76,23 @@ app.use((req, res, next) => {
 
   next();
 });
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.json({ message: "need token!!!" });
+  } else {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.userid = decoded.id;
+      next(); // 继续处理下一个中间件或路由
+    } catch (err) {
+      res.json({ message: "bad bad token" });
+    }
+  }
+};
+app.get("/isUserAuth",verifyJWT,(req,res) => {
+  res.json("congrats!UOOOOOUGH!!!NEED CORRECTION!!!")
+})
 
 //路由放這邊
 app.use("/api/user", userRouter);
