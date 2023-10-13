@@ -46,8 +46,26 @@ bookRouter.get("/:rid/:uid?", async (req, res) => {
     rows: [],
     rowsImgs: [],
     rowsMenuImgs: [],
+    rowsFull: [],
   };
   const sql = `SELECT * FROM restaurant_user WHERE restaurant_id = ${rid}`;
+
+  const sqlFull = `
+  SELECT DISTINCT b.restaurant_id, b.book_date, b.book_time
+FROM book b
+LEFT JOIN (
+    SELECT bo.restaurant_id, bo.book_date, bo.book_time,
+      SUM(bo.book_num_adult + bo.book_num_kid) AS total_booked
+    FROM book bo
+    WHERE bo.book_isValid = 1
+    GROUP BY bo.restaurant_id, bo.book_date, bo.book_time
+) booked ON b.restaurant_id = booked.restaurant_id
+          AND b.book_date = booked.book_date
+          AND b.book_time = booked.book_time
+JOIN restaurant_opening_hours h ON b.restaurant_id = h.restaurant_id
+WHERE h.is_open = 1
+  AND (h.max_capacity - IFNULL(booked.total_booked, 0)) <= 0;
+  `;
 
   const sqlImgs = `SELECT r_img_route FROM r_img 
   JOIN restaurant_user 
@@ -61,6 +79,8 @@ bookRouter.get("/:rid/:uid?", async (req, res) => {
 
   const [[rows]] = await db.query(sql);
   output.rows = rows;
+  const [[rowsFull]] = await db.query(sqlFull);
+  output.rowsFull = rowsFull;
   const [rowsImgs] = await db.query(sqlImgs);
   output.rowsImgs = rowsImgs;
   const [rowsMenuImgs] = await db.query(sqlMenuImgs);

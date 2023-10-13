@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { chunk } from "lodash";
 
-export default function BookCalendar() {
+export default function BookCalendar({ now, onBookMonth, onBookDate }) {
   const tomorrow = new Date();
   tomorrow.setDate(new Date().getDate() + 1);
 
   const [myMonth, setMyMonth] = useState(tomorrow.getMonth() + 1);
   const [myDate, setMyDate] = useState(tomorrow.getDate());
-  const now = {
-    y: new Date().getFullYear(),
-    m: new Date().getMonth() + 1,
-    d: new Date().getDate(),
-  };
   const weekDayList = ["日", "一", "二", "三", "四", "五", "六"];
   const days = new Date(now.y, now.m, 0).getDate();
   const Ndays = new Date(now.y, now.m + 1, 0).getDate();
@@ -57,7 +52,6 @@ export default function BookCalendar() {
       <h2 id="yearAndMonth">{`${now.y}/${myMonth ? myMonth : ""}/${
         myDate ? myDate : ""
       }`}</h2> */}
-
       <div className="row justify-content-around">
         <div className="col-12 col-xl-5">
           <table>
@@ -85,6 +79,8 @@ export default function BookCalendar() {
                             if (item && isDateSelectable1(item)) {
                               setMyDate(item);
                               setMyMonth(now.m);
+                              onBookDate(`${item}`);
+                              onBookMonth(`${now.m}`);
                             }
                           }}
                           className={`
@@ -137,6 +133,8 @@ export default function BookCalendar() {
                             if (item && isDateSelectable2(item)) {
                               setMyDate(item);
                               setMyMonth(now.m + 1);
+                              onBookDate(`${item}`);
+                              onBookMonth(`${now.m + 1}`);
                             }
                           }}
                           className={`
@@ -172,7 +170,8 @@ export default function BookCalendar() {
             padding: 12px;
           }
           .chosen-date {
-            background-color: orange;
+            color: #fff;
+            background-color: #ae4818;
           }
 
           .selectable {
