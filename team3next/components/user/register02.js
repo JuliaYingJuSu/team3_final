@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 
 export default function Register2() {
   const router = useRouter();
+  //拿取食物tag
   const foodTagIds = router.query.foodTagIds;
 
 
@@ -28,7 +29,7 @@ export default function Register2() {
   // sweetalert設定
   const swalTest1 = Swal.mixin({
     showConfirmButton: false,
-    timer: 3000,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (swalTest1) => {
       swalTest1.addEventListener("mouseenter", Swal.stopTimer);
@@ -115,31 +116,30 @@ export default function Register2() {
   return (
     <>
       <div className="backgs">
-        <span className="z-1">
+        <span className="z-1 position-absolute start-50 translate-middle" style={{ top: 90 }}>
           <Wave01></Wave01>
         </span>
         <span
           className="z-2 position-absolute start-50 translate-middle"
-          style={{ top: 65 }}>
+          style={{ top: 70 }}>
           <Wave02></Wave02>
         </span>
         <div className="container middle flex-column mb-4">
-          <div className="z-3 position-absolute" style={{ top: 130 }}>
+          <div className="z-2 position-absolute" style={{ top: 130 }}>
             <h1 className="fw-bold ps-5">會員註冊</h1>
           </div>
-          <span className="bgi position-absolute opacity-25"></span>
+          <span className="bgi position-absolute opacity-25 translate-middle start-100"></span>
           <div
             className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
-            style={{ paddingRight: 350 }}>
-            有{" "}
+            style={{ paddingRight: 3,paddingTop:180 }}>
+            有
             <span className="px-1" style={{ color: "red" }}>
               *
-            </span>{" "}
+            </span>
             的欄位為必填
           </div>
           {/* 輸入區 */}
           <form
-            className="mt-4"
             onSubmit={handleSubmit(onSubmit)}
             encType="multipart/form-data">
             {/* 大頭照 */}
@@ -420,8 +420,6 @@ export default function Register2() {
           .bgi {
             width: 390px;
             height: 440px;
-            right: 400px;
-            top: 146px;
             background: no-repeat;
             background-image: url("/images/onlybro.png");
           }

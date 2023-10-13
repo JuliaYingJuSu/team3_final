@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 
 export default function Register1() {
-  const router = useRouter();
   const [selectedFoodTagIds, setSelectedFoodTagIds] = useState([]);
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
@@ -41,14 +39,14 @@ export default function Register1() {
 
     setSelectedFoodTagIds(selectedIds);
 
-    const query = {
-      foodTagIds: selectedIds.join(","), // Join selected IDs into a comma-separated string
-    };
+    // const query = {
+    //   foodTagIds: selectedIds.join(","), // Join selected IDs into a comma-separated string
+    // };
 
-    router.replace({
-      pathname: router.pathname,
-      query: query,
-    });
+    // router.replace({
+    //   pathname: router.pathname,
+    //   query: query,
+    // });
   }, [
     isChecked1,
     isChecked2,
@@ -396,13 +394,17 @@ export default function Register1() {
 
                 <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
                   <div className="me-4">
-                    <Link href="/user/register02" className="grey">
-                      下次一定選
-                    </Link>
+                    <button
+                      className="grey btn fs-5"
+                      data-bs-dismiss="modal"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modal2"
+                      >下次一定選
+                    </button>
                   </div>
                   <div className="me-2">
                     <button type="submit" className="btn btn-middle fs-5">
-                      <Link
+                      {/* <Link
                         href={{
                           pathname: "/user/register02",
                           query: { foodTagIds: selectedFoodTagIds.join(",") },
@@ -411,7 +413,7 @@ export default function Register1() {
                         passHref // 加這個才可以正常連結
                       >
                         確定選擇
-                      </Link>
+                      </Link> */}
                     </button>
                   </div>
                 </div>

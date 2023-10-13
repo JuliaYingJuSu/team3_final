@@ -8,6 +8,8 @@ import GoogleLogo from "@/components/icons/google-icon";
 import AuthContext from "@/hooks/AuthContext";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import Register1 from "@/components/user/register01";
+import Register2 from "@/components/user/register02";
 
 export default function Login() {
   const { auth, setAuth } = useContext(AuthContext);
@@ -184,11 +186,15 @@ export default function Login() {
                 </div>
                 <div className="row">
                   <p className="middle mt-3">
-                    <span className="bottom-line-g fs-5 grey-ae">
+                    <span className="bottom-line-g fs-5 grey-ae middle">
                       沒有帳號？
-                      <Link href="/user/register01" className="red-i">
+                      <button
+                        type="button"
+                        className="red-i btn fs-5"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal1">
                         註冊
-                      </Link>
+                      </button>
                     </span>
                   </p>
                 </div>
@@ -197,7 +203,51 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {/* <!-- Modal 1 --> */}
+      <div
+        className="modal fade rounded"
+        id="modal1"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content position-relative">
+            <span
+              type="button"
+              className="btn-close position-absolute top-0 end-0 m-3 fs-5"
+              aria-label="Close"
+              data-bs-dismiss="modal"></span>
+            <Register1></Register1>
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-dismiss="modal"
+              data-bs-toggle="modal"
+              data-bs-target="#modal2">
+              Open Modal 2
+            </button>
+          </div>
+        </div>
+      </div>
 
+      {/* <!-- Modal 2 --> */}
+      <div
+        className="modal fade rounded"
+        id="modal2"
+        tabindex="-2"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <span
+              type="button"
+              className="btn-close position-absolute top-0 end-0 m-3 fs-5 z-3"
+              aria-label="Close"
+              data-bs-dismiss="modal"></span>
+            <Register2></Register2>
+          </div>
+        </div>
+      </div>
       <Head>
         <title>登入</title>
       </Head>
