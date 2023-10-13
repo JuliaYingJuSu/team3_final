@@ -10,6 +10,7 @@ productRouter.post("/", async (req, res) => {
     rowsWish: [],
     rowsType: [],
     rowsTypeList: [],
+    price: [],
   };
 
   //#region (商品條件)

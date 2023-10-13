@@ -17,6 +17,16 @@ export default function index() {
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
 
+  const [price, setPrice] = useState([]);
+
+  // const priceList = [
+  //   { value: "300", text: "300以下" },
+  //   { value: "300,500", text: "300 - 500" },
+  //   { value: "500,800", text: "500 - 800" },
+  //   { value: "800,1000", text: "800 - 1000" },
+  //   { value: "1000", text: "1000以上" },
+  // ];
+
   useEffect(() => {
     // axios.get("");
 
@@ -29,6 +39,7 @@ export default function index() {
         search: search,
         type: type,
         typeList: typeList,
+        price: price,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -184,47 +195,28 @@ export default function index() {
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
 
-                <Form className="d-flex flex-column px-2 justify-content-start">
-                  {["radio"].map((type) => (
-                    <div key={`inline-${type}`} className="mb-3">
-                      <Form.Check
-                        inline
-                        label="300以下"
-                        name="price"
-                        type={type}
-                        id={`inline-${type}-1`}
+                {/* {priceList.map((v, i) => {
+                  console.log(v);
+                  return (
+                    // 畫面渲染後不會再變動key才能用索引
+                    <label key={i} className="w-100 ps-2 my-2">
+                      <input
+                        className="me-2"
+                        // className="----------------------------"
+                        type="radio"
+                        // 用目前選中的food狀態來比較，決定是否呈現選中的樣子
+                        checked={price === v}
+                        // 一樣可以使用value屬性，用e.target.value在事件觸發後得到值
+                        value={v}
+                        onChange={(e) => {
+                          //  狀態中記錄的是每個選項被選中的值
+                          setPrice(e.target.value);
+                        }}
                       />
-                      <Form.Check
-                        inline
-                        label="300 - 500"
-                        name="price"
-                        type={type}
-                        id={`inline-${type}-2`}
-                      />
-                      <Form.Check
-                        inline
-                        label="500 - 800"
-                        name="price"
-                        type={type}
-                        id={`inline-${type}-2`}
-                      />
-                      <Form.Check
-                        inline
-                        label="800 - 1000"
-                        name="price"
-                        type={type}
-                        id={`inline-${type}-2`}
-                      />
-                      <Form.Check
-                        inline
-                        label="1000以上"
-                        name="price"
-                        type={type}
-                        id={`inline-${type}-2`}
-                      />
-                    </div>
-                  ))}
-                </Form>
+                      {v}
+                    </label>
+                  );
+                })} */}
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">篩選條件</p>
@@ -276,7 +268,7 @@ export default function index() {
                   " row d-flex justify-content-end align-items-center"
                 }
               >
-                {/* ------------------------------- */}
+                {/* ---------------------------------------- */}
                 <div className="dropdown col-auto me-auto ">
                   <button
                     className={
@@ -495,6 +487,7 @@ export default function index() {
                                 id={`inline-${type}-1`}
                               />
                               <Form.Check
+                                checked={true}
                                 inline
                                 label="300 - 500"
                                 name="price"
