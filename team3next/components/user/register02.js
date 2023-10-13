@@ -6,13 +6,11 @@ import Head from "next/head";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useRouter } from 'next/router';
 
-export default function Register2() {
-  const router = useRouter();
+
+export default function Register2(props) {
   //拿取食物tag
-  const foodTagIds = router.query.foodTagIds;
-
+  const { selectedFoodTagIds } = props
 
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);

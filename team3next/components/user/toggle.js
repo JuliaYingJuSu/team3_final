@@ -4,8 +4,8 @@ import { useState } from "react";
 
 export default function Toggle() {
   const [checked, setChecked] = useState(false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
+  const handleChange = () => {
+    window.location.href = "/restaurant-member/"
   };
 
   return (

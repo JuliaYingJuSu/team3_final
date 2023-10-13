@@ -403,7 +403,7 @@ export default function Register1() {
                     </button>
                   </div>
                   <div className="me-2">
-                    <button type="submit" className="btn btn-middle fs-5">
+                    <button  className="btn btn-middle fs-5">
                       {/* <Link
                         href={{
                           pathname: "/user/register02",
