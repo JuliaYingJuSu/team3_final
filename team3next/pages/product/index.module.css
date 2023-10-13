@@ -71,9 +71,9 @@
 .barBtn {
   display: none;
 }
-.sort {
+/* .sort {
   margin-bottom: 20px;
-}
+} */
 .sort select,
 .sort form input {
   border-radius: 40px;

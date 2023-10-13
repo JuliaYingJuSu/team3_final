@@ -160,17 +160,10 @@ export default function productDetail() {
             (v) => v.product_id == router.query.pid
           );
           //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
-
           // -----------------新的------------------
-          console.log(cart, data.rows.product_id);
-          console.log(
-            cart.findIndex((v) => v.product_id == data.rows.product_id)
-          );
-
           if (
             cart.findIndex((v) => v.product_id == data.rows.product_id) >= 0
           ) {
-            console.log("5");
             const newCart = cart.map((v, i) => {
               if (v.product_id == data.rows.product_id) {
                 return { ...v, quantity: v.quantity + quantity };
@@ -178,10 +171,9 @@ export default function productDetail() {
                 return { ...v };
               }
             });
-
             localStorage.setItem("cart", JSON.stringify(newCart));
           }
-
+          // -----------------舊的------------------
           //   if (existCart >= 0) {
           //   const updateQuantity =
           //     parseInt(cart[existCart].quantity) + quantity;

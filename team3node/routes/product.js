@@ -30,9 +30,26 @@ productRouter.post("/", async (req, res) => {
     : req.body.typeList
     ? `AND product_type_list.product_type_list_name = '${req.body.typeList}'`
     : "";
+
+  const reqPrice =
+    req.body.price === "300以下"
+      ? "AND price BETWEEN 1 AND 300"
+      : req.body.price === "300 - 500"
+      ? "AND price BETWEEN 301 AND 500"
+      : req.body.price === "500 - 800"
+      ? "AND price BETWEEN 501 AND 800"
+      : req.body.price === "800 - 1000"
+      ? "AND price BETWEEN 801 AND 1000"
+      : req.body.price === "1000以上"
+      ? "AND price > 1000"
+      : "";
+
+  const price = req.body.price ? reqPrice : "";
+
   //#endregion
 
-  const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ORDER BY ${orderCondition}`;
+  const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ${price} ORDER BY ${orderCondition}`;
+  console.log(sql);
   const sqlType = `SELECT * FROM product_type`;
   const sqlTypeList = `SELECT * FROM product_type_list`;
   // console.log(req.body.uid);

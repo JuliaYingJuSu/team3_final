@@ -12,20 +12,17 @@ export default function index() {
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
-  // const [inputText, setInputText] = useState("");
+
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
 
-  const [price, setPrice] = useState([]);
-
-  // const priceList = [
-  //   { value: "300", text: "300以下" },
-  //   { value: "300,500", text: "300 - 500" },
-  //   { value: "500,800", text: "500 - 800" },
-  //   { value: "800,1000", text: "800 - 1000" },
-  //   { value: "1000", text: "1000以上" },
-  // ];
+  const [price, setPrice] = useState("");
+  console.log(price);
+  const priceList = [
+    [300, 500, 800, 1000, 1001],
+    ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
+  ];
 
   useEffect(() => {
     // axios.get("");
@@ -59,18 +56,13 @@ export default function index() {
 
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
-          console.log(wishList);
-
+          // console.log(wishList);
           setWish(wishList);
         }
       });
-  }, [order, search, typeList]);
+  }, [order, search, typeList, price]);
 
-  // const handleOrder = (e) => {
-  //   setOrder(e.target.value);
-  //   fetch();
-  // };
-
+  // 增刪購物清單
   const handleWish = (product_id) => {
     if (!wish.includes(product_id)) {
       console.log(product_id);
@@ -142,11 +134,11 @@ export default function index() {
           <main className="w-100 d-flex">
             <div className={styles.leftBox}>
               <div className={styles.left}>
-                <Link href="/product">
+                <a href="/product">
                   <button className={styles.leftA + " btn"} type="button">
                     全部商品
                   </button>
-                </Link>
+                </a>
 
                 {/* -----------分類選單---------- */}
                 {data.rowsType &&
@@ -195,7 +187,7 @@ export default function index() {
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
 
-                {/* {priceList.map((v, i) => {
+                {priceList[1].map((v, i) => {
                   console.log(v);
                   return (
                     // 畫面渲染後不會再變動key才能用索引
@@ -216,7 +208,7 @@ export default function index() {
                       {v}
                     </label>
                   );
-                })} */}
+                })}
               </div>
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">篩選條件</p>
@@ -656,6 +648,7 @@ export default function index() {
                             ></span>
                           </div>
                           <div
+                            style={{ color: "#666666" }}
                             className={
                               styles.contentBox +
                               " px-2 w-100 d-flex justify-content-between pt-1 pb-1"

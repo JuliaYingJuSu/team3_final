@@ -5,10 +5,9 @@ import { useRouter } from "next/router";
 
 export default function Bread() {
   const router = useRouter();
-  console.log(router.pathname);
 
-  const path = router.pathname.slice(1);
-  console.log(path);
+  const path = router.pathname.split("/")[1];
+
   const pathname =
     path == "product"
       ? "嗑零食"
@@ -17,16 +16,16 @@ export default function Bread() {
       : path == "post"
       ? "食記"
       : "餐廳";
-  console.log(pathname);
+  // console.log(pathname);
 
   return (
     <>
-      <div className={styles.bread}>
+      <div className={styles.bread + " mb-2 ms-2"}>
         <a href="/">
           <span className="icon-home"></span>
         </a>
         <span className="icon-arrow-s-right"></span>
-        <a href={router.pathname}>{pathname}</a>
+        <a href={"/" + path}>{pathname}</a>
       </div>
     </>
   );
