@@ -1,11 +1,12 @@
-import React from "react";
-import SelectFoodStyle from "@/components/user/select-food-style";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 export default function Register1() {
+  const router = useRouter();
+  const [selectedFoodTagIds, setSelectedFoodTagIds] = useState([]);
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
   const [isChecked3, setIsChecked3] = useState(false);
@@ -16,36 +17,49 @@ export default function Register1() {
   const [isChecked8, setIsChecked8] = useState(false);
   const [isChecked9, setIsChecked9] = useState(false);
 
-  const handleCheckboxClick = (id) => {
-    if (id === 1) {
-      setIsChecked1(!isChecked1);
-    } else if (id === 2) {
-      setIsChecked2(!isChecked2);
-    } else if (id === 3) {
-      setIsChecked3(!isChecked3);
-    } else if (id === 4) {
-      setIsChecked4(!isChecked4);
-    } else if (id === 5) {
-      setIsChecked5(!isChecked5);
-    } else if (id === 6) {
-      setIsChecked6(!isChecked6);
-    } else if (id === 7) {
-      setIsChecked7(!isChecked7);
-    } else if (id === 8) {
-      setIsChecked8(!isChecked8);
-    } else if (id === 9) {
-      setIsChecked9(!isChecked9);
-    }
-    // 根據食物選項的 id，更新對應的 isChecked 狀態
-  };
-
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  console.log(watch());
   console.log(errors);
+
+  useEffect(() => {
+    const selectedIds = [
+      isChecked1 ? "1" : "",
+      isChecked2 ? "2" : "",
+      isChecked3 ? "3" : "",
+      isChecked4 ? "4" : "",
+      isChecked5 ? "5" : "",
+      isChecked6 ? "6" : "",
+      isChecked7 ? "7" : "",
+      isChecked8 ? "8" : "",
+      isChecked9 ? "9" : "",
+    ].filter(Boolean); // Remove empty strings
+
+    setSelectedFoodTagIds(selectedIds);
+
+    const query = {
+      foodTagIds: selectedIds.join(","), // Join selected IDs into a comma-separated string
+    };
+
+    router.replace({
+      pathname: router.pathname,
+      query: query,
+    });
+  }, [
+    isChecked1,
+    isChecked2,
+    isChecked3,
+    isChecked4,
+    isChecked5,
+    isChecked6,
+    isChecked7,
+    isChecked8,
+    isChecked9,
+  ]);
 
   return (
     <>
@@ -54,7 +68,7 @@ export default function Register1() {
           <h3 className="text-center">請先選擇您喜愛的食物樣式(可多選)</h3>
           <div className="ficb mt-4">
             <div className="container">
-              <form onSubmit={handleSubmit(onSubmit)} className="row gy-3">
+              <form className="row gy-3">
                 {/* 從此開始 */}
                 <div className="col ps-4">
                   <div className="c-card middle">
@@ -64,30 +78,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_1"
-                          name="likefoodtag[]"
                           value="1"
                           checked={isChecked1}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked1((prev) => !prev);
+                          }}
                           {...register("food_tag_id_1")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked1 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_1"
-                          onClick={() => {
-                            handleCheckboxClick(1);
-                          }}>
+                          htmlFor="food_tag_id_1">
                           <img
                             src="/images/food-1106513_1920.jpg"
                             alt="台式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked1
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked1 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -105,30 +114,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_2"
-                          name="likefoodtag[]"
                           value="2"
                           checked={isChecked2}
-                          onChange={() => {}}
                           {...register("food_tag_id_2")}
+                          onClick={() => {
+                            setIsChecked2((prev) => !prev);
+                          }}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked2 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_2"
-                          onClick={() => {
-                            handleCheckboxClick(2);
-                          }}>
+                          htmlFor="food_tag_id_2">
                           <img
                             src="/images/test/c1.jpg"
                             alt="中式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked2
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked2 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -146,30 +150,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_3"
-                          name="likefoodtag[]"
                           value="3"
                           checked={isChecked3}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked3((prev) => !prev);
+                          }}
                           {...register("food_tag_id_3")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked3 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_3"
-                          onClick={() => {
-                            handleCheckboxClick(3);
-                          }}>
+                          htmlFor="food_tag_id_3">
                           <img
                             src="/images/test/j1.jpg"
                             alt="日式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked3
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked3 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -187,30 +186,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_4"
-                          name="likefoodtag[]"
                           value="4"
                           checked={isChecked4}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked4((prev) => !prev);
+                          }}
                           {...register("food_tag_id_4")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked4 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_4"
-                          onClick={() => {
-                            handleCheckboxClick(4);
-                          }}>
+                          htmlFor="food_tag_id_4">
                           <img
                             src="/images/test/k1.jpg"
                             alt="韓式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked4
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked4 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -228,30 +222,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_5"
-                          name="likefoodtag[]"
                           value="5"
                           checked={isChecked5}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked5((prev) => !prev);
+                          }}
                           {...register("food_tag_id_5")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked5 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_5"
-                          onClick={() => {
-                            handleCheckboxClick(5);
-                          }}>
+                          htmlFor="food_tag_id_5">
                           <img
                             src="/images/test/h1.jpg"
                             alt="港式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked5
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked5 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -260,8 +249,8 @@ export default function Register1() {
                     </div>
                   </div>
                 </div>
-                 {/* 美式 */}
-                 <div className="col ps-4">
+                {/* 美式 */}
+                <div className="col ps-4">
                   <div className="c-card middle">
                     <div className="mt-2">
                       <div className="custom-control custom-checkbox image-checkbox">
@@ -269,30 +258,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_6"
-                          name="likefoodtag[]"
                           value="6"
                           checked={isChecked6}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked6((prev) => !prev);
+                          }}
                           {...register("food_tag_id_6")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked6 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_6"
-                          onClick={() => {
-                            handleCheckboxClick(6);
-                          }}>
+                          htmlFor="food_tag_id_6">
                           <img
                             src="/images/test/a1.jpg"
                             alt="美式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked6
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked6 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -310,30 +294,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_7"
-                          name="likefoodtag[]"
                           value="7"
                           checked={isChecked7}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked7((prev) => !prev);
+                          }}
                           {...register("food_tag_id_7")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked7 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_7"
-                          onClick={() => {
-                            handleCheckboxClick(7);
-                          }}>
+                          htmlFor="food_tag_id_7">
                           <img
                             src="/images/test/i1.jpg"
                             alt="義式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked7
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked7 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -351,30 +330,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_8"
-                          name="likefoodtag[]"
                           value="8"
                           checked={isChecked8}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked8((prev) => !prev);
+                          }}
                           {...register("food_tag_id_8")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked8 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_8"
-                          onClick={() => {
-                            handleCheckboxClick(8);
-                          }}>
+                          htmlFor="food_tag_id_8">
                           <img
                             src="/images/test/f1.jpg"
                             alt="法式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked8
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked8 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -392,30 +366,25 @@ export default function Register1() {
                           type="checkbox"
                           className="custom-control-input"
                           id="food_tag_id_9"
-                          name="likefoodtag[]"
                           value="9"
                           checked={isChecked9}
-                          onChange={() => {}}
+                          onClick={() => {
+                            setIsChecked9((prev) => !prev);
+                          }}
                           {...register("food_tag_id_9")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
                             isChecked9 ? "checked" : ""
                           }`}
-                          htmlFor="food_tag_id_9"
-                          onClick={() => {
-                            handleCheckboxClick(9);
-                          }}>
+                          htmlFor="food_tag_id_9">
                           <img
                             src="/images/test/e1.jpg"
                             alt="西式"
                             className="w-100 c-card-img"></img>
-                          <i
-                            className={`${
-                              isChecked9
-                                ? "icon-heart-fill rounded-circle img-thumbnail"
-                                : ""
-                            }`}></i>
+                          {isChecked9 && (
+                            <i className="icon-heart-fill rounded-circle img-thumbnail"></i>
+                          )}
                         </label>
                       </div>
                       <div className="text-center pt-2">
@@ -424,20 +393,29 @@ export default function Register1() {
                     </div>
                   </div>
                 </div>
-              </form>
 
-              <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
-                <div className="me-4">
-                  <Link href="/user/register02" className="grey">
-                    下次一定選
-                  </Link>
+                <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
+                  <div className="me-4">
+                    <Link href="/user/register02" className="grey">
+                      下次一定選
+                    </Link>
+                  </div>
+                  <div className="me-2">
+                    <button type="submit" className="btn btn-middle fs-5">
+                      <Link
+                        href={{
+                          pathname: "/user/register02",
+                          query: { foodTagIds: selectedFoodTagIds.join(",") },
+                        }}
+                        style={{ color: "#3f4c5c" }}
+                        passHref // 加這個才可以正常連結
+                      >
+                        確定選擇
+                      </Link>
+                    </button>
+                  </div>
                 </div>
-                <div className="me-2">
-                  <button type="submit" className="btn btn-middle fs-5">
-                    確定選擇
-                  </button>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

@@ -156,24 +156,46 @@ export default function productDetail() {
         if (localStorage.getItem("cart")) {
           //拿出來找找看裡面有沒有目前頁面商品
           let cart = JSON.parse(localStorage.getItem("cart"));
-          console.log(cart);
-
           const existCart = cart.findIndex(
             (v) => v.product_id == router.query.pid
           );
           //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
-          if (existCart >= 0) {
-            const updateQuantity =
-              parseInt(cart[existCart].quantity) + quantity;
-            console.log(updateQuantity);
 
-            const cartUpdateIndex = {
-              ...cart[existCart],
-              quantity: updateQuantity,
-            };
-            cart[existCart] = cartUpdateIndex;
-            localStorage.setItem("cart", JSON.stringify(cart));
-          } else {
+          // -----------------新的------------------
+          console.log(cart, data.rows.product_id);
+          console.log(
+            cart.findIndex((v) => v.product_id == data.rows.product_id)
+          );
+
+          if (
+            cart.findIndex((v) => v.product_id == data.rows.product_id) >= 0
+          ) {
+            console.log("5");
+            const newCart = cart.map((v, i) => {
+              if (v.product_id == data.rows.product_id) {
+                return { ...v, quantity: v.quantity + quantity };
+              } else {
+                return { ...v };
+              }
+            });
+
+            localStorage.setItem("cart", JSON.stringify(newCart));
+          }
+
+          //   if (existCart >= 0) {
+          //   const updateQuantity =
+          //     parseInt(cart[existCart].quantity) + quantity;
+          //   console.log(updateQuantity);
+
+          //   const cartUpdateIndex = {
+          //     ...cart[existCart],
+          //     quantity: updateQuantity,
+          //   };
+          //   cart[existCart] = cartUpdateIndex;
+          //   localStorage.setItem("cart", JSON.stringify(cart));
+          // }
+          // ---------------------------------
+          else {
             //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
             cart.unshift({
               product_id: data.rows.product_id,
@@ -196,20 +218,9 @@ export default function productDetail() {
             },
           ];
           localStorage.setItem("cart", JSON.stringify(cart));
-
-          //????? console.log(cart) >>> {} rather than [{}]
-          // const cart = [
-          //   JSON.stringify({
-          //     product_id: data.rows.product_id,
-          //     product_img: data.rowsImgs[0].product_img,
-          //     quantity: quantity,
-          //   }),
-          // ];
-          // localStorage.setItem("cart", cart);
         }
       }
     }
-    // }
   };
 
   return (

@@ -23,8 +23,8 @@ export default function MyNavbar() {
     <>
       <header>
         <nav
-          className="sticky-top bg-white navbar navbar-expand-lg"
-          style={{ height: 150 }}
+          className="sticky-top bg-white navbar navbar-expand-lg forCheese"
+          style={{ height: 275 }}
         >
           <div className="container">
             {/* Logo區塊 */}
@@ -195,6 +195,14 @@ export default function MyNavbar() {
       </div>
       <style global jsx>
         {`
+          .pt-10 {
+            pdding-top: 100px;
+          }
+
+          .forCheese {
+            background-image: url("/images/cheese-2.png");
+            background-size: cover;
+          }
           .h150 {
             height: 150px;
           }
@@ -203,7 +211,7 @@ export default function MyNavbar() {
             width: 200px;
             position: absolute;
             left: 45%;
-            top: 5%;
+            top: 23%;
           }
           .right-menu {
             position: absolute;

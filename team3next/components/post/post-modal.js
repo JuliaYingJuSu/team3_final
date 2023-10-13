@@ -18,6 +18,7 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
+  const [imgs,setImgs] = useState([]);
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
   // 創建日期對象
@@ -71,6 +72,24 @@ export default function PostModal({
   const handleSelect = (selectedIndex) => {
     setActiveIndex(selectedIndex);
   };
+
+  useEffect(()=>{
+    if(post_id){
+      fetch(`http://localhost:3002/api/post/post-pid`,{
+        method:"POST",
+        body:JSON.stringify({
+          post_id:post_id,
+        }),
+        headers:{
+          "Content-Type":"application/json",
+        },
+      }).then((r)=> r.json())
+      .then((r)=>{
+        console.log(r);
+setImgs(r);
+      })
+    }
+  },[])
 
   return (
     <>
@@ -134,10 +153,10 @@ export default function PostModal({
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
               >
-                {imageNames.map((imageName, index) => (
-                  <Carousel.Item key={index} >
+                {imgs.map((v, i) => (
+                  <Carousel.Item key={i} >
                     <img
-                      src={`/images/post/${imageName}`}
+                      src={`/images/post/${v.post_image_name}`}
                       className="d-block w-100 object-fit-cover"
                       alt="..."
                     />

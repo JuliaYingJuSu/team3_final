@@ -3,12 +3,12 @@ import Card from "../layout/card";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Main({selectedCity,selectdStyle}) {
+export default function Main({selectedCity, selectedStyle}) {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
-  //const [selectedCity, setSelectedCity] = useState("");
+  const [displayData, setDisplayData] = useState([]);
   // console.log('main:', {selectedCity})
-  console.log('main:',{selectdStyle})
+console.log('main:', {selectedStyle})
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -54,31 +54,31 @@ export default function Main({selectedCity,selectdStyle}) {
         dataWithFirstImages.sort((a, b) => b.post_id - a.post_id);
 
         setData(dataWithFirstImages);
+        setDisplayData(dataWithFirstImages);
       })
       .catch((ex) => console.log(ex));
   },[]);
-  useEffect(() => {
-    const filteredData = selectedCity
-      ? data.filter(
-          (city) => city.restaurant_city === selectedCity
-        ): data;
-    setData(filteredData);
-    
-  });
-  useEffect(() => {
-    const styleselectedData = selectdStyle
-      ? data.filter(
-          (style) => style.food_tag_name === selectdStyle
-        ): data;
-    setData(styleselectedData);
-    
-  });
+
+  useEffect(()=>{
+    let newData = data.filter((city) =>{ 
+      if(selectedCity){return city.restaurant_city === selectedCity}
+      else{return city}}
+      ).filter((style)=>{
+        
+        if(selectedStyle){return style.food_tag_names.indexOf(selectedStyle)>=0}
+        else{
+          return style}
+        });
+    setDisplayData(newData);
+
+  },[selectedCity, selectedStyle])
+
 
   return (
     <>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 mx-auto">
-          {data.map(
+          {displayData.map(
             ({
               post_id,
               post_title,

@@ -1,5 +1,6 @@
 .footer{
     background: var(--efd-6-c-5, #EFD6C5);
+    position: relative;
     display: flex;
     height: 130px;
     padding: 20px 3px;
@@ -21,4 +22,16 @@
     width: 204px;
     height: 30px;
     color:#3F4C5C;
+}
+.cheese{
+    background-image: url("/images/cheese-logo.png");
+    right: 50px;
+    bottom: 50px;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+background-size:contain ;
+background-repeat: no-repeat;
+background-position: center;
+// position: relative;
 }

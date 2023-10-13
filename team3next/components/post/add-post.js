@@ -1,8 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import ImageItemPreview from "@/components/post/Image-Item-preview";
 import { PictureOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
+import Select from 'react-select';
+
 
 export default function AddPost() {
   const props = {
@@ -15,6 +16,7 @@ export default function AddPost() {
       border: "none",
     },
   };
+
   return (
     <>
       <div className="container-sm justify-content-center bg-color mb-2">
@@ -33,9 +35,8 @@ export default function AddPost() {
               noStyle
               // bug fixed用來解決filelist錯誤
             >
-              <Upload.Dragger
-                {...props}>
-                <div className="mt-5" style={{position}}>
+              <Upload.Dragger {...props}>
+                <div className="mt-5">
                   <p className="ant-upload-drag-icon">
                     <PictureOutlined style={{ color: "#ae4818" }} />
                   </p>
@@ -66,14 +67,14 @@ export default function AddPost() {
               <input
                 type="text"
                 className="form-control"
-                placeholder="新增地點"
+                placeholder="新增餐廳"
                 aria-label="Postlocation"
                 aria-describedby="button-addon2"
               />
               {/* <button
-              className="icon-arrow-s-right btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
+                className="icon-arrow-s-right btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
             ></button> */}
             </div>
             <div className="input-group mb-3 ">
@@ -113,6 +114,7 @@ export default function AddPost() {
           </div>
         </Form>
       </div>
+      
       <style jsx>
         {`
           .btn {
