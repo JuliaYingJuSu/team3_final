@@ -6,7 +6,7 @@ import FormLayout from "./form-component/restaurant-form";
 import StepFirst from "./form-component/step-first";
 import StepSecond from "./form-component/step-second";
 import StepThird from "./form-component/step-third";
-
+// 在這個頁面引入表單模板和表單欄位，將分步驟表單欄位作為物件控制多步驟呈現。參考dave multistep register
 export default function RestaurantRegister() {
   const display = { 0: <StepFirst />, 1: <StepSecond />, 2: <StepThird /> };
   const inputField = [
@@ -22,8 +22,9 @@ export default function RestaurantRegister() {
   const nextPage = () => {
     setPage(page + 1);
   };
-
   const currentField = inputField[page];
+  // derived state依靠先有得state計算而出的方法
+  
 
   return (
     <>
@@ -58,6 +59,8 @@ export default function RestaurantRegister() {
             page={page}
             setPage={setPage}
             currentField={currentField}
+            // 在這個頁面和模板頁面傳遞page，setpage，切頁function，目前欄位，讓模板頁面可以控制
+            // 可能可以直接寫入form之中，不用傳遞，看起來dave也是寫在form之中的，以後再改吧
           >
             {display[page]}
           </FormLayout>
