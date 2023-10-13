@@ -15,7 +15,7 @@ postRouter.get("/", async(req, res)=>{
 
 postRouter.post("/post-pid",async(req,res)=>{
   const post_id = req.body.post_id;
-  console.log(post_id);
+  // console.log(post_id);
 
   const sql= `SELECT * FROM post_image where post_id=${post_id};`
 
@@ -23,40 +23,16 @@ postRouter.post("/post-pid",async(req,res)=>{
   res.json(rowsImgs);
 })
 
-// userRouter.post("/add-post", upload.any(), async (req, res) => {
-//   console.log(req.file, req.files);
-//   const output = {
-//     success: false,
-//     errors: {},
-//     result: {},
-//     postData: req.body, // 除錯檢查用
-//   };
-//   // TODO: 欄位格式檢查
-//   if(req.body.user_id){
-//     try{
-//       const sql = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (NULL, ?, ?, ?, current_timestamp(), ?, NULL, '1')`;
+postRouter.post("/post-comment",async(req,res)=>{
+  const post_id = req.body.post_id;
+  // console.log(post_id);
 
-//   [result] = await db.query(sql,[
-//     post_id,
-//     post_title, 
-//     post_content, 
-//     post_restaurant_id, 
-//     createTime, 
-//     user_id, 
-//     editingTime, 
-//     postisValid
-//   ]);
-//   output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
-//         output.result = result;
-//     }catch (ex) {
-//       output.error = "SQL寫入錯誤";
-//       output.ex = ex;
-//     } 
-//   }res.json(output);
+  const sql= `SELECT * FROM post_comment where post_id=${post_id};`
 
-//   });
-  
+  const [rowsComments] = await db.query(sql);
+  res.json(rowsComments);
+})
 
- 
+
 export default postRouter;
 
