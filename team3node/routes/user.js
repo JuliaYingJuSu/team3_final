@@ -6,7 +6,7 @@ const userRouter = express.Router();
 const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 //我的文章---------------------
-userRouter.get('/:user_id/my-article', async (req, res) => {
+userRouter.get("/:user_id/my-article", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
   const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id WHERE user.user_id=?`;
 
@@ -20,8 +20,8 @@ userRouter.get('/:user_id/my-article', async (req, res) => {
 });
 
 //檔案上傳
-userRouter.post("/upload", upload.any(), async (req, res) => {
-  console.log(req.file, req.files);
+userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
+  console.log(req.file);
   const output = {
     success: false,
     errors: {},
@@ -36,7 +36,7 @@ userRouter.post("/upload", upload.any(), async (req, res) => {
     const file = req.file;
     let result;
 
-    if (!file.length) {
+    if (!file) {
       try {
         const sql = `INSERT INTO user ( user_name,nickname,user_email,user_password, user_phone,create_date,updatetime) VALUES (?,?,?,?,?,NOW(),NOW() )`;
 
@@ -50,27 +50,27 @@ userRouter.post("/upload", upload.any(), async (req, res) => {
         output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
         output.result = result;
       } catch (ex) {
-        output.error = "SQL寫入錯誤";
+        output.errors = "SQL寫入錯誤";
         output.ex = ex;
       }
     }
 
-    if (file.length) {
+    if (file) {
       try {
         const sql = `INSERT INTO user ( user_name,nickname,user_email,user_password, user_phone,user_img,create_date,updatetime) VALUES (?,?,?,?,?,?,NOW(),NOW() )`;
-
+        const { filename } = file;
         [result] = await db.query(sql, [
           user_name,
           nickname,
           user_email,
           user_password,
           user_phone,
-          user_img,
+          filename,
         ]); //這邊欄位要跟寫入SQL的?一樣，不然會出錯
         output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
         output.result = result;
       } catch (ex) {
-        output.error = "SQL寫入錯誤";
+        output.errors = "SQL寫入錯誤";
         output.ex = ex;
       }
     }

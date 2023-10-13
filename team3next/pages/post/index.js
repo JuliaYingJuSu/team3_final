@@ -7,7 +7,8 @@ import Main from "@/components/post/main";
 
 export default function index() {
   const [selectedCity, setSelectedCity] = useState("");
-  const [selectdStyle, setSelectedStyle] = useState("");
+  const [selectedStyle, setSelectedStyle] = useState("");
+ 
   // const [data, setData] = useState([])
 
   // useEffect(()=>{
@@ -28,12 +29,13 @@ export default function index() {
       <Banner
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
-        selectdStyle={selectdStyle}
+        selectedStyle={selectedStyle}
         setSelectedStyle={setSelectedStyle}
       />
       <Main 
       selectedCity={selectedCity} 
-      selectdStyle={selectdStyle} />
+      selectedStyle={selectedStyle}
+      />
       <Footer />
     </>
   );

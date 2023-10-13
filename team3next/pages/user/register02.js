@@ -17,9 +17,7 @@ export default function Register2() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm({
-    defaultValues: { password2: "" },
-  });
+  } = useForm();
   console.log(errors);
 
   // sweetalert設定
@@ -72,10 +70,20 @@ export default function Register2() {
     }
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
+    // 從 "data" 中移除 "password2"
+    const { password2, ...fieldData } = data;
     const formData = new FormData();
-    formData.append("user_img", selectedFile);
+    formData.append("user_name", data.user_name);
+    formData.append("nickname", data.nickname);
+    formData.append("user_email", data.user_email);
+    formData.append("user_password", data.user_password);
+    formData.append("user_phone", data.user_phone);
+    formData.append("self_intr", data.self_intr);
+    formData.append("user_img", data.user_img[0]);
+
     try {
+      console.log(data.user_img[0]);
       const response = await axios({
         method: "POST",
         url: process.env.API_SERVER + "/api/user/upload",
@@ -97,32 +105,6 @@ export default function Register2() {
       });
     }
   };
-
-  // const handleSubmission = () => {
-  //   const Data = new FormData();
-
-  //   // 對照server上的檔案名稱 req.files.avatar
-  //   formData.append("user_img", selectedFile);
-
-  //   fetch(
-  //     process.env.API_SERVER + "/api/user/upload", //server url
-  //     {
-  //       method: "POST",
-  //       body: formData,
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       console.log("Success:", result);
-  //       setImgServerUrl(process.env.API_SERVER + "/api/user/upload");
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-  // };
 
   return (
     <>
@@ -174,9 +156,7 @@ export default function Register2() {
                   <input
                     className="upload_input"
                     type="file"
-                    onChange={changeHandler}
-                    {...register("user_img")}
-                    // {...register("user_img", { onChange: { changeHandler } })}
+                    {...register("user_img", { onChange: changeHandler })}
                   />
                   <span className="fs-5">➕</span>
                 </label>

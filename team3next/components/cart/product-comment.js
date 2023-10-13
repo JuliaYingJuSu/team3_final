@@ -1,12 +1,36 @@
+import { method } from "lodash";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export default function ProductComment() {
+export default function ProductComment({ product }) {
   const [show, setShow] = useState(false);
+  const [content, setContent] = useState("");
+  console.log(content);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const comment = (product) => {
+    console.log(product.orderproduct_id);
+    console.log(content);
+
+    fetch("http://localhost:3002/api/product/add-comment", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: localStorage.getItem("auth").user_id,
+        opid: product.orderproduct_id,
+        content: content,
+        // score
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+      });
+    setShow(false);
+  };
 
   return (
     <>
@@ -30,7 +54,7 @@ export default function ProductComment() {
             className="fs-5 pb-1"
             style={{ borderBottom: "2px solid rgba(102, 102, 102, 0.5)" }}
           >
-            商品名稱
+            {product.product_name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body
@@ -56,6 +80,13 @@ export default function ProductComment() {
               aria-describedby="helpId"
               placeholder="評論內容..."
               className="w-100 p-1 rounded-3"
+              value={content}
+              onChange={(e) => {
+                console.log(e.target.value);
+
+                setContent(e.target.value);
+                console.log(e.target.value);
+              }}
               style={{
                 fontSize: "16px",
                 height: "200px",
@@ -74,7 +105,14 @@ export default function ProductComment() {
             backgroundColor: "#FBF9EF",
           }}
         >
-          <Button className="btn-middle" onClick={handleClose}>
+          <Button
+            className="btn-middle"
+            onClick={() => {
+              console.log(product);
+
+              comment(product);
+            }}
+          >
             確定
           </Button>
           <Button
