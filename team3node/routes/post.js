@@ -13,6 +13,16 @@ postRouter.get("/", async(req, res)=>{
   res.json(data);//回傳json格式
 });
 
+postRouter.post("/post-pid",async(req,res)=>{
+  const post_id = req.body.post_id;
+  console.log(post_id);
+
+  const sql= `SELECT * FROM post_image where post_id=${post_id};`
+
+  const [rowsImgs] = await db.query(sql);
+  res.json(rowsImgs);
+})
+
 // userRouter.post("/add-post", upload.any(), async (req, res) => {
 //   console.log(req.file, req.files);
 //   const output = {
