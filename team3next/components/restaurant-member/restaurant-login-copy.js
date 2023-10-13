@@ -11,27 +11,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "@/validation/login-validation";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { headers } from "@/next.config";
 
 export default function RestaurantLogin() {
   const [loginState, setLoginState] = useState(false);
   axios.defaults.withCredentials = true;
-  const login = async () => {
-    const response = await axios.get(
-      "http://localhost:3002/api/restaurant/member-login"
-    );
-    setLoginState(response.data.user.restaurant_name);
-    console.log(response.data);
-  };
-  const authCheck = async () => {
-    const response = await axios.get(
-      "http://localhost:3002/isUserAuth",{headers:{"x-access-token": localStorage.getItem("token")}}
-    );
-    console.log(response.data)
-  };
-  useEffect(() => {
-    // login();
-  }, []);
+  // const login = async () => {
+  //   const response = await axios.get(
+  //     "http://localhost:3002/api/restaurant/member-login"
+  //   );
+  //   setLoginState(response.data.user.restaurant_name);
+  //   console.log(response.data);
+  // };
+  // useEffect(() => {
+  //   login();
+  // }, []);
   const {
     register,
     handleSubmit,
@@ -47,13 +40,8 @@ export default function RestaurantLogin() {
         data
       );
       console.log("Server Response:", response.data);
-      if (response.data.auth) {
-        setLoginState(true);
-        localStorage.setItem("token","Bearer " + response.data.token)
-      }
     } catch (err) {
       console.error("Error:", err);
-      setLoginState(false);
     }
   };
   return (
@@ -95,15 +83,6 @@ export default function RestaurantLogin() {
                   登入
                 </Link>
               </span>
-              {loginState && (
-                <button
-                  onClick={() => {
-                    authCheck();
-                  }}
-                >
-                  Sunny
-                </button>
-              )}
             </div>
             <div className="container mt-5">
               <Toggle></Toggle>
