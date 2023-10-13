@@ -8,6 +8,8 @@ import AuthContext from "@/hooks/AuthContext";
 import { useContext } from "react";
 
 export default function UserPictureCard() {
+
+  //sweetalert 設定
   const swalButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",

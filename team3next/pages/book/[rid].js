@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
@@ -13,7 +14,38 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import "swiper/css/pagination";
 
-export default function Index() {
+export default function RestaurantDetail() {
+  const [data, setData] = useState({
+    restaurant_id: "",
+    restaurant_name: "",
+    restaurant_city: "",
+    restaurant_district: "",
+    restaurant_address: "",
+    restaurant_phone: "",
+    restaurant_info: "",
+    r_img_id: "",
+    r_img_route: [],
+  });
+  console.log(data);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.isReady) {
+      const rid = router.query.rid; //***
+      const uid = "10" || "";
+      // const uid = localStorage.getItem()
+
+      console.log(rid);
+
+      fetch(`http://localhost:3002/api/book/${rid}/${uid}`)
+        .then((r) => r.json())
+        .then((r) => {
+          console.log(r);
+          setData(r);
+        });
+    }
+  }, [router.isReady]);
+
   return (
     <>
       <Head>
@@ -61,7 +93,7 @@ export default function Index() {
         <BreadcrumbRestaurant></BreadcrumbRestaurant>
       </div>
       <div className="container" style={{ maxWidth: "1320px" }}>
-        <p className="h3 my-3">Cin Cin Osteria 請請義大利餐廳</p>
+        <p className="h3 my-3">{data.rows?.restaurant_name}</p>
         <div className="fs18">
           <div className="d-flex">
             <span className="pe-2">

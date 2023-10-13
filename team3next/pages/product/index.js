@@ -48,6 +48,8 @@ export default function index() {
 
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
+          console.log(wishList);
+
           setWish(wishList);
         }
       });

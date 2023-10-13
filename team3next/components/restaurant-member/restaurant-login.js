@@ -9,9 +9,20 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "@/validation/login-validation";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function RestaurantLogin() {
+  axios.defaults.withCredentials = true;
+  const login = async () => {
+    const response = await axios.get(
+      "http://localhost:3002/api/restaurant/member-login"
+    );
+    console.log(response.data);
+  };
+  useEffect(() => {
+    login();
+  }, []);
   const {
     register,
     handleSubmit,
@@ -21,6 +32,15 @@ export default function RestaurantLogin() {
 
   const onSubmit = async (data) => {
     console.log(data);
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/restaurant/member-login",
+        data
+      );
+      console.log("Server Response:", response);
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
   return (
     <>

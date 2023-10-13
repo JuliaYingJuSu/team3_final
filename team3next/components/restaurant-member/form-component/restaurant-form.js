@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import registerSchema from "@/validation/register-validation";
 import { Upload, Modal, Form } from "antd";
 import axios from "axios";
-
+// 製作form的外框，把含有上傳功能的form作為模板使用,因此使用rhf自帶的context從這裡往下傳送即可，其他地方不需要用到
 export default function FormLayout({
   children,
   prevPage,
@@ -33,7 +33,7 @@ export default function FormLayout({
     data.photo.forEach((file) => {
       formData.append("photo", file.originFileObj);
     });
-    console.log(data.photo[0].originFileObj);
+    // console.log(data.photo[0].originFileObj);
 
     try {
       const response = await axios.post(
@@ -65,6 +65,7 @@ export default function FormLayout({
                 >
                   上一步
                 </button>
+                {/* 下一步的按鈕用rhf的trigger即使不用submit也能暫時觸發檢查，currentField為本頁目前所含的欄位 */}
                 <button
                   onClick={async () => {
                     nextPage;
@@ -72,6 +73,7 @@ export default function FormLayout({
                       shouldFocus: true,
                     });
                     if (output) {
+                      // 這裡rhf會回傳佈林值，如果為true就下一頁
                       nextPage();
                     }
                   }}

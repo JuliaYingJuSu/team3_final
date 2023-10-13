@@ -275,7 +275,7 @@ export default function OrderComplete() {
                       {v.price * v.order_quantity}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
-                      {<ProductComment />}
+                      {<ProductComment product={v} />}
                     </td>
                   </tr>
                 </>
