@@ -23,6 +23,7 @@ export default function RestaurantDetail() {
     restaurant_address: "",
     restaurant_phone: "",
     restaurant_info: "",
+    restaurant_opening: "",
     r_img_id: "",
     r_img_route: [],
   });
@@ -45,6 +46,10 @@ export default function RestaurantDetail() {
         });
     }
   }, [router.isReady]);
+
+  const specSplit = data.rows?.restaurant_info.split("\\n").map((v) => {
+    return <>{v ? <p>{v}</p> : <br></br>}</>;
+  });
 
   return (
     <>
@@ -74,18 +79,17 @@ export default function RestaurantDetail() {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log("slide change")}
       >
-        <SwiperSlide>
-          <img className="w-100" src="../../images/book/r1-1.png" alt="..." />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="w-100" src="../../images/book/r1-2.png" alt="..." />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="w-100" src="../../images/book/r1-3.png" alt="..." />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="w-100" src="../../images/book/r1-4.png" alt="..." />
-        </SwiperSlide>
+        {data.rowsImgs?.map((v, i) => {
+          return (
+            <SwiperSlide key={i}>
+              <img
+                className="w-100 swiper1Img"
+                src={"/images/book/" + v.r_img_route}
+                alt=""
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <br />
       {/* ==========麵包屑========= */}
@@ -99,13 +103,17 @@ export default function RestaurantDetail() {
             <span className="pe-2">
               <span className="icon-map"></span>
             </span>
-            <div>台北市松山區慶城街16巷16號1F</div>
+            <div>
+              {data.rows?.restaurant_city}
+              {data.rows?.restaurant_district}
+              {data.rows?.restaurant_address}
+            </div>
           </div>
           <div className="d-flex">
             <span className="pe-2">
               <span className="icon-Call"></span>
             </span>
-            <div>02-2712-2050</div>
+            <div>{data.rows?.restaurant_phone}</div>
           </div>
           <div className="d-flex">
             <span className="pe-2">
@@ -118,32 +126,7 @@ export default function RestaurantDetail() {
         <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <div className="fs18">
-          <p>
-            『堅持原型食材，簡單調味』『我們只提供我們自己也吃的食物』堅持使用台灣島嶼的當季農產與、新鮮現流海鮮漁獲，和進口的調味品，所融合出的義式料理餐廳，帶給每一位貴賓視覺與味覺上的饗宴。
-            <br />
-            <br />
-            <br />
-            ***
-            為了提供貴客完美用餐體驗與品質、尊重員工及其他用餐客人，以下說明請您詳閱，謝謝您的體諒與配合
-            ****
-            <br />
-            <br />
-            １．訂位保留 10 分鐘，如逾時將視場狀況重新安排座位。每一輪用餐限時 2
-            小時
-            <br />
-            ２．低消為每人累積點滿 $150、加收 10% 服務費
-            <br />
-            ３．本系統接受 60
-            天內訂位。若需取消或更改訂位，請提前線上操作或來電告知
-            <br />
-            ４．提供兒童專用安全餐具及座位，您可於線上訂位時留言告知需求
-            <br />
-            ５．提供部分蛋奶素餐點，請參考菜單上綠色標示
-            <br />
-            ６．本餐廳未販售酒精類飲品，若您欲攜帶酒類進場不加收開瓶費
-            <br />
-            ７．超過８人用餐之訂位，請直接致電我們將為您特別安排
-          </p>
+          <p>{data.rows && specSplit}</p>
         </div>
         <br />
         <hr className="grey" style={{ maxWidth: "1320px" }} />
@@ -152,19 +135,7 @@ export default function RestaurantDetail() {
           <div className="fs18 align-self-center col-12 col-xl-4">
             <p className="h5">營業時間</p>
             <br />
-            <p>
-              週二至週五
-              <br />
-              <br />
-              11:00-21:00 (最後點餐20:00)
-              <br />
-              <br />
-              <br />
-              週六至週日
-              <br />
-              <br />
-              11:00-21:00 (最後點餐20:00)
-            </p>
+            <p>{data.rows?.restaurant_opening}</p>
           </div>
           <div className="col-xl-8">
             <iframe
@@ -174,7 +145,9 @@ export default function RestaurantDetail() {
               frameborder="0"
               marginheight="0"
               marginwidth="0"
-              src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=台北市松山區慶城街16巷16號&output=embed&t="
+              src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${data.rows?.restaurant_city}
+              ${data.rows?.restaurant_district}
+              ${data.rows?.restaurant_address}&output=embed&t=`}
             ></iframe>
             {/* <img className="r-map" src="../../images/book/map.png" alt="" />/ */}
           </div>
@@ -201,9 +174,17 @@ export default function RestaurantDetail() {
           modules={[Pagination]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <img src="/images/book/r1-menu1.png" alt="" className="menu-img" />
-          </SwiperSlide>
+          {data.rowsMenuImgs?.map((v, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <img
+                  className="w-100 swiper2Img"
+                  src={"/images/book/" + v.menu_img_route}
+                  alt=""
+                />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
         <br />
         <br />
@@ -487,6 +468,10 @@ export default function RestaurantDetail() {
       <Footer></Footer>
       <style jsx>
         {`
+          .swiper1Img {
+            max-height: 780px;
+            object-fit: cover;
+          }
           .r-map {
             width: 100%;
             height: 100%;

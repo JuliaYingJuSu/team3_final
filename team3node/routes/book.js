@@ -45,6 +45,7 @@ bookRouter.get("/:rid/:uid?", async (req, res) => {
   let output = {
     rows: [],
     rowsImgs: [],
+    rowsMenuImgs: [],
   };
   const sql = `SELECT * FROM restaurant_user WHERE restaurant_id = ${rid}`;
 
@@ -53,10 +54,17 @@ bookRouter.get("/:rid/:uid?", async (req, res) => {
   ON r_img.restaurant_id = restaurant_user.restaurant_id 
   WHERE r_img.restaurant_id = ${rid};`;
 
+  const sqlMenuImgs = `SELECT menu_img_route FROM menu_img 
+  JOIN restaurant_user 
+  ON menu_img.restaurant_id = restaurant_user.restaurant_id 
+  WHERE menu_img.restaurant_id = ${rid};`;
+
   const [[rows]] = await db.query(sql);
   output.rows = rows;
   const [rowsImgs] = await db.query(sqlImgs);
   output.rowsImgs = rowsImgs;
+  const [rowsMenuImgs] = await db.query(sqlMenuImgs);
+  output.rowsMenuImgs = rowsMenuImgs;
 
   // console.log(output);
   res.json(output);
