@@ -1,8 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import ImageItemPreview from "@/components/post/Image-Item-preview";
 import { PictureOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
+import Select from 'react-select';
+
 
 export default function AddPost() {
   const props = {
@@ -113,6 +114,7 @@ export default function AddPost() {
           </div>
         </Form>
       </div>
+      
       <style jsx>
         {`
           .btn {

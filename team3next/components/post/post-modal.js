@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import FollowButton from "./followbutton";
 import Like from "./like";
@@ -18,6 +18,9 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
+  const [imgs, setImgs] = useState([]);
+  const [comments, setComments] = useState([]);
+
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
   // 創建日期對象
@@ -58,12 +61,6 @@ export default function PostModal({
     }
   };
 
-  // 將所有的 post_image_name 放入一個數組中
-  const imageNames = Array.isArray(post_image_name)
-    ? post_image_name
-    : [post_image_name];
-    // console.log(imageNames);
-
   // 初始化輪播的 activeIndex
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -72,15 +69,57 @@ export default function PostModal({
     setActiveIndex(selectedIndex);
   };
 
+  useEffect(()=>{
+    if(post_id){
+      fetch(`http://localhost:3002/api/post/post-pid`,{
+        method:"POST",
+        body:JSON.stringify({
+          post_id:post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          setImgs(r);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (post_id) {
+      fetch(`http://localhost:3002/api/post/post-comment`, {
+        method: "POST",
+        body: JSON.stringify({
+          post_id: post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          setComments(r);
+        });
+    }
+  }, [imgs]);
+
+  // const {auth} = useContext(AuthContext);
+
+  // useEffect(()=>{
+  //   fetch(process.env.API_SERVER = `/api/`)
+  // })
   return (
     <>
       <div
         className="modal fade"
-        id={"exampleModal"+post_id}
+        id={"exampleModal" + post_id}
         tabindex="-1"
-        aria-labelledby={"exampleModalLabel"+post_id}
+        aria-labelledby={"exampleModalLabel" + post_id}
         aria-hidden="true"
-        // key={post_id}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -113,11 +152,6 @@ export default function PostModal({
                       {restaurant_city}
                     </a>
                   </p>
-                  {/* <p className="me-1">
-                    <a href="#" className="text-dark">
-                      松山區
-                    </a>
-                  </p> */}
                 </div>
               </h5>
               <button
@@ -133,101 +167,18 @@ export default function PostModal({
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
+                className="image-radius"
               >
-                {imageNames.map((imageName, index) => (
-                  <Carousel.Item key={index} >
+                {imgs.map((v, i) => (
+                  <Carousel.Item key={i}>
                     <img
-                      src={`/images/post/${imageName}`}
+                      src={`/images/post/${v.post_image_name}`}
                       className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
                   </Carousel.Item>
                 ))}
               </Carousel>
-              {/* <div id="carouselExampleIndicators" className="carousel slide">
-                <div className="carousel-indicators">
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
-                    className="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="3"
-                    aria-label="Slide 4"
-                  ></button>
-                </div>
-                <div className="carousel-inner image-radius">
-                  <div className="carousel-item active">
-                    <img
-                      src={`/images/post/${post_image_name}`}
-                      className="d-block w-100 object-fit-cover"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src={`/images/post/${post_image_name}`}
-                      className="d-block  object-fit-cover"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src={`/images/post/${post_image_name}`}
-                      className="d-block  object-fit-cover"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src={`/images/post/${post_image_name}`}
-                      className="d-block  object-fit-cover"
-                      alt="..."
-                    />
-                  </div>
-                </div>
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Next</span>
-                </button>
-              </div> */}
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
@@ -273,9 +224,27 @@ export default function PostModal({
               </div>
               <div className="me-auto">
                 <a className="fs16b text-dark" href="#">
-                  會員暱稱
-                </a>
-                <p>讚，感謝分享。</p>
+                      會員暱稱
+                    </a>
+
+                {comments &&
+                  comments.map((v, i) => {
+                    {
+                      /* console.log(v); */
+                    }
+                    return(<p key={i}>{v.content}</p>)
+                    
+                  })}
+
+                {imgs.map((v, i) => (
+                  <Carousel.Item key={i}>
+                    <img
+                      src={`/images/post/${v.post_image_name}`}
+                      className="d-block w-100 object-fit-cover"
+                      alt="..."
+                    />
+                  </Carousel.Item>
+                ))}
               </div>
               <div>
                 <p className="fs12 mt-3 me-3">2023.9.6</p>
