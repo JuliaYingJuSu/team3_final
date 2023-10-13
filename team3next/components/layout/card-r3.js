@@ -15,6 +15,9 @@ export default function CardR3({
   food_tag_names,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
+  const avoidSplit = restaurant_info.split("\\n").map((v) => {
+    return <span>{v}</span>;
+  });
   return (
     <>
       <div className="mt-5 mb-4 container d-flex justify-content-center">
@@ -41,7 +44,7 @@ export default function CardR3({
               {restaurant_name}
             </h5>
             <div className="truncation max-height card-title w-100 grey fs16 mb-0 mt-3">
-              {restaurant_info}
+              {avoidSplit}
             </div>
             <div className="d-flex w-100">
               <div className="fs16b">

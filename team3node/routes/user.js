@@ -31,7 +31,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   // TODO: 欄位格式檢查
   let isPass = true; // 有沒有通常檢查
   if (req.body.user_name) {
-    const { user_name, nickname, user_email, user_password, user_phone } =
+    const { user_name, nickname, user_email, user_password, user_phone,food_tag_id } =
       req.body;
     const file = req.file;
     let result;
