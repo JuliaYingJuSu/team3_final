@@ -83,12 +83,20 @@ restaurantRouter.post(
 //   console.log(req.file)
 // })
 
+restaurantRouter.get("/member-login",async (req, res) => {
+  if (req.session.rows) {
+    res.send({ loggedInStatus: true, user: req.session.user });
+  }
+  else(res.send({ loggedInStatus:false}))
+});
+
+
 restaurantRouter.post("/member-login", async (req, res) => {
   let { email, password } = req.body;
   const sql = "SELECT * FROM `restaurant_user` WHERE restaurant_email = ?";
   const [rows] = await db.query(sql, [email]);
   if (rows.length > 0) {
-    req.session.user = rows;
+    req.session.user = rows[0];
     console.log(req.session.user);
     const storedHash = rows[0].restaurant_password_hash;
     const isPasswordCorrect = bcrypt.compare(password, storedHash);
@@ -104,11 +112,6 @@ restaurantRouter.post("/member-login", async (req, res) => {
   // }
 });
 
-restaurantRouter.get(async (req, res) => {
-  if (req.session.rows) {
-    res.send({ loggedInStatus: true, user: req.session.user });
-  }
-  // else(res.send({ loggedInStatus:user: req.session.user }))
-});
+
 
 export default restaurantRouter;
