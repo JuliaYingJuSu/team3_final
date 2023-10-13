@@ -25,9 +25,9 @@ postRouter.post("/post-pid",async(req,res)=>{
 
 postRouter.post("/post-comment",async(req,res)=>{
   const post_id = req.body.post_id;
-  // console.log(post_id);
+  console.log(post_id);
 
-  const sql= `SELECT * FROM post_comment where post_id=${post_id};`
+  const sql= `SELECT * FROM post_comment join user on  post_comment.user_id = user.user_id where post_comment.post_id=${post_id};`
 
   const [rowsComments] = await db.query(sql);
   res.json(rowsComments);

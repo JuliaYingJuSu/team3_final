@@ -69,12 +69,12 @@ export default function PostModal({
     setActiveIndex(selectedIndex);
   };
 
-  useEffect(()=>{
-    if(post_id){
-      fetch(`http://localhost:3002/api/post/post-pid`,{
-        method:"POST",
-        body:JSON.stringify({
-          post_id:post_id,
+  useEffect(() => {
+    if (post_id) {
+      fetch(`http://localhost:3002/api/post/post-pid`, {
+        method: "POST",
+        body: JSON.stringify({
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -213,43 +213,31 @@ export default function PostModal({
               <p className="fs12 mb-2">{formattedDate}</p>
             </div>
             <hr />
-            <div className="d-flex align-items-start ms-2">
-              <div className="me-2">
-                <Link href="/user/user-my-article-i">
-                  <img
-                    className="rounded-circle headshot-sm img-thumbnail"
-                    src="/images/logo.png"
-                  ></img>
-                </Link>
-              </div>
-              <div className="me-auto">
-                <a className="fs16b text-dark" href="#">
-                      會員暱稱
-                    </a>
-
-                {comments &&
-                  comments.map((v, i) => {
-                    {
-                      /* console.log(v); */
-                    }
-                    return(<p key={i}>{v.content}</p>)
-                    
-                  })}
-
-                {imgs.map((v, i) => (
-                  <Carousel.Item key={i}>
-                    <img
-                      src={`/images/post/${v.post_image_name}`}
-                      className="d-block w-100 object-fit-cover"
-                      alt="..."
-                    />
-                  </Carousel.Item>
-                ))}
-              </div>
-              <div>
-                <p className="fs12 mt-3 me-3">2023.9.6</p>
-              </div>
-            </div>
+            {comments &&
+              comments.map((v, i) => {
+                console.log(v); 
+                return (
+                  <div className="info d-flex align-items-start ms-2" key={i}>
+                    <div className="me-2">
+                      <Link href="/user/user-my-article-i">
+                        <img
+                          className="rounded-circle headshot-sm img-thumbnail"
+                          src={v.user_img}
+                        ></img>
+                      </Link>
+                    </div>
+                    <div className="me-auto">
+                      <a className="fs16b text-dark" href="#">
+                      {v.nickname}
+                      </a>
+                      <p >{v.content}</p>
+                    </div>
+                    <div>
+                      <p className="fs12 mt-3 me-3">{v.create_time}</p>
+                    </div>
+                  </div>
+                );
+              })}
             <hr />
             <form className="container input-group mb-3" onSubmit={sendMessage}>
               <input
