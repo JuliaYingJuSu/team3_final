@@ -15,6 +15,13 @@ export default function Register1() {
   const [isChecked8, setIsChecked8] = useState(false);
   const [isChecked9, setIsChecked9] = useState(false);
 
+  const updateLocalStorage = (id, checked) => {
+    const storedData =
+      JSON.parse(localStorage.getItem("selectedFoodTagIds")) || {};
+    storedData[id] = checked;
+    localStorage.setItem("selectedFoodTagIds", JSON.stringify(storedData));
+  };
+
   const {
     register,
     handleSubmit,
@@ -39,14 +46,16 @@ export default function Register1() {
 
     setSelectedFoodTagIds(selectedIds);
 
-    // const query = {
-    //   foodTagIds: selectedIds.join(","), // Join selected IDs into a comma-separated string
-    // };
-
-    // router.replace({
-    //   pathname: router.pathname,
-    //   query: query,
-    // });
+    // 更新本地存储
+    updateLocalStorage("1", isChecked1);
+    updateLocalStorage("2", isChecked2);
+    updateLocalStorage("3", isChecked3);
+    updateLocalStorage("4", isChecked4);
+    updateLocalStorage("5", isChecked5);
+    updateLocalStorage("6", isChecked6);
+    updateLocalStorage("7", isChecked7);
+    updateLocalStorage("8", isChecked8);
+    updateLocalStorage("9", isChecked9);
   }, [
     isChecked1,
     isChecked2,
@@ -80,6 +89,7 @@ export default function Register1() {
                           checked={isChecked1}
                           onClick={() => {
                             setIsChecked1((prev) => !prev);
+                            updateLocalStorage("1", !isChecked1);
                           }}
                           {...register("food_tag_id_1")}
                         />
@@ -117,6 +127,7 @@ export default function Register1() {
                           {...register("food_tag_id_2")}
                           onClick={() => {
                             setIsChecked2((prev) => !prev);
+                            updateLocalStorage("2", !isChecked2);
                           }}
                         />
                         <label
@@ -152,6 +163,7 @@ export default function Register1() {
                           checked={isChecked3}
                           onClick={() => {
                             setIsChecked3((prev) => !prev);
+                            updateLocalStorage("3", !isChecked3);
                           }}
                           {...register("food_tag_id_3")}
                         />
@@ -188,6 +200,7 @@ export default function Register1() {
                           checked={isChecked4}
                           onClick={() => {
                             setIsChecked4((prev) => !prev);
+                            updateLocalStorage("4", !isChecked4);
                           }}
                           {...register("food_tag_id_4")}
                         />
@@ -224,6 +237,7 @@ export default function Register1() {
                           checked={isChecked5}
                           onClick={() => {
                             setIsChecked5((prev) => !prev);
+                            updateLocalStorage("5", !isChecked5);
                           }}
                           {...register("food_tag_id_5")}
                         />
@@ -260,6 +274,7 @@ export default function Register1() {
                           checked={isChecked6}
                           onClick={() => {
                             setIsChecked6((prev) => !prev);
+                            updateLocalStorage("6", !isChecked6);
                           }}
                           {...register("food_tag_id_6")}
                         />
@@ -296,6 +311,7 @@ export default function Register1() {
                           checked={isChecked7}
                           onClick={() => {
                             setIsChecked7((prev) => !prev);
+                            updateLocalStorage("7", !isChecked7);
                           }}
                           {...register("food_tag_id_7")}
                         />
@@ -332,6 +348,7 @@ export default function Register1() {
                           checked={isChecked8}
                           onClick={() => {
                             setIsChecked8((prev) => !prev);
+                            updateLocalStorage("8", !isChecked8);
                           }}
                           {...register("food_tag_id_8")}
                         />
@@ -368,6 +385,7 @@ export default function Register1() {
                           checked={isChecked9}
                           onClick={() => {
                             setIsChecked9((prev) => !prev);
+                            updateLocalStorage("9", !isChecked9);
                           }}
                           {...register("food_tag_id_9")}
                         />
@@ -396,24 +414,17 @@ export default function Register1() {
                   <div className="me-4">
                     <button
                       className="grey btn fs-5"
-                      data-bs-dismiss="modal"
                       data-bs-toggle="modal"
-                      data-bs-target="#modal2"
-                      >下次一定選
+                      data-bs-target="#modal2">
+                      下次一定選
                     </button>
                   </div>
                   <div className="me-2">
-                    <button  className="btn btn-middle fs-5">
-                      {/* <Link
-                        href={{
-                          pathname: "/user/register02",
-                          query: { foodTagIds: selectedFoodTagIds.join(",") },
-                        }}
-                        style={{ color: "#3f4c5c" }}
-                        passHref // 加這個才可以正常連結
-                      >
-                        確定選擇
-                      </Link> */}
+                    <button
+                      className="btn btn-middle fs-5"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modal2">
+                      確定選擇
                     </button>
                   </div>
                 </div>
