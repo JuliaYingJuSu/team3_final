@@ -19,6 +19,21 @@ userRouter.get("/:user_id/my-article", async (req, res) => {
   }
 });
 
+//圖片卡片內容
+userRouter.get("/:user_id/my-article2", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT user.*, post.*, post_image.* FROM user JOIN post ON user.user_id = post.user_id JOIN post_image ON post.post_id = post_image.post_id WHERE user.user_id = ? GROUP BY post.post_id`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+
 //檔案上傳
 userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   console.log(req.file);
