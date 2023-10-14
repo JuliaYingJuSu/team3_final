@@ -53,7 +53,8 @@ export default function Card({
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
-          <a href="#" data-bs-toggle="modal" data-bs-target={"#exampleModal"+post_id}>
+          <a href="#" data-bs-toggle="modal" data-bs-target={"#exampleModal"+post_id}
+          >
             <img
               src={`/images/post/${post_image_name}`}
               className="card-img"

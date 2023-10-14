@@ -113,8 +113,21 @@ export default function Index() {
         </div>
         <br />
         <div className="container d-flex justify-content-center my-5">
-          <Link href="/user/my-book" className="btn btn-middle">
+          <Link
+            href="/user/my-book"
+            className="btn btn-middle me-3"
+            onClick={(event) => {
+              const result = window.confirm("確認要取消這筆訂位嗎?");
+              if (result) {
+              } else {
+                event.preventDefault();
+              }
+            }}
+          >
             取消訂位
+          </Link>
+          <Link href="/user/my-book" className="btn btn-middle ms-3">
+            回上一頁
           </Link>
         </div>
       </div>

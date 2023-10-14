@@ -31,17 +31,16 @@ export default function productDetail() {
   const [wish, setWish] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [recommend, setRecommend] = useState([]);
-  console.log(recommend);
+  // console.log(recommend);
   const router = useRouter();
 
+  // 取資料
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
-      const uid = "10" || "";
-      // const uid = localStorage.getItem()
 
-      console.log(pid);
-
+      const uid = JSON.parse(localStorage.getItem("auth")).user_id || 0;
+      console.log(pid, uid);
       fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
@@ -52,6 +51,7 @@ export default function productDetail() {
     }
   }, [router.isReady]);
 
+  // 取推薦商品
   useEffect(() => {
     if (data.rows) {
       fetch(`http://localhost:3002/api/product/product-recommend`, {
@@ -71,10 +71,6 @@ export default function productDetail() {
     }
   }, [data]);
 
-  // data.rows && console.log(data.rows.specification);
-  // console.log(data.rows?.specification.split("\\n"));
-  // const specSplit = data.rows?.specification.replace("\\n", "<br />");
-  // console.log(specSplit);
   const specSplit = data.rows?.specification.split("\\n").map((v) => {
     return <p>{v}</p>;
   });
@@ -93,6 +89,7 @@ export default function productDetail() {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,
+            uid: JSON.parse(localStorage.getItem("auth")).user_id || 0,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -115,6 +112,7 @@ export default function productDetail() {
           method: "POST",
           body: JSON.stringify({
             pid: pathName,
+            uid: JSON.parse(localStorage.getItem("auth")).user_id || 0,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -160,17 +158,10 @@ export default function productDetail() {
             (v) => v.product_id == router.query.pid
           );
           //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
-
           // -----------------新的------------------
-          console.log(cart, data.rows.product_id);
-          console.log(
-            cart.findIndex((v) => v.product_id == data.rows.product_id)
-          );
-
           if (
             cart.findIndex((v) => v.product_id == data.rows.product_id) >= 0
           ) {
-            console.log("5");
             const newCart = cart.map((v, i) => {
               if (v.product_id == data.rows.product_id) {
                 return { ...v, quantity: v.quantity + quantity };
@@ -178,10 +169,9 @@ export default function productDetail() {
                 return { ...v };
               }
             });
-
             localStorage.setItem("cart", JSON.stringify(newCart));
           }
-
+          // -----------------舊的------------------
           //   if (existCart >= 0) {
           //   const updateQuantity =
           //     parseInt(cart[existCart].quantity) + quantity;

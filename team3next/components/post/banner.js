@@ -38,6 +38,9 @@ export default function Banner({selectedCity, setSelectedCity, selectedStyle, se
             <li className="dropdown-item"  onClick={handleCityChange}>
                 基隆市
             </li>
+            <li className="dropdown-item"  onClick={handleCityChange}>
+                高雄市
+            </li>
           </ul>
         </div>
       </div>

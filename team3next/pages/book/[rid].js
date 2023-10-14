@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import "swiper/css/pagination";
+import { filter } from "lodash";
+import { array } from "prop-types";
 
 export default function RestaurantDetail() {
   const [data, setData] = useState({
@@ -47,9 +49,46 @@ export default function RestaurantDetail() {
     }
   }, [router.isReady]);
 
-  const specSplit = data.rows?.restaurant_info.split("\\n").map((v) => {
+  const specSplit1 = data.rows?.restaurant_info.split("\\n").map((v) => {
     return <>{v ? <p>{v}</p> : <br></br>}</>;
   });
+  const specSplit2 = data.rows?.restaurant_opening.split("\\n").map((v) => {
+    return <>{v ? <p>{v}</p> : <br></br>}</>;
+  });
+
+  // 日曆
+  const now = {
+    y: new Date().getFullYear(),
+    m: new Date().getMonth() + 1,
+    d: new Date().getDate(),
+  };
+  const [bookMonth, setBookMonth] = useState(`${now.m}`);
+  const [bookDate, setBookDate] = useState(`${now.d + 1}`);
+
+  const handleBookMonth = (newMonth) => {
+    setBookMonth(newMonth);
+  };
+  const handleBookDate = (newDate) => {
+    setBookDate(newDate);
+  };
+
+  //訂位開始與結束時間
+  const startAndEndF = () => {
+    const bookDay = new Date(now.y, bookMonth - 1, bookDate).getDay();
+    const bookDayData = data.rowsRoutine?.find(
+      (item) => item.day_of_week === bookDay
+    );
+    if (bookDayData && bookDayData.is_open) {
+      const startHour = new Date(`0,${bookDayData.start_time}`).getHours();
+      const endHour = new Date(`0,${bookDayData.end_time}`).getHours();
+      return [startHour, endHour];
+    } else {
+      console.log("不營業");
+      return null;
+    }
+  };
+  const startAndEnd = startAndEndF();
+  console.log(startAndEnd);
 
   return (
     <>
@@ -97,7 +136,7 @@ export default function RestaurantDetail() {
         <BreadcrumbRestaurant></BreadcrumbRestaurant>
       </div>
       <div className="container" style={{ maxWidth: "1320px" }}>
-        <p className="h3 my-3">{data.rows?.restaurant_name}</p>
+        <p className="h3 my-4">{data.rows?.restaurant_name}</p>
         <div className="fs18">
           <div className="d-flex">
             <span className="pe-2">
@@ -126,16 +165,15 @@ export default function RestaurantDetail() {
         <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <div className="fs18">
-          <p>{data.rows && specSplit}</p>
+          <p>{data.rows && specSplit1}</p>
         </div>
-        <br />
         <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <div className="row g-5" style={{ minHeight: "450px" }}>
           <div className="fs18 align-self-center col-12 col-xl-4">
             <p className="h5">營業時間</p>
             <br />
-            <p>{data.rows?.restaurant_opening}</p>
+            <p>{data.rows && specSplit2}</p>
           </div>
           <div className="col-xl-8">
             <iframe
@@ -192,7 +230,7 @@ export default function RestaurantDetail() {
         <hr className="grey" style={{ maxWidth: "1320px" }} />
         <br />
         <div className="row justify-content-between">
-          {/* 人數 */}
+          {/* 用餐人數 */}
           <div className="col-auto row mb-2 mt-5">
             <label
               htmlFor="readdress"
@@ -204,24 +242,32 @@ export default function RestaurantDetail() {
               <br />
               <br />
               <select className={styles.selectbox + " fs18"}>
-                <option value="2">2 位 大人</option>
-                <option value="3">3 位 大人</option>
-                <option value="4">4 位 大人</option>
+                {Array(6)
+                  .fill(1)
+                  .map((v, i) => {
+                    return (
+                      <option value={i + 1} selected={i + 1 === 2}>
+                        {i + 1} 位 大人
+                      </option>
+                    );
+                  })}
               </select>
             </div>
             <div className={styles.sortnum + " me-3"}>
               <br />
               <br />
               <select className={styles.selectbox + " fs18"}>
-                <option value="0">0 位 孩童</option>
-                <option value="1">1 位 孩童</option>
-                <option value="2">2 位 孩童</option>
+                {Array(5)
+                  .fill(1)
+                  .map((v, i) => {
+                    return <option value={i}>{i} 位 小孩</option>;
+                  })}
               </select>
             </div>
           </div>
           <br />
           <br />
-          {/* 日期 */}
+          {/* 用餐日期 */}
           <div
             style={{ width: "400px" }}
             className="col row mb-2 align-self-start mt-5"
@@ -236,13 +282,19 @@ export default function RestaurantDetail() {
               <br />
               <br />
               <select className={styles.selectbox + " fs18 w-100"}>
-                <option value="2">10 月 25 日 週三</option>
+                <option value={`${bookMonth}-${bookDate}`} selected>
+                  {bookMonth} 月 {bookDate} 日
+                </option>
               </select>
             </div>
           </div>
         </div>
         <br />
-        <BookCalendar></BookCalendar>
+        <BookCalendar
+          now={now}
+          onBookMonth={handleBookMonth}
+          onBookDate={handleBookDate}
+        />
         <br />
         <br />
         <br />
@@ -251,214 +303,46 @@ export default function RestaurantDetail() {
         <p className="h5">用餐時段</p>
         <br />
         <br />
-        <div className="mb-4">
+        <div className="mb-4" style={{ minHeight: "200px" }}>
           <input name="id" type="hidden" />
           <div className="mt-2">
             <div className="row row-cols-sm-3 row-cols-md-6 g-1 gy-4">
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-1"
-                  name="selectTime[]"
-                  value="1"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-1"
-                >
-                  11:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-2"
-                  name="selectTime[]"
-                  value="2"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-2"
-                >
-                  12:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-3"
-                  name="selectTime[]"
-                  value="3"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-3"
-                >
-                  13:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-4"
-                  name="selectTime[]"
-                  value="4"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-4"
-                >
-                  14:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-5"
-                  name="selectTime[]"
-                  value="5"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-5"
-                >
-                  15:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-6"
-                  name="selectTime[]"
-                  value="6"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-6"
-                >
-                  16:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-7"
-                  name="selectTime[]"
-                  value="7"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-7"
-                >
-                  17:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-8"
-                  name="selectTime[]"
-                  value="8"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-8"
-                >
-                  18:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-9"
-                  name="selectTime[]"
-                  value="9"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-9"
-                >
-                  19:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-10"
-                  name="selectTime[]"
-                  value="10"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-10"
-                >
-                  20:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="checkbox"
-                  className="btn-check"
-                  id="btn-check-11"
-                  name="selectTime[]"
-                  value="11"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-11"
-                >
-                  21:00
-                </label>
-              </div>
+              {startAndEnd ? (
+                Array(startAndEnd[1] - startAndEnd[0] + 1)
+                  .fill(startAndEnd[0])
+                  .map((v, i) => {
+                    return (
+                      <div key={v + i} className="col">
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          id={`btn-check-${v + i}`}
+                          name="selectTime"
+                          value={`${v + i}:00`}
+                        />
+                        <label
+                          className={
+                            styles.btnLg +
+                            " btn btn-lg btn-outline-warning rounded-4 fw-bold"
+                          }
+                          htmlFor={`btn-check-${v + i}`}
+                        >
+                          {v + i}:00
+                        </label>
+                      </div>
+                    );
+                  })
+              ) : (
+                <div className="col fs18 w-100" style={{ textAlign: "center" }}>
+                  目前沒有時段可以預約喔!
+                </div>
+              )}
             </div>
           </div>
         </div>
         <br />
         <br />
-        <div className="container d-flex justify-content-center my-5">
+        <div className="container d-flex justify-content-center mb-5 mt-3">
           <Link href="/book/customer-info" className="btn btn-middle">
             立即訂位
           </Link>
@@ -478,11 +362,6 @@ export default function RestaurantDetail() {
             object-fit: cover;
           }
           .menu-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-          .calendar-img {
             width: 100%;
             height: 100%;
             object-fit: cover;

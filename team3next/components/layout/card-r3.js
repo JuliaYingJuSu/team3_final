@@ -13,11 +13,13 @@ export default function CardR3({
   restaurant_info,
   r_img_route,
   food_tag_names,
+  restaurant_opening,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
   const avoidSplit = restaurant_info.split("\\n").map((v) => {
     return <span>{v}</span>;
   });
+  const openingShort = restaurant_opening.split("\\n")[0];
   return (
     <>
       <div className="mt-5 mb-4 container d-flex justify-content-center">
@@ -71,7 +73,7 @@ export default function CardR3({
                   <span className="pe-2">
                     <span className="icon-calender"></span>
                   </span>
-                  <div>每週一、週二休息</div>
+                  <div>{openingShort}</div>
                 </div>
               </div>
               <Link

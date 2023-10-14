@@ -39,7 +39,10 @@ export default function Index() {
 
         <div className="row justify-content-center d-flex w-25">
           <div className="col-12 col-sm-12 py-1">
-            <Link href="/user/my-book" className="btn btn-middle w-100">
+            <Link
+              href="/user/:user_id/my-book"
+              className="btn btn-middle w-100"
+            >
               訂位紀錄
             </Link>
           </div>

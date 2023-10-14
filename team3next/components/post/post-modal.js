@@ -18,6 +18,7 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
+ 
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
 
@@ -44,8 +45,24 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
+    console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
+    fetch("http://localhost:3002/api/post/add-comment", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: JSON.parse(localStorage.getItem("auth")).user_id,
+        content: messageVal.message,
+        pid: post_id,
+      
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+      });
+    
 
     const newErrors = {};
 
@@ -74,7 +91,7 @@ export default function PostModal({
       fetch(`http://localhost:3002/api/post/post-pid`, {
         method: "POST",
         body: JSON.stringify({
-          post_id: post_id,
+        post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +110,7 @@ export default function PostModal({
       fetch(`http://localhost:3002/api/post/post-comment`, {
         method: "POST",
         body: JSON.stringify({
-          post_id: post_id,
+        post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +138,7 @@ export default function PostModal({
         aria-labelledby={"exampleModalLabel" + post_id}
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
@@ -196,7 +213,7 @@ export default function PostModal({
                 {/* <span>1</span> */}
               </span>
             </div>
-            <div className="ms-3" style={{ width: 470 }}>
+            <div className="ms-3" >
               <div className="mb-3">{post_content}</div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
@@ -215,7 +232,7 @@ export default function PostModal({
             <hr />
             {comments &&
               comments.map((v, i) => {
-                console.log(v); 
+                {/* console.log(v);  */}
                 return (
                   <div className="info d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">

@@ -1,34 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from "react";
+import Select from 'react-select';
+import restaurantArray from "@/data/post_restaurant.json";
 
 function PostRestaurant() {
-  const [jsonData, setJsonData] = useState(null);
-
-  useEffect(() => {
-    // 請求讀取 JSON 檔案
-    fetch('../data/post_restaurant.json') 
-      .then((response) => response.json())
-      .then((data) => setJsonData(data))
-      .catch((error) => console.error('Error reading JSON file:', error));
-      
-  }, []);
+  const options = restaurantArray.map((v,i)=> {
+    return {
+      value: v.post_restaurant_id,
+      label: v.restaurant_name
+    }
+  })
 
 
-  // 渲染 JSON 數據
-  return (
-    <div>
-      {jsonData ? (
-        <pre>{JSON.stringify(jsonData, null, 2)}</pre>
-      ) : (
-        <p>Loading JSON data...</p>
-      )}
-    </div>
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleChange = (selectedOption) => {
+    console.log(selectedOption);
+    setSelectedOption(selectedOption.value);
+  };
+
   
-  );
+  return (
+    <Select onChange={handleChange} options={options} placeholder="下拉選擇餐廳"  />
+  )
 }
 
 export default PostRestaurant;
-
-
-
-
-
