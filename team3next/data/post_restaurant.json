@@ -1,7 +1,4 @@
-[
-{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"team3final"},
-{"type":"table","name":"post_restaurant","database":"team3final","data":
+
 [
 {"post_restaurant_id":"1","restaurant_city":"台北市","restaurant_district":"大安區","restaurant_address":"安和路一段116號","restaurant_name":"CROM Taipei"},
 {"post_restaurant_id":"2","restaurant_city":"台北市","restaurant_district":"松山區","restaurant_address":"八德路三段209號","restaurant_name":"韓華園"},
@@ -49,5 +46,4 @@
 {"post_restaurant_id":"44","restaurant_city":"台北市","restaurant_district":"中山區","restaurant_address":"伊通街42號","restaurant_name":"有田屋火鍋"},
 {"post_restaurant_id":"45","restaurant_city":"基隆市","restaurant_district":"中正區","restaurant_address":"義一路58號","restaurant_name":"小峨嵋川菜館"}
 ]
-}
-]
+

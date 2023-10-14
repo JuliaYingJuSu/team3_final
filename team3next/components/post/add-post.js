@@ -1,8 +1,9 @@
 import Link from "next/link";
 import React from "react";
 import { PictureOutlined } from "@ant-design/icons";
-import { Upload, Modal, Form } from "antd";
-import Select from 'react-select';
+import { Upload, Form } from "antd";
+import PostRestaurant from "./post_restaurant";
+import FoodTags from "./foodtags";
 
 
 export default function AddPost() {
@@ -62,35 +63,27 @@ export default function AddPost() {
                 aria-describedby="basic-addon1"
               />
             </div>
-            <div className="input-group mb-3 ">
+            <div className="input-group mb-3 w-100 ">
               <span className="input-group-text icon-map"></span>
-              <input
+              {/* <input
                 type="text"
                 className="form-control"
                 placeholder="新增餐廳"
                 aria-label="Postlocation"
                 aria-describedby="button-addon2"
-              />
-              {/* <button
-                className="icon-arrow-s-right btn btn-outline-secondary"
-                type="button"
-                id="button-addon2"
-            ></button> */}
+              /> */}
+              <PostRestaurant className="input-group-text" />
             </div>
             <div className="input-group mb-3 ">
               <span className="input-group-text icon-tag"></span>
-              <input
+              <FoodTags/>
+              {/* <input
                 type="text"
                 className="form-control"
                 placeholder="新增標籤"
                 aria-label="Posttag"
                 aria-describedby="button-addon3"
-              />
-              {/* <button
-              className="btn btn-outline-secondary icon-arrow-s-right"
-              type="button"
-              id="button-addon3"
-            ></button> */}
+              /> */}
             </div>
             <div className="input-group mb-3 ">
               <span className="input-group-text icon-edit"></span>

@@ -33,6 +33,11 @@ postRouter.post("/post-comment",async(req,res)=>{
   res.json(rowsComments);
 })
 
+postRouter.post("/addpost",upload.array("photo"), async(req,res)=>{
+  console.log(req.body);
+
+})
+
 
 export default postRouter;
 

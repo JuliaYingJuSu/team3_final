@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
 import Link from "next/link";
@@ -7,14 +7,22 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
 export default function Register2(props) {
   //拿取食物tag
-  const { selectedFoodTagIds } = props
+  const { selectedFoodTagIds } = props;
 
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
+
+  //關閉黑視窗
+  function close() {
+    let modalBackdrops = document.getElementsByClassName("modal-backdrop");
+    for (let i = 0; i < modalBackdrops.length; i++) {
+      const modalBackdrop = modalBackdrops[i];
+      modalBackdrop.parentNode.removeChild(modalBackdrop);
+    }
+  }
 
   const {
     register,
@@ -23,11 +31,10 @@ export default function Register2(props) {
     formState: { errors },
   } = useForm();
   console.log(errors);
-
   // sweetalert設定
   const swalTest1 = Swal.mixin({
     showConfirmButton: false,
-    timer: 2000,
+    timer: 1000,
     timerProgressBar: true,
     didOpen: (swalTest1) => {
       swalTest1.addEventListener("mouseenter", Swal.stopTimer);
@@ -85,7 +92,7 @@ export default function Register2(props) {
     formData.append("user_phone", data.user_phone);
     formData.append("self_intr", data.self_intr);
     formData.append("user_img", data.user_img[0]);
-    formData.append("food_tag_id", foodTagIds);
+    // formData.append("food_tag_id", foodTagIds);
 
     try {
       console.log(data.user_img[0]);
@@ -101,7 +108,7 @@ export default function Register2(props) {
         title: "註冊成功",
         icon: "success",
       });
-      // location.href = "/user/login";
+      close();
     } catch (err) {
       console.error("Error:", err);
       Swal.fire({
@@ -114,7 +121,9 @@ export default function Register2(props) {
   return (
     <>
       <div className="backgs">
-        <span className="z-1 position-absolute start-50 translate-middle" style={{ top: 90 }}>
+        <span
+          className="z-1 position-absolute start-50 translate-middle"
+          style={{ top: 90 }}>
           <Wave01></Wave01>
         </span>
         <span
@@ -129,7 +138,7 @@ export default function Register2(props) {
           <span className="bgi position-absolute opacity-25 translate-middle start-100"></span>
           <div
             className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
-            style={{ paddingRight: 3,paddingTop:180 }}>
+            style={{ paddingRight: 3, paddingTop: 180 }}>
             有
             <span className="px-1" style={{ color: "red" }}>
               *
@@ -137,9 +146,7 @@ export default function Register2(props) {
             的欄位為必填
           </div>
           {/* 輸入區 */}
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            encType="multipart/form-data">
+          <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
             {/* 大頭照 */}
             <div className="middle ms-5">
               <div className="position-relative">
@@ -362,11 +369,9 @@ export default function Register2(props) {
                 })}></textarea>
             </div>
             <div className="d-flex justify-content-end mt-5">
-              {/* <Link href=""> */}
-              <button type="submit" className="btn btn-big fs18b">
+              <button id="close1" type="submit" className="btn btn-big fs18b">
                 註冊
               </button>
-              {/* </Link> */}
             </div>
           </form>
         </div>
