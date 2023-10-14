@@ -10,7 +10,7 @@ productRouter.post("/", async (req, res) => {
     rowsWish: [],
     rowsType: [],
     rowsTypeList: [],
-    price: [],
+    items: [],
   };
 
   //#region (商品條件)
@@ -44,33 +44,48 @@ productRouter.post("/", async (req, res) => {
       ? "AND price > 1000"
       : "";
 
-  const price = req.body.price ? reqPrice : "";
+  //                  []
+  const items = req.body.items.length > 0 ? req.body.items : "";
+  const itemSearch =
+    req.body.items.length > 0
+      ? `AND product_item_detail.product_id IN(SELECT product_id FROM product_item_detail WHERE item_id IN(${items.join(
+          ","
+        )})GROUP BY product_id HAVING COUNT(DISTINCT item_id) = ${
+          req.body.items.length
+        } )`
+      : "";
 
   //#endregion
 
-  const sql = `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ${price} ORDER BY ${orderCondition}`;
-  console.log(sql);
+  const sql =
+    req.body.items.length > 0
+      ? `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id LEFT JOIN product_item_detail ON product_item_detail.product_id = product.product_id WHERE showed_1st = 1 ${search} ${type} ${reqPrice} ${itemSearch} GROUP BY product.product_id ORDER BY ${orderCondition}`
+      : `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ${reqPrice} ORDER BY ${orderCondition}`;
+
+  // console.log(sql);
+
   const sqlType = `SELECT * FROM product_type`;
   const sqlTypeList = `SELECT * FROM product_type_list`;
   // console.log(req.body.uid);
+  const sqlItems = `SELECT * FROM product_item`;
+  console.log(req.body.uid);
   if (req.body.uid) {
-    const sqlWish = `SELECT * FROM product JOIN collection ON product.product_id = collection.product_id WHERE collection.user_id = 10 ORDER BY product.product_id;`;
+    const sqlWish = `SELECT * FROM product JOIN collection ON product.product_id = collection.product_id WHERE collection.user_id = ${req.body.uid} ORDER BY product.product_id;`;
     // const sqlWish = `SELECT * FROM product JOIN collection ON product.product_id = collection.product_id WHERE collection.user_id = ${req.body.uid} ORDER BY product.product_id;`;
     const [rowsWish] = await db.query(sqlWish);
     output.rowsWish = rowsWish;
   }
 
-  // `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id LEFT JOIN collection ON product.product_id = collection.product_id WHERE product_img.showed_1st = 1 ORDER BY product.product_id;`
-
   const [rows] = await db.query(sql);
   const [rowsType] = await db.query(sqlType);
   const [rowsTypeList] = await db.query(sqlTypeList);
+  const [rowsItems] = await db.query(sqlItems);
 
   output.rows = rows;
   output.rowsType = rowsType;
   output.rowsTypeList = rowsTypeList;
+  output.items = rowsItems;
 
-  // console.log(output);
   res.json(output);
 });
 
@@ -80,7 +95,7 @@ productRouter.post("/", async (req, res) => {
 productRouter.get("/:pid/:uid?", async (req, res) => {
   const pid = req.params.pid;
   const uid = req.params.uid;
-  console.log(uid);
+  console.log("pid:" + pid, "uid:" + uid);
 
   let output = {
     rows: [],
@@ -112,7 +127,6 @@ productRouter.get("/:pid/:uid?", async (req, res) => {
 
 //--------------------推薦商品--------------------
 productRouter.post("/product-recommend", async (req, res) => {
-  console.log("12點了");
   let output = {
     rowsRecommend: [],
     rowsRecommendFront: [],
@@ -130,17 +144,18 @@ productRouter.post("/product-recommend", async (req, res) => {
   }
   // console.log(req.body.tid);
 
-  console.log(output);
+  // console.log(output);
   res.json(output);
 });
 
 //--------------------收藏列表---------------------
-//還沒抓到uid版
 productRouter.post("/wishList", async (req, res) => {
-  // const uid = req.body.uid;
+  const uid = req.body.uid;
   // console.log(uid);
 
-  const sql = `SELECT * FROM collection JOIN product ON collection.product_id = product.product_id JOIN product_img ON product_img.product_id = product.product_id WHERE user_id = 10 AND product_img.showed_1st = 1;`;
+  const sql = `SELECT * FROM collection JOIN product ON collection.product_id = product.product_id JOIN product_img ON product_img.product_id = product.product_id WHERE user_id = ${parseInt(
+    uid
+  )} AND product_img.showed_1st = 1;`;
   // const sql = `SELECT * FROM collection WHERE user_id = ${uid}`;
   console.log("有事嗎");
   try {
@@ -157,11 +172,15 @@ productRouter.post("/add-wish", async (req, res) => {
   // const pathName = req.body.pathName;
 
   const pid = req.body.pid;
-  console.log(pid);
+  const uid = req.body.uid;
+  //              ''29''
 
-  const sql = `INSERT INTO collection (collection_id,user_id, product_id) VALUES (NULL, 10, ?)`;
+  console.log(uid);
 
-  const [result] = await db.query(sql, parseInt(pid)); //''29''
+  const sql = `INSERT INTO collection (collection_id,user_id, product_id) VALUES (NULL, ${parseInt(
+    uid
+  )}, ${parseInt(pid)})`;
+  const [result] = await db.query(sql);
   console.log(result);
   //#region
   //ResultSetHeader {
@@ -186,13 +205,16 @@ productRouter.post("/add-wish", async (req, res) => {
 //--------------------刪除收藏---------------------
 productRouter.post("/del-wish", async (req, res) => {
   const pid = req.body.pid;
-  console.log(pid);
+  const uid = req.body.uid;
 
-  const sql = `DELETE FROM collection WHERE product_id = ${pid} AND user_id = 10`;
+  console.log(uid);
+  const sql = `DELETE FROM collection WHERE product_id = ${parseInt(
+    pid
+  )} AND user_id = ${parseInt(uid)}`;
   //                                     ''29''
-
+  console.log(sql);
   try {
-    const [result] = await db.query(sql, parseInt(pid));
+    const [result] = await db.query(sql);
     console.log(result);
 
     const success = !!result.affectedRows;

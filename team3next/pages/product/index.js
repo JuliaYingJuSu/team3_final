@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
@@ -6,6 +6,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import { Form } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
+import AuthContext from "@/hooks/AuthContext";
 import axios from "axios";
 
 export default function index() {
@@ -16,27 +17,36 @@ export default function index() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
-
+  console.log(typeList);
+  // console.log(typeList.split(",")[0]);
   const [price, setPrice] = useState("");
-  console.log(price);
   const priceList = [
     [300, 500, 800, 1000, 1001],
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
+  const [items, setItems] = useState([]);
+  console.log(items);
 
+  //?????
+  // const { auth } = useContext(AuthContext);
+
+  const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
+  console.log(uid);
+  // console.log(setTypeList);
+
+  // 取資料
   useEffect(() => {
-    // axios.get("");
-
     fetch("http://localhost:3002/api/product", {
       method: "POST",
       body: JSON.stringify({
-        // uid: localStorage.getItem()||0,
-        uid: 10,
+        uid: JSON.parse(localStorage.getItem("auth")).user_id,
+        // uid: uid,
         order: order,
         search: search,
         type: type,
-        typeList: typeList,
+        typeList: typeList.split(",")[1],
         price: price,
+        items: items,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -46,30 +56,36 @@ export default function index() {
         const a = r.json();
         return a;
       })
+      //#region (promise運作)
+
       //then的第一次:接收到的r >>> fetch的結果(Response {type: 'cors', url: 'http://localhost:3002/product', redirected: false, status: 200, ok: true, …})
       //r.json() >>> response的json()會得到 >>> Promise {<pending>}
       // [[Prototype]]: Promise [[PromiseState]]:"fulfilled" [[PromiseResult]]:Array(34)
 
       //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
+
+      //#endregion
+
       .then((data) => {
         setData(data);
 
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
-          // console.log(wishList);
+          console.log(wishList);
           setWish(wishList);
         }
       });
-  }, [order, search, typeList, price]);
+  }, [order, search, typeList, price, items]);
 
-  // 增刪購物清單
+  // 增刪願望清單
   const handleWish = (product_id) => {
     if (!wish.includes(product_id)) {
-      console.log(product_id);
+      // console.log(product_id);
       fetch("http://localhost:3002/api/product/add-wish", {
         method: "POST",
         body: JSON.stringify({
           pid: product_id,
+          uid: JSON.parse(localStorage.getItem("auth")).user_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -95,6 +111,7 @@ export default function index() {
         method: "POST",
         body: JSON.stringify({
           pid: product_id,
+          uid: JSON.parse(localStorage.getItem("auth")).user_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -133,6 +150,7 @@ export default function index() {
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
             <div className={styles.leftBox}>
+              {/* -----------分類選單---------- */}
               <div className={styles.left}>
                 <a href="/product">
                   <button className={styles.leftA + " btn"} type="button">
@@ -140,10 +158,8 @@ export default function index() {
                   </button>
                 </a>
 
-                {/* -----------分類選單---------- */}
                 {data.rowsType &&
                   data.rowsType.map((v, i) => {
-                    // console.log(v);
                     return (
                       <>
                         <button
@@ -172,7 +188,10 @@ export default function index() {
                                   className={styles.typeListBtn + " btn"}
                                   type="button"
                                   onClick={() => {
-                                    setTypeList(list.product_type_list_name);
+                                    console.log(list.product_type_list_name);
+                                    setTypeList(
+                                      `${list.product_type_list_id},${list.product_type_list_name}`
+                                    );
                                   }}
                                 >
                                   {list.product_type_list_name}
@@ -184,11 +203,112 @@ export default function index() {
                     );
                   })}
               </div>
+              {/* ------------篩選條件----------- */}
+              <div className={styles.left}>
+                <p className="h6 px-2 pb-3">篩選條件</p>
+                <form className="d-flex flex-column px-2">
+                  {typeList
+                    ? data.items
+                        ?.filter((v) =>
+                          v.product_type_list_id
+                            .split(",")
+                            .includes(typeList.split(",")[0])
+                        )
+                        .map((v, i) => {
+                          return (
+                            <label key={i}>
+                              <input
+                                className="mb-4"
+                                type="checkbox"
+                                value={v.item_id}
+                                onChange={() => {
+                                  if (!items.includes(v.item_id)) {
+                                    const newItems = [...items, v.item_id];
+                                    setItems(newItems);
+                                  } else {
+                                    const newItems = items.filter(
+                                      (a) => a != v.item_id
+                                    );
+
+                                    setItems(newItems);
+                                  }
+                                  // setItems(items.push(v));
+                                  //**在setItems之前push就已試圖直接變items
+                                }}
+                              />
+                              {v.item_name}
+                            </label>
+                          );
+                        })
+                    : data.items &&
+                      data.items
+                        // .filter((v) => v.price_range == 1)
+                        .map((v, i) => {
+                          return (
+                            <label key={i}>
+                              <input
+                                className="mb-4"
+                                type="checkbox"
+                                value={v.item_id}
+                                onChange={() => {
+                                  if (!items.includes(v.item_id)) {
+                                    const newItems = [...items, v.item_id];
+                                    setItems(newItems);
+                                  } else {
+                                    const newItems = items.filter(
+                                      (a) => a != v.item_id
+                                    );
+                                    setItems(newItems);
+                                  }
+                                  // setItems(items.push(v));
+                                  //**在setItems之前push就已試圖直接變items
+                                }}
+                              />
+                              {v.item_name}
+                            </label>
+                          );
+                        })}
+                  {/* {data.items
+                    ?.filter((v) =>
+                      v.product_type_list_id
+                        .split(",")
+                        .includes(typeList.split(",")[0])
+                    )
+                    .map((v, i) => {
+                      console.log(typeList.split(",")[0]);
+                      return (
+                        <label key={i}>
+                          <input
+                            className="mb-4"
+                            type="checkbox"
+                            value={v.item_id}
+                            onChange={() => {
+                              if (!items.includes(v.item_id)) {
+                                const newItems = [...items, v.item_id];
+                                setItems(newItems);
+                              } else {
+                                const newItems = items.filter(
+                                  (a) => a != v.item_id
+                                );
+
+                                setItems(newItems);
+                              }
+                              // setItems(items.push(v));
+                              //**在setItems之前push就已試圖直接變items
+                            }}
+                          />
+                          {v.item_name}
+                        </label>
+                      );
+                    })} */}
+                </form>
+              </div>
+              {/* ------------價格範圍----------- */}
               <div className={styles.left}>
                 <p className="h6 px-2 pb-3">價格範圍</p>
 
                 {priceList[1].map((v, i) => {
-                  console.log(v);
+                  // console.log(v);
                   return (
                     // 畫面渲染後不會再變動key才能用索引
                     <label key={i} className="w-100 ps-2 my-2">
@@ -209,47 +329,6 @@ export default function index() {
                     </label>
                   );
                 })}
-              </div>
-              <div className={styles.left}>
-                <p className="h6 px-2 pb-3">篩選條件</p>
-                <form className="d-flex flex-column px-2">
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType1"
-                      id="priceType1"
-                    />
-                    無添加
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType2"
-                      id="priceType2"
-                    />
-                    無麩質
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType3"
-                      id="priceType3"
-                    />
-                    蛋奶素
-                  </label>
-                  <label>
-                    <input
-                      className="mb-4"
-                      type="checkbox"
-                      name="priceType3"
-                      id="priceType3"
-                    />
-                    送禮
-                  </label>
-                </form>
               </div>
             </div>
 
@@ -614,7 +693,7 @@ export default function index() {
                       >
                         <div className={styles.cardP}>
                           <div className={styles.imgBox}>
-                            <Link href={"/product/" + product_id}>
+                            <Link href={`/product/${product_id}`}>
                               <img
                                 src={"images/product/" + product_img}
                                 alt=""
