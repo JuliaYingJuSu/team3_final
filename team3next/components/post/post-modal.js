@@ -121,7 +121,7 @@ export default function PostModal({
         aria-labelledby={"exampleModalLabel" + post_id}
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
@@ -196,7 +196,7 @@ export default function PostModal({
                 {/* <span>1</span> */}
               </span>
             </div>
-            <div className="ms-3" style={{ width: 470 }}>
+            <div className="ms-3" >
               <div className="mb-3">{post_content}</div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
