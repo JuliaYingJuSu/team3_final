@@ -1,36 +1,43 @@
 [
-{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"team3final"},
-{"type":"table","name":"food_tag","database":"team3final","data":
-[
-{"food_tag_id":"1","food_tag_name":"台式"},
-{"food_tag_id":"2","food_tag_name":"中式"},
-{"food_tag_id":"3","food_tag_name":"日式"},
-{"food_tag_id":"4","food_tag_name":"韓式"},
-{"food_tag_id":"5","food_tag_name":"港式"},
-{"food_tag_id":"6","food_tag_name":"美式"},
-{"food_tag_id":"7","food_tag_name":"義式"},
-{"food_tag_id":"8","food_tag_name":"法式"},
-{"food_tag_id":"9","food_tag_name":"西式"},
-{"food_tag_id":"10","food_tag_name":"泰式"},
-{"food_tag_id":"11","food_tag_name":"越式"},
-{"food_tag_id":"12","food_tag_name":"火鍋"},
-{"food_tag_id":"13","food_tag_name":"燒烤"},
-{"food_tag_id":"14","food_tag_name":"牛排"},
-{"food_tag_id":"15","food_tag_name":"熱炒"},
-{"food_tag_id":"16","food_tag_name":"素食"},
-{"food_tag_id":"17","food_tag_name":"飲品"},
-{"food_tag_id":"18","food_tag_name":"酒吧"},
-{"food_tag_id":"19","food_tag_name":"咖啡廳"},
-{"food_tag_id":"20","food_tag_name":"炸物"},
-{"food_tag_id":"21","food_tag_name":"吃到飽"},
-{"food_tag_id":"22","food_tag_name":"小吃"},
-{"food_tag_id":"23","food_tag_name":"甜點"},
-{"food_tag_id":"24","food_tag_name":"早餐"},
-{"food_tag_id":"25","food_tag_name":"早午餐"},
-{"food_tag_id":"26","food_tag_name":"午餐"},
-{"food_tag_id":"27","food_tag_name":"下午茶"},
-{"food_tag_id":"28","food_tag_name":"晚餐"}
-]
-}
+  {
+    "type": "header",
+    "version": "5.2.1",
+    "comment": "Export to JSON plugin for PHPMyAdmin"
+  },
+  { "type": "database", "name": "team3final" },
+  {
+    "type": "table",
+    "name": "food_tag",
+    "database": "team3final",
+    "data": [
+      { "food_tag_id": "1", "food_tag_name": "台式" },
+      { "food_tag_id": "2", "food_tag_name": "中式" },
+      { "food_tag_id": "3", "food_tag_name": "日式" },
+      { "food_tag_id": "4", "food_tag_name": "韓式" },
+      { "food_tag_id": "5", "food_tag_name": "港式" },
+      { "food_tag_id": "6", "food_tag_name": "美式" },
+      { "food_tag_id": "7", "food_tag_name": "義式" },
+      { "food_tag_id": "8", "food_tag_name": "法式" },
+      { "food_tag_id": "9", "food_tag_name": "西式" },
+      { "food_tag_id": "10", "food_tag_name": "泰式" },
+      { "food_tag_id": "11", "food_tag_name": "越式" },
+      { "food_tag_id": "12", "food_tag_name": "火鍋" },
+      { "food_tag_id": "13", "food_tag_name": "燒烤" },
+      { "food_tag_id": "14", "food_tag_name": "牛排" },
+      { "food_tag_id": "15", "food_tag_name": "熱炒" },
+      { "food_tag_id": "16", "food_tag_name": "素食" },
+      { "food_tag_id": "17", "food_tag_name": "飲品" },
+      { "food_tag_id": "18", "food_tag_name": "酒吧" },
+      { "food_tag_id": "19", "food_tag_name": "咖啡廳" },
+      { "food_tag_id": "20", "food_tag_name": "炸物" },
+      { "food_tag_id": "21", "food_tag_name": "吃到飽" },
+      { "food_tag_id": "22", "food_tag_name": "小吃" },
+      { "food_tag_id": "23", "food_tag_name": "甜點" },
+      { "food_tag_id": "24", "food_tag_name": "早餐" },
+      { "food_tag_id": "25", "food_tag_name": "早午餐" },
+      { "food_tag_id": "26", "food_tag_name": "午餐" },
+      { "food_tag_id": "27", "food_tag_name": "下午茶" },
+      { "food_tag_id": "28", "food_tag_name": "晚餐" }
+    ]
+  }
 ]
