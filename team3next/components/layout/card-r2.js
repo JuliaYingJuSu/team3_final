@@ -13,11 +13,13 @@ export default function CardR2({
   restaurant_info,
   r_img_route,
   food_tag_names,
+  restaurant_opening,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
   const avoidSplit = restaurant_info.split("\\n").map((v) => {
     return <span>{v}</span>;
   });
+  const openingShort = restaurant_opening.split("\\n")[0];
   return (
     <>
       <div className="col mt-2" style={{ height: "780px" }}>
@@ -72,7 +74,7 @@ export default function CardR2({
                 <span className="pe-2">
                   <span className="icon-calender"></span>
                 </span>
-                <div>每週一、週二休息</div>
+                <div>{openingShort}</div>
                 <Link
                   href={`/book/${restaurant_id}`}
                   className="btn btn-little fs16 ms-auto align-self-end"

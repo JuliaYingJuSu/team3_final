@@ -4,7 +4,6 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Banner from "@/components/book/banner";
 import Carousel from "@/components/layout/default-layout/carousel";
 import Footer from "@/components/layout/default-layout/footer";
-import FontMain from "@/components/book/font-main";
 import CardR3 from "@/components/layout/card-r3";
 import Link from "next/link";
 import BreadcrumbIndex from "@/components/book/breadcrumb-index";
@@ -73,6 +72,7 @@ export default function Index() {
               restaurant_info,
               r_img_route,
               food_tag_names,
+              restaurant_opening,
             },
             i
           ) => {
@@ -88,6 +88,7 @@ export default function Index() {
                 restaurant_info={restaurant_info}
                 r_img_route={r_img_route}
                 food_tag_names={food_tag_names}
+                restaurant_opening={restaurant_opening}
               />
             );
           }

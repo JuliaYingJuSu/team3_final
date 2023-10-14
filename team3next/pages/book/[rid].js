@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import "swiper/css/pagination";
+import { filter } from "lodash";
+import { array } from "prop-types";
 
 export default function RestaurantDetail() {
   const [data, setData] = useState({
@@ -69,6 +71,25 @@ export default function RestaurantDetail() {
   const handleBookDate = (newDate) => {
     setBookDate(newDate);
   };
+
+  //訂位開始與結束時間
+  const startAndEndF = () => {
+    const bookDay = new Date(now.y, bookMonth - 1, bookDate).getDay();
+    const bookDayData = data.rowsRoutine?.find(
+      (item) => item.day_of_week === bookDay
+    );
+    if (bookDayData && bookDayData.is_open) {
+      const startHour = new Date(`0,${bookDayData.start_time}`).getHours();
+      const endHour = new Date(`0,${bookDayData.end_time}`).getHours();
+      return [startHour, endHour];
+    } else {
+      console.log("不營業");
+      return null;
+    }
+  };
+  const startAndEnd = startAndEndF();
+  console.log(startAndEnd);
+
   return (
     <>
       <Head>
@@ -282,52 +303,46 @@ export default function RestaurantDetail() {
         <p className="h5">用餐時段</p>
         <br />
         <br />
-        <div className="mb-4">
+        <div className="mb-4" style={{ minHeight: "200px" }}>
           <input name="id" type="hidden" />
           <div className="mt-2">
             <div className="row row-cols-sm-3 row-cols-md-6 g-1 gy-4">
-              <div className="col">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  id="btn-check-1"
-                  name="selectTime"
-                  value="11:00"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-1"
-                >
-                  11:00
-                </label>
-              </div>
-              <div className="col">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  id="btn-check-2"
-                  name="selectTime"
-                  value="12:00"
-                />
-                <label
-                  className={
-                    styles.btnLg +
-                    " btn btn-lg btn-outline-warning rounded-4 fw-bold"
-                  }
-                  htmlFor="btn-check-2"
-                >
-                  12:00
-                </label>
-              </div>
+              {startAndEnd ? (
+                Array(startAndEnd[1] - startAndEnd[0] + 1)
+                  .fill(startAndEnd[0])
+                  .map((v, i) => {
+                    return (
+                      <div key={v + i} className="col">
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          id={`btn-check-${v + i}`}
+                          name="selectTime"
+                          value={`${v + i}:00`}
+                        />
+                        <label
+                          className={
+                            styles.btnLg +
+                            " btn btn-lg btn-outline-warning rounded-4 fw-bold"
+                          }
+                          htmlFor={`btn-check-${v + i}`}
+                        >
+                          {v + i}:00
+                        </label>
+                      </div>
+                    );
+                  })
+              ) : (
+                <div className="col fs18 w-100" style={{ textAlign: "center" }}>
+                  目前沒有時段可以預約喔!
+                </div>
+              )}
             </div>
           </div>
         </div>
         <br />
         <br />
-        <div className="container d-flex justify-content-center my-5">
+        <div className="container d-flex justify-content-center mb-5 mt-3">
           <Link href="/book/customer-info" className="btn btn-middle">
             立即訂位
           </Link>

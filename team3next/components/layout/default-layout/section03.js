@@ -7,7 +7,13 @@ export default function Section03() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.API_SERVER + "/api/book/")
+    fetch("http://localhost:3002/api/book", {
+      method: "POST",
+      body: JSON.stringify({}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((data) => {
         console.log(data);
@@ -52,6 +58,7 @@ export default function Section03() {
                 restaurant_info,
                 r_img_route,
                 food_tag_names,
+                restaurant_opening,
               },
               i
             ) => {
@@ -67,6 +74,7 @@ export default function Section03() {
                   restaurant_info={restaurant_info}
                   r_img_route={r_img_route}
                   food_tag_names={food_tag_names}
+                  restaurant_opening={restaurant_opening}
                 />
               );
             }
