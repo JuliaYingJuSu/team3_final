@@ -4,10 +4,8 @@ import React from "react";
 import Styles from "@/components/user/user-information.module.scss";
 import MyArticle from "../post/my-article";
 import Swal from "sweetalert2";
-import AuthContext from "@/hooks/AuthContext";
-import { useContext } from "react";
 
-export default function UserPictureCard() {
+export default function UserPictureCard({article}) {
 
   //sweetalert 設定
   const swalButtons = Swal.mixin({
@@ -17,7 +15,7 @@ export default function UserPictureCard() {
     },
     buttonsStyling: false,
   });
-  const {auth} = useContext(AuthContext)
+
   return (
     <>
       <div className="position-relative">
@@ -26,7 +24,10 @@ export default function UserPictureCard() {
           className="position-relative"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal">
-          <img src="/images/post/ifood01.jpg" className={Styles.imgStyle}></img>
+          <img
+            src={`/images/post/${article.post_image_name}`}
+            className={Styles.imgStyle}
+            alt="User Image"></img>
           <span
             className="icon-multi position-absolute z-1 fs-4 top-50"
             style={{ right: 20, marginTop: 155 }}></span>
