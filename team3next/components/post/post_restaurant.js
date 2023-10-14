@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import restaurantArray from "@/data/post_restaurant.json";
 
 function PostRestaurant() {

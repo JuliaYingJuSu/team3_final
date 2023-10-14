@@ -5,6 +5,14 @@ import { Upload, Form } from "antd";
 import PostRestaurant from "./post_restaurant";
 import FoodTags from "./foodtags";
 
+// fetch(process.env.API_SERVER +"/api/post/addpost",{
+//   method:"POST",
+//   body:JSON.stringify({
+//     uid:localStorage.getItem("auth").user_id,
+
+//   })
+// })
+
 
 export default function AddPost() {
   const props = {

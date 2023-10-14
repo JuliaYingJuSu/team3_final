@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import foodtagArray from "@/data/food_tag.json";
 
 function FoodTags() {
