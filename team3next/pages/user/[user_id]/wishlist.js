@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
@@ -6,19 +6,28 @@ import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./wishlist.module.css";
 import Link from "next/link";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function WishList() {
   const [wish, setWish] = useState([]);
+  // const [run, setRun] = useState(false);
+  // console.log(run);
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("auth")).user_id);
+
+    const uid = JSON.parse(localStorage.getItem("auth")).user_id;
+    // const uid = auth.user_id;
+
     fetch("http://localhost:3002/api/product/wishList", {
       method: "POST",
-      // body: JSON.stringify({
-      //   uid: localStorage.???
-      // }),
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
+      body: JSON.stringify({
+        uid: uid,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((r) => r.json())
       .then((r) => {
@@ -29,13 +38,14 @@ export default function WishList() {
         console.log(ex);
       });
   }, []);
-
+  // run
   const handleWish = (v) => {
-    console.log(v);
+    console.log(auth);
     fetch("http://localhost:3002/api/product/del-wish", {
       method: "POST",
       body: JSON.stringify({
         pid: v.product_id,
+        uid: auth.user_id,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +55,9 @@ export default function WishList() {
       .then((r) => {
         console.log(r);
         if (r) {
-          location.reload();
+          console.log(!run);
+          // setRun(!run);
+          // location.reload();
         }
       })
       .catch((ex) => {
@@ -84,6 +96,8 @@ export default function WishList() {
             );
             cart.unshift({
               product_id: v.product_id,
+              product_name: v.product_name,
+              price: v.price,
               product_img: v.product_img,
               quantity: 1,
             });
@@ -95,6 +109,8 @@ export default function WishList() {
           const cart = [
             {
               product_id: v.product_id,
+              product_name: v.product_name,
+              price: v.price,
               product_img: v.product_img,
               quantity: 1,
             },
@@ -149,6 +165,7 @@ export default function WishList() {
                     className="me-2 my-1 btn btn-big"
                     onClick={() => {
                       handleAddCart(v);
+                      // setRun(!run);
                     }}
                   >
                     <Link
