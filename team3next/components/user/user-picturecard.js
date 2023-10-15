@@ -23,7 +23,7 @@ export default function UserPictureCard({article}) {
           type="button"
           className="position-relative"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal">
+          data-bs-target={"#exampleModal"+article.post_id}>
           <img
             src={`/images/post/${article.post_image_name}`}
             className={Styles.imgStyle}
@@ -74,7 +74,7 @@ export default function UserPictureCard({article}) {
           </ul>
         </div>
         <span>
-          <MyArticle></MyArticle>
+          <MyArticle article={article}></MyArticle>
         </span>
       </div>
       <style jsx>{`

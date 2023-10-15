@@ -5,9 +5,10 @@ import Saved from "./saved";
 import AuthContext from "@/hooks/AuthContext";
 import { useContext,useState,useEffect } from "react";
 
-export default function MyArticle() {
+export default function MyArticle({article}) {
   const { auth } = useContext(AuthContext);
   const [myarticle, setMyArticle] = useState([]);
+  console.log({article});
 
   useEffect(() => {
     fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/my-article2`)
@@ -24,10 +25,10 @@ export default function MyArticle() {
   return (
     <>
         <div
-          className="modal fade"
-          id="exampleModal"
+          className="modal fade modal-lg"
+          id={"exampleModal" + article.post_id}
           tabindex="-1"
-          aria-labelledby="exampleModalLabel"
+          aria-labelledby={"exampleModalLabel" + article.post_id}
           aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
@@ -58,19 +59,14 @@ export default function MyArticle() {
                   <div className="d-flex align-items-center p-1">
                     <p className="icon-map me-1">
                       <a className="me-1 restaurant" href="#">
-                        
+                        {article.restaurant_name}
                       </a>
                     </p>
-                    {/* <p className="me-1">
+                    <p className="me-1">
                     <a href="#" className="text-dark">
-                      台北市
+                    {article.restaurant_city}
                     </a>
                   </p>
-                  <p className="me-1">
-                    <a href="#" className="text-dark">
-                      松山區
-                    </a>
-                  </p> */}
                   </div>
                 </h5>
                 <button
@@ -170,32 +166,13 @@ export default function MyArticle() {
                   <Saved />
                 </span>
               </div>
-              <div className="ms-3" style={{ width: 500 }}>
+              <div className="ms-3">
                 <div className="mb-3">
-                  公司附近的義大利餐廳
-                  <br />
-                  餐廳的海鮮是從基隆港直接進貨非常新鮮
-                  <br />
-                  今天點了四道
-                  <br />
-                  酪梨醬辣味番茄莎莎海鮮披薩
-                  <br />
-                  烏魚子香蒜辣椒鯷魚炒白花椰
-                  <br />
-                  松露奶醬烤菇燉飯
-                  <br />
-                  義式烤本島現流海魚
-                  <br />
-                  每一道都好吃
-                  <br />
+                  {article.post_content}
                 </div>
                 <p className="icon-tag">
                   <a className="ms-2 " href="#" style={{ color: "#666666" }}>
-                    義式
-                  </a>
-                  <span className="ms-2">|</span>
-                  <a className="ms-2" href="#" style={{ color: "#666666" }}>
-                    午餐
+                    {article.food_tag_name}
                   </a>
                 </p>
                 <p className="fs12 mb-2">2023.9.6</p>
