@@ -25,7 +25,7 @@ export default function UserInformation() {
         <div className={Styles.inputarea}>
           <div className="middle flex-column w-75">
             <dvi>
-              <h4>會員資訊</h4>
+              <h3 className="mt-4">會員資訊</h3>
             </dvi>
             <form className="mt-4">
               <fieldset disabled>
