@@ -1,14 +1,18 @@
 import React from "react";
 import Card from "../layout/card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function Main({selectedCity, selectedStyle}) {
+  const {auth} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   // console.log('main:', {selectedCity})
-console.log('main:', {selectedStyle})
+  // console.log('main:', {selectedStyle})
+  // const [fav, setFav] = usestate([]);
+
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -93,6 +97,7 @@ console.log('main:', {selectedStyle})
             }) => {
               const nickname = userData[user_id].nickname;
               const user_img = userData[user_id].user_img;
+
               return (
                 <Card
                   key={post_id}
