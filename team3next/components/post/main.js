@@ -110,7 +110,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
         // 使用 includes 方法檢查標題或標籤是否包含關鍵字（不區分大小寫）
         return (
           post.post_title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          post.food_tag_name.toLowerCase().includes(searchKeyword.toLowerCase())
+          post.food_tag_name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          post.post_content.toLowerCase().includes(searchKeyword.toLowerCase()) 
+        
         );
       } else {
         return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
