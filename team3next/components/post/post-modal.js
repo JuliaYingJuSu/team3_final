@@ -5,6 +5,9 @@ import Like from "./like";
 import Saved from "./saved";
 import { Carousel } from "react-bootstrap";
 import AuthContext from "@/hooks/AuthContext";
+import Router from "next/router";
+
+
 
 
 export default function PostModal({
@@ -20,7 +23,6 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
- 
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
 
@@ -63,6 +65,7 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
+       Router.push("/post")
       });
     
 
@@ -249,7 +252,7 @@ export default function PostModal({
                       <p >{v.content}</p>
                     </div>
                     <div>
-                      <p className="fs12 mt-3 me-3">{v.create_time}</p>
+                      <p className="fs12 mt-3 me-3">{v.create_time.substr(0,10)}</p>
                     </div>
                   </div>
                 );
