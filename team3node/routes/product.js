@@ -231,13 +231,12 @@ productRouter.post("/add-comment", async (req, res) => {
   const opid = req.body.opid;
   const uid = req.body.uid;
   const content = req.body.content;
-  // const score = req.body.score
-  const score = 4;
+  const score = req.body.score;
 
   const sql = `UPDATE oder_detail SET score = ${score}, content = "${content}" WHERE oder_detail.orderproduct_id = ${opid}`;
   console.log(sql);
 
-  const [result] = await db.query(sql); //''29''
+  const [result] = await db.query(sql);
   console.log(result);
   // {
   //   fieldCount: 0,
@@ -253,9 +252,7 @@ productRouter.post("/add-comment", async (req, res) => {
   if (result.affectedRows) {
     const success = true;
     res.send(success);
-    console.log(success);
   }
-  // res.sendStatus(200);
 });
 
 export default productRouter;

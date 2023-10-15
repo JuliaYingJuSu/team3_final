@@ -6,23 +6,23 @@ import Link from "next/link";
 import FollowButton from "../post/followbutton";
 
 
-export default function UserSCard() {
+export default function UserSCard({author}) {
   return (
     <>
       <div className={Styles.authorCard}>
         <div className="d-flex align-items-center justify-content-between w-100">
           <div className="d-flex ps-4">
             <div className="pe-3">
-              <Link href="/user/user-my-article-i">
+              <Link href={`/user/${author.user_id}/user-my-article-i/`}>
                 <img
                   className="rounded-circle img-thumbnail"
-                  src="/images/logo.png"
-                  style={{ height: 60, width: 60, objectFit: "cover" }}></img>
+                  src={author.user_img}
+                  style={{ height: 70, width: 70, objectFit: "cover" }}></img>
               </Link>
             </div>
             <div className="middle">
               <Link className="fs16b text-dark" href="/user/user-my-article-i">
-                會員暱稱
+                {author.nickname}
               </Link>
             </div>
           </div>

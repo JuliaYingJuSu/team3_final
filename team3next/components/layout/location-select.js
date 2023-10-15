@@ -1,6 +1,14 @@
 import React from 'react'
 
-export default function LocationSelect() {
+export default function LocationSelect(
+  {
+  selectedCity,
+  setSelectedCity,
+}
+) {
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.innerText);
+  };
   return (
     <>
         <button
@@ -9,24 +17,21 @@ export default function LocationSelect() {
               data-bs-toggle="dropdown"
               aria-expanded="false">
               <span className="icon-map fs-5 pe-2 fw-bold"></span>
-              不分地區
+              {selectedCity || "不分地區"}
             </button>
             <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#/">
-                  台北市
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#/">
-                  桃園市
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#/">
-                  高雄市
-                </a>
-              </li>
+              <li className="dropdown-item" onClick={handleCityChange}>
+              台北市
+            </li>
+            <li className="dropdown-item" onClick={handleCityChange}>
+              新北市
+            </li>
+            <li className="dropdown-item" onClick={handleCityChange}>
+              基隆市
+            </li>
+            <li className="dropdown-item" onClick={handleCityChange}>
+              高雄市
+            </li>
             </ul>
             <style jsx>
         {`
