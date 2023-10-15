@@ -89,23 +89,12 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
   }, [selectedCity, selectedStyle, searchKeyword]);
 
 
-  // useEffect(() => {
-  //   let newData = data;
-    
-  //   // 根据选定城市过滤数据
-  //   if (selectedCity) {
-  //     newData = newData.filter((item) => item.restaurant_city === selectedCity);
-  //   }
-
-  //   setDisplayData(newData);
-  // }, [selectedCity]);
-
 
   return (
     <>
       <div className="container">
         <h4 className="h4-title mb-4">
-        {`${selectedCity}${searchKeyword}食記` || "熱門食記"}</h4>
+        {`${selectedCity}${searchKeyword}熱門食記` || "熱門食記"}</h4>
         <div className="row row-cols-1 row-cols-lg-3 container mx-auto">
           {displayData.map(
             (
