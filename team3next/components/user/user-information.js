@@ -4,6 +4,7 @@ import Styles from "./user-information.module.scss";
 import AuthContext from "@/hooks/AuthContext";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function UserInformation() {
   const { auth } = useContext(AuthContext);
@@ -17,7 +18,17 @@ export default function UserInformation() {
     formState: { errors },
   } = useForm();
   console.log(errors);
-  // sweetalert設定
+  
+  const onSubmit =async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.put(process.env.API_SERVER + `/api/user/update`, data);
+      console.log("Server Response:", response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
 
   return (
     <>
@@ -27,7 +38,10 @@ export default function UserInformation() {
             <dvi>
               <h3 className="mt-4">會員資訊</h3>
             </dvi>
-            <form className="mt-4">
+            <form className="mt-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+            <input name="user_id" type="hidden" value={auth.user_id}
+              {...register("user_id")}
+            />
               <fieldset disabled>
                 <div className="mb-3">
                   <label
@@ -59,7 +73,8 @@ export default function UserInformation() {
                     errors.user_name ? "is-invalid" : ""
                   }`}
                   id="InputName"
-                  value={auth.user_name}
+                  name="user_name"
+                  defaultValue={auth.user_name}
                   {...register("user_name", { required: "請輸入姓名" })}
                 />
               </div>
@@ -79,7 +94,8 @@ export default function UserInformation() {
                     errors.nickname ? "is-invalid" : ""
                   }`}
                   id="InputNickName"
-                  value={auth.nickname}
+                  name="nickname"
+                  defaultValue={auth.nickname}
                   {...register("nickname", { required: "請輸入暱稱" })}
                 />
               </div>
@@ -99,11 +115,12 @@ export default function UserInformation() {
                     errors.user_password ? "is-invalid" : ""
                   }`}
                   id="InputPassword"
-                  value={auth.user_password}
+                  name="user_password"
+                  defaultValue={auth.user_password}
                   {...register("user_password", {
                     required: "請輸入英文+數字至少8碼最多不超過12碼",
                     minLength: {
-                      value: 8,
+                      value: 4,
                       message: "請輸入英文+數字至少8碼",
                     },
                     maxLength: {
@@ -138,7 +155,8 @@ export default function UserInformation() {
                     errors.user_phone ? "is-invalid" : ""
                   }`}
                   id="InputPhone"
-                  value={auth.user_phone}
+                  name="user_phone"
+                  defaultValue={auth.user_phone}
                   {...register("user_phone", {
                     required: "請輸入09開頭共10碼的手機號碼",
                     pattern: {

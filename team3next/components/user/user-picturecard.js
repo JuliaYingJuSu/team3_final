@@ -30,7 +30,7 @@ export default function UserPictureCard({article}) {
             alt="User Image"></img>
           <span
             className="icon-multi position-absolute z-1 fs-4 top-50"
-            style={{ right: 20, marginTop: 155 }}></span>
+            style={{ right: 20, marginTop: 140 }}></span>
         </a>
         <div
           className="dropstart position-absolute btn-group"

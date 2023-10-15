@@ -94,7 +94,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
 });
 
 //修改會員資料表單
-userRouter.put("/:sid/update", async (req, res) => {
+userRouter.put("/update", async (req, res) => {
   const output = {
     success: false,
     error: null,
@@ -117,14 +117,14 @@ userRouter.put("/:sid/update", async (req, res) => {
     if (isPass) {
       try {
         const sql =
-          "UPDATE `user` SET `user_id`=?,`user_name`=?,`nickname`=?,`user_password`=?,`user_phone`=? WHERE `user_id`=?";
+          "UPDATE `user` SET `user_name`=?,`nickname`=?,`user_password`=?,`user_phone`=? WHERE `user_id`=?";
 
         [result] = await db.query(sql, [
-          user_id,
           user_name,
           nickname,
           user_password,
           user_phone,
+          user_id,
         ]); //這邊欄位要跟寫入SQL的?一樣，不然會出錯
         output.success = !!result.changedRows; //有改變1，沒有為0
         output.result = result;
