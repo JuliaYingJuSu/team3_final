@@ -1,19 +1,26 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Banner({selectedCity, setSelectedCity, selectedStyle, setSelectedStyle}) {
-
+export default function Banner({
+  selectedCity,
+  setSelectedCity,
+  selectedStyle,
+  setSelectedStyle,
+  searchKeyword, 
+  setSearchKeyword
+}) {
   const handleCityChange = (e) => {
-    setSelectedCity(e.target.innerText); 
+    setSelectedCity(e.target.innerText);
   };
 
   const handleTagSelect = (e) => {
-    setSelectedStyle(e.target.innerText); 
+    setSelectedStyle(e.target.innerText);
   };
 
+  const handleSearch = (e) => {
+    setDisplayData(e.target.innerText);
+  };
 
-  
-  
   return (
     <>
       <div className="container d-flex justify-content-center">
@@ -26,20 +33,20 @@ export default function Banner({selectedCity, setSelectedCity, selectedStyle, se
             aria-expanded="false"
           >
             <span className="icon-map fs-5 pe-2 fw-bold"></span>
-            {selectedCity || '不分地區'}
+            {selectedCity || "不分地區"}
           </button>
           <ul className="dropdown-menu">
-            <li className="dropdown-item"  onClick={handleCityChange}>        
-                台北市
+            <li className="dropdown-item" onClick={handleCityChange}>
+              台北市
             </li>
-            <li className="dropdown-item"  onClick={handleCityChange}>
-                新北市
+            <li className="dropdown-item" onClick={handleCityChange}>
+              新北市
             </li>
-            <li className="dropdown-item"  onClick={handleCityChange}>
-                基隆市
+            <li className="dropdown-item" onClick={handleCityChange}>
+              基隆市
             </li>
-            <li className="dropdown-item"  onClick={handleCityChange}>
-                高雄市
+            <li className="dropdown-item" onClick={handleCityChange}>
+              高雄市
             </li>
           </ul>
         </div>
@@ -48,12 +55,14 @@ export default function Banner({selectedCity, setSelectedCity, selectedStyle, se
         {/* 搜尋條 */}
         <div className="row">
           <div className="col">
-            <form className="d-flex" role="search">
+            <form className="d-flex" role="search" onSubmit={handleSearch}>
               <input
                 className="form-control me-2 searchbar ps-4"
                 type="search"
                 placeholder=""
                 aria-label="Search"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
               ></input>
               <span className="icon-search search-banner"></span>
             </form>
@@ -62,43 +71,95 @@ export default function Banner({selectedCity, setSelectedCity, selectedStyle, se
       </div>
       <div className=" container d-flex justify-content-center mb-3">
         {/* 搜尋條 */}
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           台式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           中式
         </button>
-        <button type="button" className="btn  btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn  btn-sm tags"
+          onClick={handleTagSelect}
+        >
           日式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           韓式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           港式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           美式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           義式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
-        越式
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          越式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           西式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           泰式
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
-        早餐
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          早餐
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
-        午餐
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          午餐
         </button>
-        <button type="button" className="btn btn-sm tags" onClick={handleTagSelect}>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
           晚餐
         </button>
       </div>
