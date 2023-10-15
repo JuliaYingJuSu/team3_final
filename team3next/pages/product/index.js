@@ -142,8 +142,63 @@ export default function index() {
     }
   };
 
+  //ws-------------------------------------------
+  // const [msg, setMsg] = useState("");
+  // const [msgs, setMsgs] = useState([]);
+  // console.log(msg);
+  // const ws = new WebSocket("ws://localhost:3002/ws");
+  // ws.onopen;
+
+  // // (useEffect) => {
+  // // ws.onmessage = (e) => {
+  // //   setMsgs([...msgs, e.data]);
+  // // };
+  // // };
+
   return (
     <>
+      {/* <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom"
+        aria-controls="offcanvasBottom"
+        style={{ position: "absolute", right: "0px", bottom: "300px" }}
+      >
+        Toggle bottom offcanvas
+      </button>
+
+      <div
+        class="offcanvas offcanvas-bottom"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+            泥好
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body small ">
+          ...
+          <div></div>
+          <input
+            type="text"
+            value={msg}
+            onChange={(e) => {
+              setMsg(e.target.value);
+            }}
+          />
+          <button className="btn btn-warning">送出</button>
+        </div>
+      </div> */}
+
       <Navbar />
       <div className="container">
         <Bread />

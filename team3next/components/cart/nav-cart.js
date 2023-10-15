@@ -1,49 +1,85 @@
 import { useState, useEffect } from "react";
 import styles from "./nav-cart.module.css";
+// import { Router, useRouter } from "next/router";
+import Link from "next/link";
+import { HTML5_FMT } from "moment/moment";
 
 export default function NavCart() {
   const [data, setData] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3002/cart")
-  //     .then((r) => r.json())
-  //     .then((data) => {
-  //       setData(data);
-  //       console.log(data);
-  //     })
-  //     .catch((ex) => {
-  //       console.log(ex + "good");
-  //     });
-  // }, []);
+  useEffect(() => {
+    // fetch("http://localhost:3002/cart")
+    //   .then((r) => r.json())
+    //   .then((data) => {
+    //     setData(data);
+    //     console.log(data);
+    //   })
+    //   .catch((ex) => {
+    //     console.log(ex + "good");
+    //   });
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    if (cart) {
+      setData(cart);
+    }
+  }, []);
 
+  // const router = useRouter();
   return (
     <>
-      {data.map((v, i) => {
-        return (
-          <div className="d-flex w-100 border-top border-bottom py-3">
-            <div className="w-50">
-              <img
-                className="img-fluid"
-                src={"images/product/" + v.product_img}
-                alt="檸檬大叔"
-              />
-            </div>
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-12">{v.product_name}</div>
-                <div className="col-6 pt-2">售價</div>
-                <div className="col-6 pt-2">{v.price}</div>
-                <div className="col-6 pt-2">數量</div>
-                <div className="col-6 pt-2">{v.cart_quantity}</div>
+      {data &&
+        data.map((v, i) => {
+          return (
+            <div className="d-flex w-100 border-top border-bottom py-3">
+              <div className="w-50">
+                <img
+                  className="img-fluid"
+                  src={"images/product/" + v.product_img}
+                  alt=""
+                />
+              </div>
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-12">{v.product_name}</div>
+                  <div className="col-6 pt-2">售價</div>
+                  <div className="col-6 pt-2">{v.price}</div>
+                  <div className="col-6 pt-2">數量</div>
+                  <div className="col-6 pt-2">{v.quantity}</div>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      <p style={{ textAlign: "end", padding: "10px", fontWeight: "bold" }}>
+        {data.length > 0
+          ? `小計:${data.reduce((a, i) => {
+              console.log(i.quantity * i.price);
+              return a + i.quantity * i.price;
+            }, 0)}`
+          : ""}
+      </p>
 
-      <div className={styles.checkout + " d-grid col-12 mx-auto mt-4"}>
-        <button className="btn align-items-center">結帳</button>
-      </div>
+      {data.length > 0 ? (
+        <div
+          className={
+            styles.checkout +
+            "d-flex justify-content-end d-grid col-12 mx-auto mt-4"
+          }
+        >
+          {/* <button
+          className="btn align-items-center"
+          onClick={() => {
+            router.push("/cart");
+          }}
+        >
+          結帳
+        </button> */}
+          <a href="/cart" className="btn btn-big h-auto">
+            結帳
+          </a>
+        </div>
+      ) : (
+        <h5 className="h6 px-4">快快挑選商品吧~</h5>
+      )}
     </>
   );
 }
