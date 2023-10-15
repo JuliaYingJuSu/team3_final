@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./cart-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import { json } from "@files-ui/core";
 import { useRouter } from "next/router";
+import RunContext from "@/hooks/RunContext";
 export default function CartDetail() {
   const [data, setData] = useState([]);
+  const { run } = useContext(RunContext);
+  console.log(run);
 
   useEffect(() => {
     // localStorage 取資料
@@ -14,7 +17,7 @@ export default function CartDetail() {
       //setData, 非同步的關係
       setData(getCartItem);
     }
-  }, []);
+  }, [run]);
 
   // 數量增加寫入local Storage
 

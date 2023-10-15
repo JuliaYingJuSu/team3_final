@@ -19,7 +19,7 @@ function FoodTags() {
   
 
   return (
-    <Select onChange={handleChange} options={options} placeholder="新增標籤(可多選，最多五個)" isMulti  />
+    <Select onChange={handleChange} options={options} placeholder="新增食記標籤 (可多選，最多五個)" isMulti  />
   )
 }
 

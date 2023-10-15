@@ -6,6 +6,8 @@ import Link from "next/link";
 import FollowButton from "../post/followbutton";
 import Like from "../post/like";
 import Saved from "../post/saved";
+import { useState, useContext, useEffect } from "react";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function Card({
   post_id,
@@ -21,6 +23,29 @@ export default function Card({
   user_img,
   food_tag_name,
 }) {
+  const { auth } = useContext(AuthContext);
+  const [saved, setSaved] = useState(false);
+  // const [fav, setFav] = useState(false);
+
+  // useEffect(() => {
+  //   if (user_id) {
+  //     fetch("http://localhost:3002/api/post/fav", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         user_id: user_id,
+  //         post_id: post_id,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((r) => r.json())
+  //     .then((r) => {
+  //       setSaved(r);
+  //     });
+  //   }
+  // }, []);
+
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
   // 創建日期對象
@@ -53,7 +78,10 @@ export default function Card({
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
-          <a href="#" data-bs-toggle="modal" data-bs-target={"#exampleModal"+post_id}
+          <a
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target={"#exampleModal" + post_id}
           >
             <img
               src={`/images/post/${post_image_name}`}
@@ -74,8 +102,16 @@ export default function Card({
                 <span>1</span>
               </span> */}
               <span className="middle">
-                <Saved />
-                {/* <span>1</span> */}
+                {/* <Saved 
+                /> */}
+                <button
+                  className="btn btn-sm btn-i"
+                  onClick={() => {
+                    setSaved(!saved);
+                  }}
+                >
+                  <i className={saved ? "icon-mark-fill" : "icon-mark"}></i>
+                </button>
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
@@ -93,7 +129,7 @@ export default function Card({
             <div className="d-flex align-items-center w-100">
               <div className="pe-2">
                 <Link href="/user/user-my-article-i">
-                {/* 三元運算還是不成功，要如何才能使突變薯哥，如果大頭照沒有上傳的時候 */}
+                  {/* 三元運算還是不成功，要如何才能使突變薯哥，如果大頭照沒有上傳的時候 */}
                   {user_img ? (
                     <img
                       className="rounded-circle headshot-small img-thumbnail"

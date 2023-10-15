@@ -6,16 +6,19 @@ import "slick-carousel/slick/slick-theme.css";
 import "@/styles/style.css";
 import { AuthContextProvider } from "@/hooks/AuthContext";
 import { MemberAuthProvider } from "@/components/restaurant-member/context/auth-context";
+import RunContext, { RunContextProvider } from "@/hooks/RunContext";
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <MemberAuthProvider>
-      <AuthContextProvider>
-        <Component {...pageProps} />
-      </AuthContextProvider>
-    </MemberAuthProvider>
+    <RunContextProvider>
+      <MemberAuthProvider>
+        <AuthContextProvider>
+          <Component {...pageProps} />
+        </AuthContextProvider>
+      </MemberAuthProvider>
+    </RunContextProvider>
   );
 }

@@ -5,6 +5,49 @@ import upload from "../module/upload-imgs.js";
 const userRouter = express.Router();
 const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+//訂位紀錄---------------------
+userRouter.get("/:user_id/my-book", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  const sql = `
+  SELECT * FROM user JOIN book 
+  ON user.user_id = book.user_id 
+  JOIN restaurant_user 
+  ON restaurant_user.restaurant_id = book.restaurant_id
+  WHERE user.user_id = ? GROUP BY book.book_id;
+  `;
+
+  try {
+    const [rows] = await db.query(sql, [user_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+userRouter.get("/:user_id/my-book/:bid?", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  const bid = req.params.bid;
+  console.log(bid);
+
+  let output = {
+    rows: [],
+  };
+
+  const sql = `
+    SELECT * FROM user
+    JOIN book
+    ON user.user_id = book.user_id
+    JOIN restaurant_user
+    ON restaurant_user.restaurant_id = book.restaurant_id
+    WHERE book.book_id = ${bid};
+    `;
+  const [[rows]] = await db.query(sql, [user_id]);
+  output.rows = rows;
+
+  res.json(output);
+});
+
 //我的文章---------------------
 userRouter.get("/:user_id/my-article", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
@@ -33,7 +76,6 @@ userRouter.get("/:user_id/myauthor", async (req, res) => {
   }
 });
 
-
 //檔案上傳
 userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   console.log(req.file);
@@ -46,8 +88,14 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   // TODO: 欄位格式檢查
   let isPass = true; // 有沒有通常檢查
   if (req.body.user_name) {
-    const { user_name, nickname, user_email, user_password, user_phone,food_tag_id } =
-      req.body;
+    const {
+      user_name,
+      nickname,
+      user_email,
+      user_password,
+      user_phone,
+      food_tag_id,
+    } = req.body;
     const file = req.file;
     let result;
 
@@ -105,7 +153,14 @@ userRouter.put("/update", async (req, res) => {
   // TODO: 欄位格式檢查
   let isPass = true; // 有沒有通常檢查
   if (req.body.user_name) {
-    let { user_id, user_name,nickname, user_password, user_phone,food_tag_id } = req.body;
+    let {
+      user_id,
+      user_name,
+      nickname,
+      user_password,
+      user_phone,
+      food_tag_id,
+    } = req.body;
     //檢查姓名欄位
     if (user_name.length < 2) {
       output.errors.name = "姓名要大於2個字";
@@ -136,8 +191,5 @@ userRouter.put("/update", async (req, res) => {
   }
   res.json(output);
 });
-
-
-
 
 export default userRouter;
