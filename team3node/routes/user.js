@@ -107,7 +107,7 @@ userRouter.put("/:sid/update", async (req, res) => {
   if (req.body.user_name) {
     let { user_id, user_name,nickname, user_password, user_phone,food_tag_id } = req.body;
     //檢查姓名欄位
-    if (name.length < 2) {
+    if (user_name.length < 2) {
       output.errors.name = "姓名要大於2個字";
       isPass = false;
       output.error = true;
