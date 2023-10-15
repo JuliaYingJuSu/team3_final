@@ -17,7 +17,6 @@ export default function AddNewPost() {
       <UserNavbar />
       <AddPost/>
       <Footer />
-      <PostRestaurant/>
     </>
   );
 }

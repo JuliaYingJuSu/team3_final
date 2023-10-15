@@ -1,15 +1,5 @@
 [
-  {
-    "type": "header",
-    "version": "5.2.1",
-    "comment": "Export to JSON plugin for PHPMyAdmin"
-  },
-  { "type": "database", "name": "team3final" },
-  {
-    "type": "table",
-    "name": "food_tag",
-    "database": "team3final",
-    "data": [
+  
       { "food_tag_id": "1", "food_tag_name": "台式" },
       { "food_tag_id": "2", "food_tag_name": "中式" },
       { "food_tag_id": "3", "food_tag_name": "日式" },
@@ -39,5 +29,4 @@
       { "food_tag_id": "27", "food_tag_name": "下午茶" },
       { "food_tag_id": "28", "food_tag_name": "晚餐" }
     ]
-  }
-]
+ 
