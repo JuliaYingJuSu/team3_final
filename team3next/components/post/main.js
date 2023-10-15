@@ -4,13 +4,14 @@ import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
-export default function Main({selectedCity, selectedStyle}) {
+export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const {auth} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
+  console.log('main:',{searchKeyword})
   // const [fav, setFav] = usestate([]);
 
   useEffect(() => {
@@ -63,20 +64,62 @@ export default function Main({selectedCity, selectedStyle}) {
       .catch((ex) => console.log(ex));
   },[]);
 
-  useEffect(()=>{
-    let newData = data.filter((city) =>{ 
-      if(selectedCity){return city.restaurant_city === selectedCity}
-      else{return city}}
-      ).filter((style)=>{
+  // useEffect(()=>{
+  //   let newData = data.filter((city) =>{ 
+  //     if(selectedCity){return city.restaurant_city === selectedCity}
+  //     else{return city}}
+  //     ).filter((style)=>{
         
-        if(selectedStyle){return style.food_tag_names.indexOf(selectedStyle)>=0}
-        else{
-          return style}
-        });
+  //       if(selectedStyle){return style.food_tag_names.indexOf(selectedStyle)>=0}
+  //       else{
+  //         return style}
+  //       });
+  //   setDisplayData(newData);
+
+  // },[selectedCity, selectedStyle])
+
+  // useEffect(()=>{
+  //   let newData = data.filter((city) =>{ 
+  //     if(selectedCity){return city.restaurant_city === selectedCity}
+  //     else{return city}}
+  //     ).filter((search)=>{
+        
+  //       if(searchKeyword){return search.food_tag_name = searchKeyword }
+  //       else{
+  //         return search}
+  //       });
+  //   setDisplayData(newData);
+
+  // },[selectedCity, searchKeyword])
+
+  useEffect(() => {
+    let newData = data.filter((city) => {
+      if (selectedCity) {
+        return city.restaurant_city === selectedCity;
+      } else {
+        return true; // 如果没有選擇城市，不過濾城市
+      }
+    }).filter((style) => {
+      if (selectedStyle) {
+        return style.food_tag_names.indexOf(selectedStyle) >= 0;
+      } else {
+        return true; // 如果没有選擇標籤，不過濾標籤
+      }
+    }).filter((post) => {
+      if (searchKeyword) {
+        // 使用 includes 方法檢查標題或標籤是否包含關鍵字（不區分大小寫）
+        return (
+          post.post_title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          post.food_tag_name.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+      } else {
+        return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
+      }
+    });
+  
     setDisplayData(newData);
-
-  },[selectedCity, selectedStyle])
-
+  }, [selectedCity, selectedStyle, searchKeyword]);
+  
 
   return (
     <>
