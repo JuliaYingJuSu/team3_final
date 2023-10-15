@@ -7,7 +7,8 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
-  console.log('frontpage:', {selectedCity})
+  // console.log('frontpage:', {selectedCity})
+  console.log('frontpage:', {searchKeyword})
 
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
@@ -57,54 +58,54 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
       .catch((ex) => console.log(ex));
   }, []);
 
-  // useEffect(() => {
-  //   let newData = data.filter((city) => {
-  //     if (selectedCity) {
-  //       return city.restaurant_city === selectedCity;
-  //     } else {
-  //       return true; // 如果没有選擇城市，不過濾城市
-  //     }
-  //   }).filter((style) => {
-  //     if (selectedStyle) {
-  //       return style.food_tag_names.indexOf(selectedStyle) >= 0;
-  //     } else {
-  //       return true; // 如果没有選擇標籤，不過濾標籤
-  //     }
-  //   }).filter((post) => {
-  //     if (searchKeyword) {
-  //       // 使用 includes 方法檢查標題或標籤是否包含關鍵字（不區分大小寫）
-  //       return (
-  //         post.post_title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-  //         post.food_tag_name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-  //         post.post_content.toLowerCase().includes(searchKeyword.toLowerCase()) 
-        
-  //       );
-  //     } else {
-  //       return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
-  //     }
-  //   });
-  
-  //   setDisplayData(newData);
-  // }, [selectedCity, selectedStyle, searchKeyword]);
-
-
   useEffect(() => {
-    let newData = data;
-    
-    // 根据选定城市过滤数据
-    if (selectedCity) {
-      newData = newData.filter((item) => item.restaurant_city === selectedCity);
-    }
+    let newData = data.filter((city) => {
+      if (selectedCity) {
+        return city.restaurant_city === selectedCity;
+      } else {
+        return true; // 如果没有選擇城市，不過濾城市
+      }
+    }).filter((style) => {
+      if (selectedStyle) {
+        return style.food_tag_names.indexOf(selectedStyle) >= 0;
+      } else {
+        return true; // 如果没有選擇標籤，不過濾標籤
+      }
+    }).filter((post) => {
+      if (searchKeyword) {
+        // 使用 includes 方法檢查標題或標籤是否包含關鍵字（不區分大小寫）
+        return (
+          post.post_title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          post.food_tag_name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          post.post_content.toLowerCase().includes(searchKeyword.toLowerCase()) 
+        
+        );
+      } else {
+        return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
+      }
+    });
+  
+    setDisplayData(newData.slice(0, 3));
+  }, [selectedCity, selectedStyle, searchKeyword]);
 
-    setDisplayData(newData);
-  }, [selectedCity]);
+
+  // useEffect(() => {
+  //   let newData = data;
+    
+  //   // 根据选定城市过滤数据
+  //   if (selectedCity) {
+  //     newData = newData.filter((item) => item.restaurant_city === selectedCity);
+  //   }
+
+  //   setDisplayData(newData);
+  // }, [selectedCity]);
 
 
   return (
     <>
       <div className="container">
         <h4 className="h4-title mb-4">
-        {`${selectedCity}食記` || "熱門食記"}</h4>
+        {`${selectedCity}${searchKeyword}食記` || "熱門食記"}</h4>
         <div className="row row-cols-1 row-cols-lg-3 container mx-auto">
           {displayData.map(
             (
