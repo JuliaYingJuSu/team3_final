@@ -7,11 +7,12 @@ import Footer from "@/components/layout/default-layout/footer";
 import styles from "./wishlist.module.css";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
+import RunContext from "@/hooks/RunContext";
 
 export default function WishList() {
   const [wish, setWish] = useState([]);
-  // const [run, setRun] = useState(false);
-  // console.log(run);
+  const { run, setRun } = useContext(RunContext);
+
   const { auth } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,8 +38,8 @@ export default function WishList() {
       .catch((ex) => {
         console.log(ex);
       });
-  }, []);
-  // run
+  }, [run]);
+
   const handleWish = (v) => {
     console.log(auth);
     fetch("http://localhost:3002/api/product/del-wish", {
@@ -55,8 +56,8 @@ export default function WishList() {
       .then((r) => {
         console.log(r);
         if (r) {
-          console.log(!run);
-          // setRun(!run);
+          // console.log(!run);
+          setRun(!run);
           // location.reload();
         }
       })
@@ -129,7 +130,7 @@ export default function WishList() {
       <UserNavbar />
       <div className={styles.wishBox + " container p-5"}>
         <p className={styles.head + " grey"}>
-          {wish.length > 0 ? "收藏商品" : "還沒有收藏收品唷～"}
+          {wish.length > 0 ? `收藏商品(${wish.length})` : "還沒有收藏收品唷～"}
         </p>
         {console.log(wish)}
         {wish.map((v, i) => {
@@ -149,7 +150,6 @@ export default function WishList() {
                     className="btn icon-trash rounded-pill"
                     onClick={
                       () => {
-                        // console.log(v);
                         handleWish(v);
                       }
                       // handleWish //reat中不用傳參數時使用
@@ -165,7 +165,6 @@ export default function WishList() {
                     className="me-2 my-1 btn btn-big"
                     onClick={() => {
                       handleAddCart(v);
-                      // setRun(!run);
                     }}
                   >
                     <Link
@@ -179,6 +178,7 @@ export default function WishList() {
                     className="me-2 my-1 btn btn-big"
                     onClick={() => {
                       handleAddCart(v);
+                      setRun(!run);
                     }}
                   >
                     加入購物車
