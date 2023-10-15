@@ -6,13 +6,15 @@ import Modal from "react-bootstrap/Modal";
 export default function ProductComment({ product }) {
   const [show, setShow] = useState(false);
   const [content, setContent] = useState("");
-  console.log(content);
+  const [hover, setHover] = useState(0);
+  const [score, setScore] = useState(0);
+  console.log(score);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  console.log(product);
 
   const comment = (product) => {
-    console.log(product.orderproduct_id);
     console.log(content);
 
     fetch("http://localhost:3002/api/product/add-comment", {
@@ -21,7 +23,7 @@ export default function ProductComment({ product }) {
         uid: localStorage.getItem("auth").user_id,
         opid: product.orderproduct_id,
         content: content,
-        // score
+        score: score,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -34,9 +36,22 @@ export default function ProductComment({ product }) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} className="btn-middle">
-        評論
-      </Button>
+      {product.content ? (
+        <Button
+          variant="primary"
+          onClick={handleShow}
+          className="btn-middle"
+          disabled
+          style={{ backgroundColor: "#666666", border: "none" }}
+        >
+          已評論
+        </Button>
+      ) : (
+        <Button variant="primary" onClick={handleShow} className="btn-middle">
+          評論
+        </Button>
+      )}
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -65,11 +80,24 @@ export default function ProductComment({ product }) {
           }}
         >
           <div className="rate py-2 fs-5">
-            <span className="icon-Star"></span>
-            <span className="icon-Star"></span>
-            <span className="icon-Star"></span>
-            <span className="icon-Star"></span>
-            <span className="icon-Star"></span>
+            {Array(5)
+              .fill(1)
+              .map((v, i) => {
+                return (
+                  <span
+                    className={
+                      i < score || i < hover ? "icon-Star-fill" : "icon-Star"
+                    }
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={() => {
+                      setHover(i + 1);
+                    }}
+                    onClick={() => {
+                      setScore(i + 1);
+                    }}
+                  ></span>
+                );
+              })}
           </div>
           <div class="mb-3">
             <textarea
@@ -85,7 +113,6 @@ export default function ProductComment({ product }) {
                 console.log(e.target.value);
 
                 setContent(e.target.value);
-                console.log(e.target.value);
               }}
               style={{
                 fontSize: "16px",

@@ -30,6 +30,10 @@ export default function RestaurantDetail() {
     r_img_route: [],
   });
   console.log(data);
+  const [numAdult, setNumAdult] = useState(2);
+  const [numKid, setNumKid] = useState(0);
+  const [selectedTime, setSelectedTime] = useState("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -55,6 +59,32 @@ export default function RestaurantDetail() {
   const specSplit2 = data.rows?.restaurant_opening.split("\\n").map((v) => {
     return <>{v ? <p>{v}</p> : <br></br>}</>;
   });
+
+  // 儲存表單資料
+  const handleNumAdultChange = (event) => {
+    setNumAdult(event.target.value);
+  };
+  const handleNumKidChange = (event) => {
+    setNumKid(event.target.value);
+  };
+  const handleSelectedTimeChange = (event) => {
+    setSelectedTime(event.target.value);
+  };
+  const handleMyBook = () => {
+    const queryParams = {
+      restaurant_id: data.rows?.restaurant_id,
+      restaurant_name: data.rows?.restaurant_name,
+      restaurant_img: data.rowsImgs[0]?.r_img_route,
+      bookMonth: bookMonth,
+      bookDate: bookDate,
+      numAdult: numAdult,
+      numKid: numKid,
+      selectedTime: selectedTime,
+    };
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    router.push(`/book/customer-info?${queryString}`);
+  };
 
   // 日曆
   const now = {
@@ -133,7 +163,10 @@ export default function RestaurantDetail() {
       <br />
       {/* ==========麵包屑========= */}
       <div className="container">
-        <BreadcrumbRestaurant></BreadcrumbRestaurant>
+        <BreadcrumbRestaurant
+          key={data.rows?.restaurant_id}
+          restaurant_name={data.rows?.restaurant_name}
+        />
       </div>
       <div className="container" style={{ maxWidth: "1320px" }}>
         <p className="h3 my-4">{data.rows?.restaurant_name}</p>
@@ -241,19 +274,27 @@ export default function RestaurantDetail() {
             <div className={styles.sortnum + " me-4"}>
               <br />
               <br />
-              <select className={styles.selectbox + " fs18"}>
+              <select
+                className={styles.selectbox + " fs18"}
+                value={numAdult}
+                onChange={handleNumAdultChange}
+              >
                 {Array(6)
                   .fill(1)
                   .map((v, i) => {
                     return (
-                      <option value={i + 1} selected={i + 1 === 2}>
+                      <option key={i + 1} value={i + 1} selected={i + 1 === 2}>
                         {i + 1} 位 大人
                       </option>
                     );
                   })}
               </select>
             </div>
-            <div className={styles.sortnum + " me-3"}>
+            <div
+              className={styles.sortnum + " me-3"}
+              value={numKid}
+              onChange={handleNumKidChange}
+            >
               <br />
               <br />
               <select className={styles.selectbox + " fs18"}>
@@ -281,7 +322,7 @@ export default function RestaurantDetail() {
             <div className={styles.sortnum + " me-4 w-100"}>
               <br />
               <br />
-              <select className={styles.selectbox + " fs18 w-100"}>
+              <select className={styles.selectbox + " fs18 w-100"} disabled>
                 <option value={`${bookMonth}-${bookDate}`} selected>
                   {bookMonth} 月 {bookDate} 日
                 </option>
@@ -319,6 +360,8 @@ export default function RestaurantDetail() {
                           id={`btn-check-${v + i}`}
                           name="selectTime"
                           value={`${v + i}:00`}
+                          checked={selectedTime === `${v + i}:00`}
+                          onChange={handleSelectedTimeChange}
                         />
                         <label
                           className={
@@ -343,9 +386,19 @@ export default function RestaurantDetail() {
         <br />
         <br />
         <div className="container d-flex justify-content-center mb-5 mt-3">
-          <Link href="/book/customer-info" className="btn btn-middle">
+          <div
+            onClick={() => {
+              if (selectedTime) {
+                // 檢查selectedTime是否有值
+                handleMyBook();
+              } else {
+                // 在這裡可以加入提示或處理未選擇用餐時段的情況
+              }
+            }}
+            className="btn btn-middle"
+          >
             立即訂位
-          </Link>
+          </div>
         </div>
         <br />
       </div>

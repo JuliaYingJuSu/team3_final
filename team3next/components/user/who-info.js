@@ -23,11 +23,7 @@ export default function WhoInfo() {
           </div>
           <div className="middle ms-5">
             <div className="rounded-circle img-thumbnail headshot-big position-relative">
-              <span
-                className="d-block position-absolute z-3"
-                style={{ paddingInlineStart: 130, paddingTop: 140 }}>
-                <button className="icon-pan fs-4 img-thumbnail rounded-circle"></button>
-              </span>
+              
             </div>
           </div>
           <div className="d-flex ps-4" style={{ width: 300 }}>

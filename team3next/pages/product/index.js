@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
+import RunContext from "@/hooks/RunContext";
 import axios from "axios";
 
 export default function index() {
@@ -25,14 +26,15 @@ export default function index() {
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
   const [items, setItems] = useState([]);
-  console.log(items);
+
+  const { run, setRun } = useContext(RunContext);
+  console.log(run);
 
   //?????
   // const { auth } = useContext(AuthContext);
 
   const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   console.log(uid);
-  // console.log(setTypeList);
 
   // 取資料
   useEffect(() => {
@@ -68,14 +70,14 @@ export default function index() {
 
       .then((data) => {
         setData(data);
-
+        //取願望資料
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
           console.log(wishList);
           setWish(wishList);
         }
       });
-  }, [order, search, typeList, price, items]);
+  }, [order, search, typeList, price, items, run]);
 
   // 增刪願望清單
   const handleWish = (product_id) => {
@@ -99,7 +101,8 @@ export default function index() {
         .then((r) => {
           console.log(r); //true
           if (r) {
-            location.reload();
+            // location.reload();
+            setRun(!run);
           }
         })
         .catch((ex) => {
@@ -133,7 +136,8 @@ export default function index() {
         .then((r) => {
           console.log(r); //true
           if (r) {
-            location.reload();
+            // location.reload();
+            setRun(!run);
           }
         })
         .catch((ex) => {
@@ -142,8 +146,66 @@ export default function index() {
     }
   };
 
+  //ws-------------------------------------------
+  // const [msg, setMsg] = useState("");
+  // const [msgs, setMsgs] = useState([]);
+  // console.log(msg);
+  // const ws = new WebSocket("ws://localhost:3002");
+  // ws.onopen;
+
+  // (useEffect) => {
+  //   ws.onopen = () => {
+  //     console.log("open connection");
+  //   };
+  //   ws.onclose = () => {
+  //     console.log("close connection");
+  //   };
+  // };
+  //------------------------------------------------
   return (
     <>
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom"
+        aria-controls="offcanvasBottom"
+        style={{ position: "absolute", right: "0px", bottom: "300px" }}
+      >
+        Toggle bottom offcanvas
+      </button>
+
+      <div
+        class="offcanvas offcanvas-bottom"
+        tabindex="-1"
+        id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+            泥好
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body small ">
+          ...
+          <div></div>
+          <input
+            type="text"
+            // value={msg}
+            onChange={(e) => {
+              setMsg(e.target.value);
+            }}
+          />
+          <button className="btn btn-warning">送出</button>
+        </div>
+      </div>
+
       <Navbar />
       <div className="container">
         <Bread />
@@ -268,39 +330,6 @@ export default function index() {
                             </label>
                           );
                         })}
-                  {/* {data.items
-                    ?.filter((v) =>
-                      v.product_type_list_id
-                        .split(",")
-                        .includes(typeList.split(",")[0])
-                    )
-                    .map((v, i) => {
-                      console.log(typeList.split(",")[0]);
-                      return (
-                        <label key={i}>
-                          <input
-                            className="mb-4"
-                            type="checkbox"
-                            value={v.item_id}
-                            onChange={() => {
-                              if (!items.includes(v.item_id)) {
-                                const newItems = [...items, v.item_id];
-                                setItems(newItems);
-                              } else {
-                                const newItems = items.filter(
-                                  (a) => a != v.item_id
-                                );
-
-                                setItems(newItems);
-                              }
-                              // setItems(items.push(v));
-                              //**在setItems之前push就已試圖直接變items
-                            }}
-                          />
-                          {v.item_name}
-                        </label>
-                      );
-                    })} */}
                 </form>
               </div>
               {/* ------------價格範圍----------- */}

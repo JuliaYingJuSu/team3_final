@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
@@ -6,19 +6,29 @@ import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./wishlist.module.css";
 import Link from "next/link";
+import AuthContext from "@/hooks/AuthContext";
+import RunContext from "@/hooks/RunContext";
 
 export default function WishList() {
   const [wish, setWish] = useState([]);
+  const { run, setRun } = useContext(RunContext);
+
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("auth")).user_id);
+
+    const uid = JSON.parse(localStorage.getItem("auth")).user_id;
+    // const uid = auth.user_id;
+
     fetch("http://localhost:3002/api/product/wishList", {
       method: "POST",
-      // body: JSON.stringify({
-      //   uid: localStorage.???
-      // }),
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
+      body: JSON.stringify({
+        uid: uid,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((r) => r.json())
       .then((r) => {
@@ -28,14 +38,15 @@ export default function WishList() {
       .catch((ex) => {
         console.log(ex);
       });
-  }, []);
+  }, [run]);
 
   const handleWish = (v) => {
-    console.log(v);
+    console.log(auth);
     fetch("http://localhost:3002/api/product/del-wish", {
       method: "POST",
       body: JSON.stringify({
         pid: v.product_id,
+        uid: auth.user_id,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +56,9 @@ export default function WishList() {
       .then((r) => {
         console.log(r);
         if (r) {
-          location.reload();
+          // console.log(!run);
+          setRun(!run);
+          // location.reload();
         }
       })
       .catch((ex) => {
@@ -84,6 +97,8 @@ export default function WishList() {
             );
             cart.unshift({
               product_id: v.product_id,
+              product_name: v.product_name,
+              price: v.price,
               product_img: v.product_img,
               quantity: 1,
             });
@@ -95,6 +110,8 @@ export default function WishList() {
           const cart = [
             {
               product_id: v.product_id,
+              product_name: v.product_name,
+              price: v.price,
               product_img: v.product_img,
               quantity: 1,
             },
@@ -113,7 +130,7 @@ export default function WishList() {
       <UserNavbar />
       <div className={styles.wishBox + " container p-5"}>
         <p className={styles.head + " grey"}>
-          {wish.length > 0 ? "收藏商品" : "還沒有收藏收品唷～"}
+          {wish.length > 0 ? `收藏商品(${wish.length})` : "還沒有收藏收品唷～"}
         </p>
         {console.log(wish)}
         {wish.map((v, i) => {
@@ -133,7 +150,6 @@ export default function WishList() {
                     className="btn icon-trash rounded-pill"
                     onClick={
                       () => {
-                        // console.log(v);
                         handleWish(v);
                       }
                       // handleWish //reat中不用傳參數時使用
@@ -162,6 +178,7 @@ export default function WishList() {
                     className="me-2 my-1 btn btn-big"
                     onClick={() => {
                       handleAddCart(v);
+                      setRun(!run);
                     }}
                   >
                     加入購物車

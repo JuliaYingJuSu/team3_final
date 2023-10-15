@@ -19,6 +19,7 @@ import productRouter from "./routes/product.js";
 import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
 import cartRouter from "./routes/cart.js";
+import { WebSocketServer } from "ws";
 
 // const upload=multer({dest:'tmp_uploads/'});//設定上傳檔案位置
 
@@ -105,6 +106,7 @@ app.use("/api/product", productRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/restaurant", verifyJWT, restaurantRouter);
 app.use("/api/cart", cartRouter);
+// app.use('/ws',wsRouter)
 
 // GET - 得到所有會員資料
 app.get("/", async function (req, res) {
@@ -225,6 +227,19 @@ app.use((req, res) => {
 });
 
 const post = process.env.WEB_POST || 3001;
+
+// ws------------------------------
+const wss = new WebSocketServer({ server: app });
+wss.on("connection", function connection(ws) {
+  ws.on("error", console.error);
+  console.log("連線成功");
+
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+  });
+});
+
+// ---------------------------------------
 
 app.listen(3002, () => {
   console.log(`伺服器啟動,post:${post}`);

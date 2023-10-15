@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/pages/product/index.module.css";
 
-export default function BreadcrumbRestaurant() {
+export default function BreadcrumbRestaurant({ restaurant_name }) {
   return (
     <>
       <div className={styles.bread} style={{ paddingLeft: "0px" }}>
@@ -12,7 +12,7 @@ export default function BreadcrumbRestaurant() {
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#">Cin Cin Osteria 請請義大利餐廳</a>
+          <a href="#">{restaurant_name}</a>
         </span>
         {/* <nav
           // style={{--bs-breadcrumb-divider= '>'}}

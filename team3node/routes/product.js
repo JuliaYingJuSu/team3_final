@@ -150,14 +150,14 @@ productRouter.post("/product-recommend", async (req, res) => {
 
 //--------------------收藏列表---------------------
 productRouter.post("/wishList", async (req, res) => {
-  const uid = req.body.uid;
-  // console.log(uid);
+  const uid = parseInt(req.body.uid);
+  //Express的body-parser處理轉換過程，不需要手動使用JSON.parse來解析req.body
 
-  const sql = `SELECT * FROM collection JOIN product ON collection.product_id = product.product_id JOIN product_img ON product_img.product_id = product.product_id WHERE user_id = ${parseInt(
-    uid
-  )} AND product_img.showed_1st = 1;`;
-  // const sql = `SELECT * FROM collection WHERE user_id = ${uid}`;
   console.log("有事嗎");
+  console.log(typeof req.body.uid);
+
+  const sql = `SELECT * FROM collection JOIN product ON collection.product_id = product.product_id JOIN product_img ON product_img.product_id = product.product_id WHERE user_id = ${uid} AND product_img.showed_1st = 1;`;
+  // const sql = `SELECT * FROM collection WHERE user_id = ${uid}`;
   try {
     const [rows] = await db.query(sql);
     console.log(rows);
@@ -231,13 +231,12 @@ productRouter.post("/add-comment", async (req, res) => {
   const opid = req.body.opid;
   const uid = req.body.uid;
   const content = req.body.content;
-  // const score = req.body.score
-  const score = 4;
+  const score = req.body.score;
 
   const sql = `UPDATE oder_detail SET score = ${score}, content = "${content}" WHERE oder_detail.orderproduct_id = ${opid}`;
   console.log(sql);
 
-  const [result] = await db.query(sql); //''29''
+  const [result] = await db.query(sql);
   console.log(result);
   // {
   //   fieldCount: 0,
@@ -253,9 +252,7 @@ productRouter.post("/add-comment", async (req, res) => {
   if (result.affectedRows) {
     const success = true;
     res.send(success);
-    console.log(success);
   }
-  // res.sendStatus(200);
 });
 
 export default productRouter;

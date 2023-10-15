@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
@@ -10,9 +10,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import CarouselProduct from "@/components/layout/default-layout/carousel-product";
 import { useRouter } from "next/router";
-// import handleAddCart from "@/components/product/add-cart";
+import RunContext from "@/hooks/RunContext";
 
 export default function productDetail() {
   const [data, setData] = useState({
@@ -29,9 +28,11 @@ export default function productDetail() {
     showed_1st: "",
   });
   const [wish, setWish] = useState(false);
+  const [score, setScore] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [recommend, setRecommend] = useState([]);
-  // console.log(recommend);
+  const { run, setRun } = useContext(RunContext);
+
   const router = useRouter();
 
   // 取資料
@@ -47,9 +48,17 @@ export default function productDetail() {
           console.log(r);
           setData(r);
           setWish(r.rowsWished);
+
+          setScore(
+            Math.ceil(
+              r.rowsComment.reduce((a, b) => {
+                return a + parseInt(b.score);
+              }, 0) / r.rowsComment.length
+            )
+          );
         });
     }
-  }, [router.isReady]);
+  }, [router.isReady, run]);
 
   // 取推薦商品
   useEffect(() => {
@@ -170,6 +179,7 @@ export default function productDetail() {
               }
             });
             localStorage.setItem("cart", JSON.stringify(newCart));
+            setRun(!run);
           }
           // -----------------舊的------------------
           //   if (existCart >= 0) {
@@ -431,11 +441,15 @@ export default function productDetail() {
                 </p>
               </div>
               <div className="fs-3 my-2">
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
+                {Array(5)
+                  .fill(1)
+                  .map((v, i) => {
+                    return (
+                      <span
+                        className={i < score ? "icon-Star-fill" : "icon-Star"}
+                      ></span>
+                    );
+                  })}
               </div>
 
               <div className={styles.btnBox}>
@@ -462,6 +476,7 @@ export default function productDetail() {
                       // <handleAddCart />
                       () => {
                         handleAddCart();
+                        setRun(!run);
                       }
                     }
                   >
@@ -471,7 +486,6 @@ export default function productDetail() {
                     className="btn btn-big d-flex justify-content-center w-100 overflow-hidden"
                     onClick={() => {
                       handleAddCart();
-                      // router.push("/cart");
                     }}
                   >
                     <Link
@@ -533,7 +547,6 @@ export default function productDetail() {
               >
                 {recommend &&
                   recommend.map((v, i) => {
-                    console.log(v);
                     return (
                       <SwiperSlide key={i}>
                         {

@@ -4,6 +4,11 @@ import FollowButton from "./followbutton";
 import Like from "./like";
 import Saved from "./saved";
 import { Carousel } from "react-bootstrap";
+import AuthContext from "@/hooks/AuthContext";
+import Router from "next/router";
+
+
+
 
 export default function PostModal({
   post_id,
@@ -18,7 +23,6 @@ export default function PostModal({
   nickname,
   user_img,
 }) {
- 
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
 
@@ -45,13 +49,13 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
-    console.log(JSON.parse(localStorage.getItem("auth").user_id))
+    // console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
-    fetch("http://localhost:3002/api/post/add-comment", {
+    fetch('http://localhost:3002/api/post/add-comment', {
       method: "POST",
       body: JSON.stringify({
-        uid: JSON.parse(localStorage.getItem("auth")).user_id,
+        uid:auth.user_id,
         content: messageVal.message,
         pid: post_id,
       
@@ -61,6 +65,7 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
+       Router.push("/post")
       });
     
 
@@ -124,11 +129,8 @@ export default function PostModal({
     }
   }, [imgs]);
 
-  // const {auth} = useContext(AuthContext);
+  const {auth} = useContext(AuthContext);
 
-  // useEffect(()=>{
-  //   fetch(process.env.API_SERVER = `/api/`)
-  // })
   return (
     <>
       <div
@@ -250,7 +252,7 @@ export default function PostModal({
                       <p >{v.content}</p>
                     </div>
                     <div>
-                      <p className="fs12 mt-3 me-3">{v.create_time}</p>
+                      <p className="fs12 mt-3 me-3">{v.create_time.substr(0,10)}</p>
                     </div>
                   </div>
                 );
