@@ -3,8 +3,43 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbCustomerInfo from "@/components/book/breadcrumb-customerInfo";
+import { useRouter } from "next/router";
 
 export default function Index() {
+  const router = useRouter();
+  const {
+    restaurant_id,
+    restaurant_name,
+    restaurant_img,
+    bookMonth,
+    bookDate,
+    numAdult,
+    numKid,
+    selectedTime,
+  } = router.query;
+  console.log(router.query);
+
+  // 將日期轉換為Date物件
+  const date = new Date(`2023-${bookMonth}-${bookDate}`);
+
+  // 取得星期幾
+  const dayOfWeek = date.toLocaleDateString("zh-TW", { weekday: "long" });
+
+  //傳遞表單資料
+  const handleMyBook = () => {
+    const queryParams = {
+      restaurant_id: restaurant_id,
+      restaurant_name: restaurant_name,
+      bookMonth: bookMonth,
+      bookDate: bookDate,
+      bookNum: parseInt(numKid) + parseInt(numAdult),
+      selectedTime: selectedTime,
+    };
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    router.push(`/book/book-complete?${queryString}`);
+  };
+
   return (
     <>
       <Head>
@@ -13,7 +48,10 @@ export default function Index() {
       <Navbar></Navbar>
       <div className="container d-flex justify-content-center">
         <div style={{ width: "90%" }}>
-          <BreadcrumbCustomerInfo></BreadcrumbCustomerInfo>
+          <BreadcrumbCustomerInfo
+            key={restaurant_id}
+            restaurant_name={restaurant_name}
+          />
         </div>
       </div>
       <div className="container mt-4">
@@ -22,18 +60,14 @@ export default function Index() {
             <div className="container2">
               <img
                 className="w-100"
-                src="../../images/book/r1-1.png"
+                src={`/images/book/${restaurant_img}`}
                 alt="..."
               />
               <div className="h5 d-flex justify-content-center py-4 con1">
                 <div className="pe-2 align-self-center">
                   <span className="icon-map"></span>
                 </div>
-                <div className="ms-1">
-                  Cin Cin Osteria
-                  <br />
-                  請請義大利餐廳
-                </div>
+                <div className="ms-1">{restaurant_name}</div>
               </div>
               <div className="d-flex justify-content-center align-items-center ">
                 <div className="fs18 my-3">
@@ -44,19 +78,23 @@ export default function Index() {
                         style={{ fontSize: "16px" }}
                       ></span>
                     </span>
-                    <div className="ms-4">3 大 1 小</div>
+                    <div className="ms-4">
+                      {numAdult} 大 {numKid} 小
+                    </div>
                   </div>
                   <div className="d-flex mt-2">
                     <span className="pe-2">
                       <span className="icon-calender"></span>
                     </span>
-                    <div className="ms-4">2023年11月7日 週二</div>
+                    <div className="ms-4">
+                      2023年{bookMonth}月{bookDate}日 {dayOfWeek}
+                    </div>
                   </div>
                   <div className="d-flex mt-2">
                     <span className="pe-2">
                       <span className="icon-bell"></span>
                     </span>
-                    <div className="ms-4">17:00</div>
+                    <div className="ms-4">{selectedTime}</div>
                   </div>
                 </div>
               </div>
@@ -171,9 +209,9 @@ export default function Index() {
         <br />
         <br />
         <div className="d-flex justify-content-center my-5">
-          <Link href="/book/book-complete" className="btn btn-middle me-3">
+          <div onClick={handleMyBook} className="btn btn-middle me-3">
             確認訂位
-          </Link>
+          </div>
           <Link href="/book/restaurant" className="btn btn-middle ms-3">
             回上一頁
           </Link>
@@ -200,6 +238,8 @@ export default function Index() {
           }
           .con1 {
             border-bottom: 1px solid grey;
+            padding-left: 50px;
+            padding-right: 50px;
           }
           .container3 {
             border: 1px solid grey;
@@ -219,6 +259,9 @@ export default function Index() {
           .form-check-input:checked {
             background-color: #869aaa;
             border-color: #869aaa;
+          }
+          .form-check-input {
+            border-color: #d9d9d9;
           }
         `}
       </style>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "@/pages/product/index.module.css";
 
-export default function BreadcrumbBookComplete() {
+export default function BreadcrumbBookComplete({ restaurant_name }) {
   return (
     <>
       <div className={styles.bread} style={{ paddingLeft: "0px" }}>
@@ -12,7 +12,7 @@ export default function BreadcrumbBookComplete() {
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>
-          <a href="#">Cin Cin Osteria 請請義大利餐廳</a>
+          <a href="#">{restaurant_name}</a>
         </span>
         <span className="icon-arrow-s-right"></span>
         <span>

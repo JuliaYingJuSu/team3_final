@@ -3,8 +3,19 @@ import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbBookComplete from "@/components/book/breadcrumb-bookComplete";
+import { useRouter } from "next/router";
 
 export default function Index() {
+  const router = useRouter();
+  const {
+    restaurant_id,
+    restaurant_name,
+    bookMonth,
+    bookDate,
+    bookNum,
+    selectedTime,
+  } = router.query;
+  console.log(router.query);
   return (
     <>
       <Head>
@@ -13,7 +24,10 @@ export default function Index() {
       <Navbar></Navbar>
       <div className="container d-flex justify-content-center">
         <div style={{ width: "90%" }}>
-          <BreadcrumbBookComplete></BreadcrumbBookComplete>
+          <BreadcrumbBookComplete
+            key={restaurant_id}
+            restaurant_name={restaurant_name}
+          />
         </div>
       </div>
       <div className="container text-center">
@@ -26,13 +40,15 @@ export default function Index() {
       <div className="container w-50 d-flex border p-5 mb-5 justify-content-between">
         <div className="row justify-content-center w-50">
           <div className="col-sm-6 py-1">訂位日期</div>
-          <div className="col-sm-6 py-1">2023/09/30</div>
-          <div className="col-sm-6 py-1">訂單時間</div>
-          <div className="col-sm-6 py-1">18:00</div>
+          <div className="col-sm-6 py-1">
+            2023/{bookMonth}/{bookDate}
+          </div>
+          <div className="col-sm-6 py-1">訂位時間</div>
+          <div className="col-sm-6 py-1">{selectedTime}</div>
           <div className="col-sm-6 py-1">訂位人數</div>
-          <div className="col-sm-6 py-1">4 位</div>
+          <div className="col-sm-6 py-1">{bookNum} 位</div>
           <div className="col-sm-6 py-1">餐廳名稱</div>
-          <div className="col-sm-6 py-1">Cin Cin Osteria 請請義大利餐廳</div>
+          <div className="col-sm-6 py-1">{restaurant_name}</div>
           {/* 強迫col換行 */}
           {/* <div class="w-100"></div> */}
         </div>

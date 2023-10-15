@@ -111,11 +111,7 @@ export default function Index() {
           <h6 className="align-self-end ms-2">(10篇)</h6>
         </div>
       </div>
-      <CardR3></CardR3>
-      <CardR3></CardR3>
-      <CardR3></CardR3>
-      <CardR3></CardR3>
-      <CardR3></CardR3>
+      {/* <CardR3></CardR3> */}
       <Link href={"/"} className="middle grey fs18b mt-5 py-3 mb-4">
         看更多
       </Link>
