@@ -1,9 +1,23 @@
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
-import { useContext } from "react";
+import { useContext,useState,useEffect } from "react";
 
 export default function UserInfo() {
   const { auth } = useContext(AuthContext);
+  const [follown, setFollowN] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/follown`)
+      .then((r) => r.json())
+      .then((r) => {
+        setFollowN(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
+
   return (
     <>
       <main className="container bottom-line" style={{ paddingBottom: 40 }}>
@@ -13,7 +27,7 @@ export default function UserInfo() {
           <div className="middle flex-column ms-5 ps-5">
             <h2 className="fw-bold">{auth.nickname}</h2>
             <div className="mt-2 fw-semibold">
-              <span>110人</span>
+              <span>{follown.length} 人</span>
               <span>追蹤中</span>
             </div>
             <Link className="btn btn-middle mt-4 fw-bold" href="/post/add-post">
