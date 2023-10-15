@@ -78,19 +78,6 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
 
   // },[selectedCity, selectedStyle])
 
-  // useEffect(()=>{
-  //   let newData = data.filter((city) =>{ 
-  //     if(selectedCity){return city.restaurant_city === selectedCity}
-  //     else{return city}}
-  //     ).filter((search)=>{
-        
-  //       if(searchKeyword){return search.food_tag_name = searchKeyword }
-  //       else{
-  //         return search}
-  //       });
-  //   setDisplayData(newData);
-
-  // },[selectedCity, searchKeyword])
 
   useEffect(() => {
     let newData = data.filter((city) => {
@@ -140,8 +127,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
               user_id, 
               food_tag_name,
             }) => {
-              const nickname = userData[user_id].nickname;
-              const user_img = userData[user_id].user_img;
+              const nickname = userData && userData[user_id].nickname;
+              const user_img = userData && userData[user_id].user_img;
 
               return (
                 <Card

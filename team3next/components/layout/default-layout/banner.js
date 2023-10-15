@@ -3,17 +3,30 @@ import React from "react";
 import LocationSelect from "../location-select";
 import SearchBar from "../search-bar";
 
-export default function Banner() {
+export default function Banner(
+  {
+    selectedCity,
+    setSelectedCity,
+    searchKeyword, 
+    setSearchKeyword
+  }
+) {
   return (
     <>
       <div className="w-100 h400 d-flex align-items-end banner pdb-50">
         <div className="container d-flex justify-content-center">
           <div className="dropdown ms-5 pe-4">
             {/* 下拉選單 */}
-            <LocationSelect />
+            <LocationSelect 
+              selectedCity={selectedCity}
+        setSelectedCity={setSelectedCity}
+            />
           </div>
           {/* 搜尋條 */}
-          <SearchBar />
+          <SearchBar 
+            searchKeyword={searchKeyword}
+        setSearchKeyword={setSearchKeyword}
+          />
         </div>
       </div>
 
