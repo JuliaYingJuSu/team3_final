@@ -1,20 +1,20 @@
-import Link from "next/link";
 import React from "react";
 import { PictureOutlined } from "@ant-design/icons";
 import { Upload, Form } from "antd";
 import PostRestaurant from "./post_restaurant";
 import FoodTags from "./foodtags";
-
-// fetch(process.env.API_SERVER +"/api/post/addpost",{
-//   method:"POST",
-//   body:JSON.stringify({
-//     uid:localStorage.getItem("auth").user_id,
-
-//   })
-// })
-
+import Swal from "sweetalert2";
 
 export default function AddPost() {
+  //sweetalert 設定
+  const swalButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
   const props = {
     name: "files",
     multiple: true,
@@ -26,10 +26,29 @@ export default function AddPost() {
     },
   };
 
+  const sendPost = async(data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    data.photo.forEach((file) => {
+      formData.append("photo", file.originFileObj);
+    });
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/post/add-post",
+        formData
+      );
+      console.log("Server Response:", response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   return (
     <>
       <div className="container-sm justify-content-center bg-color mb-2">
-        <Form className="d-flex justify-content-around">
+        <Form className="d-flex justify-content-around" onSubmit={sendPost}>
           <div className="my-3">
             <Form.Item
               control=""
@@ -105,9 +124,25 @@ export default function AddPost() {
               ></textarea>
             </div>
             <div className="d-flex justify-content-center mb-3">
-              <Link className="btn btn-big me-2" href="#">
+              <button className="btn btn-big me-2" onClick={() => {
+                  swalButtons
+                    .fire({
+                      title: "確定要放棄這篇文章?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      cancelButtonText:
+                        '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                      confirmButtonText:
+                        '<i class="far fa-check-circle fs-5"></i> 放棄',
+                    })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        swalButtons.fire("結束發表", "", "success");
+                      }
+                    });
+                }}>
                 放棄發表
-              </Link>
+              </button>
               <button type="submit" className="btn btn-big">
                 發表文章
               </button>

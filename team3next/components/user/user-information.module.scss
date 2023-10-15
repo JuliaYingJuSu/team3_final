@@ -32,8 +32,10 @@
 }
 
 .wbc{
+    color: grey;
+    text-align: center;       
     display: flex;
-    padding: 0px 10px 0px 20px;
+    padding: 30px 10px 25px 20px;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -49,21 +51,22 @@
 }
 
 .wma{
+    font-size: 22px;
     display: flex;
-    padding: 20px 100px 0px 70px;
+    padding: 20px 100px 0px 55px;
     align-items: center;
     gap: 10px;
     align-self: stretch;
     color: #808080;
-    font-size: 20px;
     font-weight: 500;
     line-height: normal;
 }
 
 .imgArea{
     display: flex;
-    padding: 30px 0px;
-    justify-content: center;
+    padding: 30px;
+    padding-left: 60px;
+    justify-content: start;
     align-items: center;
     align-content: center;
     gap: 30px 50px;
@@ -72,8 +75,8 @@
 }
 
 .imgStyle{
-    width: 350px;
-    height: 380px;
+    width: 348px;
+    height: 360px;
     border-radius: 10px;
     /* 陰影 */
     box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);  

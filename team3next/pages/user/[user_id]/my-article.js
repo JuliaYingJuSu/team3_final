@@ -31,7 +31,7 @@ export default function UserMyfrom() {
       <UserNavbar></UserNavbar>
       {myaricle.length > 0 ? (
         <div className={"container mb-5" + " " + `${Styles.wbc}`}>
-          <div className={Styles.wma}>{myaricle.length}篇文章</div>
+          <div className={Styles.wma}>{myaricle.length} 篇文章</div>
           <div className={Styles.imgArea}>
             {myaricle.map((article,i) => {
               return (

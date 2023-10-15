@@ -6,6 +6,7 @@ import multer from "multer"; //先載入套件
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import session from "express-session";
 import cors from "cors";
@@ -81,21 +82,21 @@ app.use((req, res, next) => {
   next();
 });
 const verifyJWT = (req, res, next) => {
-  const token = req.headers["x-access-token"];
+  const token = req.headers["authorization"].split(" ")[1];
   if (!token) {
     res.json({ message: "need token!!!" });
   } else {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.userid = decoded.id;
+      req.id = decoded.id;
       next(); // 继续处理下一个中间件或路由
     } catch (err) {
-      res.json({ message: "bad bad token" });
+      res.json({ message: "token is not ok" });
     }
   }
 };
 app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.json("congrats!UOOOOOUGH!!!NEED CORRECTION!!!");
+  res.json({ pass: true });
 });
 
 //路由放這邊
@@ -103,7 +104,7 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/product", productRouter);
 app.use("/api/book", bookRouter);
-app.use("/api/restaurant", restaurantRouter);
+app.use("/api/restaurant", verifyJWT, restaurantRouter);
 app.use("/api/cart", cartRouter);
 // app.use('/ws',wsRouter)
 
@@ -169,6 +170,51 @@ app.post("/login-jwt", async (req, res) => {
     };
   }
   res.json(output);
+});
+
+app.post("/member-login", async (req, res) => {
+  // 注意自己是非同步寫法
+  let { email, password } = req.body;
+  const sql = "SELECT * FROM `restaurant_user` WHERE restaurant_email = ?";
+  const [rows] = await db.query(sql, [email]);
+  // db.query的返回結果為一個大陣列包兩個小陣列，解構一次拿到第一個有資料的陣列
+  // 獲得email存在的用戶的那筆所有資料
+  if (rows.length > 0) {
+    // 確定資料長度大於1，其實用戶資料也只有一筆，然後就比對hash密碼，返回為true的結果進行之後的jwt登入狀態操作
+    console.log("email核對成功");
+    const storedHash = rows[0].restaurant_password_hash;
+    const isPasswordCorrect = await bcrypt.compare(password, storedHash);
+    console.log(isPasswordCorrect);
+    if (!isPasswordCorrect) {
+      res.json({ message: "密碼不正確" });
+    }
+    if (isPasswordCorrect) {
+      const id = rows[0].restaurant_id;
+      const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: 300,
+      });
+      const {
+        restaurant_password_hash,
+        restaurant_city,
+        restaurant_district,
+        restaurant_address,
+        restaurant_info,
+        ...withoutSensitive
+      } = rows[0];
+      // 把敏感數據拿掉
+      // req.session.user = rows[0];
+
+      res.json({
+        auth: true,
+        token: token,
+        result: withoutSensitive,
+      });
+      // 只是建立token
+    }
+  } else {
+    res.json({ auth: false, message: "用戶不存在" });
+    // 這邊的事response
+  }
 });
 
 //**************其他路由放在這裡之前*********************

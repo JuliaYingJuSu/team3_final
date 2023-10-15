@@ -10,28 +10,31 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "@/validation/login-validation";
 import axios from "axios";
+import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import Swal from "sweetalert2";
 import { headers } from "@/next.config";
 
 export default function RestaurantLogin() {
+  const router = useRouter();
+  const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
   axios.defaults.withCredentials = true;
-  const login = async () => {
-    const response = await axios.get(
-      "http://localhost:3002/api/restaurant/member-login"
-    );
-    setLoginState(response.data.user.restaurant_name);
+  const authCheck = async () => {
+    const authObj = JSON.parse(localStorage.getItem("token"));
+    // json.parse成物件，取其中的token進行伺服器驗證,這就算是一個簡單的request了
+    const response = await axios.get("http://localhost:3002/isUserAuth", {
+      headers: {
+        Authorization: "Bearer " + authObj.token,
+      },
+    });
     console.log(response.data);
   };
-  const authCheck = async () => {
-    const response = await axios.get(
-      "http://localhost:3002/isUserAuth",{headers:{"x-access-token": localStorage.getItem("token")}}
-    );
-    console.log(response.data)
-  };
   useEffect(() => {
-    // login();
-  }, []);
+    console.log({ router });
+    if (memberAuth) {
+      router.push("/restaurant-member/profile");
+    }
+  }, [memberAuth]);
   const {
     register,
     handleSubmit,
@@ -43,19 +46,21 @@ export default function RestaurantLogin() {
     // console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/restaurant/member-login",
+        "http://localhost:3002/member-login",
         data
       );
       console.log("Server Response:", response.data);
       if (response.data.auth) {
         setLoginState(true);
-        localStorage.setItem("token","Bearer " + response.data.token)
+        localStorage.setItem("token", JSON.stringify(response.data));
+        // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是string
       }
     } catch (err) {
       console.error("Error:", err);
       setLoginState(false);
     }
   };
+
   return (
     <>
       <Head>
