@@ -4,6 +4,8 @@ import FollowButton from "./followbutton";
 import Like from "./like";
 import Saved from "./saved";
 import { Carousel } from "react-bootstrap";
+import AuthContext from "@/hooks/AuthContext";
+
 
 export default function PostModal({
   post_id,
@@ -45,13 +47,13 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
-    console.log(JSON.parse(localStorage.getItem("auth").user_id))
+    // console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
-    fetch("http://localhost:3002/api/post/add-comment", {
+    fetch('http://localhost:3002/api/post/add-comment', {
       method: "POST",
       body: JSON.stringify({
-        uid: JSON.parse(localStorage.getItem("auth")).user_id,
+        uid:auth.user_id,
         content: messageVal.message,
         pid: post_id,
       
@@ -124,11 +126,8 @@ export default function PostModal({
     }
   }, [imgs]);
 
-  // const {auth} = useContext(AuthContext);
+  const {auth} = useContext(AuthContext);
 
-  // useEffect(()=>{
-  //   fetch(process.env.API_SERVER = `/api/`)
-  // })
   return (
     <>
       <div
