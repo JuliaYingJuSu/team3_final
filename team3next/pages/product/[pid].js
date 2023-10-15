@@ -28,6 +28,7 @@ export default function productDetail() {
     showed_1st: "",
   });
   const [wish, setWish] = useState(false);
+  const [score, setScore] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [recommend, setRecommend] = useState([]);
   const { run, setRun } = useContext(RunContext);
@@ -47,6 +48,14 @@ export default function productDetail() {
           console.log(r);
           setData(r);
           setWish(r.rowsWished);
+
+          setScore(
+            Math.ceil(
+              r.rowsComment.reduce((a, b) => {
+                return a + parseInt(b.score);
+              }, 0) / r.rowsComment.length
+            )
+          );
         });
     }
   }, [router.isReady, run]);
@@ -432,11 +441,15 @@ export default function productDetail() {
                 </p>
               </div>
               <div className="fs-3 my-2">
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
-                <span className="icon-Star"></span>
+                {Array(5)
+                  .fill(1)
+                  .map((v, i) => {
+                    return (
+                      <span
+                        className={i < score ? "icon-Star-fill" : "icon-Star"}
+                      ></span>
+                    );
+                  })}
               </div>
 
               <div className={styles.btnBox}>
