@@ -1,10 +1,45 @@
+import React, { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbDetail from "@/components/book/breadcrumb-detail";
+import AuthContext from "@/hooks/AuthContext";
+import { useEffect, useState, useContext } from "react";
 
-export default function Index() {
+export default function Detail() {
+  const { auth } = useContext(AuthContext);
+  const [data, setData] = useState({
+    restaurant_id: "",
+    restaurant_name: "",
+    restaurant_city: "",
+    restaurant_district: "",
+    restaurant_address: "",
+    restaurant_phone: "",
+    restaurant_opening: "",
+  });
+  console.log(data);
+  const router = useRouter();
+
+  useEffect(
+    () => {
+      if (router.isReady) {
+        const bid = router.query.bid; //***
+        console.log(bid);
+        fetch(
+          process.env.API_SERVER + `/api/user/${auth.user_id}/my-book/${bid}`
+        )
+          .then((r) => r.json())
+          .then((r) => {
+            console.log(r);
+            setData(r);
+          });
+      }
+    },
+    [router.isReady],
+    [auth.user_id]
+  );
   return (
     <>
       <Head>

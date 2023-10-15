@@ -55,6 +55,7 @@ bookRouter.get("/:rid/:uid?", async (req, res) => {
   output.rowsMenuImgs = rowsMenuImgs;
   const [rowsRoutine] = await db.query(sqlRoutine);
   output.rowsRoutine = rowsRoutine;
+
   res.json(output);
 });
 
