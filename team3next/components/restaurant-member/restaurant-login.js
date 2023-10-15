@@ -19,22 +19,24 @@ export default function RestaurantLogin() {
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
   axios.defaults.withCredentials = true;
-  const authCheck = async () => {
-    const authObj = JSON.parse(localStorage.getItem("token"));
-    // json.parse成物件，取其中的token進行伺服器驗證,這就算是一個簡單的request了
-    const response = await axios.get("http://localhost:3002/isUserAuth", {
-      headers: {
-        Authorization: "Bearer " + authObj.token,
-      },
-    });
-    console.log(response.data);
-  };
+  // const authCheck = async () => {
+  //   const authObj = JSON.parse(localStorage.getItem("token"));
+  //   // json.parse成物件，取其中的token進行伺服器驗證,這就算是一個簡單的request了
+  //   const response = await axios.get("http://localhost:3002/isUserAuth", {
+  //     headers: {
+  //       Authorization: "Bearer " + memberAuth.result.token,
+  //     },
+  //   });
+  //   console.log(response.data);
+  // };
   useEffect(() => {
-    console.log({ router });
-    if (memberAuth) {
-      router.push("/restaurant-member/profile");
+    if (memberAuth.auth) {
+      // 判斷要下好，memberAuth為空物件，會導致true，估計是這裡導致了所有的bug
+      router.push(`/restaurant-member/${memberAuth.result.restaurant_id}`);
+    } else {
+      router.push(`/restaurant-member/member-login`);
     }
-  }, [memberAuth]);
+  }, []);
   const {
     register,
     handleSubmit,
@@ -49,11 +51,15 @@ export default function RestaurantLogin() {
         "http://localhost:3002/member-login",
         data
       );
-      console.log("Server Response:", response.data);
+      console.log("Server Response for Log In:", response.data);
       if (response.data.auth) {
         setLoginState(true);
         localStorage.setItem("token", JSON.stringify(response.data));
-        // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是string
+        // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
+        setMemberAuth(response.data);
+        // 在這裡把登入時獲得的response token設定為auth;
+        router.push(`/restaurant-member/${memberAuth.result.restaurant_id}`);
+        // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
       }
     } catch (err) {
       console.error("Error:", err);

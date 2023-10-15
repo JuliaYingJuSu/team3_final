@@ -57,7 +57,7 @@ export default function StepFirst() {
               setInputType(inputType === "password" ? "text" : "password");
             }}
           >
-            {inputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
+            {inputType === "password" ? <FaRegEyeSlash /> : <FaRegEye />}
           </span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function StepFirst() {
               reSetInputType(reInputType === "password" ? "text" : "password");
             }}
           >
-            {reInputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
+            {reInputType === "password" ? <FaRegEyeSlash /> : <FaRegEye />}
           </span>
         </div>
       </div>

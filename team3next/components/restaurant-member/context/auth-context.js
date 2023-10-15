@@ -1,10 +1,16 @@
 import { createContext, useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
 export const MemberAuthContext = createContext();
 
-// 老師是因為掛在頂層middleware才不需要路由，但你不是
 export const MemberAuthProvider = ({ children }) => {
-  const [memberAuth, setMemberAuth] = useState("");
+  const router = useRouter();
+  const [memberAuth, setMemberAuth] = useState({ auth: "", result: "" });
+  console.log(memberAuth);
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setMemberAuth({ auth: "", result: "" });
+    router.push("/restaurant-member/member-login");
+  };
   useEffect(() => {
     const memberJwt = localStorage.getItem("token");
     if (memberJwt) {
@@ -17,8 +23,14 @@ export const MemberAuthProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (memberAuth) {
+      console.log("finally changed", memberAuth);
+    }
+  }, [memberAuth]);
+
   return (
-    <MemberAuthContext.Provider value={{ memberAuth, setMemberAuth }}>
+    <MemberAuthContext.Provider value={{ memberAuth, setMemberAuth, logOut }}>
       {children}
     </MemberAuthContext.Provider>
   );

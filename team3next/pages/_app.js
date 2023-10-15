@@ -12,10 +12,10 @@ export default function App({ Component, pageProps }) {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <MemberAuthProvider>
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <MemberAuthProvider>
         <Component {...pageProps} />
-      </AuthContextProvider>
-    </MemberAuthProvider>
+      </MemberAuthProvider>
+    </AuthContextProvider>
   );
 }

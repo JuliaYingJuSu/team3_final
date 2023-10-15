@@ -80,6 +80,13 @@ restaurantRouter.post(
   }
 );
 
+restaurantRouter.get("/member-info", async (req, res) => {
+  const restaurantId = parseInt(req.id);
+  const sql = "SELECT * FROM `restaurant_user` WHERE `restaurant_id` = ?";
+  const [result] = await db.query(sql, [restaurantId]);
+  console.log(result);
+  res.json(result);
+});
 // restaurantRouter.post("/image-upload",upload.single("image"),async (req,res) =>{
 //   console.log(req.file)
 // })
