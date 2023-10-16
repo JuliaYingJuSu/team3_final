@@ -8,8 +8,8 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   // console.log('frontpage:', {selectedCity})
-  //console.log('frontpage:', {searchKeyword})
-  console.log('frontpage:', {selectedStyle})
+  // console.log('frontpage:', {searchKeyword})
+  // console.log('frontpage:', {selectedStyle})
 
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
