@@ -13,6 +13,7 @@ import cors from "cors";
 import MySQLStore from "express-mysql-session";
 import db from "./module/connect.js";
 import fs from "node:fs/promises";
+import upload from "./module/upload-imgs.js";
 import userRouter from "./routes/user.js";
 import postRouter from "./routes/post.js";
 import productRouter from "./routes/product.js";
@@ -20,6 +21,8 @@ import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
 import cartRouter from "./routes/cart.js";
 import { WebSocketServer } from "ws";
+import http from "http";
+import { parse } from "url";
 
 // const upload=multer({dest:'tmp_uploads/'});//設定上傳檔案位置
 
@@ -34,7 +37,7 @@ const app = express();
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => {
-    console.log({ origin });
+    // console.log({ origin });
     callback(null, true);
   },
 };
@@ -68,6 +71,7 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   //顯示token
   let auth = req.get("Authorization");
+
   if (auth && auth.indexOf("Bearer ") === 0) {
     auth = auth.slice(7);
 
@@ -90,7 +94,7 @@ const verifyJWT = (req, res, next) => {
       req.id = decoded.id;
       next(); // 继续处理下一個中間件或者路由
     } catch (err) {
-      console.log(req.headers["authorization"]);
+      // console.log(req.headers["authorization"]);
       res.json({ message: "token is not ok" });
     }
   }
@@ -172,6 +176,74 @@ app.post("/login-jwt", async (req, res) => {
   res.json(output);
 });
 
+app.post("/member-register", upload.array("photo"), async (req, res) => {
+  // console.log(req.body);
+  const saltRounds = 10;
+
+  let { email, password, name, address, city, district, description, phone } =
+    req.body;
+  const output = {
+    success: false,
+    errors: {},
+    result: {},
+    postData: {}, // 除錯檢查用
+  };
+
+  const sql =
+    "INSERT INTO `restaurant_user`(`restaurant_name`, `restaurant_password_hash`, `restaurant_email`, `restaurant_phone`, `restaurant_city`, `restaurant_district`, `restaurant_address`, `restaurant_info`) VALUES (?,?,?,?,?,?,?,?)";
+
+  let result;
+
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+
+    [result] = await db.query(sql, [
+      name,
+      hash, // 使用哈希后的密码
+      email,
+      phone,
+      city,
+      district,
+      address,
+      description,
+    ]);
+    output.success = !!result.affectedRows;
+    output.result = result;
+
+    const restaurantId = result.insertId;
+
+    const files = req.files;
+    // console.log(req.files);
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const { filename } = file;
+        const sqlUploadImage =
+          "INSERT INTO `r_img` (`restaurant_id`, `r_img_route`, `r_img_isValid`) VALUES (?, ?, ?)";
+
+        try {
+          [result] = await db.query(sqlUploadImage, [
+            restaurantId,
+            filename,
+            1,
+          ]);
+          console.log(`File ${filename} inserted into database.`);
+        } catch (err) {
+          console.error(
+            `Error inserting file ${filename} into database: ${err}`
+          );
+        }
+      }
+    }
+  } catch (err) {
+    console.error("密碼雜湊或者sql錯誤:", err);
+    // 這裡處理錯誤
+    output.errors = "密碼雜湊或者sql錯誤";
+    output.err = err;
+  }
+
+  res.json(output);
+});
+
 app.post("/member-login", async (req, res) => {
   // 注意自己是非同步寫法
   let { email, password } = req.body;
@@ -194,7 +266,8 @@ app.post("/member-login", async (req, res) => {
         expiresIn: 86400,
       });
       delete rows[0].restaurant_password_hash;
-      delete rows[0].restaurant_city, delete rows[0].restaurant_district;
+      delete rows[0].restaurant_city;
+      delete rows[0].restaurant_district;
       delete rows[0].restaurant_address;
       delete rows[0].restaurant_info;
       // 把敏感數據拿掉
@@ -229,18 +302,38 @@ app.use((req, res) => {
 const post = process.env.WEB_POST || 3001;
 
 // ws------------------------------
-const wss = new WebSocketServer({ server: app });
+const server = http.createServer(app);
+const wss = new WebSocketServer({ noServer: true });
 wss.on("connection", function connection(ws) {
+  console.log("connection");
   ws.on("error", console.error);
-  console.log("連線成功");
 
   ws.on("message", function message(data) {
-    console.log("received: %s", data);
+    console.log("received: %s", JSON.parse(data));
   });
+
+  ws.send(
+    JSON.stringify({
+      type: "message",
+      data: "test",
+    })
+  );
+});
+
+server.on("upgrade", function upgrade(request, socket, head) {
+  const { pathname } = parse(request.url);
+
+  if (pathname === "/ws") {
+    wss.handleUpgrade(request, socket, head, function done(ws) {
+      wss.emit("connection", ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
 });
 
 // ---------------------------------------
 
-app.listen(3002, () => {
+server.listen(3002, () => {
   console.log(`伺服器啟動,post:${post}`);
 });

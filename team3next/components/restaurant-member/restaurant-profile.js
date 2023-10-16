@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "@/validation/profile-validation";
+import { useRouter } from "next/router";
 import axios from "axios";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function Profile() {
-  const [fetchedData, setFetchedData] = useState("Do");
+  const router = useRouter();
+  const [fetchedData, setFetchedData] = useState("default");
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [inputType, setInputType] = useState("password");
   const [reInputType, reSetInputType] = useState("password");
@@ -26,21 +29,24 @@ export default function Profile() {
         );
         console.log("fetch result:", response.data);
         setFetchedData(response.data);
+        setDataLoaded(true);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
-  console.log(memberAuth); // 添加这行用于观察 memberAuth
-  useEffect(() => {
-    if (fetchedData) {
-      console.log("finally changed", fetchedData);
-    }
-  }, [fetchedData]);
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [memberAuth]);
+
+  // 要加上auth作為依賴，否則多刷新幾次就不request了，不知道為什麼
+  useEffect(() => {
+    if (!memberAuth.auth && dataLoaded) {
+      alert("請先登入");
+      router.push(`/restaurant-member/member-login`);
+    }
+  }, [memberAuth, dataLoaded]);
+
   // eyeopened
   const {
     register,
@@ -56,8 +62,16 @@ export default function Profile() {
     try {
       // const isValid = await profileSchema.isValid(data)
       // console.log(isValid)
-      const response = await axios.post("http://localhost:3002/try-post", data);
-      console.log("Server Response:", response.data);
+      const response = await axios.put(
+        "http://localhost:3002/api/restaurant/member-info-update",
+        data,
+        {
+          headers: {
+            Authorization: "Bearer " + memberAuth.result.token,
+          },
+        }
+      );
+      console.log("Updated Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
     }
@@ -90,7 +104,7 @@ export default function Profile() {
                 {...register("email")}
                 id="email"
                 placeholder="請輸入正確的email格式"
-                value={fetchedData[0].restaurant_email}
+                defaultValue={fetchedData[0].restaurant_email}
               />
             </div>
             <div className="d-flex flex-column mb-3">

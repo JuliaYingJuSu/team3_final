@@ -9,6 +9,7 @@ import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
 import axios from "axios";
+// import ws from "ws";
 
 export default function index() {
   const [data, setData] = useState([]);
@@ -18,6 +19,7 @@ export default function index() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
+
   console.log(typeList);
   // console.log(typeList.split(",")[0]);
   const [price, setPrice] = useState("");
@@ -28,13 +30,10 @@ export default function index() {
   const [items, setItems] = useState([]);
 
   const { run, setRun } = useContext(RunContext);
-  console.log(run);
-
-  //?????
-  // const { auth } = useContext(AuthContext);
+  // console.log(run);
 
   const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
-  console.log(uid);
+  // console.log(uid);
 
   // 取資料
   useEffect(() => {
@@ -147,20 +146,38 @@ export default function index() {
   };
 
   //ws-------------------------------------------
-  // const [msg, setMsg] = useState("");
-  // const [msgs, setMsgs] = useState([]);
-  // console.log(msg);
-  // const ws = new WebSocket("ws://localhost:3002");
-  // ws.onopen;
+  const [msg, setMsg] = useState("");
+  const [msgs, setMsgs] = useState([]);
+  let ws;
+  useEffect(() => {
+    ws = new WebSocket("ws://localhost:3002/ws");
+    ws.onopen = () => {
+      console.log("open connection");
+    };
+    //#region (onmessage)
+    //  這個程式碼片段是一個 WebSocket 的事件監聽器，當從後端接收到訊息時，會觸發 onmessage 事件。在這段程式碼中：
 
-  // (useEffect) => {
-  //   ws.onopen = () => {
-  //     console.log("open connection");
-  //   };
-  //   ws.onclose = () => {
-  //     console.log("close connection");
-  //   };
-  // };
+    //  res 是從後端接收到的訊息物件。
+    //  JSON.parse(res.data) 解析接收到的訊息，將其轉換成 JavaScript 物件。
+    //  接著程式碼檢查訊息的 type 屬性是否為 "message"。如果是，代表這是一則正常的訊息。
+    //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
+    //#endregion
+    ws.onmessage = (res) => {
+      console.log("res");
+      const msg = JSON.parse(res.data);
+      if (msg.type === "message") {
+        setMsgs([...msgs, msg.data]);
+      }
+    };
+    ws.onclose = () => {
+      console.log("close connection");
+    };
+  }, []);
+
+  function sendMsg() {
+    if (!ws) return;
+    ws.send(JSON.stringify({ constent: msg }));
+  }
   //------------------------------------------------
   return (
     <>
@@ -182,9 +199,14 @@ export default function index() {
         aria-labelledby="offcanvasBottomLabel"
       >
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasBottomLabel">
-            泥好
-          </h5>
+          {msgs.map((msg) => {
+            return (
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+                {msg}
+              </h5>
+            );
+          })}
+
           <button
             type="button"
             class="btn-close"
@@ -197,12 +219,19 @@ export default function index() {
           <div></div>
           <input
             type="text"
-            // value={msg}
+            value={msg}
             onChange={(e) => {
               setMsg(e.target.value);
             }}
           />
-          <button className="btn btn-warning">送出</button>
+          <button
+            className="btn btn-warning"
+            onClick={() => {
+              sendMsg();
+            }}
+          >
+            送出
+          </button>
         </div>
       </div>
 

@@ -22,6 +22,9 @@ export default function PostModal({
   user_id,
   nickname,
   user_img,
+  ifSave,
+  favs,
+  setFavs
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
@@ -66,7 +69,7 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
-        Router.push("/post")
+        router.push("/post")
       });
     
 
@@ -212,7 +215,10 @@ export default function PostModal({
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
-                <Saved />
+              <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
+                favs={favs}
+                setFavs={setFavs}
+                />
                 {/* <span>1</span> */}
               </span>
             </div>

@@ -42,7 +42,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const [fav, setFav] = useState([])
   useEffect(() => {
-    fetch(process.env.API_SERVER + `api/post/`)
+    fetch(process.env.API_SERVER + `api/post/fav`)
       .then((r) => r.json())
       .then((r) => {
         setFav(r);
@@ -62,9 +62,28 @@ export const AuthContextProvider = ({ children }) => {
       } catch (ex) {}
     }
   }, []);
+  useEffect(() => {
+    if(auth.user_id){
+    fetch(process.env.API_SERVER + `/api/post/fav`,{
+      headers: {
+        //Bearer後面一定要空一格
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        setFav(r);
+        console.log(212);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });}
+  }, [auth]);
+
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, logout }}>
+    <AuthContext.Provider value={{ auth, setAuth, logout ,fav}}>
       {children}
     </AuthContext.Provider>
   );

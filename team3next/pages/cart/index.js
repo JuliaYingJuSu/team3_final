@@ -8,7 +8,7 @@ import RunContext from "@/hooks/RunContext";
 export default function CartDetail() {
   const [data, setData] = useState([]);
   const { run } = useContext(RunContext);
-  console.log(run);
+  // console.log(run);
 
   useEffect(() => {
     // localStorage 取資料

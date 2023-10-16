@@ -11,7 +11,7 @@ export default function RestaurantRegister() {
   const display = { 0: <StepFirst />, 1: <StepSecond />, 2: <StepThird /> };
   const inputField = [
     ["email", "password", "rePassword"],
-    ["city", "district", "address", "phone", "description"],
+    ["name", "city", "district", "address", "phone", "description"],
     ["photo"],
   ];
 
@@ -24,7 +24,6 @@ export default function RestaurantRegister() {
   };
   const currentField = inputField[page];
   // derived state依靠先有得state計算而出的方法
-  
 
   return (
     <>

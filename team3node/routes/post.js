@@ -108,49 +108,53 @@ postRouter.post("/add-comment", async (req, res) => {
 
 //文章主頁要收藏訊息
 postRouter.get('/fav', async(req,res)=>{
-  const sql = `SELECT * FROM post_favorite WHERE user_id = ? `;
+  
+  if(!res.locals.jwtData?.user_id){
+    return res.json({});
+  }
+  const loguid = res.locals.jwtData.user_id
+  console.log(loguid)
+  const sql = `SELECT post_id FROM post_favorite WHERE user_id = ? `;
 
-  const [data] = await db.query(sql, [user_id]);
-  console.log(data)
-  res.json(data);//回傳json格式
+  const [data] = await db.query(sql, [loguid]);
+  
+  const newData = data.map(i=>i.post_id);
+
+  console.log(newData)
+  res.json(newData);//回傳json格式
 })
 
+
 //加入收藏
-postRouter.post("/add-fav/", async (req, res) => {
-  const pid = req.body.pid;
-  const uid = req.body.uid;
+postRouter.post("/toggle-fav/:post_id", async (req, res) => {
+  const post_id = req.query.post_id;
+  const output = {
+    action: '', // insert, delete
+    post_id,
+  };
+  
+  
 
-  const sql = `INSERT INTO post_favorite (post_favorite_id, user_id, post_id) VALUES (NULL, '${uid}', '${pid}')`;
-  const [result] = await db.query(sql);
-  console.log(result);
-
-  if (result.affectedRows) {
-    const success = true;
-    res.send(success);
-    console.log(success);
+  if(!res.locals.jwtData?.user_id){
+    return res.json({});
   }
+  const user_id = res.locals.jwtData.user_id
+
+  const sql1 = `SELECT * FROM post_favorite WHERE user_id=? AND post_id=?`;
+  const [rows1] = await db.query(sql1, [user_id, post_id]);
+  if(rows1.length){
+    // delete
+    const sql2 = `DELETE FROM post_favorite WHERE user_id=? AND post_id=?`;
+    await db.query(sql2, [user_id, post_id]);
+    output.action = 'delete';
+  } else {
+    // insert
+    const sql3 = `INSERT INTO post_favorite (user_id, post_id) VALUES (?, ?)`;
+    await db.query(sql3, [user_id, post_id]);
+    output.action = 'insert';
+  }
+  res.json(output)
 });
 
-//刪除收藏
-postRouter.post("/del-fav", async (req, res) => {
-  const pid = req.body.pid;
-  const uid = req.body.uid;
-
-  console.log(uid);
-  const sql = `DELETE FROM post_favorite WHERE user_id=${pid} AND  post_id =${uid}`;
-
-  console.log(sql);
-  try {
-    const [result] = await db.query(sql);
-    console.log(result);
-
-    const success = !!result.affectedRows;
-
-    console.log(success);
-    res.json(success);
-  } catch (ex) {
-    console.log(ex);
-  }
-});
 
 export default postRouter;

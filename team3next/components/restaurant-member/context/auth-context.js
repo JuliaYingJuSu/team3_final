@@ -5,7 +5,6 @@ export const MemberAuthContext = createContext();
 export const MemberAuthProvider = ({ children }) => {
   const router = useRouter();
   const [memberAuth, setMemberAuth] = useState({ auth: "", result: "" });
-  console.log(memberAuth);
   const logOut = () => {
     localStorage.removeItem("token");
     setMemberAuth({ auth: "", result: "" });
@@ -25,7 +24,7 @@ export const MemberAuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (memberAuth) {
-      console.log("finally changed", memberAuth);
+      console.log("auth state changed", memberAuth);
     }
   }, [memberAuth]);
 
