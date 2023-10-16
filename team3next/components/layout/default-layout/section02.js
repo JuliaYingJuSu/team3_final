@@ -25,7 +25,7 @@ export default function Section02() {
     fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const groupedData = {};
         data.forEach(({ post_id, ...rest }) => {
           if (groupedData[post_id]) {
