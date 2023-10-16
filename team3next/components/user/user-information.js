@@ -8,9 +8,12 @@ import axios from "axios";
 
 export default function UserInformation() {
   const { auth } = useContext(AuthContext);
+  const [foodtag, setFoodTag] = useState([]);
 
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
+
+
 
   const {
     register,
