@@ -79,15 +79,18 @@ app.use((req, res, next) => {
   next();
 });
 const verifyJWT = (req, res, next) => {
+  // 製作jwt驗證中間件
   const token = req.headers["authorization"].split(" ")[1];
+  // 取得bearer後的token
   if (!token) {
     res.json({ message: "need token!!!" });
   } else {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.id = decoded.id;
-      next(); // 继续处理下一个中间件或路由
+      next(); // 继续处理下一個中間件或者路由
     } catch (err) {
+      console.log(req.headers["authorization"]);
       res.json({ message: "token is not ok" });
     }
   }
@@ -177,7 +180,7 @@ app.post("/member-login", async (req, res) => {
   // db.query的返回結果為一個大陣列包兩個小陣列，解構一次拿到第一個有資料的陣列
   // 獲得email存在的用戶的那筆所有資料
   if (rows.length > 0) {
-    // 確定資料長度大於1，其實用戶資料也只有一筆，然後就比對hash密碼，返回為true的結果進行之後的jwt登入狀態操作
+    // 確定資料長度大於1，其實用戶資料也只有一筆，然後就比對hash密碼，返回為true的結果進行之後的jwt生成
     console.log("email核對成功");
     const storedHash = rows[0].restaurant_password_hash;
     const isPasswordCorrect = await bcrypt.compare(password, storedHash);
@@ -188,29 +191,27 @@ app.post("/member-login", async (req, res) => {
     if (isPasswordCorrect) {
       const id = rows[0].restaurant_id;
       const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: 300,
+        expiresIn: 86400,
       });
-      const {
-        restaurant_password_hash,
-        restaurant_city,
-        restaurant_district,
-        restaurant_address,
-        restaurant_info,
-        ...withoutSensitive
-      } = rows[0];
+      delete rows[0].restaurant_password_hash;
+      delete rows[0].restaurant_city, delete rows[0].restaurant_district;
+      delete rows[0].restaurant_address;
+      delete rows[0].restaurant_info;
       // 把敏感數據拿掉
       // req.session.user = rows[0];
-
+      const withToken = {
+        token,
+        ...rows[0],
+      };
       res.json({
         auth: true,
-        token: token,
-        result: withoutSensitive,
+        result: withToken,
       });
-      // 只是建立token
+      // 做為response交由前端使用
     }
   } else {
     res.json({ auth: false, message: "用戶不存在" });
-    // 這邊的事response
+    // 這邊是錯誤response
   }
 });
 

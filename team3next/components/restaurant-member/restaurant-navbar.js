@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
+import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function RestaurantNavbar() {
+  const { memberAuth, setMemberAuth } = useMemberAuthContext();
   return (
     <>
       <ul className="nav nav-underline d-flex align-items-center justify-content-between flex-nowrap">
@@ -57,7 +59,7 @@ export default function RestaurantNavbar() {
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
-              歡迎回來，XXX
+              歡迎回來，{memberAuth.result?.restaurant_name || "加載中..."}
             </div>
           </div>
         </div>

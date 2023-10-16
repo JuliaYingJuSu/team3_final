@@ -11,7 +11,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const [displayData, setDisplayData] = useState([]);
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
-  console.log('main:',{searchKeyword})
+  // console.log('main:',{searchKeyword})
   // const [fav, setFav] = usestate([]);
 
   useEffect(() => {

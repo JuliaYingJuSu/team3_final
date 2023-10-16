@@ -14,6 +14,7 @@ import Register from "./register";
 
 export default function Login() {
   const { auth, setAuth } = useContext(AuthContext);
+
   const router = useRouter();
   console.log({ router });
 
@@ -219,16 +220,6 @@ export default function Login() {
               aria-label="Close"
               data-bs-dismiss="modal"></span>
             <Register></Register>
-            <Register1></Register1>
-            <Register2></Register2>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-bs-dismiss="modal"
-              data-bs-toggle="modal"
-              data-bs-target="#modal2">
-              Open Modal 2
-            </button>
           </div>
         </div>
       </div>

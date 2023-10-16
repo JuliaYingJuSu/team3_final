@@ -43,6 +43,7 @@ export default function AddPost() {
     } catch (err) {
       console.error("Error:", err);
     }
+    
   };
 
   return (
@@ -88,6 +89,7 @@ export default function AddPost() {
                 placeholder="新增標題"
                 aria-label="Posttitle"
                 aria-describedby="basic-addon1"
+                
               />
             </div>
             <div className="input-group mb-3 w-100 ">

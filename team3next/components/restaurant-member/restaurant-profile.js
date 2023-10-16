@@ -1,14 +1,46 @@
-import React from "react";
-import { useState } from "react";
+import React, { use } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "@/validation/profile-validation";
 import axios from "axios";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function Profile() {
+  const [fetchedData, setFetchedData] = useState("Do");
+  const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [inputType, setInputType] = useState("password");
   const [reInputType, reSetInputType] = useState("password");
+  const fetchData = async () => {
+    try {
+      const authObj = JSON.parse(localStorage.getItem("token"));
+      if (memberAuth && memberAuth.result.token) {
+        const response = await axios.get(
+          "http://localhost:3002/api/restaurant/member-info",
+          {
+            headers: {
+              Authorization: "Bearer " + memberAuth.result.token,
+            },
+          }
+        );
+        console.log("fetch result:", response.data);
+        setFetchedData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  console.log(memberAuth); // 添加这行用于观察 memberAuth
+  useEffect(() => {
+    if (fetchedData) {
+      console.log("finally changed", fetchedData);
+    }
+  }, [fetchedData]);
+  useEffect(() => {
+    fetchData();
+  }, []);
   // eyeopened
   const {
     register,
@@ -18,7 +50,6 @@ export default function Profile() {
   } = useForm({
     resolver: yupResolver(profileSchema),
   });
-  console.log(errors);
   // rhf
   const onSubmit = async (data) => {
     console.log(data);
@@ -58,7 +89,8 @@ export default function Profile() {
                 type="text"
                 {...register("email")}
                 id="email"
-                placeholder="test@gmail.com"
+                placeholder="請輸入正確的email格式"
+                value={fetchedData[0].restaurant_email}
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -87,7 +119,7 @@ export default function Profile() {
                     );
                   }}
                 >
-                  {inputType === "password" ? <FaRegEye /> : <FaRegEyeSlash />}
+                  {inputType === "password" ? <FaRegEyeSlash /> : <FaRegEye />}
                 </span>
               </div>
             </div>
@@ -118,9 +150,9 @@ export default function Profile() {
                   }}
                 >
                   {reInputType === "password" ? (
-                    <FaRegEye />
-                  ) : (
                     <FaRegEyeSlash />
+                  ) : (
+                    <FaRegEye />
                   )}
                 </span>
               </div>

@@ -109,6 +109,25 @@ userRouter.get("/:user_id/follown", async (req, res) => {
   }
 });
 
+//食物標籤---------------------
+userRouter.get("/:user_id/food_tag", async (req, res) => {
+  const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT user.user_id,food_tag.food_tag_id 
+  FROM user_tag 
+  JOIN food_tag ON food_tag.food_tag_id = user_tag.food_tag_id 
+  JOIN user ON user.user_id=user_tag.user_id 
+  WHERE user.user_id=?;
+`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id_followed]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
 //檔案上傳---------------------
 userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   console.log(req.file);

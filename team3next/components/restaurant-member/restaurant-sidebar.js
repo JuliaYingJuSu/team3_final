@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function RestaurantSidebar() {
+  const { memberAuth, setMemberAuth, logOut } = useMemberAuthContext();
   return (
     <>
       <div
@@ -24,7 +26,7 @@ export default function RestaurantSidebar() {
             >
               <Link
                 className="stretched-link text-dark"
-                href="/restaurant-member/profile"
+                href={`/restaurant-member/${memberAuth.result.restaurant_id}/profile`}
               >
                 會員資料管理
               </Link>
@@ -46,7 +48,7 @@ export default function RestaurantSidebar() {
             >
               <Link
                 className="stretched-link text-dark"
-                href="/restaurant-member/page-content"
+                href={`/restaurant-member/${memberAuth.result.restaurant_id}/page-content`}
               >
                 餐廳資料維護
               </Link>
@@ -66,7 +68,10 @@ export default function RestaurantSidebar() {
               className="option justify-content-center"
               style={{ width: "140px" }}
             >
-              <Link className="stretched-link text-dark" href="#">
+              <Link
+                className="stretched-link text-dark"
+                href={`/restaurant-member/${memberAuth.result.restaurant_id}/orders`}
+              >
                 餐廳訂單管理
               </Link>
             </div>
@@ -87,10 +92,30 @@ export default function RestaurantSidebar() {
             >
               <Link
                 className="stretched-link text-dark"
-                href="/restaurant-member/opening-hours"
+                href={`/restaurant-member/${memberAuth.result.restaurant_id}/opening-hours`}
               >
                 營業時間管理
               </Link>
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          className="btn d-flex justify-content-center px-4 mb-3"
+        >
+          <div className="d-flex justify-content-between w-100">
+            <div
+              className="option justify-content-center"
+              style={{ width: "140px" }}
+            >
+              <span
+                className="stretched-link text-dark"
+                onClick={() => {
+                  logOut();
+                }}
+              >
+                登出
+              </span>
             </div>
           </div>
         </button>
