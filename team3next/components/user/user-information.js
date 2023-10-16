@@ -209,10 +209,10 @@ export default function UserInformation() {
                         onClick={() =>
                           setMyFoodTag((prev) => {
                             console.log({ prev });
-                            const p = { ...prev };//複製prev
-                            p[1] = !p[1];//取
+                            const p = { ...prev }; //複製prev
+                            p[1] = !p[1]; //取相反值
                             console.log({ p });
-                            return p;
+                            return p; //新狀態
                           })
                         }
                         {...register("food_tag_id")}
@@ -411,7 +411,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[10] = !p[10];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -432,7 +433,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[11] = !p[11];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -468,7 +470,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[13] = !p[13];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -489,7 +492,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[14] = !p[14];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -510,7 +514,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[15] = !p[15];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -531,7 +536,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[16] = !p[16];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -553,7 +559,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[17] = !p[17];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -574,7 +581,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[18] = !p[18];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -595,7 +603,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[19] = !p[19];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -616,7 +625,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[20] = !p[20];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -637,7 +647,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[21] = !p[21];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -658,7 +669,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[22] = !p[22];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
@@ -679,7 +691,8 @@ export default function UserInformation() {
                             const p = { ...prev };
                             p[23] = !p[23];
                             return p;
-                          })}
+                          })
+                        }
                         {...register("food_tag_id")}
                       />
                       <label
