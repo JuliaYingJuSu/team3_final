@@ -108,14 +108,53 @@ postRouter.post("/add-comment", async (req, res) => {
 
 //文章主頁要收藏訊息
 postRouter.get('/fav', async(req,res)=>{
+  
+  if(!res.locals.jwtData?.user_id){
+    return res.json({});
+  }
   const loguid = res.locals.jwtData.user_id
-  const sql = `SELECT * FROM post_favorite WHERE user_id = ${loguid} `;
+  console.log(loguid)
+  const sql = `SELECT post_id FROM post_favorite WHERE user_id = ? `;
 
-  const [data] = await db.query(sql, [user_id]);
-  console.log(data)
-  res.json(data);//回傳json格式
+  const [data] = await db.query(sql, [loguid]);
+  
+  const newData = data.map(i=>i.post_id);
+
+  console.log(newData)
+  res.json(newData);//回傳json格式
 })
 
+
+//加入收藏
+postRouter.post("/toggle-fav/:post_id", async (req, res) => {
+  const post_id = req.query.post_id;
+  const output = {
+    action: '', // insert, delete
+    post_id,
+  };
+  
+  
+
+  if(!res.locals.jwtData?.user_id){
+    return res.json({});
+  }
+  const user_id = res.locals.jwtData.user_id
+
+  const sql1 = `SELECT * FROM post_favorite WHERE user_id=? AND post_id=?`;
+  const [rows1] = await db.query(sql1, [user_id, post_id]);
+  if(rows1.length){
+    // delete
+    const sql2 = `DELETE FROM post_favorite WHERE user_id=? AND post_id=?`;
+    await db.query(sql2, [user_id, post_id]);
+    output.action = 'delete';
+  } else {
+    // insert
+    const sql3 = `INSERT INTO post_favorite (user_id, post_id) VALUES (?, ?)`;
+    await db.query(sql3, [user_id, post_id]);
+    output.action = 'insert';
+  }
+  res.json(output)
+});
 //加入收藏
 postRouter.post("/add-fav/", async (req, res) => {
   const pid = req.body.pid;

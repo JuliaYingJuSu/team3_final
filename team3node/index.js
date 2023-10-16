@@ -68,6 +68,7 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   //顯示token
   let auth = req.get("Authorization");
+  
   if (auth && auth.indexOf("Bearer ") === 0) {
     auth = auth.slice(7);
 
