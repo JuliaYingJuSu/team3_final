@@ -10,6 +10,7 @@ export default function MyArticle({ article }) {
   const { auth } = useContext(AuthContext);
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
+  const contentParagraphs = article.post_content.split("\n");
   console.log({ article });
 
   // 初始化輪播的 activeIndex
@@ -145,19 +146,25 @@ export default function MyArticle({ article }) {
                 <Saved />
               </span>
             </div>
-            <div className="ms-3">
-              <div className="mb-3">{article.post_content}</div>
+            <div className="ms-3 text-start">
+              <div className="mb-3 ">
+                {contentParagraphs.map((paragraph, index) => (
+                  <div className="mb-3" key={index}>
+                    {paragraph}
+                  </div>
+                ))}
+              </div>
               <p className="icon-tag">
                 <a className="ms-2 " href="#" style={{ color: "#666666" }}>
                   {article.food_tag_name}
                 </a>
               </p>
-              <p className="fs12 mb-2">{article.create_date.substr(0,10)}</p>
+              <p className="fs12 mb-2">{article.create_date.substr(0, 10)}</p>
             </div>
             <hr />
             {comments &&
               comments.map((v, i) => {
-                  console.log(v);              
+                console.log(v);
                 return (
                   <div className="d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">
@@ -174,7 +181,9 @@ export default function MyArticle({ article }) {
                       <p>{v.content}</p>
                     </div>
                     <div>
-                      <p className="fs12 mt-3 me-3">{v.create_time.substr(0,10)}</p>
+                      <p className="fs12 mt-3 me-3">
+                        {v.create_time.substr(0, 10)}
+                      </p>
                     </div>
                   </div>
                 );

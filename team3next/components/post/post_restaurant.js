@@ -20,7 +20,7 @@ function PostRestaurant() {
 
   
   return (
-    <Select onChange={handleChange} options={options} placeholder="請輸入餐廳名稱或者下拉選擇餐廳"  />
+    <Select onChange={handleChange} options={options} placeholder="請輸入餐廳名稱或者下拉選擇餐廳" />
   )
 }
 

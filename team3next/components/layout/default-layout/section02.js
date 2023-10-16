@@ -25,7 +25,7 @@ export default function Section02() {
     fetch(process.env.API_SERVER + "/api/post/")
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const groupedData = {};
         data.forEach(({ post_id, ...rest }) => {
           if (groupedData[post_id]) {
@@ -71,8 +71,8 @@ export default function Section02() {
               food_tag_names,
               user_id,
             },i) => {      
-              const nickname = userData[user_id].nickname ;
-              const user_img = userData[user_id].user_img ;  
+              const nickname = userData && userData[user_id].nickname;
+              const user_img = userData && userData[user_id].user_img; 
               return (
                 <Card
                   key={post_id}

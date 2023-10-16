@@ -9,11 +9,13 @@ const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 userRouter.get("/:user_id/my-book", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0;
   const sql = `
-  SELECT * FROM user JOIN book 
-  ON user.user_id = book.user_id 
-  JOIN restaurant_user 
+  SELECT * FROM user JOIN book
+  ON user.user_id = book.user_id
+  JOIN restaurant_user
   ON restaurant_user.restaurant_id = book.restaurant_id
-  WHERE user.user_id = ? GROUP BY book.book_id;
+  WHERE book.book_isValid = "1" 
+  AND user.user_id = ? GROUP BY book.book_id
+  ORDER BY book.book_date DESC;
   `;
 
   try {
@@ -48,6 +50,23 @@ userRouter.get("/:user_id/my-book/:bid?", async (req, res) => {
   res.json(output);
 });
 
+userRouter.post("/:user_id/my-book/:bid?", (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  const bid = req.params.bid;
+
+  const updateSql = `UPDATE book SET book_isValid = 0 WHERE book_id = ${bid}`;
+  db.query(updateSql, [bid], (err, result) => {
+    if (err) {
+      console.error("取消訂位失敗：" + err.message);
+      res.status(500).json({ message: "取消訂位失敗" });
+      return;
+    }
+
+    console.log("成功取消訂位：" + result.affectedRows);
+    res.status(200).json({ message: "成功取消訂位" });
+  });
+});
+
 //我的文章---------------------
 userRouter.get("/:user_id/my-article", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
@@ -80,6 +99,25 @@ userRouter.get("/:user_id/myauthor", async (req, res) => {
 userRouter.get("/:user_id/follown", async (req, res) => {
   const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
   const sql = `SELECT * FROM followers JOIN user ON followers.user_id_following=user.user_id WHERE followers.user_id_followed=?`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id_followed]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+//食物標籤---------------------
+userRouter.get("/:user_id/food_tag", async (req, res) => {
+  const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT user.user_id,food_tag.food_tag_id 
+  FROM user_tag 
+  JOIN food_tag ON food_tag.food_tag_id = user_tag.food_tag_id 
+  JOIN user ON user.user_id=user_tag.user_id 
+  WHERE user.user_id=?;
+`;
 
   try {
     const [rows] = await db.query(sql, [user_id_followed]);
@@ -155,7 +193,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
   }
 });
 
-//修改會員資料表單---------------------
+// 修改會員資料表單
 userRouter.put("/update", async (req, res) => {
   const output = {
     success: false,
@@ -164,45 +202,60 @@ userRouter.put("/update", async (req, res) => {
     result: {},
     postData: req.body, // 除錯檢查用
   };
+
   // TODO: 欄位格式檢查
   let isPass = true; // 有沒有通常檢查
-  if (req.body.user_name) {
-    let {
-      user_id,
-      user_name,
-      nickname,
-      user_password,
-      user_phone,
-      food_tag_id,
-    } = req.body;
-    //檢查姓名欄位
-    if (user_name.length < 2) {
-      output.errors.name = "姓名要大於2個字";
-      isPass = false;
-      output.error = true;
-    }
 
-    let result;
-    if (isPass) {
-      try {
+  if (req.body.user_name) {
+    try {
+      const {
+        user_id,
+        user_name,
+        nickname,
+        user_password,
+        user_phone,
+        food_tag_id,
+      } = req.body;
+
+      // 檢查姓名欄位
+      if (user_name.length < 2) {
+        output.errors.name = "姓名要大於2個字";
+        isPass = false;
+        output.error = true;
+      }
+
+      if (isPass) {
         const sql =
           "UPDATE `user` SET `user_name`=?,`nickname`=?,`user_password`=?,`user_phone`=? WHERE `user_id`=?";
-
-        [result] = await db.query(sql, [
+        
+        //更新user資料
+        const [result] = await db.query(sql, [
           user_name,
           nickname,
           user_password,
           user_phone,
           user_id,
-        ]); //這邊欄位要跟寫入SQL的?一樣，不然會出錯
-        output.success = !!result.changedRows; //有改變1，沒有為0
+        ]);
+
+        output.success = !!result.changedRows; // 有改變1，沒有為0
         output.result = result;
-      } catch (ex) {
-        output.error = "SQL寫入錯誤";
-        output.ex = ex;
+
+        // 刪除user的標籤
+        const delSql = `DELETE FROM user_tag WHERE user_id = ?`;
+        await db.query(delSql, [user_id]);
+
+        // 新增user的標籤
+        for (const foodtagid of food_tag_id) {
+          const tagSql = `INSERT INTO user_tag (user_id, food_tag_id) VALUES (?, ?)`;
+          await db.query(tagSql, [user_id, foodtagid]);
+        }
       }
+    } catch (ex) {
+      output.error = "SQL寫入錯誤";
+      output.ex = ex;
     }
   }
+
   res.json(output);
 });
 

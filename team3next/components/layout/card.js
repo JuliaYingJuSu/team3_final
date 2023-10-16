@@ -22,9 +22,12 @@ export default function Card({
   nickname,
   user_img,
   food_tag_name,
+  favs,
+  setFavs,
 }) {
-  const { auth } = useContext(AuthContext);
+  const { auth,fav } = useContext(AuthContext);
   const [saved, setSaved] = useState(false);
+
   // const [fav, setFav] = useState(false);
 
   // useEffect(() => {
@@ -75,6 +78,8 @@ export default function Card({
         nickname={nickname}
         user_img={user_img}
         food_tag_name={food_tag_name}
+        favs={favs}
+        setFavs={setFavs}
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
@@ -95,23 +100,25 @@ export default function Card({
                 <Like />
                 {/* <span>1</span> */}
               </span>
-              {/* <span className="middle">
+              <span className="middle">
                 <button className="btn btn-sm btn-i">
                   <i className="fa-regular fa-comment"></i>
                 </button>
-                <span>1</span>
-              </span> */}
+                {/* <span>1</span> */}
+              </span>
               <span className="middle">
-                {/* <Saved 
-                /> */}
-                <button
+                <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
+                favs={favs}
+                setFavs={setFavs}
+                />
+                {/* <button
                   className="btn btn-sm btn-i"
                   onClick={() => {
                     setSaved(!saved);
                   }}
                 >
                   <i className={saved ? "icon-mark-fill" : "icon-mark"}></i>
-                </button>
+                </button> */}
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
@@ -153,7 +160,7 @@ export default function Card({
                   {nickname}
                 </Link>
               </p>
-              <FollowButton />
+              <FollowButton ifFollow={false}/>
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>

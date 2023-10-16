@@ -22,9 +22,13 @@ export default function PostModal({
   user_id,
   nickname,
   user_img,
+  ifSave,
+  favs,
+  setFavs
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
+  const contentParagraphs = post_content.split('\n');
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -65,7 +69,7 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
-       Router.push("/post")
+        Router.push("/post")
       });
     
 
@@ -211,12 +215,19 @@ export default function PostModal({
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
-                <Saved />
+              <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
+                favs={favs}
+                setFavs={setFavs}
+                />
                 {/* <span>1</span> */}
               </span>
             </div>
             <div className="ms-3" >
-              <div className="mb-3">{post_content}</div>
+              <div className="mb-3">{contentParagraphs.map((paragraph, index) => (
+                <div className="mb-3" key={index}>
+                  {paragraph}
+                </div>
+              ))} </div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
                   <a

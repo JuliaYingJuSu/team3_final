@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
@@ -6,7 +6,6 @@ import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbDetail from "@/components/book/breadcrumb-detail";
 import AuthContext from "@/hooks/AuthContext";
-import { useEffect, useState, useContext } from "react";
 
 export default function Detail() {
   const { auth } = useContext(AuthContext);
@@ -28,7 +27,8 @@ export default function Detail() {
         const bid = router.query.bid; //***
         console.log(bid);
         fetch(
-          process.env.API_SERVER + `/api/user/${auth.user_id}/my-book/${bid}`
+          process.env.API_SERVER + `/api/user/${auth.user_id}/my-book/${bid}`,
+          { method: "GET" }
         )
           .then((r) => r.json())
           .then((r) => {
@@ -40,6 +40,30 @@ export default function Detail() {
     [router.isReady],
     [auth.user_id]
   );
+
+  const openingShort = data.rows?.restaurant_opening.split("\\n")[0];
+
+  const originalBookDate = new Date(data.rows?.book_date);
+  const offset = originalBookDate.getTimezoneOffset();
+  const correctedBookDate = new Date(
+    originalBookDate.getTime() - offset * 60 * 1000
+  );
+
+  const shortBookMonth = correctedBookDate.getMonth() + 1; // 1月是0
+  const shortBookDate = correctedBookDate.getDate();
+  const shortBookTime = data.rows?.book_time.split(":")[0] + ":00";
+
+  const dayOfWeek = correctedBookDate.getDay();
+  const daysOfWeek = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
+  const shortBookDay = daysOfWeek[dayOfWeek];
+
+  const specSplit = data.rows?.book_note.split(",").map((v) => {
+    return <p>{v}</p>;
+  });
+
+  const gender = ["小姐", "先生", "貴賓"];
+  const bookGender = gender[data.rows?.book_gender];
+
   return (
     <>
       <Head>
@@ -58,30 +82,30 @@ export default function Detail() {
             style={{ width: "70%" }}
           >
             <div className="fs18 align-self-center col-12 col-xl-5">
-              <p className="h4">
-                Cin Cin Osteria
-                <br />
-                請請義大利餐廳
-              </p>
+              <p className="h4">{data.rows?.restaurant_name}</p>
               <br />
               <div className="fs18">
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-map"></span>
                   </span>
-                  <div>台北市松山區慶城街16巷16號1F</div>
+                  <div>
+                    {data.rows?.restaurant_city}
+                    {data.rows?.restaurant_district}
+                    {data.rows?.restaurant_address}
+                  </div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-Call"></span>
                   </span>
-                  <div>02-2712-2050</div>
+                  <div>{data.rows?.restaurant_phone}</div>
                 </div>
                 <div className="d-flex">
                   <span className="pe-2">
                     <span className="icon-calender"></span>
                   </span>
-                  <div>每週一休息</div>
+                  <div>{openingShort}</div>
                 </div>
               </div>
             </div>
@@ -94,7 +118,9 @@ export default function Detail() {
                 frameborder="0"
                 marginheight="0"
                 marginwidth="0"
-                src="https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=台北市松山區慶城街16巷16號&z=16&output=embed&t="
+                src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${data.rows?.restaurant_city}
+                ${data.rows?.restaurant_district}
+                ${data.rows?.restaurant_address}&output=embed&t=`}
               ></iframe>
             </div>
           </div>
@@ -112,15 +138,26 @@ export default function Detail() {
             <div>
               <div className="h5 mb-4">用餐人數</div>
               <div className="d-flex">
-                <div className="fs18 me-5 ps-3">3 位 大人</div>
-                <div className="fs18 ps-3">1 位 孩童</div>
+                <div className="fs18 me-5 ps-3">
+                  {data.rows?.book_num_adult} 位 大人
+                </div>
+                <div className="fs18 ps-3">
+                  {data.rows?.book_num_kid} 位 孩童
+                </div>
               </div>
               <div className="h5 mt-5 mb-4">用餐時段</div>
-              <div className="fs18 ps-3">17:00</div>
+              <div className="fs18 ps-3">{shortBookTime}</div>
             </div>
             <div>
               <div className="h5 mb-4">用餐日期</div>
-              <div className="fs18 ps-3">11月7日 週二</div>
+              <div className="fs18 ps-3">
+                {"2023-" +
+                  shortBookMonth +
+                  "-" +
+                  shortBookDate +
+                  "　" +
+                  shortBookDay}
+              </div>
             </div>
           </div>
         </div>
@@ -132,16 +169,16 @@ export default function Detail() {
         <div className="d-flex justify-content-center">
           <div className="container3">
             <div className="h5 mb-4">訂位人姓名</div>
-            <div className="fs18 ps-3">洪琪方 小姐</div>
+            <div className="fs18 ps-3">
+              {data.rows?.book_name}　{bookGender}
+            </div>
             <div className="h5 mb-4 mt-5">訂位人手機號碼</div>
-            <div className="fs18 ps-3">0963850549</div>
+            <div className="fs18 ps-3">{data.rows?.book_phone}</div>
             <div className="h5 mb-4 mt-5">訂位人 email</div>
-            <div className="fs18 ps-3">apple667733@gmail.com</div>
+            <div className="fs18 ps-3">{data.rows?.book_email}</div>
             <div className="h5 mb-4 mt-5">其他備註</div>
             <div className="fs18 ps-3">
-              請準備兒童餐具,
-              <br />
-              另外其中有一位對海鮮過敏, 再麻煩協助點菜。
+              {!specSplit === "" ? specSplit : "無"}
             </div>
           </div>
         </div>
@@ -153,6 +190,16 @@ export default function Detail() {
             onClick={(event) => {
               const result = window.confirm("確認要取消這筆訂位嗎?");
               if (result) {
+                const bid = data.rows?.book_id;
+                fetch(
+                  process.env.API_SERVER +
+                    `/api/user/${auth.user_id}/my-book/${bid}`,
+                  {
+                    method: "POST",
+                  }
+                )
+                  .then((r) => r.json())
+                  .then(data);
               } else {
                 event.preventDefault();
               }
@@ -160,7 +207,7 @@ export default function Detail() {
           >
             取消訂位
           </Link>
-          <Link href="/user/my-book" className="btn btn-middle ms-3">
+          <Link href="/user/:user_id/my-book" className="btn btn-middle ms-3">
             回上一頁
           </Link>
         </div>
