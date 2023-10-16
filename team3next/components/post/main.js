@@ -9,11 +9,24 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
+  const [favs, setFavs] = useState([]);
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
-  // const [fav, setFav] = usestate([]);
 
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/fav",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setFavs(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -134,6 +147,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
                 <Card
                   key={post_id}
                   post_id={post_id}
+                  favs={favs}
+                  setFavs={setFavs}
                   post_title={post_title}
                   post_content={post_content}
                   createTime={createTime}
