@@ -9,15 +9,11 @@ export default function ProductComment({ product }) {
   const [content, setContent] = useState("");
   const [hover, setHover] = useState(0);
   const [score, setScore] = useState(0);
-  console.log(score);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(product);
 
   const comment = (product) => {
-    console.log(content);
-
     fetch("http://localhost:3002/api/product/add-comment", {
       method: "POST",
       body: JSON.stringify({
