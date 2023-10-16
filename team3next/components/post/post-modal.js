@@ -69,7 +69,7 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
-        Router.push("/post")
+        router.push("/post")
       });
     
 

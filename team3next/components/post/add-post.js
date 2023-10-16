@@ -102,7 +102,7 @@ export default function AddPost() {
               /> */}
               <PostRestaurant className="input-group-text" />
             </div>
-            <div className="input-group mb-3 w-100">
+            <div className="input-group mb-3 w-100" style={{width: '310px'}}>
               <span className="input-group-text icon-tag"></span>
               <FoodTags/>
               {/* <input

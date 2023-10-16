@@ -21,6 +21,8 @@ import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
 import cartRouter from "./routes/cart.js";
 import { WebSocketServer } from "ws";
+import http from "http";
+import { parse } from "url";
 
 // const upload=multer({dest:'tmp_uploads/'});//設定上傳檔案位置
 
@@ -35,7 +37,7 @@ const app = express();
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => {
-    console.log({ origin });
+    // console.log({ origin });
     callback(null, true);
   },
 };
@@ -69,7 +71,7 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   //顯示token
   let auth = req.get("Authorization");
-  
+
   if (auth && auth.indexOf("Bearer ") === 0) {
     auth = auth.slice(7);
 
@@ -92,7 +94,7 @@ const verifyJWT = (req, res, next) => {
       req.id = decoded.id;
       next(); // 继续处理下一個中間件或者路由
     } catch (err) {
-      console.log(req.headers["authorization"]);
+      // console.log(req.headers["authorization"]);
       res.json({ message: "token is not ok" });
     }
   }
@@ -300,18 +302,38 @@ app.use((req, res) => {
 const post = process.env.WEB_POST || 3001;
 
 // ws------------------------------
-const wss = new WebSocketServer({ server: app });
+const server = http.createServer(app);
+const wss = new WebSocketServer({ noServer: true });
 wss.on("connection", function connection(ws) {
+  console.log("connection");
   ws.on("error", console.error);
-  console.log("連線成功");
 
   ws.on("message", function message(data) {
-    console.log("received: %s", data);
+    console.log("received: %s", JSON.parse(data));
   });
+
+  ws.send(
+    JSON.stringify({
+      type: "message",
+      data: "test",
+    })
+  );
+});
+
+server.on("upgrade", function upgrade(request, socket, head) {
+  const { pathname } = parse(request.url);
+
+  if (pathname === "/ws") {
+    wss.handleUpgrade(request, socket, head, function done(ws) {
+      wss.emit("connection", ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
 });
 
 // ---------------------------------------
 
-app.listen(3002, () => {
+server.listen(3002, () => {
   console.log(`伺服器啟動,post:${post}`);
 });
