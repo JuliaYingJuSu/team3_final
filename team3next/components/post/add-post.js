@@ -102,7 +102,7 @@ export default function AddPost() {
               /> */}
               <PostRestaurant className="input-group-text" />
             </div>
-            <div className="input-group mb-3 ">
+            <div className="input-group mb-3 w-100">
               <span className="input-group-text icon-tag"></span>
               <FoodTags/>
               {/* <input
@@ -163,6 +163,7 @@ export default function AddPost() {
             width: 900px;
             height: 550px;
           }
+          
         `}
       </style>
     </>

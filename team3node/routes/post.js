@@ -155,42 +155,6 @@ postRouter.post("/toggle-fav/:post_id", async (req, res) => {
   }
   res.json(output)
 });
-//加入收藏
-postRouter.post("/add-fav/", async (req, res) => {
-  const pid = req.body.pid;
-  const uid = req.body.uid;
 
-  const sql = `INSERT INTO post_favorite (post_favorite_id, user_id, post_id) VALUES (NULL, '${uid}', '${pid}')`;
-  const [result] = await db.query(sql);
-  console.log(result);
-
-  if (result.affectedRows) {
-    const success = true;
-    res.send(success);
-    console.log(success);
-  }
-});
-
-//刪除收藏
-postRouter.post("/del-fav", async (req, res) => {
-  const pid = req.body.pid;
-  const uid = req.body.uid;
-
-  console.log(uid);
-  const sql = `DELETE FROM post_favorite WHERE user_id=${pid} AND  post_id =${uid}`;
-
-  console.log(sql);
-  try {
-    const [result] = await db.query(sql);
-    console.log(result);
-
-    const success = !!result.affectedRows;
-
-    console.log(success);
-    res.json(success);
-  } catch (ex) {
-    console.log(ex);
-  }
-});
 
 export default postRouter;

@@ -78,6 +78,8 @@ export default function Card({
         nickname={nickname}
         user_img={user_img}
         food_tag_name={food_tag_name}
+        favs={favs}
+        setFavs={setFavs}
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
