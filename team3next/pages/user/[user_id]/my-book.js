@@ -40,9 +40,9 @@ export default function MyBook() {
         <table className="table table-hover">
           <thead className=" bottom-line-g">
             <tr>
-              <th className="align-middle">訂位日期</th>
-              <th className="align-middle">訂位時間</th>
-              <th className="align-middle">訂位人數</th>
+              <th className="align-middle">用餐日期</th>
+              <th className="align-middle">用餐時間</th>
+              <th className="align-middle">用餐人數</th>
               <th className="align-middle">餐廳名稱</th>
               <th className="align-middle"></th>
             </tr>
@@ -55,24 +55,32 @@ export default function MyBook() {
               const correctedBookDate = new Date(
                 originalBookDate.getTime() - offset * 60 * 1000
               );
-
+              console.log(correctedBookDate);
               const shortBookDate = correctedBookDate
                 .toISOString()
                 .split("T")[0];
               const shortBookTime = book.book_time.split(":")[0] + ":00";
+              const isPastDate = originalBookDate < new Date();
+              const grayStyle = isPastDate
+                ? { backgroundColor: "" }
+                : { backgroundColor: "ivory" };
               return (
                 <tr key={i} className={styles.topLine}>
-                  <td className="align-middle pt-2">{shortBookDate}</td>
-                  <td className="align-middle pt-2">{shortBookTime}</td>
-                  <td className="align-middle pt-2">
+                  <td className="align-middle pt-2" style={grayStyle}>
+                    {shortBookDate}
+                  </td>
+                  <td className="align-middle pt-2" style={grayStyle}>
+                    {shortBookTime}
+                  </td>
+                  <td className="align-middle pt-2" style={grayStyle}>
                     {book.book_num_adult + book.book_num_kid}
                   </td>
-                  <td className="align-middle pt-2">
+                  <td className="align-middle pt-2" style={grayStyle}>
                     <Link href={`/book/${book.restaurant_id}`}>
                       {book.restaurant_name}
                     </Link>
                   </td>
-                  <td className="align-middle pt-2">
+                  <td className="align-middle pt-2" style={grayStyle}>
                     <div className="my-1 d-flex justify-content-end a">
                       <Link
                         href={`/user/:user_id/my-book/${book.book_id}`}

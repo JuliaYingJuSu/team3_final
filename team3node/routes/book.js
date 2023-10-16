@@ -3,6 +3,49 @@ import db from "../module/connect.js";
 
 const bookRouter = express.Router();
 
+// ======== 寫入訂位資料 =========
+bookRouter.post("/add-book", async (req, res) => {
+  const {
+    user_id,
+    restaurant_id,
+    book_date,
+    book_time,
+    book_num_adult,
+    book_num_kid,
+    book_name,
+    book_gender,
+    book_phone,
+    book_email,
+    book_note,
+  } = req.body;
+
+  const sql = `INSERT INTO book (book_id, user_id, restaurant_id, book_date, book_time, book_num_adult, book_num_kid, book_name, book_gender, book_phone, book_email, book_note, book_create_time, book_isValid) VALUES (NULL, '${user_id}', '${restaurant_id}', '${book_date}', '${book_time}', '${book_num_adult}', '${book_num_kid}', '${book_name}', '${book_gender}', '${book_phone}', '${book_email}', '${book_note}', current_timestamp(), 1);`;
+  console.log(sql);
+
+  try {
+    // 執行SQL查詢來插入新資料
+    const result = await db.query(sql, [
+      user_id,
+      restaurant_id,
+      book_date,
+      book_time,
+      book_num_adult,
+      book_num_kid,
+      book_name,
+      book_gender,
+      book_phone,
+      book_email,
+      book_note,
+    ]);
+
+    // 如果成功，返回成功的回應
+    res.json({ message: "訂位資料已成功寫入！", insertedId: result.insertId });
+  } catch (error) {
+    // 如果發生錯誤，返回錯誤的回應
+    res.status(500).json({ error: "寫入資料時發生錯誤：" + error.message });
+  }
+});
+
 //================餐廳卡片================
 bookRouter.post("/", async (req, res) => {
   const sql = `

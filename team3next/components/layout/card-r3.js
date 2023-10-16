@@ -100,13 +100,13 @@ export default function CardR3({
             max-width: 100%;
           }
           .card3 {
-            max-height: 330px;
             width: 80%;
             border-radius: 10px;
             background: #fff;
             box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
           }
           .card3-img {
+            max-height: 330px;
             width: 100%;
             height: 100%;
             object-fit: cover;

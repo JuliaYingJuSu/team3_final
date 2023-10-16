@@ -4,8 +4,15 @@ import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbCustomerInfo from "@/components/book/breadcrumb-customerInfo";
 import { useRouter } from "next/router";
+import AuthContext from "@/hooks/AuthContext";
+import { useEffect, useState, useContext, Component } from "react";
 
 export default function Index() {
+  //useState
+  const [isChecked, setIsChecked] = useState(false);
+  const [bookNote, setBookNote] = useState("");
+  const [bookGender, setBookGender] = useState(2);
+
   const router = useRouter();
   const {
     restaurant_id,
@@ -18,6 +25,8 @@ export default function Index() {
     selectedTime,
   } = router.query;
   console.log(router.query);
+  const { auth } = useContext(AuthContext);
+  // console.log(auth);
 
   // 將日期轉換為Date物件
   const date = new Date(`2023-${bookMonth}-${bookDate}`);
@@ -25,8 +34,17 @@ export default function Index() {
   // 取得星期幾
   const dayOfWeek = date.toLocaleDateString("zh-TW", { weekday: "long" });
 
-  //傳遞表單資料
-  const handleMyBook = () => {
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleGenderChange = (event) => {
+    setBookGender(parseInt(event.target.value));
+  };
+
+  // 確認訂位
+  const sendForm = async () => {
+    // queryURL
     const queryParams = {
       restaurant_id: restaurant_id,
       restaurant_name: restaurant_name,
@@ -37,7 +55,41 @@ export default function Index() {
     };
 
     const queryString = new URLSearchParams(queryParams).toString();
-    router.push(`/book/book-complete?${queryString}`);
+    // 準備要發送的訂位資料
+    const bookData = {
+      user_id: auth.user_id,
+      restaurant_id: restaurant_id,
+      book_date: "2023-" + bookMonth + "-" + bookDate,
+      book_time: selectedTime,
+      book_num_adult: numAdult,
+      book_num_kid: numKid,
+      book_name: auth.user_name,
+      book_gender: bookGender,
+      book_phone: auth.user_phone,
+      book_email: auth.user_email,
+      book_note: bookNote,
+    };
+    console.log(bookData);
+
+    try {
+      const response = await fetch("http://localhost:3002/api/book/add-book", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+
+      if (response.ok) {
+        // 處理成功的情況，例如轉向訂位成功頁面
+        router.push(`/book/book-complete?${queryString}`);
+      } else {
+        // 處理錯誤的情況，例如顯示錯誤訊息
+        console.error("訂位失敗");
+      }
+    } catch (error) {
+      console.error("發生錯誤：", error);
+    }
   };
 
   return (
@@ -100,6 +152,7 @@ export default function Index() {
               </div>
             </div>
           </div>
+          {/* 表單 */}
           <div className="col col-xl-8 container3 mx-3">
             <div className="mb-4 form-check">
               <input
@@ -107,6 +160,8 @@ export default function Index() {
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
+                checked={isChecked}
+                onChange={handleChange}
               />
               <label className="form-check-label fs16" for="flexCheckDefault">
                 訂位人聯絡方式與登入的會員資料相同
@@ -123,6 +178,7 @@ export default function Index() {
                     className="inputframe name form-control"
                     id="name"
                     placeholder=" 請輸入姓名"
+                    value={isChecked ? auth.user_name : ""}
                     autoFocus
                   />
                 </div>
@@ -134,7 +190,8 @@ export default function Index() {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault1"
-                    checked
+                    value="0"
+                    onChange={handleGenderChange}
                   />
                   <label className="form-check-label" for="flexRadioDefault1">
                     小姐
@@ -146,6 +203,8 @@ export default function Index() {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault2"
+                    value="1"
+                    onChange={handleGenderChange}
                   />
                   <label className="form-check-label" for="flexRadioDefault2">
                     先生
@@ -157,6 +216,9 @@ export default function Index() {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault3"
+                    value="2"
+                    onChange={handleGenderChange}
+                    checked={bookGender === 2}
                   />
                   <label className="form-check-label" for="flexRadioDefault3">
                     其他
@@ -173,6 +235,7 @@ export default function Index() {
                   type="text"
                   className="inputframe form-control"
                   id="cellphone"
+                  value={isChecked ? auth.user_phone : ""}
                   placeholder=" 請輸入手機號碼"
                 />
               </div>
@@ -186,6 +249,7 @@ export default function Index() {
                   type="text"
                   className="inputframe form-control"
                   id="email"
+                  value={isChecked ? auth.user_email : ""}
                   placeholder=" 請輸入 email"
                 />
               </div>
@@ -201,6 +265,8 @@ export default function Index() {
                   id="note"
                   cols="30"
                   rows="10"
+                  value={bookNote}
+                  onChange={(e) => setBookNote(e.target.value)}
                 ></textarea>
               </div>
             </div>
@@ -209,7 +275,7 @@ export default function Index() {
         <br />
         <br />
         <div className="d-flex justify-content-center my-5">
-          <div onClick={handleMyBook} className="btn btn-middle me-3">
+          <div onClick={sendForm} className="btn btn-middle me-3">
             確認訂位
           </div>
           <Link href="/book/restaurant" className="btn btn-middle ms-3">
