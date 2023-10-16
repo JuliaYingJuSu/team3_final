@@ -9,11 +9,13 @@ const email_re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 userRouter.get("/:user_id/my-book", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0;
   const sql = `
-  SELECT * FROM user JOIN book 
-  ON user.user_id = book.user_id 
-  JOIN restaurant_user 
+  SELECT * FROM user JOIN book
+  ON user.user_id = book.user_id
+  JOIN restaurant_user
   ON restaurant_user.restaurant_id = book.restaurant_id
-  WHERE user.user_id = ? GROUP BY book.book_id;
+  WHERE book.book_isValid = "1" 
+  AND user.user_id = ? GROUP BY book.book_id
+  ORDER BY book.book_date DESC;
   `;
 
   try {
@@ -46,6 +48,23 @@ userRouter.get("/:user_id/my-book/:bid?", async (req, res) => {
   output.rows = rows;
 
   res.json(output);
+});
+
+userRouter.post("/:user_id/my-book/:bid?", (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  const bid = req.params.bid;
+
+  const updateSql = `UPDATE book SET book_isValid = 0 WHERE book_id = ${bid}`;
+  db.query(updateSql, [bid], (err, result) => {
+    if (err) {
+      console.error("取消訂位失敗：" + err.message);
+      res.status(500).json({ message: "取消訂位失敗" });
+      return;
+    }
+
+    console.log("成功取消訂位：" + result.affectedRows);
+    res.status(200).json({ message: "成功取消訂位" });
+  });
 });
 
 //我的文章---------------------

@@ -50,7 +50,15 @@ export default function MyBook() {
 
           <tbody>
             {myBook.map((book, i) => {
-              const shortBookDate = book.book_date.split("T")[0];
+              const originalBookDate = new Date(book.book_date);
+              const offset = originalBookDate.getTimezoneOffset();
+              const correctedBookDate = new Date(
+                originalBookDate.getTime() - offset * 60 * 1000
+              );
+
+              const shortBookDate = correctedBookDate
+                .toISOString()
+                .split("T")[0];
               const shortBookTime = book.book_time.split(":")[0] + ":00";
               return (
                 <tr key={i} className={styles.topLine}>
