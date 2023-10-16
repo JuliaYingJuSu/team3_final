@@ -115,13 +115,13 @@ postRouter.post('/add-comment',async(req,res)=>{
 })
 
 //文章主頁要收藏訊息
-// postRouter.get('/fav',async(req,res)=>{
-//   const sql = `SELECT * FROM post_favorite `;
+postRouter.get('/fav',async(req,res)=>{
+  const sql = `SELECT * FROM post_favorite `;
 
-//   const [data] = await db.query(sql);
-//   console.log(data)
-//   res.json(data);//回傳json格式
-// })
+  const [data] = await db.query(sql);
+  console.log(data)
+  res.json(data);//回傳json格式
+})
 
 //加入收藏
 postRouter.post("/add-fav", async (req, res)=>{

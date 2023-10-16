@@ -8,7 +8,8 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   // console.log('frontpage:', {selectedCity})
-  console.log('frontpage:', {searchKeyword})
+  //console.log('frontpage:', {searchKeyword})
+  console.log('frontpage:', {selectedStyle})
 
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
@@ -94,7 +95,7 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
     <>
       <div className="container">
         <h4 className="h4-title mb-4">
-        {`${selectedCity}${searchKeyword}熱門食記` || "熱門食記"}</h4>
+        {`${selectedCity}${searchKeyword}${selectedStyle}熱門食記` || "熱門食記"}</h4>
         <div className="row row-cols-1 row-cols-lg-3 container mx-auto">
           {displayData.map(
             (
