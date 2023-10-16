@@ -40,6 +40,19 @@ export const AuthContextProvider = ({ children }) => {
     Router.push("/");
   };
 
+  const [fav, setFav] = useState([])
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `api/post/`)
+      .then((r) => r.json())
+      .then((r) => {
+        setFav(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, []);
+
   useEffect(() => {
     const jwt = localStorage.getItem("auth");
     if (jwt) {

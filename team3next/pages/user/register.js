@@ -49,20 +49,21 @@ export default function Register() {
       // 沒錯誤才會到下一步
       if (step < maxSteps) setStep(step + 1);
     }
-
-    return (
-      <>
-        {/* 子頁面區域 */}
-        <div className="order-steps">
-          <BlockComponent foodtagid={foodtagid} setFoodTagID={setFoodTagID} />
-        </div>
-        {/* 按鈕 */}
-        <div>
-          <button onClick={next} disabled={step === maxSteps}>
-            下一步
-          </button>
-        </div>
-      </>
-    );
   };
+  return (
+    <>
+      {/* 子頁面區域 */}
+      <div className="order-steps">
+        {step === 1 ? <Register1></Register1> : ""}
+        {step === 2 ? <Register2></Register2> : ""}
+        <BlockComponent foodtagid={foodtagid} setFoodTagID={setFoodTagID} />
+      </div>
+      {/* 按鈕 */} 
+      <div>
+        <button onClick={next} disabled={step === maxSteps}>
+          下一步
+        </button>
+      </div>
+    </>
+  );
 }
