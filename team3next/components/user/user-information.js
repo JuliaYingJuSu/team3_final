@@ -2,7 +2,7 @@ import React from "react";
 import UserButtonGroup from "./user-button-group";
 import Styles from "./user-information.module.scss";
 import AuthContext from "@/hooks/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -13,7 +13,17 @@ export default function UserInformation() {
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
 
-
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/food_tag`)
+      .then((r) => r.json())
+      .then((r) => {
+        setFoodTag(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
 
   const {
     register,
