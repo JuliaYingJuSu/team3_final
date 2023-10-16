@@ -2,6 +2,7 @@ import { method } from "lodash";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 
 export default function ProductComment({ product }) {
   const [show, setShow] = useState(false);
@@ -135,6 +136,23 @@ export default function ProductComment({ product }) {
           <Button
             className="btn-middle"
             onClick={() => {
+              Swal.fire({
+                title: "已新增評論",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+                // showCancelButton: true,
+                // cancelButtonText:
+                //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                // confirmButtonText:
+                //   '<i class="far fa-check-circle fs-5"></i> 放棄',
+              });
+              // .then((result) => {
+              //   if (result.isConfirmed) {
+              //     swalButtons.fire("結束發表", "", "success");
+              //   }
+              // });
+
               console.log(product);
 
               comment(product);
@@ -149,7 +167,8 @@ export default function ProductComment({ product }) {
               border: "#869AAA",
               color: "#FFF",
             }}
-            onClick={handleClose}
+
+            // onClick={handleClose}
           >
             取消
           </Button>

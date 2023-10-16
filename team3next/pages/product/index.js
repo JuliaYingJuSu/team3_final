@@ -18,6 +18,7 @@ export default function index() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
+
   console.log(typeList);
   // console.log(typeList.split(",")[0]);
   const [price, setPrice] = useState("");
@@ -28,7 +29,7 @@ export default function index() {
   const [items, setItems] = useState([]);
 
   const { run, setRun } = useContext(RunContext);
-  console.log(run);
+  // console.log(run);
 
   //?????
   // const { auth } = useContext(AuthContext);
@@ -245,6 +246,8 @@ export default function index() {
                                 list.product_type_id === v.product_type_id
                             )
                             .map((list) => {
+                              console.log(list);
+
                               return (
                                 <button
                                   className={styles.typeListBtn + " btn"}

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { LineShareButton, LineIcon } from "next-share";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
@@ -12,6 +13,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useRouter } from "next/router";
 import RunContext from "@/hooks/RunContext";
+import { FacebookShareButton, FacebookIcon } from "next-share";
+import {
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon,
+} from "next-share";
+import Swal from "sweetalert2";
 
 export default function productDetail() {
   const [data, setData] = useState({
@@ -35,10 +42,21 @@ export default function productDetail() {
 
   const router = useRouter();
 
+  //sweetalert 設定-------------------------
+  // const swalButtons = Swal.mixin({
+  //   customClass: {
+  //     // confirmButton: "btn btn-success",
+  //     // cancelButton: "btn btn-danger",
+  //   },
+  //   buttonsStyling: false,
+  // });
+  // -----------------------------------------
+
   // 取資料
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
+      console.log(`http://localhost:3080${router.asPath}`);
 
       const uid = JSON.parse(localStorage.getItem("auth")).user_id || 0;
       console.log(pid, uid);
@@ -389,7 +407,7 @@ export default function productDetail() {
           <div className={styles.productMain + " row"}>
             <div
               className={
-                " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
+                " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6 "
               }
             >
               <Swiper
@@ -415,7 +433,7 @@ export default function productDetail() {
             </div>
             <div
               className={
-                " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6"
+                " d-flex flex-column col-12 col-sm-12 col-md-6  col-lg-4 col-xl-4 col-xxl-4"
               }
             >
               <div className="my-2 h5 ">
@@ -440,7 +458,7 @@ export default function productDetail() {
                   {data.rows?.price}
                 </p>
               </div>
-              <div className="fs-3 my-2">
+              <div className="fs-3 my-2 mb-auto">
                 {Array(5)
                   .fill(1)
                   .map((v, i) => {
@@ -476,7 +494,10 @@ export default function productDetail() {
                       // <handleAddCart />
                       () => {
                         handleAddCart();
+                        // ------------------------------------
                         setRun(!run);
+
+                        // ------------------------------------
                       }
                     }
                   >
@@ -496,6 +517,31 @@ export default function productDetail() {
                     </Link>
                   </button>
                 </form>
+              </div>
+              <div className="d-flex justify-content-around">
+                <FacebookShareButton
+                  url={`http://localhost:3080${router.asPath}`}
+                  quote={
+                    "next-share is a social share buttons for your next React apps."
+                  }
+                  hashtag={"#nextshare"}
+                >
+                  <FacebookIcon size={50} round />
+                </FacebookShareButton>
+                <FacebookMessengerShareButton
+                  url={`http://localhost:3080${router.asPath}`}
+                  appId={""}
+                >
+                  <FacebookMessengerIcon size={50} round />
+                </FacebookMessengerShareButton>
+                <LineShareButton
+                  url={`http://localhost:3080${router.asPath}`}
+                  title={
+                    "next-share is a social share buttons for your next React apps."
+                  }
+                >
+                  <LineIcon size={50} round />
+                </LineShareButton>
               </div>
             </div>
           </div>
@@ -533,7 +579,7 @@ export default function productDetail() {
                 })}
             </div>
           </div>
-          <div className={styles.recommendBox + " row pb-5 "}>
+          <div className={styles.recommendBox + " row pb-5"}>
             <p className={styles.head + " h4"}>推薦商品</p>
             <div className={styles.test + " w-75"}>
               {/* ------------推薦商品----------- */}
