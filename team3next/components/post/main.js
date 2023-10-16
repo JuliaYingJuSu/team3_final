@@ -77,21 +77,6 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       .catch((ex) => console.log(ex));
   },[]);
 
-  // useEffect(()=>{
-  //   let newData = data.filter((city) =>{ 
-  //     if(selectedCity){return city.restaurant_city === selectedCity}
-  //     else{return city}}
-  //     ).filter((style)=>{
-        
-  //       if(selectedStyle){return style.food_tag_names.indexOf(selectedStyle)>=0}
-  //       else{
-  //         return style}
-  //       });
-  //   setDisplayData(newData);
-
-  // },[selectedCity, selectedStyle])
-
-
   useEffect(() => {
     let newData = data.filter((city) => {
       if (selectedCity) {
