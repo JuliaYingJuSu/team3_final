@@ -1,3 +1,4 @@
+import React from "react";
 import Styles from "./user-information.module.scss";
 import AuthContext from "@/hooks/AuthContext";
 import { useContext, useState, useEffect } from "react";
@@ -7,6 +8,7 @@ import axios from "axios";
 export default function UserInformation() {
   const { auth } = useContext(AuthContext);
   const [foodtag, setFoodTag] = useState([]);
+  const [myFoodTag, setMyFoodTag] = useState({});
 
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
@@ -16,8 +18,13 @@ export default function UserInformation() {
     fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/food_tag`)
       .then((r) => r.json())
       .then((r) => {
-        setFoodTag(r);
-        console.log(r);
+        const tags = { ...myFoodTag };
+        r.forEach((i) => {
+          tags[i.food_tag_id] = true;
+        });
+        setMyFoodTag(tags);
+        //setFoodTag(r);
+        console.log({ tags });
       })
       .catch((ex) => {
         console.log(ex);
@@ -197,10 +204,18 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-1"
-                        name="likefoodtag[]"
                         value="1"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 1)}
-                        {...register("food_tag_id_1")}
+                        defaultChecked={myFoodTag[1] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            console.log({ prev });
+                            const p = { ...prev };//複製prev
+                            p[1] = !p[1];//取
+                            console.log({ p });
+                            return p;
+                          })
+                        }
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -213,10 +228,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-2"
-                        name="likefoodtag[]"
                         value="2"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 2)}
-                        {...register("food_tag_id_2")}
+                        checked={myFoodTag[2] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[2] = !p[2];
+                            return p;
+                          })
+                        }
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -229,10 +250,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-3"
-                        name="likefoodtag[]"
                         value="3"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 3)}
-                        {...register("food_tag_id_3")}
+                        checked={myFoodTag[3] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[3] = !p[3];
+                            return p;
+                          })
+                        }
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -245,10 +272,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-4"
-                        name="likefoodtag[]"
                         value="4"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 4)}
-                        {...register("food_tag_id_4")}
+                        checked={myFoodTag[4] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[4] = !p[4];
+                            return p;
+                          })
+                        }
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -261,10 +294,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-5"
-                        name="likefoodtag[]"
                         value="5"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 5)}
-                        {...register("food_tag_id_5")}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[5] = !p[5];
+                            return p;
+                          })
+                        }
+                        checked={myFoodTag[5] ? true : false}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -277,10 +316,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-6"
-                        name="likefoodtag[]"
                         value="6"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 6)}
-                        {...register("food_tag_id_6")}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[6] = !p[6];
+                            return p;
+                          })
+                        }
+                        checked={myFoodTag[6] ? true : false}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -293,10 +338,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-7"
-                        name="likefoodtag[]"
                         value="7"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 7)}
-                        {...register("food_tag_id_7")}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[7] = !p[7];
+                            return p;
+                          })
+                        }
+                        checked={myFoodTag[7] ? true : false}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -309,10 +360,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-8"
-                        name="likefoodtag[]"
                         value="8"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 8)}
-                        {...register("food_tag_id_8")}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[8] = !p[8];
+                            return p;
+                          })
+                        }
+                        checked={myFoodTag[8] ? true : false}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -325,10 +382,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-9"
-                        name="likefoodtag[]"
                         value="9"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 9)}
-                        {...register("food_tag_id_9")}
+                        checked={myFoodTag[9] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[9] = !p[9];
+                            return p;
+                          })
+                        }
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -341,10 +404,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-10"
-                        name="likefoodtag[]"
                         value="10"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 10)}
-                        {...register("food_tag_id_10")}
+                        checked={myFoodTag[10] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[10] = !p[10];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -357,10 +425,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-11"
-                        name="likefoodtag[]"
                         value="11"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 11)}
-                        {...register("food_tag_id_11")}
+                        checked={myFoodTag[11] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[11] = !p[11];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -373,10 +446,9 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-12"
-                        name="likefoodtag[]"
                         value="12"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 12)}
-                        {...register("food_tag_id_12")}
+                        checked={myFoodTag[12] ? true : false}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -389,10 +461,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-13"
-                        name="likefoodtag[]"
                         value="13"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 13)}
-                        {...register("food_tag_id_13")}
+                        checked={myFoodTag[13] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[13] = !p[13];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -405,10 +482,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-14"
-                        name="likefoodtag[]"
                         value="14"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 14)}
-                        {...register("food_tag_id_14")}
+                        checked={myFoodTag[14] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[14] = !p[14];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -421,10 +503,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-15"
-                        name="likefoodtag[]"
                         value="15"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 15)}
-                        {...register("food_tag_id_15")}
+                        checked={myFoodTag[15] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[15] = !p[15];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -437,10 +524,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-16"
-                        name="likefoodtag[]"
                         value="16"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 16)}
-                        {...register("food_tag_id_16")}
+                        checked={myFoodTag[16] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[16] = !p[16];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -453,10 +545,16 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-17"
-                        name="likefoodtag[]"
                         value="17"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 17)}
-                        {...register("food_tag_id_17")}
+                        name="food_tag_id"
+                        checked={myFoodTag[17] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[17] = !p[17];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -469,10 +567,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-18"
-                        name="likefoodtag[]"
                         value="18"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 18)}
-                        {...register("food_tag_id_18")}
+                        checked={myFoodTag[18] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[18] = !p[18];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -485,10 +588,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-19"
-                        name="likefoodtag[]"
                         value="19"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 19)}
-                        {...register("food_tag_id_19")}
+                        checked={myFoodTag[19] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[19] = !p[19];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -501,10 +609,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-20"
-                        name="likefoodtag[]"
                         value="20"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 20)}
-                        {...register("food_tag_id_20")}
+                        checked={myFoodTag[20] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[20] = !p[20];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -517,10 +630,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-21"
-                        name="likefoodtag[]"
                         value="21"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 21)}
-                        {...register("food_tag_id_21")}
+                        checked={myFoodTag[21] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[21] = !p[21];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -533,10 +651,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-22"
-                        name="likefoodtag[]"
                         value="22"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 22)}
-                        {...register("food_tag_id_22")}
+                        checked={myFoodTag[22] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[22] = !p[22];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"
@@ -549,10 +672,15 @@ export default function UserInformation() {
                         type="checkbox"
                         className="btn-check"
                         id="btn-check-23"
-                        name="likefoodtag[]"
                         value="23"
-                        defaultChecked={foodtag.some(tag => tag.food_tag_id === 23)}
-                        {...register("food_tag_id_23")}
+                        checked={myFoodTag[23] ? true : false}
+                        onClick={() =>
+                          setMyFoodTag((prev) => {
+                            const p = { ...prev };
+                            p[23] = !p[23];
+                            return p;
+                          })}
+                        {...register("food_tag_id")}
                       />
                       <label
                         className="btn btn-outline-warning rounded rounded-4 fw-bold"

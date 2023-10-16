@@ -42,7 +42,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const [fav, setFav] = useState([])
   useEffect(() => {
-    fetch(process.env.API_SERVER + `api/post/`)
+    fetch(process.env.API_SERVER + `api/post/fav`)
       .then((r) => r.json())
       .then((r) => {
         setFav(r);
