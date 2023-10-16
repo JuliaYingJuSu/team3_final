@@ -116,7 +116,6 @@ postRouter.post('/add-comment',async(req,res)=>{
 
 //文章主頁要收藏訊息
 postRouter.get('/fav', async(req,res)=>{
-  // res.locals.jwtData.user_id
   const sql = `SELECT * FROM post_favorite WHERE user_id = ? `;
 
   const [data] = await db.query(sql, [user_id]);
