@@ -11,11 +11,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "@/validation/login-validation";
 import axios from "axios";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { headers } from "@/next.config";
 
 export default function RestaurantLogin() {
   const router = useRouter();
+  const [inputType, setInputType] = useState("password");
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
   axios.defaults.withCredentials = true;
@@ -58,7 +60,7 @@ export default function RestaurantLogin() {
         // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
         setMemberAuth(response.data);
         // 在這裡把登入時獲得的response token設定為auth;
-        router.push(`/restaurant-member/${memberAuth.result.restaurant_id}`);
+        router.push(`/restaurant-member/${response.data.result.restaurant_id}`);
         // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
       }
     } catch (err) {
@@ -83,7 +85,7 @@ export default function RestaurantLogin() {
               height={520}
               width={660}
               className="position-absolute"
-              style={{ left: 400, top: 200 }}
+              style={{ left: 200, top: 150 }}
             ></img>
           </span>
         </div>
@@ -138,19 +140,30 @@ export default function RestaurantLogin() {
                   <span className="ps-1" style={{ color: "red" }}>
                     {errors.password?.message}
                   </span>
-                  <input
-                    type="password"
-                    className="form-control border-0 border-bottom rounded-0 fs-5"
-                    id="user_password"
-                    placeholder="請輸入密碼"
-                    style={{ width: 600 }}
-                    {...register("password")}
-                  />
-                  <i
-                    type="button"
-                    className="far fa-eye-slash no-see-eye"
-                    style={{ color: "#787878" }}
-                  ></i>
+                  <div className="withIcon position-relative">
+                    <input
+                      className="input-res w-100 border-0 border-bottom rounded-0 fs-5"
+                      type={inputType}
+                      {...register("password")}
+                      id="password"
+                      placeholder="請輸入密碼"
+                    />
+                    <span
+                      className="eye position-absolute mt-1 me-4 end-0"
+                      style={{ fontSize: "20px", color: "#B4C5D2" }}
+                      onClick={() => {
+                        setInputType(
+                          inputType === "password" ? "text" : "password"
+                        );
+                      }}
+                    >
+                      {inputType === "password" ? (
+                        <FaRegEyeSlash />
+                      ) : (
+                        <FaRegEye />
+                      )}
+                    </span>
+                  </div>
                 </div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
