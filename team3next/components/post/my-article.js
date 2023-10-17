@@ -67,7 +67,7 @@ export default function MyArticle({ article }) {
       <div
         className="modal fade"
         id={"exampleModal" + article.post_id}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + article.post_id}
         aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-lg">

@@ -50,7 +50,6 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
-    // console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
     fetch('http://localhost:3002/api/post/add-comment', {
