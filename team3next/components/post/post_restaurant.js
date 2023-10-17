@@ -3,7 +3,7 @@ import Select from "react-select";
 import restaurantArray from "@/data/post_restaurant.json";
 import "./select.module.css";
 
-function PostRestaurant() {
+function PostRestaurant({selectedOption, setSelectedOption}) {
   const options = restaurantArray.map((v, i) => {
     return {
       value: v.post_restaurant_id,
@@ -11,11 +11,11 @@ function PostRestaurant() {
     };
   });
 
-  const [selectedOption, setSelectedOption] = useState("");
+  // const [selectedOption, setSelectedOption] = useState("");
 
   const handleChange = (selectedOption) => {
     console.log(selectedOption);
-    setSelectedOption(selectedOption.value);
+    setSelectedOption(selectedOption);
   };
 
   return (

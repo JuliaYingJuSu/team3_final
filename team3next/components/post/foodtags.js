@@ -3,7 +3,7 @@ import Select from 'react-select';
 import foodtagArray from "@/data/food_tag.json";
 import "./select.module.css";
 
-function FoodTags({selectedOption, setSelectedOption}) {
+function FoodTags({selectedOptions, setSelectedOptions}) {
   const options = foodtagArray.map((v,i)=> {
     return {
       value: v.food_tag_id,
@@ -12,9 +12,9 @@ function FoodTags({selectedOption, setSelectedOption}) {
   })
   
 
-  const handleChange = (selectedOption) => {
-    console.log(selectedOption);
-    setSelectedOption(selectedOption);
+  const handleChange = (selectedOptions) => {
+    console.log(selectedOptions);
+    setSelectedOptions(selectedOptions);
   };
   
 
