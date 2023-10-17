@@ -22,6 +22,7 @@ export default function Index() {
         <title>食食嗑嗑-訂位完成</title>
       </Head>
       <Navbar></Navbar>
+      <div style={{ marginTop: "250px" }}></div>
       <div className="container d-flex justify-content-center">
         <div style={{ width: "90%" }}>
           <BreadcrumbBookComplete

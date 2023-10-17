@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
-import styles from "./restaurant.module.css";
+import styles from "@/pages/book/[rid].module.css";
 import Link from "next/link";
 import BreadcrumbRestaurant from "@/components/book/breadcrumb-restaurant";
 import BookCalendar from "@/components/book/book-calendar";
@@ -53,11 +53,11 @@ export default function RestaurantDetail() {
     }
   }, [router.isReady]);
 
-  const specSplit1 = data.rows?.restaurant_info.split("\\n").map((v) => {
-    return <>{v ? <p>{v}</p> : <br></br>}</>;
+  const specSplit1 = data.rows?.restaurant_info.split("\\n").map((v, i) => {
+    return <>{v ? <p key={i}>{v}</p> : <br key={i}></br>}</>;
   });
-  const specSplit2 = data.rows?.restaurant_opening.split("\\n").map((v) => {
-    return <>{v ? <p>{v}</p> : <br></br>}</>;
+  const specSplit2 = data.rows?.restaurant_opening.split("\\n").map((v, i) => {
+    return <>{v ? <p key={i}>{v}</p> : <br key={i}></br>}</>;
   });
 
   // 儲存表單資料
@@ -126,6 +126,7 @@ export default function RestaurantDetail() {
         <title>食食嗑嗑-餐廳主頁</title>
       </Head>
       <Navbar></Navbar>
+      <div style={{ marginTop: "250px" }}></div>
       {/* ========輪播牆swiper========= */}
       <Swiper
         style={{
@@ -213,9 +214,6 @@ export default function RestaurantDetail() {
               width="80%"
               height="100%"
               style={{ minHeight: "400px" }}
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
               src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${data.rows?.restaurant_city}
               ${data.rows?.restaurant_district}
               ${data.rows?.restaurant_address}&output=embed&t=`}

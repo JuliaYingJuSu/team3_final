@@ -57,8 +57,8 @@ export default function Detail() {
   const daysOfWeek = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
   const shortBookDay = daysOfWeek[dayOfWeek];
 
-  const specSplit = data.rows?.book_note.split(",").map((v) => {
-    return <p>{v}</p>;
+  const specSplit = data.rows?.book_note.split(",").map((v, i) => {
+    return <p key={i}>{v}</p>;
   });
 
   const gender = ["小姐", "先生", "貴賓"];
@@ -70,7 +70,7 @@ export default function Detail() {
         <title>食食嗑嗑-訂位詳細頁</title>
       </Head>
       <Navbar></Navbar>
-      <div className="container">
+      <div className="container" style={{ marginTop: "250px" }}>
         <BreadcrumbDetail></BreadcrumbDetail>
       </div>
       <br />
@@ -115,9 +115,6 @@ export default function Detail() {
                 width="80%"
                 height="100%"
                 style={{ minHeight: "300px" }}
-                frameborder="0"
-                marginheight="0"
-                marginwidth="0"
                 src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${data.rows?.restaurant_city}
                 ${data.rows?.restaurant_district}
                 ${data.rows?.restaurant_address}&output=embed&t=`}
@@ -178,7 +175,7 @@ export default function Detail() {
             <div className="fs18 ps-3">{data.rows?.book_email}</div>
             <div className="h5 mb-4 mt-5">其他備註</div>
             <div className="fs18 ps-3">
-              {!specSplit === "" ? specSplit : "無"}
+              {specSplit === "" ? "無" : specSplit}
             </div>
           </div>
         </div>

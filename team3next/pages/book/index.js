@@ -74,9 +74,7 @@ export default function Index() {
             restaurant.restaurant_name
               .toLowerCase()
               .includes(searchKeyword.toLowerCase()) ||
-            restaurant.food_tag_name
-              .toLowerCase()
-              .includes(searchKeyword.toLowerCase()) ||
+            restaurant.food_tag_names.includes(searchKeyword) ||
             restaurant.restaurant_info
               .toLowerCase()
               .includes(searchKeyword.toLowerCase()) ||
@@ -105,13 +103,16 @@ export default function Index() {
   const handleSearch = (e) => {
     setDisplayData(e.target.innerText);
   };
+
+  console.log(displayData);
+
   return (
     <>
       <Head>
         <title>食食嗑嗑-餐廳搜尋</title>
       </Head>
       <Navbar></Navbar>
-      <div className="container">
+      <div className="container" style={{ marginTop: "250px" }}>
         <BreadcrumbIndex></BreadcrumbIndex>
       </div>
       <div className="w-100 h400 d-flex justify-content-center align-items-end banner mt-5">
@@ -151,7 +152,7 @@ export default function Index() {
               <input
                 className="form-control me-2 searchbar ps-4"
                 type="search"
-                placeholder="日式"
+                placeholder="輸入「早午餐」或「甜點」找尋美食!"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
               ></input>
@@ -224,35 +225,7 @@ export default function Index() {
           className="btn btn-sm tags"
           onClick={handleTagSelect}
         >
-          港式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
           美式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          義式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          越式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          西式
         </button>
         <button
           type="button"
@@ -266,7 +239,21 @@ export default function Index() {
           className="btn btn-sm tags"
           onClick={handleTagSelect}
         >
-          早餐
+          西式
+        </button>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          火鍋
+        </button>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          早午餐
         </button>
         <button
           type="button"
@@ -281,6 +268,13 @@ export default function Index() {
           onClick={handleTagSelect}
         >
           晚餐
+        </button>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          下午茶
         </button>
       </div>
       {/* <div className="container d-flex justify-content-center">
@@ -302,6 +296,7 @@ export default function Index() {
             r_img_route,
             food_tag_names,
             restaurant_opening,
+            food_tag_name,
           }) => {
             return (
               <CardR3
@@ -316,6 +311,7 @@ export default function Index() {
                 r_img_route={r_img_route}
                 food_tag_names={food_tag_names}
                 restaurant_opening={restaurant_opening}
+                food_tag_name={food_tag_name}
               />
             );
           }
