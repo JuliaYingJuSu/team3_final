@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
-import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -105,6 +104,7 @@ export default function Register2({ handleClose = () => {} }) {
         title: "註冊成功",
         icon: "success",
       });
+      handleClose();
       close();
     } catch (err) {
       console.error("Error:", err);
@@ -369,12 +369,6 @@ export default function Register2({ handleClose = () => {} }) {
               <button id="close1" type="submit" className="btn btn-big fs18b">
                 註冊
               </button>
-              <button
-                onClick={() => {
-                  console.log(handleClose);
-                  handleClose();
-                  close()
-                }}>close</button>
             </div>
           </form>
         </div>
