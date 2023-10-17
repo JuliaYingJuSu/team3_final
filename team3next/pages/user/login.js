@@ -111,7 +111,7 @@ export default function Login() {
               height={520}
               width={660}
               className="position-absolute"
-              style={{ left: 400, top: 200 }}></img>
+              style={{ left: 200, top: 150 }}></img>
           </span>
         </div>
         <div

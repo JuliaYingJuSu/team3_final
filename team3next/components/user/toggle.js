@@ -1,11 +1,12 @@
 import React from "react";
 import Switch from "react-switch";
 import { useState } from "react";
+import router from "next/router";
 
 export default function Toggle() {
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
-    window.location.href = "/restaurant-member/"
+    router.push("/restaurant-member/member-login")
   };
 
   return (
