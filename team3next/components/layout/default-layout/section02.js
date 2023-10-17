@@ -71,8 +71,8 @@ export default function Section02() {
               food_tag_names,
               user_id,
             },i) => {      
-              const nickname = userData && userData[user_id].nickname;
-              const user_img = userData && userData[user_id].user_img; 
+              const nickname = userData && userData[user_id]?.nickname;
+              const user_img = userData && userData[user_id]?.user_img; 
               return (
                 <Card
                   key={post_id}
