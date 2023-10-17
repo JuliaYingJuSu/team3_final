@@ -23,7 +23,7 @@ export default function MyNavbar() {
     <>
       <header>
         <nav
-          className="sticky-top bg-white navbar navbar-expand-lg forCheese"
+          className="fixed-top bg-white navbar navbar-expand-lg forCheese"
           style={{ height: 260 }}
         >
           <div className="container">
