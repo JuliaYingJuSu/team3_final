@@ -36,16 +36,17 @@ postRouter.post("/post-comment", async (req, res) => {
 });
 
 //新增文章路由
-postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
+postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) => {
   // console.log(req.body);
-  let { post_title, post_content, post_restaurant_id, user_id } = req.body;
+  let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } = req.body;
+  console.log(food_tag_id);
   const output = {
     success: false,
     errors: {},
     result: {},
     postData: {}, // 除錯檢查用
   };
-  const sqlPost = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, ?, NOW(), ?, ?, 1)`;
+  const sqlPost = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (NULL, ?, ?, ?, NOW(),  ?,  NOW(), 1)`;
 
   let result;
 
@@ -60,6 +61,25 @@ postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
     output.result = result;
 
     const postId = result.insertId;
+    // food_tag_id.forEach(async (v,i) => {
+    //       const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
+    //             [result] = await db.query(sqlTags, [postId,food_tag_id ])
+    // })
+
+    const foodTagInsertPromises = [];
+
+    for(let i = 0; i < food_tag_id.length; i++) {
+      const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`;
+    const foodTagInsertPromise = db.query(sqlTags, [postId, food_tag_id[i]]);
+    foodTagInsertPromises.push(foodTagInsertPromise);
+    }
+    try {
+      await Promise.all(foodTagInsertPromises);
+    }catch (err) {
+      console.error("Error while inserting food tags:", err);
+    }
+
+
 
     const files = req.files;
     console.log(req.files);
@@ -67,7 +87,7 @@ postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
       files.forEach(async (file) => {
         const { filename } = file;
         // 從req.file結構出需要存入資料庫的filename
-        const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (?, ?, ?)`;
+        const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (NULL, ?, ?)`;
 
         try {
           [result] = await db.query(sqlImg, [postId, filename, 1]);
@@ -80,7 +100,7 @@ postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
 
       });
     }
-  } catch (err) {
+  }catch (err) {
     output.errors = "SQL 錯誤";
     output.err = err;
   }

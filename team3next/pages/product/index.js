@@ -8,29 +8,47 @@ import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
+import Pagination from "@/components/product/pagination";
 import axios from "axios";
+import TestInput from "./test";
+import LoadingCard from "@/components/product/loading-card";
 // import ws from "ws";
 
 export default function index() {
+  //資料用
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
-
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
-
-  console.log(typeList);
-  // console.log(typeList.split(",")[0]);
+  //篩選用
   const [price, setPrice] = useState("");
   const priceList = [
     [300, 500, 800, 1000, 1001],
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
   const [items, setItems] = useState([]);
+  console.log(items);
 
+  //重渲染頁面用
   const { run, setRun } = useContext(RunContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   // console.log(run);
+
+  //分頁用
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentItems = data.rows?.slice(firstItemIndex, lastItemIndex);
 
   const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   // console.log(uid);
@@ -72,7 +90,7 @@ export default function index() {
         //取願望資料
         if (data.rowsWish.length > 0) {
           let wishList = data.rowsWish.map((v) => v.product_id);
-          console.log(wishList);
+          // console.log(wishList);
           setWish(wishList);
         }
       });
@@ -194,7 +212,7 @@ export default function index() {
 
       <div
         class="offcanvas offcanvas-bottom"
-        tabindex="-1"
+        tabIndex="-1"
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
       >
@@ -237,7 +255,7 @@ export default function index() {
 
       <Navbar />
       <div className="container">
-        <Bread />
+        <Bread typeList={typeList} />
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
             <div className={styles.leftBox}>
@@ -279,10 +297,22 @@ export default function index() {
                                   className={styles.typeListBtn + " btn"}
                                   type="button"
                                   onClick={() => {
-                                    console.log(list.product_type_list_name);
+                                    // console.log(list.product_type_list_name);
                                     setTypeList(
                                       `${list.product_type_list_id},${list.product_type_list_name}`
                                     );
+                                    //在有篩選條件的狀態下按到非擁有此條件的小分類時，把非擁有的條件清掉
+                                    const newItems = items.filter((v) => {
+                                      const [fullItem] = data.items.filter(
+                                        (a) => a.item_id == v
+                                      );
+                                      console.log(fullItem);
+
+                                      return fullItem.product_type_list_id
+                                        .split(",")
+                                        .includes(list.product_type_list_id);
+                                    });
+                                    setItems(newItems);
                                   }}
                                 >
                                   {list.product_type_list_name}
@@ -296,31 +326,59 @@ export default function index() {
               </div>
               {/* ------------篩選條件----------- */}
               <div className={styles.left}>
-                <p className="h6 px-2 pb-3">篩選條件</p>
+                <p className="h6 px-2 pb-3">
+                  篩選條件
+                  <span
+                    style={{
+                      background: "#ebd8a9",
+                      borderRadius: "40px",
+                      padding: "5px",
+                      fontSize: "12px",
+                      color: "#3f4c5c",
+                      marginLeft: "5px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setItems([]);
+                    }}
+                  >
+                    清除
+                  </span>
+                </p>
                 <form className="d-flex flex-column px-2">
                   {typeList
                     ? data.items
-                        ?.filter((v) =>
-                          v.product_type_list_id
+                        ?.filter((v) => {
+                          console.log("data.items");
+                          console.log(data.items);
+                          return v.product_type_list_id
                             .split(",")
-                            .includes(typeList.split(",")[0])
-                        )
+                            .includes(typeList.split(",")[0]);
+                        })
                         .map((v, i) => {
+                          console.log("items");
+                          console.log(items);
+                          console.log(items.includes(v.item_id));
+
                           return (
                             <label key={i}>
                               <input
+                                checked={
+                                  items.includes(v.item_id) ? true : false
+                                }
                                 className="mb-4"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
                                   if (!items.includes(v.item_id)) {
                                     const newItems = [...items, v.item_id];
+                                    console.log(newItems);
+
                                     setItems(newItems);
                                   } else {
                                     const newItems = items.filter(
                                       (a) => a != v.item_id
                                     );
-
                                     setItems(newItems);
                                   }
                                   // setItems(items.push(v));
@@ -329,6 +387,14 @@ export default function index() {
                               />
                               {v.item_name}
                             </label>
+                            // <TestInput
+                            //   key={v.item_id}
+                            //   item_id={v.item_id}
+                            //   items={items}
+                            //   setItems={setItems}
+                            // />
+
+                            // <div key={v.item_id}>?????</div>
                           );
                         })
                     : data.items &&
@@ -338,6 +404,9 @@ export default function index() {
                           return (
                             <label key={i}>
                               <input
+                                checked={
+                                  items.includes(v.item_id) ? true : false
+                                }
                                 className="mb-4"
                                 type="checkbox"
                                 value={v.item_id}
@@ -363,7 +432,22 @@ export default function index() {
               </div>
               {/* ------------價格範圍----------- */}
               <div className={styles.left}>
-                <p className="h6 px-2 pb-3">價格範圍</p>
+                <p className="h6 px-2 pb-3">
+                  價格範圍
+                  <span
+                    style={{
+                      background: "#ebd8a9",
+                      borderRadius: "40px",
+                      padding: "5px",
+                      fontSize: "12px",
+                      color: "#3f4c5c",
+                      marginLeft: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    清除
+                  </span>
+                </p>
 
                 {priceList[1].map((v, i) => {
                   // console.log(v);
@@ -725,9 +809,19 @@ export default function index() {
                   {/* type="submit" */}
                 </form>
               </div>
-
+              <div
+                style={{
+                  color: "#666666",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                }}
+              >
+                共{data.rows?.length}項商品
+              </div>
               <div className="row mb-3 d-flex justify-content-start align-items-center">
-                {data.rows?.map(
+                {/* 卡片 */}
+                {/* {isLoading && <LoadingCard cards={8} />} */}
+                {currentItems?.map(
                   (
                     {
                       product_id,
@@ -775,8 +869,8 @@ export default function index() {
                             <span
                               className={
                                 wish.includes(product_id)
-                                  ? "icon-mark-fill"
-                                  : "icon-mark" + " pt-1"
+                                  ? " icon-mark-fill" + " pt-1"
+                                  : " icon-mark" + " pt-1"
                               }
                               style={{ cursor: "pointer" }}
                               onClick={() => {
@@ -799,6 +893,12 @@ export default function index() {
                     );
                   }
                 )}
+                <Pagination
+                  totalItems={data.rows?.length}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
               </div>
             </div>
           </main>

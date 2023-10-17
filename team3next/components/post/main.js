@@ -125,8 +125,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
               user_id, 
               food_tag_name,
             }) => {
-              const nickname = userData && userData[user_id].nickname;
-              const user_img = userData && userData[user_id].user_img;
+              const nickname = userData && userData[user_id]?.nickname;
+              const user_img = userData && userData[user_id]?.user_img;
 
               return (
                 <Card

@@ -21,11 +21,11 @@ export default function PostModal({
   user_img,
   ifSave,
   favs,
-  setFavs
+  setFavs,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
-  const contentParagraphs = post_content.split('\n');
+  const contentParagraphs = post_content.split("\n");
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -50,16 +50,14 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
-    // console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
-    fetch('http://localhost:3002/api/post/add-comment', {
+    fetch("http://localhost:3002/api/post/add-comment", {
       method: "POST",
       body: JSON.stringify({
         uid: auth.user_id,
         content: messageVal.message,
         pid: post_id,
-      
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -69,7 +67,6 @@ export default function PostModal({
         // router.push("/post")
         loadComments();
       });
-    
 
     const newErrors = {};
 
@@ -98,7 +95,7 @@ export default function PostModal({
       fetch(`http://localhost:3002/api/post/post-pid`, {
         method: "POST",
         body: JSON.stringify({
-        post_id: post_id,
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +114,7 @@ export default function PostModal({
       const r = await fetch(`http://localhost:3002/api/post/post-comment`, {
         method: "POST",
         body: JSON.stringify({
-        post_id: post_id,
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -126,13 +123,12 @@ export default function PostModal({
       const data = await r.json();
       setComments(data);
     }
-
-  }
+  };
   useEffect(() => {
     loadComments();
   }, [imgs]);
 
-  const {auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   return (
     <>
@@ -214,20 +210,23 @@ export default function PostModal({
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
-              <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
-                favs={favs}
-                setFavs={setFavs}
-                post_id={post_id}
+                <Saved
+                  ifSave={favs && favs?.includes(post_id) ? true : false}
+                  favs={favs}
+                  setFavs={setFavs}
+                  post_id={post_id}
                 />
                 {/* <span>1</span> */}
               </span>
             </div>
-            <div className="ms-3" >
-              <div className="mb-3">{contentParagraphs.map((paragraph, index) => (
-                <div className="mb-3" key={index}>
-                  {paragraph}
-                </div>
-              ))} </div>
+            <div className="ms-3">
+              <div className="mb-3">
+                {contentParagraphs.map((paragraph, index) => (
+                  <div className="mb-3" key={index}>
+                    {paragraph}
+                  </div>
+                ))}{" "}
+              </div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
                   <a
@@ -245,7 +244,9 @@ export default function PostModal({
             <hr />
             {comments &&
               comments.map((v, i) => {
-                {/* console.log(v);  */}
+                {
+                  /* console.log(v);  */
+                }
                 return (
                   <div className="info d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">
@@ -258,12 +259,14 @@ export default function PostModal({
                     </div>
                     <div className="me-auto">
                       <a className="fs16b text-dark" href="#">
-                      {v.nickname}
+                        {v.nickname}
                       </a>
-                      <p >{v.content}</p>
+                      <p>{v.content}</p>
                     </div>
                     <div>
-                      <p className="fs12 mt-3 me-3">{v.create_time.substr(0,10)}</p>
+                      <p className="fs12 mt-3 me-3">
+                        {v.create_time.substr(0, 10)}
+                      </p>
                     </div>
                   </div>
                 );
