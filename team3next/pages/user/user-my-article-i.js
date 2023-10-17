@@ -6,8 +6,27 @@ import WhoInfo from "@/components/user/who-info";
 import WhoPictureCard from "@/components/user/who-picturecard";
 import Styles from "@/components/user/user-information.module.scss";
 import Footer from "@/components/layout/default-layout/footer";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function UserMyArticleI() {
+  const router = useRouter();
+  const [usermyimgcard, setUserImgMyCard] = useState([]);
+  //由動態變數獲得user_id
+  const { user_id } = router.query;
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${user_id}/userInfoImg`)
+      .then((r) => r.json())
+      .then((r) => {
+        setUserImgMyCard(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [user_id]);
+
   return (
     <>
       <MyNavbar></MyNavbar>
@@ -41,7 +60,7 @@ export default function UserMyArticleI() {
       </div>
       <Footer></Footer>
       <Head>
-        <title>XXX的文章</title>
+        <title>{usermyimgcard.nickname}</title>
       </Head>
     </>
   );
