@@ -37,12 +37,12 @@ export default function AddPost() {
     },
   };
     const [title, setTitle] = useState({ title: "" });
-     const [content, setContent] = useState({ content: "" });
-     const titleChanged = (e) => {
-       const { id, value } = e.target;
-       console.log({ id, value });
-       const newTitle = { ...title, [id]: value };
-       setTitle(newTitle);
+    const [content, setContent] = useState({ content: "" });
+    const titleChanged = (e) => {
+    const { id, value } = e.target;
+    console.log({ id, value });
+    const newTitle = { ...title, [id]: value };
+    setTitle(newTitle);
      };
   const contentChanged = (e) => {
     const { id, value } = e.target;
@@ -120,7 +120,7 @@ export default function AddPost() {
               </Form.Item>
             </div>
           </Form>
-     
+Ｆ
         <div>
           <form onSubmit={sendArticle}>
             <div className="">

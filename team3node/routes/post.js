@@ -36,7 +36,7 @@ postRouter.post("/post-comment", async (req, res) => {
 });
 
 //新增文章路由
-postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
+postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) => {
   // console.log(req.body);
   let { post_title, post_content, post_restaurant_id, user_id } = req.body;
   const output = {
@@ -60,6 +60,8 @@ postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
     output.result = result;
 
     const postId = result.insertId;
+
+    
 
     const files = req.files;
     console.log(req.files);
