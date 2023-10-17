@@ -1,12 +1,31 @@
 import React from "react";
 import Switch from "react-switch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import router from "next/router";
 
 export default function Toggle() {
   const [checked, setChecked] = useState(false);
+
+  //從localStorage拿開關狀態
+  useEffect(() => {
+    const savedState = localStorage.getItem("switchState");
+    if (savedState !== null) {
+      setChecked(JSON.parse(savedState));
+    }
+  }, []);
+
   const handleChange = () => {
-    router.push("/restaurant-member/member-login")
+    setChecked(!checked);
+
+    // 開關狀態存到localStorage
+    localStorage.setItem("switchState", JSON.stringify(!checked));
+
+    // 根據不同路徑轉換
+    if (!checked) {
+      router.push("/restaurant-member/member-login");
+    } else {
+      router.push("/user/login"); 
+    }
   };
 
   return (
