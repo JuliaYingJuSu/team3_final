@@ -32,7 +32,7 @@ restaurantRouter.post(
 
       [result] = await db.query(sql, [
         name,
-        hash, // 使用哈希后的密码
+        hash, // 雜湊後的密碼
         email,
         phone,
         city,
@@ -172,7 +172,7 @@ restaurantRouter.put(
         console.log("修改成功", result);
       }
 
-      // 处理上传的图片
+      // 處理上傳圖片
       const files = req.files;
       console.log(req.files);
 
@@ -197,13 +197,13 @@ restaurantRouter.put(
         }
       }
 
-      // 发送响应
+      // send response
       res.json(output);
     } catch (err) {
       console.error("路由处理错误:", err);
       output.errors = "路由处理错误";
       output.err = err;
-      res.status(500).json(output); // 适当的错误状态码
+      res.status(500).json(output); // 
     }
   }
 );
