@@ -4,6 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import registerSchema from "@/validation/register-validation";
 import { Upload, Modal, Form } from "antd";
+import { useRouter } from "next/router";
 import axios from "axios";
 // 製作form的外框，把含有上傳功能的form作為模板使用,因此使用rhf自帶的context從這裡往下傳送即可，其他地方不需要用到
 export default function FormLayout({
@@ -13,6 +14,7 @@ export default function FormLayout({
   page,
   currentField,
 }) {
+  const router = useRouter();
   const methods = useForm({ resolver: yupResolver(registerSchema) });
   const {
     handleSubmit,
@@ -37,10 +39,11 @@ export default function FormLayout({
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/restaurant/member-register",
+        "http://localhost:3002/member-register",
         formData
       );
       console.log("Server Response:", response.data);
+      router.push(`/restaurant-member/member-login`);
     } catch (err) {
       console.error("Error:", err);
     }

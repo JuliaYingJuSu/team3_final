@@ -1,15 +1,89 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import infoSchema from "@/validation/info-validation";
 import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./form-component/city-selector";
+import { useMemberAuthContext } from "./hooks/use-memberauth-context";
+import axios from "axios";
 
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
 
 export default function PageContent() {
+  const router = useRouter();
+  const [here, setHere] = useState("Hereeeeee");
+  const [fetchedData, setFetchedData] = useState("default");
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const { memberAuth, setMemberAuth } = useMemberAuthContext();
+  const fetchData = async () => {
+    try {
+      const authObj = JSON.parse(localStorage.getItem("token"));
+      if (memberAuth && memberAuth.result.token) {
+        const response = await axios.get(
+          "http://localhost:3002/api/restaurant/member-info",
+          {
+            headers: {
+              Authorization: "Bearer " + memberAuth.result.token,
+            },
+          }
+        );
+        console.log("fetch result:", response.data);
+        setFetchedData(response.data);
+        setDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [memberAuth]);
+  useEffect(() => {
+    console.log(fetchedData);
+    if (!memberAuth.auth && dataLoaded) {
+      alert("請先登入");
+      router.push(`/restaurant-member/member-login`);
+    }
+  }, [memberAuth, dataLoaded]);
+
+  const onSubmit = async (data) => {
+    // 一個formdata物件
+    const formData = new FormData();
+
+    // 將表單的name加到formdata,因為rhf的data是obj，可以這麼做
+    formData.append("name", data.name);
+    formData.append("city", data.city);
+    formData.append("district", data.district);
+    formData.append("address", data.address);
+    formData.append("opening", data.opening);
+    formData.append("discription", data.discription);
+    // 添加檔到 FormData，其中 "photo" 是欄位名稱
+    // 拆解到只剩下file
+    data.photo.forEach((file) => {
+      formData.append("photo", file.originFileObj);
+    });
+    // console.log(data.photo[0].originFileObj);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/member-register",
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + memberAuth.result.token,
+          },
+        }
+      );
+      console.log("Server Response:", response.data);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
   const {
     control,
     register,
@@ -42,9 +116,7 @@ export default function PageContent() {
           <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
           <Form
             className="d-flex flex-column justify-content-center"
-            onFinish={handleSubmit((data) => {
-              console.log(data);
-            })}
+            onFinish={handleSubmit(onSubmit)}
           >
             <div className="d-flex flex-column my-3">
               <label className="fs18b" htmlFor="name">
@@ -62,6 +134,7 @@ export default function PageContent() {
                 {...register("name")}
                 id="name"
                 placeholder=""
+                defaultValue={fetchedData[0].restaurant_name}
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -81,14 +154,19 @@ export default function PageContent() {
                 </span>
               </label>
               <div className="d-flex justify-content-start">
-                <CitySelector register={register} watch={watch} />
+                <CitySelector
+                  register={register}
+                  watch={watch}
+                  fetchedData={fetchedData}
+                />
                 {/* 當作PageContent是父組件,將此頁引入的useform方法接著傳遞給CitySelector作為props */}
                 <input
                   className="input-res w-100"
                   type="text"
                   {...register("address", { required: "請輸入資料" })}
-                  id="password"
+                  id="address"
                   placeholder="請輸入資料"
+                  defaultValue={fetchedData[0].restaurant_address}
                 />
               </div>
             </div>
@@ -107,6 +185,7 @@ export default function PageContent() {
                 type="text"
                 {...register("phone", { required: "請輸入資料" })}
                 id="phone"
+                defaultValue={fetchedData[0].restaurant_phone}
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -118,6 +197,7 @@ export default function PageContent() {
                 type="text"
                 {...register("opening")}
                 id="opening"
+                placeholder="可以在這裡添加額外營業資訊"
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -136,6 +216,7 @@ export default function PageContent() {
                 {...register("description")}
                 id="description"
                 style={{ height: "150px" }}
+                defaultValue={fetchedData[0].restaurant_info}
               />
             </div>
             <div className="d-flex flex-column mb-3">

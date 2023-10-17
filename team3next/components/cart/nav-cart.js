@@ -52,7 +52,6 @@ export default function NavCart() {
       <p style={{ textAlign: "end", padding: "10px", fontWeight: "bold" }}>
         {data.length > 0
           ? `小計:${data.reduce((a, i) => {
-              console.log(i.quantity * i.price);
               return a + i.quantity * i.price;
             }, 0)}`
           : ""}
