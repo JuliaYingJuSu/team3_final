@@ -105,7 +105,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     });
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs]);
   
 
   return (

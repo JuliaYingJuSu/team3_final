@@ -20,7 +20,7 @@ export default function UserInfo() {
 
   return (
     <>
-      <main className="container bottom-line" style={{ paddingBottom: 40 }}>
+      <main className="container bottom-line" style={{ paddingBottom: 40,marginTop:250 }}>
         <div
           className="d-flex justify-content-around align-items-center mt-3 mb-1"
           style={{ paddingInline: 200 }}>

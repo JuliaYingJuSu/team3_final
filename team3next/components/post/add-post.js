@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PictureOutlined } from "@ant-design/icons";
 import { Upload, Form } from "antd";
 import PostRestaurant from "./post_restaurant";
@@ -6,6 +6,9 @@ import FoodTags from "./foodtags";
 import Swal from "sweetalert2";
 
 export default function AddPost() {
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  console.log({selectedOption, selectedOptions})
   //sweetalert 設定
   const swalButtons = Swal.mixin({
     customClass: {
@@ -100,11 +103,13 @@ export default function AddPost() {
                 aria-label="Postlocation"
                 aria-describedby="button-addon2"
               /> */}
-              <PostRestaurant className="input-group-text" />
+              <PostRestaurant className="input-group-text" selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
             </div>
             <div className="input-group mb-3 w-100" style={{width: '310px'}}>
               <span className="input-group-text icon-tag"></span>
-              <FoodTags/>
+              <FoodTags 
+                selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}
+              />
               {/* <input
                 type="text"
                 className="form-control"
