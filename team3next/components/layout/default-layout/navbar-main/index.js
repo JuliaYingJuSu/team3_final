@@ -196,7 +196,7 @@ export default function MyNavbar() {
       <style global jsx>
         {`
           .pt-10 {
-            pdding-top: 100px;
+            padding-top: 100px;
           }
 
           .forCheese {

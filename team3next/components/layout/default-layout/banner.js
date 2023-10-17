@@ -13,7 +13,7 @@ export default function Banner(
 ) {
   return (
     <>
-      <div className="w-100 h400 d-flex align-items-end banner pdb-50">
+      <div className="w-100 h650 d-flex align-items-end banner pdb-50">
         <div className="container d-flex justify-content-center">
           <div className="dropdown ms-5 pe-4">
             {/* 下拉選單 */}
@@ -32,8 +32,8 @@ export default function Banner(
 
       <style global jsx>
         {`
-          .h400 {
-            height: 400px;
+          .h650 {
+            height: 650px;
           }
           .banner {
             background-image: url("./images/index-image.jpg");
