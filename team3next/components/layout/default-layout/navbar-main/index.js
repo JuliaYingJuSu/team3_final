@@ -24,7 +24,7 @@ export default function MyNavbar() {
       <header>
         <nav
           className="fixed-top bg-white navbar navbar-expand-lg forCheese"
-          style={{ height: 250 }}
+          style={{ maxHeight: 50 }}
         >
           <div className="container">
             {/* Logo區塊 */}
