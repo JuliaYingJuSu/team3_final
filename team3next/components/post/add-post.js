@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { PictureOutlined } from "@ant-design/icons";
-import { Upload, Form } from "antd";
+import { Upload, Form, Button } from "antd";
 import PostRestaurant from "./post_restaurant";
 import FoodTags from "./foodtags";
 import Swal from "sweetalert2";
@@ -40,19 +40,19 @@ export default function AddPost() {
     const [content, setContent] = useState({ content: "" });
     const titleChanged = (e) => {
     const { id, value } = e.target;
-    console.log({ id, value });
+    // console.log({ id, value });
     const newTitle = { ...title, [id]: value };
     setTitle(newTitle);
     };
   const contentChanged = (e) => {
     const { id, value } = e.target;
-    console.log({ id, value });
+    // console.log({ id, value });
     const newContent = { ...content, [id]: value };
     setContent(newContent);
   };
 
   const sendArticle = (e) => {
-    console.log("submitting")
+    //console.log("submitting")
     e.preventDefault();
     const selectedOptionValues = selectedOptions.map((v,i) => v.value) 
     fetch("http://localhost:3002/api/post/add-post", {

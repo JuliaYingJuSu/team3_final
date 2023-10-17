@@ -65,14 +65,26 @@ postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) =
     //       const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
     //             [result] = await db.query(sqlTags, [postId,food_tag_id ])
     // })
-let sqlTags="";
+
+    const foodTagInsertPromises = [];
+
     for(let i = 0; i < food_tag_id.length; i++) {
-      sqlTags += `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ${postId}, ${food_tag_id[i]});`
-      // [result] = await db.query(sqlTags)
-      // [postId,food_tag_id[i] ]
+      const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`;
+    const foodTagInsertPromise = db.query(sqlTags, [postId, food_tag_id[i]]);
+    foodTagInsertPromises.push(foodTagInsertPromise);
     }
-    console.log(sqlTags)
-    [result] = await db.query(sqlTags)
+    try {
+      await Promise.all(foodTagInsertPromises);
+    }catch (err) {
+      console.error("Error while inserting food tags:", err);
+    }
+// let sqlTags;
+    // for(let i = 0; i < food_tag_id.length; i++) {
+    //   sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ${postId}, ${food_tag_id[i]});`
+    //   console.log(sqlTags)
+    //   [result] = await db.query(sqlTags)
+    //   // [postId,food_tag_id[i] ]
+    // }
 
     // const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
 
@@ -102,8 +114,7 @@ let sqlTags="";
 
     //   });
     // }
-  } 
-  catch (err) {
+  }catch (err) {
     output.errors = "SQL 錯誤";
     output.err = err;
   }
