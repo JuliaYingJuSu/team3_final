@@ -174,6 +174,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
       try {
         const sql = `INSERT INTO user ( user_name,nickname,user_email,user_password, user_phone,user_img,create_date,updatetime) VALUES (?,?,?,?,?,?,NOW(),NOW() )`;
         const { filename } = file;
+        //寫入user
         [result] = await db.query(sql, [
           user_name,
           nickname,
@@ -182,6 +183,16 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
           user_phone,
           filename,
         ]); //這邊欄位要跟寫入SQL的?一樣，不然會出錯
+
+        if (result.affectedRows === 1) {
+          //如果有寫入成功
+          const user_id = result.insertId; //拿到user_id
+          const userTagInsertSql = `INSERT INTO user_tag (user_id, food_tag_id) VALUES (?, ?)`;
+
+          for (const foodtagid of food_tag_id) {
+            await db.query(userTagInsertSql, [user_id, foodtagid]);
+          }
+        }
         output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
         output.result = result;
       } catch (ex) {
@@ -227,7 +238,7 @@ userRouter.put("/update", async (req, res) => {
       if (isPass) {
         const sql =
           "UPDATE `user` SET `user_name`=?,`nickname`=?,`user_password`=?,`user_phone`=? WHERE `user_id`=?";
-        
+
         //更新user資料
         const [result] = await db.query(sql, [
           user_name,

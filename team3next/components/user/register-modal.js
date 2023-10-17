@@ -41,7 +41,7 @@ export default function RegisterModal() {
         id="modal1"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1">
+        tabIndex="-1">
         <div className="modal-dialog modal-lg">
           <div className="modal-content position-relative">
             <span

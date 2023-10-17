@@ -71,7 +71,7 @@ export default function Register1() {
   return (
     <>
       <div className="sfsbc middle">
-        <div className="mt-4 mx-5">
+        <div className="mt-4 mx-5 mb-5">
           <h3 className="text-center">請先選擇您喜愛的食物樣式(可多選)</h3>
           <div className="ficb mt-4">
             <div className="container">
@@ -409,25 +409,6 @@ export default function Register1() {
                     </div>
                   </div>
                 </div>
-
-                <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
-                  <div className="me-4">
-                    <button
-                      className="grey btn fs-5"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal2">
-                      下次一定選
-                    </button>
-                  </div>
-                  <div className="me-2">
-                    <button
-                      className="btn btn-middle fs-5"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal2">
-                      確定選擇
-                    </button>
-                  </div>
-                </div>
               </form>
             </div>
           </div>
@@ -436,7 +417,8 @@ export default function Register1() {
       <style jsx>
         {`
           .sfsbc {
-            width: 800px;
+            height:870px;
+            width: 798px;
             display: flex;
             padding: 10px;
             flex-direction: column;

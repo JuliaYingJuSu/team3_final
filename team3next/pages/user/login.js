@@ -148,8 +148,8 @@ export default function Login() {
               <Toggle></Toggle>
             </div>
             <div className="middle mt-5">
-              <form noValidate onSubmit={sendForm}>
-                <div className="mb-4">
+              <form noValidate onSubmit={sendForm} className="mt-4">
+                <div className="mb-5">
                   <span className="form-text text-danger fs-5">
                     {errors.user_email}
                   </span>

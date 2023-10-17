@@ -33,7 +33,6 @@ export default function Register({ handleClose = () => {} }) {
 
   // 下一步按鈕
   const next = () => {
-    console.log(12);
     // 運送表單用檢查
     if (step === 2) {
       const {
@@ -57,16 +56,22 @@ export default function Register({ handleClose = () => {} }) {
       <div className="order-steps">
         {/* {step === 1 ? <Register1></Register1> : ""}
         {step === 2 ? <Register2></Register2> : ""} */}
-        <BlockComponent 
-        handleClose={handleClose}
-        foodtagid={foodtagid} setFoodTagID={setFoodTagID} />
+        <BlockComponent
+          handleClose={handleClose}
+          foodtagid={foodtagid}
+          setFoodTagID={setFoodTagID}
+        />
       </div>
       {/* 按鈕 */}
-      <div>
-        <button onClick={next} disabled={step === maxSteps}>
-          下一步
-        </button>
-      </div>
+      {step !== 2 && (
+        <div className="position-relative">
+          <div style={{position:"absolute",bottom:20}}>
+            <button className="btn btn-middle fs-5" onClick={next}>
+              確定選擇
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
