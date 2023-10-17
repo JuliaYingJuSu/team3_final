@@ -7,20 +7,19 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function Register2() {
-
+export default function Register2({ handleClose = () => {} }) {
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
 
-  // //關閉黑視窗
-  // function close() {
-  //   let modalBackdrops = document.getElementsByClassName("modal-backdrop");
-  //   for (let i = 0; i < modalBackdrops.length; i++) {
-  //     const modalBackdrop = modalBackdrops[i];
-  //     modalBackdrop.parentNode.removeChild(modalBackdrop);
-  //   }
-  // }
+  //關閉黑視窗
+  function close() {
+    let modalBackdrops = document.getElementsByClassName("modal-backdrop");
+    for (let i = 0; i < modalBackdrops.length; i++) {
+      const modalBackdrop = modalBackdrops[i];
+      modalBackdrop.parentNode.removeChild(modalBackdrop);
+    }
+  }
 
   const {
     register,
@@ -370,6 +369,12 @@ export default function Register2() {
               <button id="close1" type="submit" className="btn btn-big fs18b">
                 註冊
               </button>
+              <button
+                onClick={() => {
+                  console.log(handleClose);
+                  handleClose();
+                  close()
+                }}>close</button>
             </div>
           </form>
         </div>
