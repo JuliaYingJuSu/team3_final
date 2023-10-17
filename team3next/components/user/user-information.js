@@ -4,6 +4,7 @@ import AuthContext from "@/hooks/AuthContext";
 import { useContext, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function UserInformation() {
   const { auth } = useContext(AuthContext);
@@ -12,6 +13,17 @@ export default function UserInformation() {
 
   //隱藏or呈現密碼
   const [show, setShow] = useState(false);
+
+    // sweetalert設定
+    const swalTest1 = Swal.mixin({
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (swalTest1) => {
+        swalTest1.addEventListener("mouseenter", Swal.stopTimer);
+        swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
 
   //要食物ID
   useEffect(() => {
@@ -48,8 +60,16 @@ export default function UserInformation() {
         data
       );
       console.log("Server Response:", response.data);
+      swalTest1.fire({
+        title: "修改成功",
+        icon: "success",
+      });
     } catch (err) {
       console.error("Error:", err);
+      Swal.fire({
+        title: "修改失敗",
+        icon: "error",
+      });
     }
   };
 

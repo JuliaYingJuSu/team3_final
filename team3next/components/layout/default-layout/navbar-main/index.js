@@ -23,8 +23,8 @@ export default function MyNavbar() {
     <>
       <header>
         <nav
-          className="sticky-top bg-white navbar navbar-expand-lg forCheese"
-          style={{ height: 260 }}
+          className="fixed-top bg-white navbar navbar-expand-lg forCheese"
+          style={{ height: 250 }}
         >
           <div className="container">
             {/* Logo區塊 */}
@@ -196,7 +196,7 @@ export default function MyNavbar() {
       <style global jsx>
         {`
           .pt-10 {
-            pdding-top: 100px;
+            padding-top: 100px;
           }
 
           .forCheese {

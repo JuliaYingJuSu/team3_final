@@ -4,7 +4,7 @@ import { useState } from "react";
 import Register1 from "@/components/user/register01";
 import Register2 from "@/components/user/register02";
 
-export default function Register() {
+export default function Register({ handleClose = () => {} }) {
   const maxSteps = 2;
 
   const [step, setStep] = useState(1);
@@ -45,25 +45,36 @@ export default function Register() {
         isChecked8,
         isChecked9,
       } = foodtagid;
-
-      // 沒錯誤才會到下一步
-      if (step < maxSteps) setStep(step + 1);
+      console.log(foodtagid);
     }
+    // 沒錯誤才會到下一步
+    if (step < maxSteps) setStep(step + 1);
   };
   return (
     <>
       {/* 子頁面區域 */}
       <div className="order-steps">
-        {step === 1 ? <Register1></Register1> : ""}
-        {step === 2 ? <Register2></Register2> : ""}
-        <BlockComponent foodtagid={foodtagid} setFoodTagID={setFoodTagID} />
+        <BlockComponent
+          handleClose={handleClose}
+          foodtagid={foodtagid}
+          setFoodTagID={setFoodTagID}
+        />
       </div>
-      {/* 按鈕 */} 
-      <div>
-        <button onClick={next} disabled={step === maxSteps}>
-          下一步
-        </button>
-      </div>
+      {/* 按鈕 */}
+      {step !== 2 && (
+        <div className="position-relative">
+          <span style={{ position: "absolute", bottom: 20, left: 465 }}>
+            <button className="btn fs-5 grey" onClick={next}>
+              下次再選
+            </button>
+          </span>
+          <div style={{ position: "absolute", bottom: 16, left: 600 }}>
+            <button className="btn btn-middle fs-5" onClick={next}>
+              確定選擇
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

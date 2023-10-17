@@ -110,6 +110,7 @@ export default function Card({
                 <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
                 favs={favs}
                 setFavs={setFavs}
+                post_id={post_id}
                 />
                 {/* <button
                   className="btn btn-sm btn-i"

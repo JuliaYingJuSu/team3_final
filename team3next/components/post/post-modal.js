@@ -5,7 +5,7 @@ import Like from "./like";
 import Saved from "./saved";
 import { Carousel } from "react-bootstrap";
 import AuthContext from "@/hooks/AuthContext";
-import Router from "next/router";
+import router from "next/router";
 
 export default function PostModal({
   post_id,
@@ -50,7 +50,6 @@ export default function PostModal({
     setMessageVal(newVal);
   };
   const sendMessage = (e) => {
-    // console.log(JSON.parse(localStorage.getItem("auth").user_id))
     const message_re = /.{1,}/;
     e.preventDefault();
     fetch("http://localhost:3002/api/post/add-comment", {
@@ -65,7 +64,8 @@ export default function PostModal({
       .then((r) => r.json())
       .then((r) => {
         console.log(r);
-        router.push("/post");
+        // router.push("/post")
+        loadComments();
       });
 
     const newErrors = {};
@@ -109,9 +109,9 @@ export default function PostModal({
     }
   }, []);
 
-  useEffect(() => {
+  const loadComments = async () => {
     if (post_id) {
-      fetch(`http://localhost:3002/api/post/post-comment`, {
+      const r = await fetch(`http://localhost:3002/api/post/post-comment`, {
         method: "POST",
         body: JSON.stringify({
           post_id: post_id,
@@ -119,13 +119,13 @@ export default function PostModal({
         headers: {
           "Content-Type": "application/json",
         },
-      })
-        .then((r) => r.json())
-        .then((r) => {
-          // console.log(r);
-          setComments(r);
-        });
+      });
+      const data = await r.json();
+      setComments(data);
     }
+  };
+  useEffect(() => {
+    loadComments();
   }, [imgs]);
 
   const { auth } = useContext(AuthContext);
@@ -214,6 +214,7 @@ export default function PostModal({
                   ifSave={favs && favs?.includes(post_id) ? true : false}
                   favs={favs}
                   setFavs={setFavs}
+                  post_id={post_id}
                 />
                 {/* <span>1</span> */}
               </span>

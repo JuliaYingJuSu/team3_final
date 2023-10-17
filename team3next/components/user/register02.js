@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
-import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function Register2() {
-
+export default function Register2({ handleClose = () => {} }) {
   //隱藏or呈現密碼
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
 
-  // //關閉黑視窗
-  // function close() {
-  //   let modalBackdrops = document.getElementsByClassName("modal-backdrop");
-  //   for (let i = 0; i < modalBackdrops.length; i++) {
-  //     const modalBackdrop = modalBackdrops[i];
-  //     modalBackdrop.parentNode.removeChild(modalBackdrop);
-  //   }
-  // }
+  //關閉黑視窗
+  function close() {
+    let modalBackdrops = document.getElementsByClassName("modal-backdrop");
+    for (let i = 0; i < modalBackdrops.length; i++) {
+      const modalBackdrop = modalBackdrops[i];
+      modalBackdrop.parentNode.removeChild(modalBackdrop);
+    }
+  }
 
+  const food_tag_id=JSON.parse(localStorage.getItem("selectedFoodTagIds"))
+  
   const {
     register,
     handleSubmit,
@@ -90,7 +90,7 @@ export default function Register2() {
     formData.append("user_phone", data.user_phone);
     formData.append("self_intr", data.self_intr);
     formData.append("user_img", data.user_img[0]);
-    // formData.append("food_tag_id", foodTagIds);
+    formData.append("food_tag_id", food_tag_id);
 
     try {
       console.log(data.user_img[0]);
@@ -106,6 +106,7 @@ export default function Register2() {
         title: "註冊成功",
         icon: "success",
       });
+      handleClose();
       close();
     } catch (err) {
       console.error("Error:", err);
@@ -119,6 +120,11 @@ export default function Register2() {
   return (
     <>
       <div className="backgs">
+        <span
+          type="button"
+          className="btn-close position-absolute top-0 end-0 m-3 fs-5 z-3"
+          aria-label="Close"
+          data-bs-dismiss="modal"></span>
         <span
           className="z-1 position-absolute start-50 translate-middle"
           style={{ top: 90 }}>

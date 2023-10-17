@@ -8,9 +8,20 @@ import GoogleLogo from "@/components/icons/google-icon";
 import AuthContext from "@/hooks/AuthContext";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import Register1 from "@/components/user/register01";
-import Register2 from "@/components/user/register02";
-import Register from "./register";
+import dynamic from "next/dynamic";
+// import Register1 from "@/components/user/register01";
+// import Register2 from "@/components/user/register02";
+// import Register from "./register";
+
+// use the ssr option to disable server-rendering.
+const RegisterModal = dynamic(
+  () => import("@/components/user/register-modal"),
+  {
+    ssr: false,
+  }
+);
+
+// import RegisterModal from "@/components/user/register-modal";
 
 export default function Login() {
   const { auth, setAuth } = useContext(AuthContext);
@@ -112,7 +123,7 @@ export default function Login() {
               height={520}
               width={660}
               className="position-absolute"
-              style={{ left: 400, top: 200 }}
+              style={{ left: 200, top: 150 }}
             ></img>
           </span>
         </div>
@@ -140,8 +151,8 @@ export default function Login() {
               <Toggle></Toggle>
             </div>
             <div className="middle mt-5">
-              <form noValidate onSubmit={sendForm}>
-                <div className="mb-4">
+              <form noValidate onSubmit={sendForm} className="mt-4">
+                <div className="mb-5">
                   <span className="form-text text-danger fs-5">
                     {errors.user_email}
                   </span>
@@ -212,7 +223,8 @@ export default function Login() {
         </div>
       </div>
       {/* <!-- Modal 1 --> */}
-      <div
+      <RegisterModal />
+      {/* <div
         className="modal fade rounded"
         id="modal1"
         data-bs-backdrop="static"
@@ -230,7 +242,7 @@ export default function Login() {
             <Register></Register>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <!-- Modal 2 --> */}
       {/* <div

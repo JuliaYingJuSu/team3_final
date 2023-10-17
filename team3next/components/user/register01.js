@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 
@@ -16,11 +15,24 @@ export default function Register1() {
   const [isChecked9, setIsChecked9] = useState(false);
 
   const updateLocalStorage = (id, checked) => {
-    const storedData =
-      JSON.parse(localStorage.getItem("selectedFoodTagIds")) || {};
-    storedData[id] = checked;
+    const storedData = JSON.parse(localStorage.getItem("selectedFoodTagIds")) || [];
+  
+    if (checked) {
+      // 選中時將ID加入陣列 
+      if (!storedData.includes(id)) {
+        storedData.push(id);
+      }
+    } else {
+      // 沒選時將ID移出陣列 
+      const index = storedData.indexOf(id);
+      if (index !== -1) {
+        storedData.splice(index, 1);
+      }
+    }
+  
     localStorage.setItem("selectedFoodTagIds", JSON.stringify(storedData));
   };
+  
 
   const {
     register,
@@ -42,11 +54,11 @@ export default function Register1() {
       isChecked7 ? "7" : "",
       isChecked8 ? "8" : "",
       isChecked9 ? "9" : "",
-    ].filter(Boolean); // Remove empty strings
+    ].filter(Boolean);
 
     setSelectedFoodTagIds(selectedIds);
 
-    // 更新本地存储
+    //更新LocalStorage
     updateLocalStorage("1", isChecked1);
     updateLocalStorage("2", isChecked2);
     updateLocalStorage("3", isChecked3);
@@ -70,10 +82,10 @@ export default function Register1() {
 
   return (
     <>
-      <div className="sfsbc middle">
-        <div className="mt-4 mx-5">
+      <div className="sfsbc middle mb-1">
+        <div className="mx-5 mb-5">
           <h3 className="text-center">請先選擇您喜愛的食物樣式(可多選)</h3>
-          <div className="ficb mt-4">
+          <div className="ficb mt-3">
             <div className="container">
               <form className="row gy-3">
                 {/* 從此開始 */}
@@ -91,7 +103,7 @@ export default function Register1() {
                             setIsChecked1((prev) => !prev);
                             updateLocalStorage("1", !isChecked1);
                           }}
-                          {...register("food_tag_id_1")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -124,11 +136,11 @@ export default function Register1() {
                           id="food_tag_id_2"
                           value="2"
                           checked={isChecked2}
-                          {...register("food_tag_id_2")}
                           onClick={() => {
                             setIsChecked2((prev) => !prev);
                             updateLocalStorage("2", !isChecked2);
                           }}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -165,7 +177,7 @@ export default function Register1() {
                             setIsChecked3((prev) => !prev);
                             updateLocalStorage("3", !isChecked3);
                           }}
-                          {...register("food_tag_id_3")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -202,7 +214,7 @@ export default function Register1() {
                             setIsChecked4((prev) => !prev);
                             updateLocalStorage("4", !isChecked4);
                           }}
-                          {...register("food_tag_id_4")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -239,7 +251,7 @@ export default function Register1() {
                             setIsChecked5((prev) => !prev);
                             updateLocalStorage("5", !isChecked5);
                           }}
-                          {...register("food_tag_id_5")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -276,7 +288,7 @@ export default function Register1() {
                             setIsChecked6((prev) => !prev);
                             updateLocalStorage("6", !isChecked6);
                           }}
-                          {...register("food_tag_id_6")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -313,7 +325,7 @@ export default function Register1() {
                             setIsChecked7((prev) => !prev);
                             updateLocalStorage("7", !isChecked7);
                           }}
-                          {...register("food_tag_id_7")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -350,7 +362,7 @@ export default function Register1() {
                             setIsChecked8((prev) => !prev);
                             updateLocalStorage("8", !isChecked8);
                           }}
-                          {...register("food_tag_id_8")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -387,7 +399,7 @@ export default function Register1() {
                             setIsChecked9((prev) => !prev);
                             updateLocalStorage("9", !isChecked9);
                           }}
-                          {...register("food_tag_id_9")}
+                          {...register("food_tag_id")}
                         />
                         <label
                           className={`custom-icon-checkbox ${
@@ -409,25 +421,6 @@ export default function Register1() {
                     </div>
                   </div>
                 </div>
-
-                <div className="d-flex justify-content-end fs-5 align-items-center mt-5 mb-3 me-4">
-                  <div className="me-4">
-                    <button
-                      className="grey btn fs-5"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal2">
-                      下次一定選
-                    </button>
-                  </div>
-                  <div className="me-2">
-                    <button
-                      className="btn btn-middle fs-5"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal2">
-                      確定選擇
-                    </button>
-                  </div>
-                </div>
               </form>
             </div>
           </div>
@@ -436,7 +429,8 @@ export default function Register1() {
       <style jsx>
         {`
           .sfsbc {
-            width: 800px;
+            height: 870px;
+            width: 798px;
             display: flex;
             padding: 10px;
             flex-direction: column;

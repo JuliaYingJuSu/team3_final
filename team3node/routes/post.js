@@ -36,16 +36,17 @@ postRouter.post("/post-comment", async (req, res) => {
 });
 
 //新增文章路由
-postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
+postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) => {
   // console.log(req.body);
-  let { post_title, post_content, post_restaurant_id, user_id } = req.body;
+  let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } = req.body;
+  console.log(food_tag_id);
   const output = {
     success: false,
     errors: {},
     result: {},
     postData: {}, // 除錯檢查用
   };
-  const sqlPost = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, ?, NOW(), ?, ?, 1)`;
+  const sqlPost = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (NULL, ?, ?, ?, NOW(),  ?,  NOW(), 1)`;
 
   let result;
 
@@ -60,26 +61,49 @@ postRouter.post("/add-post", upload.array("photo"), async (req, res) => {
     output.result = result;
 
     const postId = result.insertId;
-
-    const files = req.files;
-    console.log(req.files);
-    if (files && files.length > 0) {
-      files.forEach(async (file) => {
-        const { filename } = file;
-        // 從req.file結構出需要存入資料庫的filename
-        const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (?, ?, ?)`;
-
-        try {
-          [result] = await db.query(sqlImg, [postId, filename, 1]);
-          console.log(`File ${filename} inserted into database.`);
-        } catch (err) {
-          console.error(
-            `Error inserting file ${filename} into database: ${err}`
-          );
-        }
-      });
+    // food_tag_id.forEach(async (v,i) => {
+    //       const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
+    //             [result] = await db.query(sqlTags, [postId,food_tag_id ])
+    // })
+let sqlTags="";
+    for(let i = 0; i < food_tag_id.length; i++) {
+      sqlTags += `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ${postId}, ${food_tag_id[i]});`
+      // [result] = await db.query(sqlTags)
+      // [postId,food_tag_id[i] ]
     }
-  } catch (err) {
+    console.log(sqlTags)
+    [result] = await db.query(sqlTags)
+
+    // const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
+
+    // try {
+    //   [result] = await db.query(sqlTags, [postId,food_tag_id ])
+    // }catch(ex){
+    //   console.log(ex);
+    // }
+
+
+    // const files = req.files;
+    // console.log(req.files);
+    // if (files && files.length > 0) {
+    //   files.forEach(async (file) => {
+    //     const { filename } = file;
+    //     // 從req.file結構出需要存入資料庫的filename
+    //     const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (?, ?, ?)`;
+
+    //     try {
+    //       [result] = await db.query(sqlImg, [postId, filename, 1]);
+    //       console.log(`File ${filename} inserted into database.`);
+    //     } catch (err) {
+    //       console.error(
+    //         `Error inserting file ${filename} into database: ${err}`
+    //       );
+    //     }
+
+    //   });
+    // }
+  } 
+  catch (err) {
     output.errors = "SQL 錯誤";
     output.err = err;
   }
@@ -113,27 +137,29 @@ postRouter.get('/fav', async(req,res)=>{
     return res.json({});
   }
   const loguid = res.locals.jwtData.user_id
-  console.log(loguid)
+  // console.log(loguid)
   const sql = `SELECT post_id FROM post_favorite WHERE user_id = ? `;
 
   const [data] = await db.query(sql, [loguid]);
   
   const newData = data.map(i=>i.post_id);
 
-  console.log(newData)
+  // console.log(newData)
   res.json(newData);//回傳json格式
 })
 
 
 //加入收藏
-postRouter.post("/toggle-fav/:post_id", async (req, res) => {
-  const post_id = req.query.post_id;
+postRouter.get("/toggle-fav/:post_id", async (req, res) => {
+  console.log("running route")
+  const post_id = req.params.post_id || 0;
   const output = {
     action: '', // insert, delete
     post_id,
   };
+  console.log(req.query)
   
-  
+  console.log(res.locals.jwtData?.user_id)
 
   if(!res.locals.jwtData?.user_id){
     return res.json({});
@@ -152,6 +178,7 @@ postRouter.post("/toggle-fav/:post_id", async (req, res) => {
     const sql3 = `INSERT INTO post_favorite (user_id, post_id) VALUES (?, ?)`;
     await db.query(sql3, [user_id, post_id]);
     output.action = 'insert';
+    console.log(sql3)
   }
   res.json(output)
 });
