@@ -109,6 +109,21 @@ userRouter.get("/:user_id/follown", async (req, res) => {
   }
 });
 
+//其他使用者資訊---------------------
+userRouter.get("/:user_id/userInfoImg", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT user.*, post.*, post_image.*, post_restaurant.*, post_food_tag.*, food_tag.*,followers.* FROM user JOIN post ON user.user_id = post.user_id JOIN post_image ON post.post_id = post_image.post_id JOIN post_restaurant ON post.post_restaurant_id = post_restaurant.post_restaurant_id JOIN post_food_tag ON post.post_id = post_food_tag.post_id JOIN food_tag ON food_tag.food_tag_id = post_food_tag.food_tag_id JOIN followers ON followers.user_id_following = user.user_id WHERE user.user_id = ? GROUP BY post.post_id;`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+
 //食物標籤---------------------
 userRouter.get("/:user_id/food_tag", async (req, res) => {
   const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id

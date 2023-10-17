@@ -21,10 +21,7 @@ export default function Register2({ handleClose = () => {} }) {
   }
 
   const food_tag_id=JSON.parse(localStorage.getItem("selectedFoodTagIds"))
-  console.log(food_tag_id);
   
-
-
   const {
     register,
     handleSubmit,
