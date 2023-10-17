@@ -20,6 +20,11 @@ export default function Register2({ handleClose = () => {} }) {
     }
   }
 
+  const food_tag_id=JSON.parse(localStorage.getItem("selectedFoodTagIds"))
+  console.log(food_tag_id);
+  
+
+
   const {
     register,
     handleSubmit,
@@ -88,7 +93,7 @@ export default function Register2({ handleClose = () => {} }) {
     formData.append("user_phone", data.user_phone);
     formData.append("self_intr", data.self_intr);
     formData.append("user_img", data.user_img[0]);
-    // formData.append("food_tag_id", foodTagIds);
+    formData.append("food_tag_id", food_tag_id);
 
     try {
       console.log(data.user_img[0]);
@@ -118,6 +123,11 @@ export default function Register2({ handleClose = () => {} }) {
   return (
     <>
       <div className="backgs">
+        <span
+          type="button"
+          className="btn-close position-absolute top-0 end-0 m-3 fs-5 z-3"
+          aria-label="Close"
+          data-bs-dismiss="modal"></span>
         <span
           className="z-1 position-absolute start-50 translate-middle"
           style={{ top: 90 }}>

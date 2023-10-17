@@ -138,7 +138,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
     postData: req.body, // 除錯檢查用
   };
   // TODO: 欄位格式檢查
-  let isPass = true; // 有沒有通常檢查
+
   if (req.body.user_name) {
     const {
       user_name,
@@ -193,7 +193,7 @@ userRouter.post("/upload", upload.single("user_img"), async (req, res) => {
             await db.query(userTagInsertSql, [user_id, foodtagid]);
           }
         }
-        output.success = !!result.affectedRows; //轉為布林值，有為1，無為0
+        output.success = true;
         output.result = result;
       } catch (ex) {
         output.errors = "SQL寫入錯誤";

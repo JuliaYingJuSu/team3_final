@@ -26,7 +26,6 @@ export default function Register({ handleClose = () => {} }) {
     isChecked9: "",
   });
 
-  console.log(step);
   // 動態元件語法
   const components = [Register1, Register2];
   const BlockComponent = components[step - 1];
@@ -46,6 +45,7 @@ export default function Register({ handleClose = () => {} }) {
         isChecked8,
         isChecked9,
       } = foodtagid;
+      console.log(foodtagid);
     }
     // 沒錯誤才會到下一步
     if (step < maxSteps) setStep(step + 1);
@@ -54,8 +54,6 @@ export default function Register({ handleClose = () => {} }) {
     <>
       {/* 子頁面區域 */}
       <div className="order-steps">
-        {/* {step === 1 ? <Register1></Register1> : ""}
-        {step === 2 ? <Register2></Register2> : ""} */}
         <BlockComponent
           handleClose={handleClose}
           foodtagid={foodtagid}
@@ -65,7 +63,12 @@ export default function Register({ handleClose = () => {} }) {
       {/* 按鈕 */}
       {step !== 2 && (
         <div className="position-relative">
-          <div style={{position:"absolute",bottom:20}}>
+          <span style={{ position: "absolute", bottom: 20, left: 465 }}>
+            <button className="btn fs-5 grey" onClick={next}>
+              下次再選
+            </button>
+          </span>
+          <div style={{ position: "absolute", bottom: 16, left: 600 }}>
             <button className="btn btn-middle fs-5" onClick={next}>
               確定選擇
             </button>
