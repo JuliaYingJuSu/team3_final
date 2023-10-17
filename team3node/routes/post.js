@@ -78,42 +78,28 @@ postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) =
     }catch (err) {
       console.error("Error while inserting food tags:", err);
     }
-// let sqlTags;
-    // for(let i = 0; i < food_tag_id.length; i++) {
-    //   sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ${postId}, ${food_tag_id[i]});`
-    //   console.log(sqlTags)
-    //   [result] = await db.query(sqlTags)
-    //   // [postId,food_tag_id[i] ]
-    // }
-
-    // const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
-
-    // try {
-    //   [result] = await db.query(sqlTags, [postId,food_tag_id ])
-    // }catch(ex){
-    //   console.log(ex);
-    // }
 
 
-    // const files = req.files;
-    // console.log(req.files);
-    // if (files && files.length > 0) {
-    //   files.forEach(async (file) => {
-    //     const { filename } = file;
-    //     // 從req.file結構出需要存入資料庫的filename
-    //     const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (?, ?, ?)`;
 
-    //     try {
-    //       [result] = await db.query(sqlImg, [postId, filename, 1]);
-    //       console.log(`File ${filename} inserted into database.`);
-    //     } catch (err) {
-    //       console.error(
-    //         `Error inserting file ${filename} into database: ${err}`
-    //       );
-    //     }
+    const files = req.files;
+    console.log(req.files);
+    if (files && files.length > 0) {
+      files.forEach(async (file) => {
+        const { filename } = file;
+        // 從req.file結構出需要存入資料庫的filename
+        const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (NULL, ?, ?)`;
 
-    //   });
-    // }
+        try {
+          [result] = await db.query(sqlImg, [postId, filename, 1]);
+          console.log(`File ${filename} inserted into database.`);
+        } catch (err) {
+          console.error(
+            `Error inserting file ${filename} into database: ${err}`
+          );
+        }
+
+      });
+    }
   }catch (err) {
     output.errors = "SQL 錯誤";
     output.err = err;
