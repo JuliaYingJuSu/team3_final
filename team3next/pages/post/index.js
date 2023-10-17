@@ -24,9 +24,9 @@ export default function index() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="container" style={{marginTop:250}}></div>
         <Breadcrumb />
-      </div>
+      
       <Banner
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
