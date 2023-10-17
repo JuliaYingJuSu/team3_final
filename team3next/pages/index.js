@@ -19,7 +19,6 @@ export default function Index() {
         <title>食食嗑嗑-首頁</title>
       </Head>
       <Navbar></Navbar>
-      <div style={{ marginTop: "250px" }}></div>
       <Banner
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
