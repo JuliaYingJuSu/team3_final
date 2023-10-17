@@ -139,7 +139,7 @@ export default function PostModal({
       <div
         className="modal fade"
         id={"exampleModal" + post_id}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + post_id}
         aria-hidden="true"
       >
@@ -217,6 +217,7 @@ export default function PostModal({
               <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
                 favs={favs}
                 setFavs={setFavs}
+                post_id={post_id}
                 />
                 {/* <span>1</span> */}
               </span>
