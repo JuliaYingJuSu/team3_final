@@ -74,7 +74,6 @@ export const AuthContextProvider = ({ children }) => {
       .then((r) => r.json())
       .then((r) => {
         setFav(r);
-        console.log(212);
         console.log(r);
       })
       .catch((ex) => {

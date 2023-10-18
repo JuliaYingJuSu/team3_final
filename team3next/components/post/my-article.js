@@ -180,11 +180,11 @@ export default function MyArticle({ article }) {
                         ></img>
                       </Link>
                     </div>
-                    <div className="me-auto mb-3">
+                    <div className="me-auto mb-3 text-start">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>
-                      <p>{v.content}</p>
+                      <p className="me-5">{v.content}</p>
                     </div>
                     <div>
                       <p className="fs12 mt-3 me-3">

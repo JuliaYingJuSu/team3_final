@@ -140,7 +140,7 @@ userRouter.get("/:user_id/userfollow", async (req, res) => {
 //其他使用者個人資訊
 userRouter.get("/:user_id/userinfo", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
-  const sql = `SELECT * FROM user WHERE user_id=?`
+  const sql = `SELECT * FROM user WHERE user_id=?`;
 
   try {
     const [rows] = await db.query(sql, [user_id]);
@@ -150,7 +150,6 @@ userRouter.get("/:user_id/userinfo", async (req, res) => {
     console.log(ex);
   }
 });
-
 
 //食物標籤---------------------
 userRouter.get("/:user_id/food_tag", async (req, res) => {
@@ -168,6 +167,42 @@ userRouter.get("/:user_id/food_tag", async (req, res) => {
     res.json(rows);
   } catch (ex) {
     console.log(ex);
+  }
+});
+
+//大頭照上傳
+userRouter.put("/update-img", upload.single("user_img"), async (req, res) => {
+  const output = {
+    success: false,
+    error: null,
+    errors: {},
+    result: {},
+    postData: req.body, // 除錯檢查用
+  };
+
+  try {
+    const { user_id } = req.body;
+    const user_img = req.file ? req.file.filename : null; // 拿到上傳名稱
+
+    if (!user_id) {
+      output.error = "沒有user_id";
+      return res.status(400).json(output);
+    }
+
+    if (!user_img) {
+      output.error = "沒有上傳檔案";
+      return res.status(400).json(output);
+    }
+
+    const sql = "UPDATE user SET user_img = ? WHERE user_id = ?";
+    const [result] = await db.query(sql, [user_img, user_id]);
+
+    output.success = !!result.changedRows; //有改變，changedRows會>0
+    output.result = result;
+    res.json(output);
+  } catch (error) {
+    output.error = error.message;
+    res.status(500).json(output);
   }
 });
 

@@ -83,6 +83,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(express.static('public'))
+
 const verifyJWT = (req, res, next) => {
   // 製作jwt驗證中間件
   const token = req.headers["authorization"].split(" ")[1];

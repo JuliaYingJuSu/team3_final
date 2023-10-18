@@ -174,3 +174,7 @@
   content: "\e91d";
   color: #ebd8a9;
 }
+.icon-heart-fill:before {
+  content: "\e917";
+  color: #dc8b76;
+}
