@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
@@ -18,16 +18,13 @@ import Swal from "sweetalert2";
 export default function index() {
   //資料用
   const [data, setData] = useState([]);
+  console.log(data.rows?.length);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
-  const [inputText, setInputText] = useState("");
-  const [search, setSearch] = useState("");
-  console.log(search);
 
-  //打開篩到注音關掉backspace不同步
-  // useEffect(() => {
-  //   setSearch(inputText);
-  // }, [inputText]);
+  const [inputText, setInputText] = useState("");
+  const [fullText, setFullText] = useState("");
+  const [isCompositing, setIsCompositing] = useState(false);
 
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
@@ -47,7 +44,7 @@ export default function index() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   }, []);
 
   // console.log(run);
@@ -64,15 +61,15 @@ export default function index() {
 
   // 取資料
   useEffect(() => {
+    if (isCompositing) return;
     fetch("http://localhost:3002/api/product", {
       method: "POST",
       body: JSON.stringify({
         uid: localStorage.getItem("auth")
           ? JSON.parse(localStorage.getItem("auth")).user_id
           : "",
-        // uid: uid,
         order: order,
-        search: search,
+        search: inputText,
         type: type,
         typeList: typeList.split(",")[1],
         price: price,
@@ -105,96 +102,96 @@ export default function index() {
           setWish(wishList);
         }
       });
-  }, [order, search, typeList, price, items, run]);
+  }, [order, inputText, typeList, price, items, run, isCompositing]);
 
   // 增刪願望清單
   const handleWish = (product_id) => {
-    if (!wish.includes(product_id)) {
-      // console.log(product_id);
-      fetch("http://localhost:3002/api/product/add-wish", {
-        method: "POST",
-        body: JSON.stringify({
-          pid: product_id,
-          uid: JSON.parse(localStorage.getItem("auth")).user_id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
-        // .then((r) => {
-        //   console.log(r); //defined
-        // })
-        .then((r) => r.json())
-        .then((r) => {
-          console.log(r); //true
-          if (r) {
-            // location.reload();
-            setRun(!run);
-          }
+    if (!localStorage.getItem("auth")) {
+      Swal.fire({
+        icon: "error",
+        title: "請先登入",
+      });
+      return;
+    } else {
+      if (!wish.includes(product_id)) {
+        // console.log(product_id);
+        fetch("http://localhost:3002/api/product/add-wish", {
+          method: "POST",
+          body: JSON.stringify({
+            pid: product_id,
+            uid: JSON.parse(localStorage.getItem("auth")).user_id,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .catch((ex) => {
-          console.log(ex);
-        });
-    }
-    if (wish.includes(product_id)) {
-      fetch("http://localhost:3002/api/product/del-wish", {
-        method: "POST",
-        body: JSON.stringify({
-          pid: product_id,
-          uid: JSON.parse(localStorage.getItem("auth")).user_id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          //#region (有無"Content-Type": "application/json"與req.body的關聯)
+          // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
+          // .then((r) => {
+          //   console.log(r); //defined
+          // })
+          .then((r) => r.json())
+          .then((r) => {
+            console.log(r); //true
+            if (r) {
+              // location.reload();
+              setRun(!run);
+            }
+          })
+          .catch((ex) => {
+            console.log(ex);
+          });
+      }
+      if (wish.includes(product_id)) {
+        fetch("http://localhost:3002/api/product/del-wish", {
+          method: "POST",
+          body: JSON.stringify({
+            pid: product_id,
+            uid: JSON.parse(localStorage.getItem("auth")).user_id,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            //#region (有無"Content-Type": "application/json"與req.body的關聯)
 
-          //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
+            //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
 
-          // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
+            // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
 
-          //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
+            //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
 
-          //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
+            //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
 
-          //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
-          //#endregion
-        },
-      })
-        .then((r) => r.json())
-        .then((r) => {
-          console.log(r); //true
-          if (r) {
-            // location.reload();
-
-            Swal.fire({
-              toast: true,
-              // className: "yyy",
-              // backdrop: "false",
-              showConfirmButton: false,
-              timer: 1500,
-              position: "top",
-              width: "250px",
-              // height: "20px",
-              text: "已更新願望清單",
-              icon: "success",
-              // padding: "0px",
-
-              // showCancelButton: true,
-              // cancelButtonText:
-              //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-              // confirmButtonText:
-              //   '<i class="far fa-check-circle fs-5"></i> 放棄',
-            });
-
-            setRun(!run);
-          }
+            //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
+            //#endregion
+          },
         })
-        .catch((ex) => {
-          console.log(ex);
-        });
+          .then((r) => r.json())
+          .then((r) => {
+            console.log(r); //true
+            if (r) {
+              // location.reload();
+
+              Swal.fire({
+                toast: true,
+                // className: "yyy",
+                // backdrop: "false",
+                showConfirmButton: false,
+                timer: 1500,
+                position: "top",
+                width: "250px",
+                // height: "20px",
+                text: "已更新願望清單",
+                icon: "success",
+              });
+
+              setRun(!run);
+            }
+          })
+          .catch((ex) => {
+            console.log(ex);
+          });
+      }
     }
   };
-
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
   console.log(msg);
@@ -252,7 +249,7 @@ export default function index() {
   //------------------------------------------------
   return (
     <>
-      <button
+      {/* <button
         class="btn btn-primary"
         type="button"
         data-bs-toggle="offcanvas"
@@ -264,15 +261,15 @@ export default function index() {
       </button>
 
       <div
-        class="offcanvas offcanvas-bottom"
+        className="offcanvas offcanvas-bottom"
         tabIndex="-1"
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
       >
-        <div class="offcanvas-header">
+        <div className="offcanvas-header">
           {msgs.map((msg) => {
             return (
-              <h5 class="offcanvas-title" id="offcanvasBottomLabel">
+              <h5 className="offcanvas-title" id="offcanvasBottomLabel">
                 {msg}
               </h5>
             );
@@ -280,12 +277,12 @@ export default function index() {
 
           <button
             type="button"
-            class="btn-close"
+            className="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body small ">
+        <div className="offcanvas-body small ">
           ...
           <div></div>
           <input
@@ -306,11 +303,12 @@ export default function index() {
             送出
           </button>
         </div>
-      </div>
+      </div> */}
 
       <Navbar />
       <div className="container" style={{ paddingTop: "225px" }}>
-        <Bread typeList={typeList} />
+        <Bread typeList={typeList} data={data} />
+
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
             <div className={styles.leftBox}>
@@ -362,7 +360,6 @@ export default function index() {
                                       const [fullItem] = data.items.filter(
                                         (a) => a.item_id == v
                                       );
-                                      console.log(fullItem);
 
                                       return fullItem.product_type_list_id
                                         .split(",")
@@ -382,7 +379,7 @@ export default function index() {
               </div>
               {/* ------------篩選條件----------- */}
               <div className={styles.left}>
-                <p className="h6 px-2 pb-3">
+                <p className="h6 px-2 pb-2">
                   篩選條件
                   <span
                     style={{
@@ -422,7 +419,7 @@ export default function index() {
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-4"
+                                className="mb-1"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
@@ -487,8 +484,8 @@ export default function index() {
                 </form>
               </div>
               {/* ------------價格範圍----------- */}
-              <div className={styles.left}>
-                <p className="h6 px-2 pb-3">
+              <div className={styles.left + " pb-2"}>
+                <p className="h6 px-2 pb-1">
                   價格範圍
                   <span
                     style={{
@@ -541,314 +538,8 @@ export default function index() {
                 }
               >
                 {/* ------------------dropdown------------------- */}
-
-                {/* <div className="dropdown col-auto me-auto ">
-                  <button
-                    className={
-                      styles.barBtn + " p-1 btn-small border-0 dropdown-toggle"
-                    }
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    data-bs-target="#rwd"
-                  >
-                    分類
-                  </button>
-                  <div className="dropdown-menu" id="rwd">
-                    <div className={styles.leftBox}>
-                      <div className={styles.left}>
-                        <Link href="#/product">
-                          <button
-                            className={styles.leftA + " btn"}
-                            type="button"
-                          >
-                            全部商品
-                          </button>
-                        </Link>
-
-                        <button
-                          className="btn"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#type1"
-                          aria-expanded="false"
-                          aria-controls="type1"
-                        >
-                          飲品/沖泡類{" "}
-                          <span className="fs-6 ms-2 icon-arrow-down"></span>
-                        </button>
-                        <div className="collapse" id="type1">
-                          <button
-                            className={styles.typeListBtn + " btn"}
-                            type="button"
-                          >
-                            茶類
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn"}
-                            type="button"
-                          >
-                            咖啡/咖啡豆
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn"}
-                            type="button"
-                          >
-                            果汁
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            醋/水果醋
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            酒類
-                          </button>
-                        </div>
-                        <button
-                          className="btn"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#type2"
-                          aria-expanded="false"
-                          aria-controls="type2"
-                        >
-                          烘焙食品/甜點{" "}
-                          <span className="fs-6 ms-2 icon-arrow-down"></span>
-                        </button>
-                        <div className="collapse" id="type2">
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            蛋糕/派
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            手工餅乾
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            麵包/吐司
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            奶酪/布丁/果凍
-                          </button>
-                        </div>
-                        <button
-                          className="btn"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#type3"
-                          aria-expanded="false"
-                          aria-controls="type3"
-                        >
-                          休閒零食{" "}
-                          <span className="fs-6 ms-2 icon-arrow-down"></span>
-                        </button>
-                        <div className="collapse" id="type3">
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            零食
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            糖果/巧克力
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            果醬/抹醬
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            果醬/抹醬
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            堅果/穀物
-                          </button>
-                        </div>
-                        <button
-                          className="btn"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#type4"
-                          aria-expanded="false"
-                          aria-controls="type4"
-                        >
-                          烹料料理{" "}
-                          <span className="fs-6 ms-2 icon-arrow-down"></span>
-                        </button>
-                        <div className="collapse" id="type4">
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            熟食/冷藏、冷凍食品
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            米/麵條
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            調理包/料理包
-                          </button>
-                          <button
-                            className={styles.typeListBtn + " btn "}
-                            type="button"
-                          >
-                            調味料/醬料
-                          </button>
-                        </div>
-                        <button
-                          className="btn"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#type5"
-                          aria-expanded="false"
-                          aria-controls="type5"
-                        >
-                          其他{" "}
-                          <span className="fs-6 ms-2 icon-arrow-down"></span>
-                        </button>
-                        <div className="collapse" id="type5">
-                          <button
-                            className={styles.typeListBtn + " btn  "}
-                            type="button"
-                          >
-                            其他
-                          </button>
-                        </div>
-                      </div>
-                      <div className={styles.left}>
-                        <p className="h6 px-2 pb-3">價格範圍</p>
-
-                        <Form className="d-flex flex-column px-2 justify-content-start">
-                          {["radio"].map((type) => (
-                            <div key={`inline-${type}`} className="mb-3">
-                              <Form.Check
-                                inline
-                                label="300以下"
-                                name="price"
-                                type={type}
-                                id={`inline-${type}-1`}
-                              />
-                              <Form.Check
-                                checked={true}
-                                inline
-                                label="300 - 500"
-                                name="price"
-                                type={type}
-                                id={`inline-${type}-2`}
-                              />
-                              <Form.Check
-                                inline
-                                label="500 - 800"
-                                name="price"
-                                type={type}
-                                id={`inline-${type}-2`}
-                              />
-                              <Form.Check
-                                inline
-                                label="800 - 1000"
-                                name="price"
-                                type={type}
-                                id={`inline-${type}-2`}
-                              />
-                              <Form.Check
-                                inline
-                                label="1000以上"
-                                name="price"
-                                type={type}
-                                id={`inline-${type}-2`}
-                              />
-                            </div>
-                          ))}
-                        </Form>
-                      </div>
-                      <div className={styles.left}>
-                        <p className="h6 px-2 pb-3">篩選條件</p>
-                        <form className="d-flex flex-column px-2">
-                          <label>
-                            <input
-                              className="mb-4"
-                              type="checkbox"
-                              name="priceType1"
-                              id="priceType1"
-                            />
-                            無添加
-                          </label>
-                          <label>
-                            <input
-                              className="mb-4"
-                              type="checkbox"
-                              name="priceType2"
-                              id="priceType2"
-                            />
-                            無麩質
-                          </label>
-                          <label>
-                            <input
-                              className="mb-4"
-                              type="checkbox"
-                              name="priceType3"
-                              id="priceType3"
-                            />
-                            蛋奶素
-                          </label>
-                          <label>
-                            <input
-                              className="mb-4"
-                              type="checkbox"
-                              name="priceType3"
-                              id="priceType3"
-                            />
-                            送禮
-                          </label>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-
                 {/* ------------------dropdown------------------- */}
-                <span
-                  className="me-auto"
-                  style={{
-                    color: "#666666",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    width: "auto",
-                  }}
-                >
-                  共{data.rows?.length}項商品
-                </span>
+
                 <form class="col-auto d-flex " role="search">
                   <input
                     class="form-control me-1"
@@ -859,23 +550,13 @@ export default function index() {
                     onChange={(e) => {
                       setInputText(e.target.value);
                     }}
-                    onCompositionEnd={(e) => {
-                      setSearch(inputText);
+                    onCompositionStart={(e) => {
+                      setIsCompositing(true);
                     }}
-                    onKeyDown={(e) => {
-                      if (e.key == "Backspace") {
-                        setSearch(e.target.value);
-                        // setInputText(e.target.value); //同步但篩到注音
-                      }
+                    onCompositionEnd={(e) => {
+                      setIsCompositing(false);
                     }}
                   />
-                  {/* <button
-                    class="btn icon-search"
-                    onClick={(e) => {
-                      setSearch(inputText);
-                    }}
-                  ></button> */}
-                  {/* type="submit" */}
                 </form>
                 <select
                   value={order}
@@ -960,13 +641,6 @@ export default function index() {
                                     // height: "20px",
                                     text: "已更新願望清單",
                                     icon: "success",
-                                    // padding: "0px",
-
-                                    // showCancelButton: true,
-                                    // cancelButtonText:
-                                    //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                                    // confirmButtonText:
-                                    //   '<i class="far fa-check-circle fs-5"></i> 放棄',
                                   });
                                   handleWish(product_id);
                                 }}
@@ -988,97 +662,6 @@ export default function index() {
                     }
                   )
                 )}
-                {/* {currentItems?.map(
-                  (
-                    {
-                      product_id,
-                      product_name,
-                      price,
-                      product_description,
-                      specification,
-                      product_type_id,
-                      product_type_list_id,
-                      isValid,
-                      product_img_id,
-                      product_img,
-                      showed_1st,
-                    },
-                    i
-                  ) => {
-                    return (
-                      <div
-                        key={product_id}
-                        className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
-                      >
-                        <div className={styles.cardP}>
-                          <div className={styles.imgBox}>
-                            <Link href={`/product/${product_id}`}>
-                              <img
-                                src={"images/product/" + product_img}
-                                alt=""
-                                className="w-100 h-100 object-fit-cover "
-                              />
-                            </Link>
-                          </div>
-                          <div
-                            className={
-                              styles.contentBox +
-                              " px-2 w-100 d-flex justify-content-between pt-2 pb-1 align-items-start"
-                            }
-                          >
-                            <Link
-                              href={"/product/" + product_id}
-                              className={styles.mylink + " fs16b"}
-                            >
-                              <span>{product_name}</span>
-                            </Link>
-
-                            <span
-                              className={
-                                wish.includes(product_id)
-                                  ? " icon-mark-fill" + " pt-1"
-                                  : " icon-mark" + " pt-1"
-                              }
-                              style={{ cursor: "pointer" }}
-                              onClick={() => {
-                                Swal.fire({
-                                  toast: true,
-                                  // className: "yyy",
-                                  // backdrop: "false",
-                                  showConfirmButton: false,
-                                  timer: 1500,
-                                  position: "top",
-                                  width: "250px",
-                                  // height: "20px",
-                                  text: "已更新願望清單",
-                                  icon: "success",
-                                  // padding: "0px",
-
-                                  // showCancelButton: true,
-                                  // cancelButtonText:
-                                  //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                                  // confirmButtonText:
-                                  //   '<i class="far fa-check-circle fs-5"></i> 放棄',
-                                });
-                                handleWish(product_id);
-                              }}
-                            ></span>
-                          </div>
-                          <div
-                            style={{ color: "#666666" }}
-                            className={
-                              styles.contentBox +
-                              " px-2 w-100 d-flex justify-content-between pt-1 pb-1"
-                            }
-                          >
-                            <span>{"NT$" + price}</span>
-                            <span className="icon-cark"></span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-                )} */}
               </div>
               <div className="d-flex justify-content-center">
                 <Pagination
@@ -1095,14 +678,6 @@ export default function index() {
       </div>
 
       <Footer />
-      <style jsx>
-        {`
-          .yyy {
-            fontsize: 10px !important;
-            background: red;
-          }
-        `}
-      </style>
     </>
   );
 }
