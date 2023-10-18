@@ -80,7 +80,7 @@ export default function Detail() {
         <title>食食嗑嗑-訂位詳細頁</title>
       </Head>
       <Navbar></Navbar>
-      <div className="container" style={{ marginTop: "250px" }}>
+      <div className="container" style={{ marginTop: "225px" }}>
         <BreadcrumbDetail></BreadcrumbDetail>
       </div>
       <br />

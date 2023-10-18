@@ -126,7 +126,7 @@ export default function RestaurantDetail() {
         <title>食食嗑嗑-餐廳主頁</title>
       </Head>
       <Navbar></Navbar>
-      <div style={{ marginTop: "250px" }}></div>
+      <div style={{ marginTop: "225px" }}></div>
       {/* ========輪播牆swiper========= */}
       <Swiper
         style={{
@@ -404,15 +404,14 @@ export default function RestaurantDetail() {
       <style jsx>
         {`
           .swiper1Img {
-            max-height: 780px;
+            max-height: 700px;
             object-fit: cover;
+          }
+          .swiper2Img {
+            max-height: 700px;
+            object-fit: contain;
           }
           .r-map {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-          .menu-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
