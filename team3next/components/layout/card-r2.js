@@ -16,8 +16,8 @@ export default function CardR2({
   restaurant_opening,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
-  const avoidSplit = restaurant_info.split("\\n").map((v) => {
-    return <span>{v}</span>;
+  const avoidSplit = restaurant_info.split("\\n").map((v, i) => {
+    return <span key={i}>{v}</span>;
   });
   const openingShort = restaurant_opening.split("\\n")[0];
   return (

@@ -69,7 +69,8 @@ export default function MyArticle({ article }) {
         id={"exampleModal" + article.post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + article.post_id}
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
@@ -80,11 +81,13 @@ export default function MyArticle({ article }) {
                       {auth.user_img ? (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={auth.user_img}></img>
+                          src={auth.user_img}
+                        ></img>
                       ) : (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src="/images/logo.png"></img>
+                          src="/images/logo.png"
+                        ></img>
                       )}
                     </Link>
                   </div>
@@ -113,7 +116,8 @@ export default function MyArticle({ article }) {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
               {/* 使用 Carousel 顯示多個圖片 */}
@@ -121,7 +125,8 @@ export default function MyArticle({ article }) {
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius">
+                className="image-radius"
+              >
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
@@ -171,7 +176,8 @@ export default function MyArticle({ article }) {
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={v.user_img}></img>
+                          src={v.user_img}
+                        ></img>
                       </Link>
                     </div>
                     <div className="me-auto mb-3">

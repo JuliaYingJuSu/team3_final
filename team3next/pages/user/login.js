@@ -114,7 +114,8 @@ export default function Login() {
     <>
       <div
         className="d-flex "
-        style={{ backgroundColor: "#EBD8A9", height: 923 }}>
+        style={{ backgroundColor: "#EBD8A9", height: 923 }}
+      >
         <div className="d-block w-100">
           <span className="position-relativ">
             <img
@@ -122,7 +123,8 @@ export default function Login() {
               height={520}
               width={660}
               className="position-absolute"
-              style={{ left: 200, top: 150 }}></img>
+              style={{ left: 200, top: 150 }}
+            ></img>
           </span>
         </div>
         <div
@@ -131,7 +133,8 @@ export default function Login() {
             backgroundColor: "white",
             height: 923,
             borderTopLeftRadius: 241,
-          }}>
+          }}
+        >
           <div className="container" style={{ marginTop: 100 }}>
             <div className="mt-5 w-100" style={{ paddingLeft: 100 }}>
               <Link href={"/"}>
@@ -179,13 +182,15 @@ export default function Login() {
                   <i
                     type="button"
                     className="far fa-eye-slash no-see-eye"
-                    style={{ color: "#787878" }}></i>
+                    style={{ color: "#787878" }}
+                  ></i>
                 </div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
                     className="btn btn-big middle"
                     type="submit"
-                    style={{ height: 60, width: 500, fontSize: 25 }}>
+                    style={{ height: 60, width: 500, fontSize: 25 }}
+                  >
                     登入
                   </button>
                 </div>
@@ -205,7 +210,8 @@ export default function Login() {
                         type="button"
                         className="red-i btn fs-5"
                         data-bs-toggle="modal"
-                        data-bs-target="#modal1">
+                        data-bs-target="#modal1"
+                      >
                         註冊
                       </button>
                     </span>
@@ -223,14 +229,16 @@ export default function Login() {
         id="modal1"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1">
+        tabIndex="-1"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content position-relative">
             <span
               type="button"
               className="btn-close position-absolute top-0 end-0 m-3 fs-5"
               aria-label="Close"
-              data-bs-dismiss="modal"></span>
+              data-bs-dismiss="modal"
+            ></span>
             <Register></Register>
           </div>
         </div>
@@ -240,7 +248,7 @@ export default function Login() {
       {/* <div
           className="modal fade rounded"
           id="modal2"
-          tabindex="-2"
+          tabIndex="-2"
           data-bs-backdrop="static"
           data-bs-keyboard="false">
           <div className="modal-dialog modal-lg">

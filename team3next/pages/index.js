@@ -20,17 +20,20 @@ export default function Index() {
       </Head>
       <Navbar></Navbar>
       <Banner
-      selectedCity={selectedCity}
+        selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
         searchKeyword={searchKeyword}
-        setSearchKeyword={setSearchKeyword}></Banner>
+        setSearchKeyword={setSearchKeyword}
+      ></Banner>
       <Carousel
-      selectedStyle={selectedStyle}
-        setSelectedStyle={setSelectedStyle}></Carousel>
+        selectedStyle={selectedStyle}
+        setSelectedStyle={setSelectedStyle}
+      ></Carousel>
       <Section01
-      selectedCity={selectedCity} 
-      selectedStyle={selectedStyle}
-      searchKeyword={searchKeyword}></Section01>
+        selectedCity={selectedCity}
+        selectedStyle={selectedStyle}
+        searchKeyword={searchKeyword}
+      ></Section01>
       <Section02></Section02>
       <Section03></Section03>
       <CarouselProduct></CarouselProduct>

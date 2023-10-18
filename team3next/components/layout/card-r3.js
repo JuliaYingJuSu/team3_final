@@ -14,10 +14,11 @@ export default function CardR3({
   r_img_route,
   food_tag_names,
   restaurant_opening,
+  food_tag_name,
 }) {
   const uniqueFoodTags = [...new Set(food_tag_names)];
-  const avoidSplit = restaurant_info.split("\\n").map((v) => {
-    return <span>{v}</span>;
+  const avoidSplit = restaurant_info.split("\\n").map((v, i) => {
+    return <span key={i}>{v}</span>;
   });
   const openingShort = restaurant_opening.split("\\n")[0];
   return (

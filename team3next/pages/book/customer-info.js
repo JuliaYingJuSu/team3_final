@@ -98,6 +98,7 @@ export default function Index() {
         <title>食食嗑嗑-訂位人資料</title>
       </Head>
       <Navbar></Navbar>
+      <div style={{ marginTop: "250px" }}></div>
       <div className="container d-flex justify-content-center">
         <div style={{ width: "90%" }}>
           <BreadcrumbCustomerInfo
@@ -163,7 +164,10 @@ export default function Index() {
                 checked={isChecked}
                 onChange={handleChange}
               />
-              <label className="form-check-label fs16" for="flexCheckDefault">
+              <label
+                className="form-check-label fs16"
+                htmlFor="flexCheckDefault"
+              >
                 訂位人聯絡方式與登入的會員資料相同
               </label>
             </div>
@@ -193,7 +197,10 @@ export default function Index() {
                     value="0"
                     onChange={handleGenderChange}
                   />
-                  <label className="form-check-label" for="flexRadioDefault1">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault1"
+                  >
                     小姐
                   </label>
                 </div>
@@ -206,7 +213,10 @@ export default function Index() {
                     value="1"
                     onChange={handleGenderChange}
                   />
-                  <label className="form-check-label" for="flexRadioDefault2">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault2"
+                  >
                     先生
                   </label>
                 </div>
@@ -220,7 +230,10 @@ export default function Index() {
                     onChange={handleGenderChange}
                     checked={bookGender === 2}
                   />
-                  <label className="form-check-label" for="flexRadioDefault3">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault3"
+                  >
                     其他
                   </label>
                 </div>
@@ -278,7 +291,7 @@ export default function Index() {
           <div onClick={sendForm} className="btn btn-middle me-3">
             確認訂位
           </div>
-          <Link href="/book/restaurant" className="btn btn-middle ms-3">
+          <Link href={`/book/${restaurant_id}`} className="btn btn-middle ms-3">
             回上一頁
           </Link>
         </div>

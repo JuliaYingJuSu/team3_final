@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { PictureOutlined } from "@ant-design/icons";
-import { Upload, Form } from "antd";
+import { Upload, Form, Button } from "antd";
 import PostRestaurant from "./post_restaurant";
 import FoodTags from "./foodtags";
 import Swal from "sweetalert2";
@@ -40,19 +40,21 @@ export default function AddPost() {
     const [content, setContent] = useState({ content: "" });
     const titleChanged = (e) => {
     const { id, value } = e.target;
-    console.log({ id, value });
+    // console.log({ id, value });
     const newTitle = { ...title, [id]: value };
     setTitle(newTitle);
-     };
+    };
   const contentChanged = (e) => {
     const { id, value } = e.target;
-    console.log({ id, value });
+    // console.log({ id, value });
     const newContent = { ...content, [id]: value };
     setContent(newContent);
   };
 
   const sendArticle = (e) => {
+    //console.log("submitting")
     e.preventDefault();
+    const selectedOptionValues = selectedOptions.map((v,i) => v.value) 
     fetch("http://localhost:3002/api/post/add-post", {
       method: "POST",
       body: JSON.stringify({
@@ -60,6 +62,7 @@ export default function AddPost() {
         post_title: title.Posttitle,
         post_content: content.content,
         post_restaurant_id: selectedOption.value,
+        food_tag_id:selectedOptionValues,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -68,24 +71,24 @@ export default function AddPost() {
         console.log(r);
       });
 
-    const sendPost = async (data) => {
-      const formData = new FormData();
-      for (let key in data) {
-        formData.append(key, data[key]);
-      }
-      data.photo.forEach((file) => {
-        formData.append("photo", file.originFileObj);
-      });
-      try {
-        const response = await axios.post(
-          "http://localhost:3002/api/post/add-post",
-          formData
-        );
-        console.log("Server Response:", response.data);
-      } catch (err) {
-        console.error("Error:", err);
-      }
-    };
+    // const sendPost = async (data) => {
+    //   const formData = new FormData();
+    //   for (let key in data) {
+    //     formData.append(key, data[key]);
+    //   }
+    //   data.photo.forEach((file) => {
+    //     formData.append("photo", file.originFileObj);
+    //   });
+    //   try {
+    //     const response = await axios.post(
+    //       "http://localhost:3002/api/post/add-post",
+    //       formData
+    //     );
+    //     console.log("Server Response:", response.data);
+    //   } catch (err) {
+    //     console.error("Error:", err);
+    //   }
+    // };
   };
   return (
     <>
@@ -120,7 +123,7 @@ export default function AddPost() {
               </Form.Item>
             </div>
           </Form>
-Ｆ
+
         <div>
           <form onSubmit={sendArticle}>
             <div className="">

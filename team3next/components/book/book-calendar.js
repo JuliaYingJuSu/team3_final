@@ -57,7 +57,7 @@ export default function BookCalendar({ now, onBookMonth, onBookDate }) {
           <table>
             <thead id="title1">
               <tr>
-                <th colspan={7} className="t-header">
+                <th colSpan={7} className="t-header">
                   {`${now.y} 年 ${now.m} 月`}
                 </th>
               </tr>
@@ -111,7 +111,7 @@ export default function BookCalendar({ now, onBookMonth, onBookDate }) {
           <table>
             <thead id="title2">
               <tr>
-                <th colspan={7} className="t-header">
+                <th colSpan={7} className="t-header">
                   {`${now.y} 年 ${now.m + 1} 月`}
                 </th>
               </tr>
