@@ -36,7 +36,7 @@ export default function UserInformation() {
         });
         setMyFoodTag(tags);
         //setFoodTag(r);
-        console.log({ tags });
+        // console.log({ tags });
       })
       .catch((ex) => {
         console.log(ex);
@@ -53,7 +53,7 @@ export default function UserInformation() {
   console.log(errors);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     try {
       const response = await axios.put(
         process.env.API_SERVER + `/api/user/update`,

@@ -133,7 +133,7 @@ export default function WhoCard({
                   {usercard.user_img ? (
                     <img
                       className="rounded-circle headshot-small img-thumbnail"
-                      src={usercard.user_img} // 顯示用戶頭像
+                      src={process.env.API_SERVER + `/img/${usercard.user_img}`} // 顯示用戶頭像
                       alt="大頭照"
                     />
                   ) : (

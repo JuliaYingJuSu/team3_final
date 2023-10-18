@@ -62,7 +62,7 @@ export default function WhoInfo() {
               </div>
               <div className="middle ms-5">
                 <img
-                  src={whoinfo.user_img}
+                  src={process.env.API_SERVER + `/img/${whoinfo.user_img}`}
                   alt="大頭照"
                   className="rounded-circle img-thumbnail headshot-big"
                 />

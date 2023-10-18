@@ -81,7 +81,7 @@ export default function MyArticle({ article }) {
                       {auth.user_img ? (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={auth.user_img}
+                          src={`http://localhost:3002/img/${auth.user_img}`}
                         ></img>
                       ) : (
                         <img
@@ -176,7 +176,7 @@ export default function MyArticle({ article }) {
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={v.user_img}
+                          src={`http://localhost:3002/img/${v.user_img}`}
                         ></img>
                       </Link>
                     </div>
