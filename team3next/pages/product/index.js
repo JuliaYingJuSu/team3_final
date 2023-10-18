@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
@@ -12,7 +12,7 @@ import Pagination from "@/components/product/pagination";
 import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
-// import ws from "ws";
+import ws from "ws";
 
 export default function index() {
   //資料用
@@ -29,7 +29,7 @@ export default function index() {
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
   const [items, setItems] = useState([]);
-  console.log(items);
+  // console.log(items);
 
   //重渲染頁面用
   const { run, setRun } = useContext(RunContext);
@@ -165,7 +165,10 @@ export default function index() {
 
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
+  console.log(msg);
   const [msgs, setMsgs] = useState([]);
+  console.log(msgs);
+
   let ws;
   useEffect(() => {
     ws = new WebSocket("ws://localhost:3002/ws");
@@ -193,8 +196,26 @@ export default function index() {
   }, []);
 
   function sendMsg() {
-    if (!ws) return;
-    ws.send(JSON.stringify({ constent: msg }));
+    console.log("進sendMsg");
+
+    // -------------------
+
+    // 錯誤訊息 "Uncaught TypeError: Cannot read properties of undefined (reading 'send')" 意味著在你的前端程式碼中，WebSocket 的連接 ws 是 undefined。這可能是因為在 sendMsg 函數被呼叫時，ws 變數尚未被正確初始化。
+
+    // 在你的程式碼中，ws 變數是在 useEffect 內部聲明的，並且只在 useEffect 的作用域內有效。這意味著在 sendMsg 函數中無法正確訪問到 ws。
+
+    // 為了解決這個問題，你可以將 ws 變數保存在 useRef 中，這樣它的作用域就不會受限於 useEffect 了。
+    // ---------------------
+
+    if (ws.readyState === 1) {
+      console.log("ws.readyState === 1");
+      ws.send(JSON.stringify({ type: "message", constent: msg }));
+    } else {
+      console.log("ws.readyState不等於 1");
+    }
+
+    // if (!ws) return;
+    // ws.send(JSON.stringify({ constent: msg }));
   }
   //------------------------------------------------
   return (
@@ -254,7 +275,7 @@ export default function index() {
       </div>
 
       <Navbar />
-      <div className="container">
+      <div className="container" style={{ paddingTop: "200px" }}>
         <Bread typeList={typeList} />
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
@@ -265,6 +286,7 @@ export default function index() {
                   <button className={styles.leftA + " btn"} type="button">
                     全部商品
                   </button>
+                  {/* <span className="icon-square"></span> */}
                 </a>
 
                 {data.rowsType &&
@@ -481,8 +503,8 @@ export default function index() {
                   " row d-flex justify-content-end align-items-center"
                 }
               >
-                {/* ---------------------------------------- */}
-                <div className="dropdown col-auto me-auto ">
+                {/* ------------------dropdown------------------- */}
+                {/* <div className="dropdown col-auto me-auto ">
                   <button
                     className={
                       styles.barBtn + " p-1 btn-small border-0 dropdown-toggle"
@@ -775,7 +797,8 @@ export default function index() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
+                {/* ------------------dropdown------------------- */}
 
                 <select
                   value={order}
@@ -818,7 +841,7 @@ export default function index() {
               >
                 共{data.rows?.length}項商品
               </div>
-              <div className="row mb-3 d-flex justify-content-start align-items-center">
+              <div className="row mb-3 d-flex justify-content-start align-items-center ">
                 {/* 卡片 */}
                 {/* {isLoading && <LoadingCard cards={8} />} */}
                 {currentItems?.map(
@@ -893,11 +916,14 @@ export default function index() {
                     );
                   }
                 )}
+              </div>
+              <div className="d-flex justify-content-center">
                 <Pagination
                   totalItems={data.rows?.length}
                   itemsPerPage={itemsPerPage}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
+                  dataRows={data.rows}
                 />
               </div>
             </div>

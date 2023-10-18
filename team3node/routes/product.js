@@ -62,7 +62,7 @@ productRouter.post("/", async (req, res) => {
       ? `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id LEFT JOIN product_item_detail ON product_item_detail.product_id = product.product_id WHERE showed_1st = 1 ${search} ${type} ${reqPrice} ${itemSearch} GROUP BY product.product_id ORDER BY ${orderCondition}`
       : `SELECT * FROM product JOIN product_img ON product.product_id=product_img.product_id JOIN product_type ON product.product_type_id = product_type.product_type_id JOIN product_type_list ON product.product_type_list_id = product_type_list.product_type_list_id WHERE showed_1st = 1 ${search} ${type} ${reqPrice} ORDER BY ${orderCondition}`;
 
-  console.log(sql);
+  // console.log(sql);
 
   const sqlType = `SELECT * FROM product_type`;
   const sqlTypeList = `SELECT * FROM product_type_list`;
