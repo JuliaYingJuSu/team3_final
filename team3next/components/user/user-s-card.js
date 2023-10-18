@@ -21,7 +21,7 @@ export default function UserSCard({author}) {
               </Link>
             </div>
             <div className="middle">
-              <Link className="fs16b text-dark" href="/user/user-my-article-i">
+              <Link className="fs16b text-dark" href={`/user/${author.user_id}/user-my-article-i/`}>
                 {author.nickname}
               </Link>
             </div>

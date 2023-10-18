@@ -172,7 +172,7 @@ export default function UserArticle({ userinfo }) {
                           src={v.user_img}></img>
                       </Link>
                     </div>
-                    <div className="me-auto mb-3">
+                    <div className="me-auto mb-3 text-start">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>

@@ -24,13 +24,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-mark-fill:before {
-  content: "\e91e";
-  color: #dc8b76;
-}
 .icon-mark:before {
-  content: "\e906";
+  content: "\e91e";
   color: #666;
+}
+.icon-mark-fill:before {
+  content: "\e906";
+  color: #dc8b76;;
 }
 .icon-heart:before {
   content: "\e915";
