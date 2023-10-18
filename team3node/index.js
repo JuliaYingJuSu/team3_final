@@ -19,6 +19,7 @@ import postRouter from "./routes/post.js";
 import productRouter from "./routes/product.js";
 import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
+import authRouter from "./routes/auth.js";
 import cartRouter from "./routes/cart.js";
 import { WebSocketServer } from "ws";
 import http from "http";
@@ -111,6 +112,7 @@ app.use("/api/book", bookRouter);
 app.use("/api/restaurant", verifyJWT, restaurantRouter);
 app.use("/api/cart", cartRouter);
 // app.use('/ws',wsRouter)
+app.use("/auth", authRouter);
 
 // GET - 得到所有會員資料
 app.get("/", async function (req, res) {
@@ -286,6 +288,11 @@ app.post("/member-login", async (req, res) => {
     res.json({ auth: false, message: "用戶不存在" });
     // 這邊是錯誤response
   }
+});
+
+app.post("/image-upload", upload.array("avatar"), async (req, res) => {
+  console.log(req.files);
+  res.json(req.files);
 });
 
 //**************其他路由放在這裡之前*********************
