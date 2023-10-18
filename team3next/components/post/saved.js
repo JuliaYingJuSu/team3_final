@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
-import { useRouter } from "next/router";
+import {useRouter } from "next/router";
 import axios from "axios";
 
 export default function Saved({ ifSave, post_id }) {

@@ -4,17 +4,25 @@ import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import productDetail from "../product/[pid]";
 import style from "@/pages/product/list.module.css";
+import { object } from "prop-types";
+import Link from "next/link";
+import { clearConfigCache } from "prettier";
+import { useRouter } from "next/router";
+
 // 想引入,but..........................
 // import selectAddress from "@/components/cart/select-address"
 
 export default function DelDetail() {
-  // 訂購人資訊 (初始化)
+  //  ------------------------------ 訂購人資訊 (初始化) ------------------------------
   const [purchaser, setPurchaser] = useState({
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
+    purchaserAddress: "",
+    receiveAddress: "",
   });
-
+  console.log(purchaser);
+  const router = useRouter();
   // useEffect(() => {
   //   fetch("http://localhost:3002/api/cart/del-detail")
   //     .then((r) => r.json())
@@ -24,24 +32,72 @@ export default function DelDetail() {
   //     });
   // }, []);
 
-  // 錯誤用初始狀態
+  // ------------------------------ 錯誤用初始狀態 ------------------------------
   const originErrors = {
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
+    purchaserPhone2: "",
   };
-  const [errors, setErrors] = useState(originErrors);
 
+  const [errors, setErrors] = useState(originErrors);
+  // console.log(errors);
   // 認証通過信號用
   const [isAuth, setIsAuth] = useState(false);
 
   // 所有欄位共用的事件處理函示
   const handleFieldChange = (e) => {
+    // e.target.name --> 選到你目前所在的輸入匡
     const newPurchaser = { ...purchaser, [e.target.name]: e.target.value };
 
     setPurchaser(newPurchaser);
   };
 
+  const aaa = (e) => {
+    const formData = new FormData(e.currentTarget);
+    const values = [...formData.values()];
+    console.log(formData);
+    console.log(values);
+    // formData.append("purchaserAddress", purchaser.purchaserAddress);
+    // console.log(purchaser);
+    // console.log(city);
+    // console.log(township);
+    // const inputData = purchaser.fromEntries(formData);
+    // console.log(inputData);
+
+    const getUserid = JSON.parse(localStorage.getItem("auth"));
+    const getUser = getUserid.user_id;
+    const getName = formData.get("receiveName");
+    const getPhone = formData.get("receivePhone");
+    // 指定從values中的第6個index開始取值, 返回新的陣列
+    // 在用join把陣列中的字串合併
+    const aaa = values.slice(6);
+    const bbb = aaa.join("");
+    const getCity = bbb;
+    console.log(getUser);
+
+    if (getUser) {
+      fetch("http://localhost:3002/api/cart/del-detail", {
+        method: "post",
+        body: JSON.stringify({
+          user_id: getUser,
+          delivery_name: getName,
+          delivery_phone: getPhone,
+          delivery_address: getCity,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((obj) => {
+          console.log(obj);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  };
   const handleSubmit = (e) => {
     //阻擋表單預設的送出行為
     e.preventDefault();
@@ -68,6 +124,17 @@ export default function DelDetail() {
         "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
       hasError = true;
     }
+    // 驗證電話號碼
+    if (!purchaser.purchaserPhone2) {
+      newErrors.purchaserPhone2 = "*請填寫電話號碼";
+      hasError = true;
+    }
+
+    if (!/09\d{8}/.test(purchaser.purchaserPhone2)) {
+      newErrors.purchaserPhone2 =
+        "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
+      hasError = true;
+    }
 
     if (!purchaser.purchaserEmail) {
       newErrors.purchaserEmail = "*請填寫電子信箱";
@@ -84,19 +151,21 @@ export default function DelDetail() {
 
     if (hasError) {
       setErrors(newErrors);
+
       return;
     }
-
+    aaa(e);
     // 認證通過
     setIsAuth(true);
   };
 
-  // --------------------------下拉式地址選單-----------------------------------------------
+  // --------------------------- 下拉式地址選單 ------------------------------
 
-  // 地址整理(縣市)
+  // --------------------------- 地址整理(縣市) ------------------------------
   const cityOptions = [
     "基隆市",
     "新北市",
+    "臺北市",
     "宜蘭縣",
     "新竹市",
     "新竹縣",
@@ -119,11 +188,17 @@ export default function DelDetail() {
   ];
 
   const [city, setCity] = useState("");
+  const [firstCity, setFirstCity] = useState("");
+
   const handleChange = (e) => {
     setCity(e.target.value);
   };
 
-  // 地址整理(鄉鎮市)
+  const handleFirstChange = (e) => {
+    setFirstCity(e.target.value);
+  };
+
+  // --------------------------- 地址整理(鄉鎮市) ---------------------------
   const townshipOptions = [
     [
       "200仁愛區",
@@ -164,6 +239,20 @@ export default function DelDetail() {
       "223石碇區",
       "232坪林區",
       "233烏來區",
+    ],
+    [
+      "100中正區",
+      "103大同區",
+      "104中山區",
+      "105松山區",
+      "106大安區",
+      "108萬華區",
+      "110信義區",
+      "111士林區",
+      "112北投區",
+      "114內湖區",
+      "115南港區",
+      "116文山區",
     ],
     [
       "261頭城鎮",
@@ -523,8 +612,11 @@ export default function DelDetail() {
     ],
   ];
 
-  // 宣告狀態
+  // --------------------------- 鄉鎮市宣告狀態 -----------------------------------
   const [township, setTownship] = useState("");
+  const [township2, setTownship2] = useState("");
+
+  // --------------------------- 地址資訊寫入資料庫 ----------------------------
 
   return (
     <>
@@ -713,13 +805,14 @@ export default function DelDetail() {
       {/* 訂購人資訊 */}
       <form
         className={styles.buyerinfo + " container mt-5 w-50"}
-        onSubmit={handleSubmit}
+        onSubmit={aaa}
       >
         <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
         <div className="row mt-3 mb-2">
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
           </label>
+          {/* 錯誤訊息 */}
           <div
             style={{
               color: "red",
@@ -730,6 +823,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
+              name="purchaserName"
               type="text"
               className={styles.inputframe + " purchaserName"}
               id="buyer"
@@ -754,10 +848,11 @@ export default function DelDetail() {
               fontSize: "13px",
             }}
           >
-            {errors.purchaserPhone}
+            {/* {errors.purchaserPhone} */}
           </span>
           <div className="col-12">
             <input
+              name="purchaserPhone"
               type="text"
               className={styles.inputframe + " purchaserPhone"}
               id="telnumber"
@@ -782,11 +877,14 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
+              name="purchaserEmail"
               type="text"
               className={styles.inputframe + " purchaserEmail"}
               id="email"
               placeholder=" 請輸入e-mail"
-              onChange={handleFieldChange}
+              onChange={(e) => {
+                handleFieldChange(e);
+              }}
             />
           </div>
         </div>
@@ -803,7 +901,7 @@ export default function DelDetail() {
             <select
               className={styles.selectbox}
               onChange={(e) => {
-                setCity(e.target.value);
+                setFirstCity(e.target.value);
               }}
             >
               <option value="">選擇縣市</option>
@@ -820,13 +918,13 @@ export default function DelDetail() {
             <select
               className={styles.selectbox}
               onChange={(e) => {
-                setTownship(e.target.value);
+                setTownship2(e.target.value);
               }}
-              value={township}
+              value={township2}
             >
               <option value="">請選擇鄉鎮區</option>
-              {city &&
-                townshipOptions[cityOptions.indexOf(city)].map((v, i) => {
+              {firstCity &&
+                townshipOptions[cityOptions.indexOf(firstCity)].map((v, i) => {
                   return (
                     <option key={i} value={v}>
                       {v}
@@ -838,6 +936,7 @@ export default function DelDetail() {
 
           <div className={styles.sortaddress2}>
             <input
+              name="purchaserAddress"
               type="text"
               className={styles.addressdetail}
               id="readdress"
@@ -864,9 +963,10 @@ export default function DelDetail() {
           <div className="col-12">
             <input
               type="text"
+              name="receiveName"
               className={styles.inputframe + " purchaserName"}
               id="buyer"
-              placeholder=" 請輸入姓名"
+              placeholder=" 請填寫真實姓名，以免無法取貨"
               autoFocus
               onChange={handleFieldChange}
             />
@@ -887,12 +987,14 @@ export default function DelDetail() {
               fontSize: "13px",
             }}
           >
-            {errors.purchaserPhone}
+            {errors.purchaserPhone2}
           </div>
           <div className="col-12">
             <input
               type="text"
-              className={styles.inputframe + " purchaserPhone"}
+              // name="receivePhone"
+              name="receivePhone"
+              className={styles.inputframe + " purchaserPhone2"}
               id="telnumber"
               placeholder=" 請輸入手機號碼"
               onChange={handleFieldChange}
@@ -910,6 +1012,7 @@ export default function DelDetail() {
           </label>
           <div className={styles.sortaddress}>
             <select
+              name="receiveCity"
               className={styles.selectbox}
               onChange={(e) => {
                 setCity(e.target.value);
@@ -927,6 +1030,7 @@ export default function DelDetail() {
           </div>
           <div className={styles.sortaddress + " me-3"}>
             <select
+              name="receiveCounty"
               className={styles.selectbox}
               onChange={(e) => {
                 setTownship(e.target.value);
@@ -947,6 +1051,7 @@ export default function DelDetail() {
 
           <div className={styles.sortaddress2}>
             <input
+              name="receiveAddress"
               type="text"
               className={styles.addressdetail}
               id="readdress"
@@ -983,8 +1088,9 @@ export default function DelDetail() {
           <a href="/cart">
             <button className="btn btn-middle mt-5 mb-5 me-3">修改訂單</button>
           </a>
-          <a href="/cart/pay-method">
-            <button className="btn btn-middle mt-5 mb-5 ms-3">
+          {/* <a href="/cart/pay-method"></a> */}
+          <a href="#">
+            <button className="btn btn-middle mt-5 mb-5 ms-3" type="submit">
               前往付款方式
             </button>
           </a>

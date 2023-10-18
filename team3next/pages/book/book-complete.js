@@ -22,7 +22,7 @@ export default function Index() {
         <title>食食嗑嗑-訂位完成</title>
       </Head>
       <Navbar></Navbar>
-      <div style={{ marginTop: "250px" }}></div>
+      <div style={{ marginTop: "225px" }}></div>
       <div className="container d-flex justify-content-center">
         <div style={{ width: "90%" }}>
           <BreadcrumbBookComplete
@@ -38,7 +38,10 @@ export default function Index() {
       </div>
 
       {/* 底下訂單資訊 */}
-      <div className="container w-50 d-flex border p-5 mb-5 justify-content-between">
+      <div
+        className="container w-50 d-flex border p-5 justify-content-between"
+        style={{ marginBottom: "200px" }}
+      >
         <div className="row justify-content-center w-50">
           <div className="col-sm-6 py-1">訂位日期</div>
           <div className="col-sm-6 py-1">

@@ -166,6 +166,16 @@ export default function productDetail() {
           });
       }
     }
+    Swal.fire({
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500,
+      position: "top",
+      width: "250px",
+      // height: "20px",
+      text: "已更新願望清單",
+      icon: "success",
+    });
   };
 
   //加入購物車
@@ -404,11 +414,16 @@ export default function productDetail() {
           </div>
         </div>
         <main className=" w-100 mt-4 ">
-          <div className={styles.productMain + " row"}>
+          <div
+            className={
+              styles.productMain + " row d-flex justify-content-around mb-5"
+            }
+          >
             <div
               className={
-                " col-12 col-sm-12 col-md-6  col-lg-6 col-xl-6 col-xxl-6 "
+                " col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 "
               }
+              style={{ maxWidth: "500px" }}
             >
               <Swiper
                 spaceBetween={50}
@@ -416,7 +431,9 @@ export default function productDetail() {
                 navigation={true}
                 modules={[Navigation]}
                 className="mySwiper"
-                style={{ "--swiper-navigation-color": "#3f4c5c" }}
+                style={{
+                  "--swiper-navigation-color": "#3f4c5c",
+                }}
               >
                 {data.rowsImgs?.map((v, i) => {
                   return (
@@ -589,7 +606,10 @@ export default function productDetail() {
                 navigation={true}
                 modules={[Navigation]}
                 className="mySwiper"
-                style={{ "--swiper-navigation-color": "#3f4c5c" }}
+                style={{
+                  "--swiper-navigation-color": "#3f4c5c",
+                  "--swiper-navigation-size": "18px",
+                }}
               >
                 {recommend &&
                   recommend.map((v, i) => {

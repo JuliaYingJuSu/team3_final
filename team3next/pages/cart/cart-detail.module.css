@@ -200,8 +200,18 @@
     font-weight: bold;
   }
 
-.minus{
+.trash{
+    cusor:pointer;
 }
 
+
+.chooseStore{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    background-color: #FBF9EF;
+    width: 400px;
+}
 
 

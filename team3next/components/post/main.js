@@ -13,7 +13,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
-
+  
+  //接收加入收藏資料庫資料
   useEffect(() => {
     if(auth && auth.token)
     fetch(process.env.API_SERVER + "/api/post/fav",{
@@ -27,6 +28,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       })
       .catch((ex) => console.log(ex));
   }, [auth]);
+
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")

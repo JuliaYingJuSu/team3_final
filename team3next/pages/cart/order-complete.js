@@ -4,9 +4,29 @@ import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
+import swal from "sweetalert2";
+import loadingLinePay from '@/components/cart/loading-linepay'
+
 
 export default function OrderComplete() {
   const [data, setData] = useState([]);
+//---------------- 做linePay Loading ---------------------
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+
+  const sweet = () => {
+    new swal({
+      title: "訂單已成立!",
+      text: "訂單詳細內容請至會員中心查詢",
+      icon: "success",
+      timer: 1500,
+    });
+  };
 
   useEffect(() => {
     fetch("http://localhost:3002/api/cart/order-complete")
@@ -204,7 +224,9 @@ export default function OrderComplete() {
       <div className="container text-center">
         {/* check文字 */}
         <div className="icon-check mt-4"></div>
+
         <div className="my-5 h5">謝謝您！您的訂單已經成立！</div>
+        <button onClick={sweet}> 送出</button>
       </div>
 
       {/* 底下訂單資訊 */}
@@ -217,7 +239,7 @@ export default function OrderComplete() {
             >
               <div className="row justify-content-center w-50">
                 <div className="col-sm-6 py-1">訂單號碼</div>
-                <div className="col-sm-6 py-1">{v.order_id}</div>
+                <div className="col-sm-6 py-1">{v.order_id.split("-")[0]}</div>
                 <div className="col-sm-6 py-1">訂單日期</div>
                 <div className="col-sm-6 py-1">{v.order_date}</div>
                 <div className="col-sm-6 py-1">配送方式</div>
@@ -231,12 +253,15 @@ export default function OrderComplete() {
               </div>
 
               <div className="row justify-content-center d-flex w-25">
-                <div className="col-12 col-sm-12 py-1">
+                <a
+                  href="http://localhost:3080/user/:user_id/my-order"
+                  className="col-12 col-sm-12 py-1"
+                >
                   <button className="btn btn-middle w-100">訂單詳情</button>
-                </div>
+                </a>
                 <div className="col-12 col-sm-12 py-1 justify-content-center d-flex">
                   <p>訂單金額 </p>
-                  <p>NT$320</p>
+                  <p>{"NT$" + v.order_amount}</p>
                 </div>
                 {/* <div className="col-6 col-sm-6 py-1"></div> */}
               </div>

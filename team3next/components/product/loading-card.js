@@ -5,7 +5,7 @@ import styles from "@/pages/product/index.module.css";
 import { MdOutlineImage } from "react-icons/md";
 
 export default function LoadingCard({ cards }) {
-  return Array({ cards })
+  return Array(cards)
     .fill(0)
     .map((items) => {
       return (
