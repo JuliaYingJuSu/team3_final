@@ -1,12 +1,55 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import styles from "./pay-method.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
-import secstyle from "./del-detail.module.css";
+import secstyle from "@/pages/cart/del-detail.module.css";
 import productDetail from "@/pages/product/[pid]";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function PayMethod() {
+  const [data, setData] = useState([]);
+  const [invoice, setInvoice] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("giveDog");
+  const options = [
+    { invoiceName: "愛貓協會(921314)", value: "giveCat " },
+    { invoiceName: "台灣流浪動物希望協會(119)", value: "giveDog" },
+  ];
+
+  const router = useRouter();
+  // console.log(data);
+  // const order_id = data.order_id;
+  // const order_id = "4354";
+  useEffect(() => {
+    if (router.isReady) {
+      // 1018 先註
+      // const oid = router.query.payMethod;
+
+      // console.log(oid);
+      // 因一開始使用, const oid = router.query.order_id; oid顯示undefined !
+      //router.asPath --> 可看現在router抓到的網址
+      // console.log(typeof oid);
+      // const oid = JSON.stringify(ooo);
+      //  1018 ----> `http://localhost:3002/api/cart/payMethod/${oid}`
+      fetch(`http://localhost:3002/api/cart/payMethod`, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((obj) => {
+          setData(obj);
+          console.log(obj);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+    // router好了, 就再重新run 一次
+  }, [router.isReady]);
+  console.log(data);
   return (
     <>
       <MyNavbar />
@@ -219,12 +262,14 @@ export default function PayMethod() {
             id="linePay"
             value="line"
           />
-          <label
-            className={styles.payFontt + " form-check-label mb-2"}
-            htmlFor="linePay"
-          >
-            LINE PAY
-          </label>
+          <a>
+            <label
+              className={styles.payFontt + " form-check-label mb-2"}
+              htmlFor="linePay"
+            >
+              LINE PAY
+            </label>
+          </a>
         </div>
 
         <div className="form-check">
@@ -246,7 +291,14 @@ export default function PayMethod() {
 
       {/* 發票資訊 */}
       <div className="container mt-4 w-50">
-        <p className={styles.pay + " pb-1"}>發票資訊</p>
+        <p
+          className={styles.pay + " pb-1"}
+          // onChange={(e) => {
+          //   setInvoice(e.target.value);
+          // }}
+        >
+          發票資訊
+        </p>
         <div className="form-check form-check-inline">
           <input
             className="form-check-input"
@@ -254,6 +306,23 @@ export default function PayMethod() {
             name="inlineRadioOptions"
             id="invoice1"
             value="cloudInvoice"
+            onChange={() => setInvoice(true)}
+          />
+          <label
+            className={styles.payFontt + " form-check-label"}
+            htmlFor="invoice1"
+          >
+            捐贈發票
+          </label>
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="invoice1"
+            value="cloudInvoice"
+            onChange={() => setInvoice(false)}
           />
           <label
             className={styles.payFontt + " form-check-label"}
@@ -263,21 +332,48 @@ export default function PayMethod() {
           </label>
         </div>
 
-        <div className="form-check form-check-inline">
+        {/* {invoice === true (  <>  
+    {options.map((options) => {
+            <div className="form-check" key={options.value}>
+              <input
+                className="form-check-input mt-2"
+                type="radio"
+                name="giveInvoice"
+                id="cat"
+                value={options.value}
+                checked={setSelectedValue === options.value}
+              />
+              <label
+                className={styles.payFontt + " form-check-label mb-2 mt-2"}
+                htmlFor="cat"
+              >
+                {options.invoiceName}
+              </label>
+            </div>;
+        })
+        })
+        </> 
+        } */}
+
+        {/* {invoice === true && (
+      
+        )}
+
+        <div className="form-check">
           <input
-            className="form-check-input"
+            className="form-check-input mt-2"
             type="radio"
-            name="inlineRadioOptions"
-            id="invoice1"
-            value="cloudInvoice"
+            name="giveInvoice"
+            id="dog"
+            value="giveDog"
           />
           <label
-            className={styles.payFontt + " form-check-label"}
-            htmlFor="invoice1"
+            className={styles.payFontt + " form-check-label mt-1"}
+            htmlFor="dog"
           >
-            捐贈發票
+            台灣流浪動物希望協會 (119)
           </label>
-        </div>
+        </div> */}
       </div>
 
       <div className="form-check container d-flex justify-content-center my-5 fs14">
@@ -301,7 +397,9 @@ export default function PayMethod() {
       </div>
 
       <div className="container d-flex justify-content-center my-5">
-        <button className="btn btn-middle">前往結帳</button>
+        <Link href={data}>
+          <button className="btn btn-middle">前往結帳</button>
+        </Link>
       </div>
       <Footer />
     </>

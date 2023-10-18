@@ -9,3 +9,8 @@
  
 }
 
+.invoiceOut {
+    display: inline-block;
+    margin-right: 10px; /* 設定適當的右邊距，以分隔不同的 radio 選項 */
+    padding-top: 10px;
+  }

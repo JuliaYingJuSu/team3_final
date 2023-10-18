@@ -225,7 +225,7 @@ export default function PostModal({
                   <div className="mb-3" key={index}>
                     {paragraph}
                   </div>
-                ))}{" "}
+                ))}
               </div>
               <p className="icon-tag">
                 {uniqueFoodTags.map((foodTag, index) => (
