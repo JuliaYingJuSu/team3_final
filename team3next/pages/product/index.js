@@ -59,7 +59,7 @@ export default function index() {
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = data.rows?.slice(firstItemIndex, lastItemIndex);
 
-  const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
+  // const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   // console.log(uid);
 
   // 取資料
@@ -67,7 +67,9 @@ export default function index() {
     fetch("http://localhost:3002/api/product", {
       method: "POST",
       body: JSON.stringify({
-        uid: JSON.parse(localStorage.getItem("auth")).user_id,
+        uid: localStorage.getItem("auth")
+          ? JSON.parse(localStorage.getItem("auth")).user_id
+          : "",
         // uid: uid,
         order: order,
         search: search,
@@ -163,6 +165,27 @@ export default function index() {
           console.log(r); //true
           if (r) {
             // location.reload();
+
+            Swal.fire({
+              toast: true,
+              // className: "yyy",
+              // backdrop: "false",
+              showConfirmButton: false,
+              timer: 1500,
+              position: "top",
+              width: "250px",
+              // height: "20px",
+              text: "已更新願望清單",
+              icon: "success",
+              // padding: "0px",
+
+              // showCancelButton: true,
+              // cancelButtonText:
+              //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+              // confirmButtonText:
+              //   '<i class="far fa-check-circle fs-5"></i> 放棄',
+            });
+
             setRun(!run);
           }
         })
@@ -476,6 +499,9 @@ export default function index() {
                       color: "#3f4c5c",
                       marginLeft: "5px",
                       cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setPrice([]);
                     }}
                   >
                     清除

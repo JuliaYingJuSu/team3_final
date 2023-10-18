@@ -12,7 +12,7 @@ export default function ProductComment({ product }) {
   const [hover, setHover] = useState(0);
   const [score, setScore] = useState(0);
   const { run, setRun } = useContext(RunContext);
-  console.log(score);
+  // console.log(score);
 
   const handleClose = async () => {
     setContent("");
