@@ -13,13 +13,22 @@ import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
+import Swal from "sweetalert2";
 
 export default function index() {
   //資料用
   const [data, setData] = useState([]);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
+  const [inputText, setInputText] = useState("");
   const [search, setSearch] = useState("");
+  console.log(search);
+
+  //打開篩到注音關掉backspace不同步
+  // useEffect(() => {
+  //   setSearch(inputText);
+  // }, [inputText]);
+
   const [type, setType] = useState("");
   const [typeList, setTypeList] = useState("");
   //篩選用
@@ -38,7 +47,7 @@ export default function index() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1500);
   }, []);
 
   // console.log(run);
@@ -228,7 +237,7 @@ export default function index() {
         aria-controls="offcanvasBottom"
         style={{ position: "absolute", right: "0px", bottom: "300px" }}
       >
-        Toggle bottom offcanvas
+        找小編
       </button>
 
       <div
@@ -266,6 +275,8 @@ export default function index() {
           <button
             className="btn btn-warning"
             onClick={() => {
+              console.log("進sendMsg");
+
               sendMsg();
             }}
           >
@@ -275,7 +286,7 @@ export default function index() {
       </div>
 
       <Navbar />
-      <div className="container" style={{ paddingTop: "200px" }}>
+      <div className="container" style={{ paddingTop: "225px" }}>
         <Bread typeList={typeList} />
         <div className="w-100 d-flex mb-3">
           <main className="w-100 d-flex">
@@ -504,6 +515,7 @@ export default function index() {
                 }
               >
                 {/* ------------------dropdown------------------- */}
+
                 {/* <div className="dropdown col-auto me-auto ">
                   <button
                     className={
@@ -798,8 +810,47 @@ export default function index() {
                     </div>
                   </div>
                 </div> */}
-                {/* ------------------dropdown------------------- */}
 
+                {/* ------------------dropdown------------------- */}
+                <span
+                  className="me-auto"
+                  style={{
+                    color: "#666666",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    width: "auto",
+                  }}
+                >
+                  共{data.rows?.length}項商品
+                </span>
+                <form class="col-auto d-flex " role="search">
+                  <input
+                    class="form-control me-1"
+                    type="text"
+                    placeholder="搜尋"
+                    aria-label="Search"
+                    value={inputText}
+                    onChange={(e) => {
+                      setInputText(e.target.value);
+                    }}
+                    onCompositionEnd={(e) => {
+                      setSearch(inputText);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key == "Backspace") {
+                        setSearch(e.target.value);
+                        // setInputText(e.target.value); //同步但篩到注音
+                      }
+                    }}
+                  />
+                  {/* <button
+                    class="btn icon-search"
+                    onClick={(e) => {
+                      setSearch(inputText);
+                    }}
+                  ></button> */}
+                  {/* type="submit" */}
+                </form>
                 <select
                   value={order}
                   onChange={(e) => {
@@ -812,39 +863,106 @@ export default function index() {
                   <option value="pHigh">價格高到低</option>
                   <option value="pLow">價格低到高</option>
                 </select>
-                <form class="col-auto d-flex " role="search">
-                  <input
-                    class="form-control me-1"
-                    type="text"
-                    placeholder="搜尋"
-                    aria-label="Search"
-                    value={search}
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                    }}
-                  />
-                  {/* <button
-                    class="btn icon-search"
-                    onClick={(e) => {
-                      setSearch(inputText);
-                    }}
-                  ></button> */}
-                  {/* type="submit" */}
-                </form>
               </div>
-              <div
-                style={{
-                  color: "#666666",
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                }}
-              >
-                共{data.rows?.length}項商品
-              </div>
+
               <div className="row mb-3 d-flex justify-content-start align-items-center ">
                 {/* 卡片 */}
-                {/* {isLoading && <LoadingCard cards={8} />} */}
-                {currentItems?.map(
+                {isLoading ? (
+                  <LoadingCard cards={8} />
+                ) : (
+                  currentItems?.map(
+                    (
+                      {
+                        product_id,
+                        product_name,
+                        price,
+                        product_description,
+                        specification,
+                        product_type_id,
+                        product_type_list_id,
+                        isValid,
+                        product_img_id,
+                        product_img,
+                        showed_1st,
+                      },
+                      i
+                    ) => {
+                      return (
+                        <div
+                          key={product_id}
+                          className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                        >
+                          <div className={styles.cardP}>
+                            <div className={styles.imgBox}>
+                              <Link href={`/product/${product_id}`}>
+                                <img
+                                  src={"images/product/" + product_img}
+                                  alt=""
+                                  className="w-100 h-100 object-fit-cover "
+                                />
+                              </Link>
+                            </div>
+                            <div
+                              className={
+                                styles.contentBox +
+                                " px-2 w-100 d-flex justify-content-between pt-2 pb-1 align-items-start"
+                              }
+                            >
+                              <Link
+                                href={"/product/" + product_id}
+                                className={styles.mylink + " fs16b"}
+                              >
+                                <span>{product_name}</span>
+                              </Link>
+
+                              <span
+                                className={
+                                  wish.includes(product_id)
+                                    ? " icon-mark-fill" + " pt-1"
+                                    : " icon-mark" + " pt-1"
+                                }
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  Swal.fire({
+                                    toast: true,
+                                    // className: "yyy",
+                                    // backdrop: "false",
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    position: "top",
+                                    width: "250px",
+                                    // height: "20px",
+                                    text: "已更新願望清單",
+                                    icon: "success",
+                                    // padding: "0px",
+
+                                    // showCancelButton: true,
+                                    // cancelButtonText:
+                                    //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                                    // confirmButtonText:
+                                    //   '<i class="far fa-check-circle fs-5"></i> 放棄',
+                                  });
+                                  handleWish(product_id);
+                                }}
+                              ></span>
+                            </div>
+                            <div
+                              style={{ color: "#666666" }}
+                              className={
+                                styles.contentBox +
+                                " px-2 w-100 d-flex justify-content-between pt-1 pb-1"
+                              }
+                            >
+                              <span>{"NT$" + price}</span>
+                              <span className="icon-cark"></span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )
+                )}
+                {/* {currentItems?.map(
                   (
                     {
                       product_id,
@@ -897,6 +1015,25 @@ export default function index() {
                               }
                               style={{ cursor: "pointer" }}
                               onClick={() => {
+                                Swal.fire({
+                                  toast: true,
+                                  // className: "yyy",
+                                  // backdrop: "false",
+                                  showConfirmButton: false,
+                                  timer: 1500,
+                                  position: "top",
+                                  width: "250px",
+                                  // height: "20px",
+                                  text: "已更新願望清單",
+                                  icon: "success",
+                                  // padding: "0px",
+
+                                  // showCancelButton: true,
+                                  // cancelButtonText:
+                                  //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                                  // confirmButtonText:
+                                  //   '<i class="far fa-check-circle fs-5"></i> 放棄',
+                                });
                                 handleWish(product_id);
                               }}
                             ></span>
@@ -915,7 +1052,7 @@ export default function index() {
                       </div>
                     );
                   }
-                )}
+                )} */}
               </div>
               <div className="d-flex justify-content-center">
                 <Pagination
@@ -932,6 +1069,14 @@ export default function index() {
       </div>
 
       <Footer />
+      <style jsx>
+        {`
+          .yyy {
+            fontsize: 10px !important;
+            background: red;
+          }
+        `}
+      </style>
     </>
   );
 }

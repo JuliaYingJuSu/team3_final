@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "../order-d.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
@@ -6,8 +6,12 @@ import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import ProductComment from "@/components/cart/product-comment";
 import { useRouter } from "next/router";
+import RunContext from "@/hooks/RunContext";
 
 export default function OrderComplete() {
+  const { run, setRun } = useContext(RunContext);
+  console.log(run);
+
   const [data, setData] = useState([]);
   const router = useRouter();
   console.log(data);
@@ -36,7 +40,7 @@ export default function OrderComplete() {
         });
     }
     // router好了, 就再重新run 一次
-  }, [router.isReady]);
+  }, [router.isReady, run]);
 
   // 計算訂單總件數
   // 使用物件來統計相同 order_id 的 order_quantity 總和
