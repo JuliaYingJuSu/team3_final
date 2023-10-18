@@ -20,7 +20,7 @@ export default function UserMyArticleI() {
       .then((r) => r.json())
       .then((r) => {
         setUserImgMyCard(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);

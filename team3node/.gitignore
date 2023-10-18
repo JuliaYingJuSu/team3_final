@@ -3,3 +3,4 @@ tmp_uploads
 node_modules
 img
 .vscode
+.env

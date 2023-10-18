@@ -13,7 +13,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -25,17 +24,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-mark:before {
-  content: "\e906";
-  color: #dc8b76;
-}
 .icon-mark-fill:before {
   content: "\e91e";
-  color: #666;
-}
-.icon-heart-fill:before {
-  content: "\e917";
   color: #dc8b76;
+}
+.icon-mark:before {
+  content: "\e906";
+  color: #666;
 }
 .icon-heart:before {
   content: "\e915";
@@ -106,7 +101,7 @@
 }
 .icon-square:before {
   content: "\e916";
-  color: #ebd8a9;
+  color: #3f4c5c;
 }
 .icon-arrow-big-left:before {
   content: "\e918";
@@ -163,4 +158,19 @@
 }
 .icon-minus:before {
   content: "\ea0b";
+}
+.icon-square:hover::before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list:hover::before {
+  content: "\e91d";
+  color: #ebd8a9;}
+.icon-square-active:before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list-active:before {
+  content: "\e91d";
+  color: #ebd8a9;
 }

@@ -203,12 +203,17 @@ restaurantRouter.put(
       console.error("路由处理错误:", err);
       output.errors = "路由处理错误";
       output.err = err;
-      res.status(500).json(output); // 
+      res.status(500).json(output); //
     }
   }
 );
-// restaurantRouter.post("/image-upload",upload.single("image"),async (req,res) =>{
-//   console.log(req.file)
-// })
+restaurantRouter.post(
+  "/image-upload",
+  upload.array("avatar"),
+  async (req, res) => {
+    console.log(req.files);
+    res.json(req.files);
+  }
+);
 
 export default restaurantRouter;
