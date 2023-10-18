@@ -18,7 +18,7 @@ export default function WhoPictureCard({ userinfo }) {
             className={Styles.imgStyle}></img>
           <span
             className="icon-multi position-absolute z-1 fs-4 top-50"
-            style={{ right: 20, marginTop: 155 }}></span>
+            style={{ right: 15, marginTop: 145 }}></span>
         </a>
       </p>
       <div>
