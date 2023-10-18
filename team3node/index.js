@@ -316,6 +316,7 @@ wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
+    console.log("前端來的");
     console.log("received: %s", JSON.parse(data));
   });
 

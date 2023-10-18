@@ -45,7 +45,13 @@ export default function Index() {
           return item;
         });
 
-        dataWithFirstImages.sort((a, b) => b.restaurant_id - a.restaurant_id);
+        for (let i = dataWithFirstImages.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [dataWithFirstImages[i], dataWithFirstImages[j]] = [
+            dataWithFirstImages[j],
+            dataWithFirstImages[i],
+          ];
+        }
 
         setData(dataWithFirstImages);
         setDisplayData(dataWithFirstImages);

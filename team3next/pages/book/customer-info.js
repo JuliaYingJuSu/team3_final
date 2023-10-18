@@ -6,6 +6,7 @@ import BreadcrumbCustomerInfo from "@/components/book/breadcrumb-customerInfo";
 import { useRouter } from "next/router";
 import AuthContext from "@/hooks/AuthContext";
 import { useEffect, useState, useContext, Component } from "react";
+import Swal from "sweetalert2";
 
 export default function Index() {
   //useState
@@ -82,7 +83,15 @@ export default function Index() {
 
       if (response.ok) {
         // 處理成功的情況，例如轉向訂位成功頁面
-        router.push(`/book/book-complete?${queryString}`);
+        Swal.fire({
+          icon: "success",
+          title: "訂位已送出",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          router.push(`/book/book-complete?${queryString}`);
+        }, 2000);
       } else {
         // 處理錯誤的情況，例如顯示錯誤訊息
         console.error("訂位失敗");
