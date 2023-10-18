@@ -31,7 +31,7 @@ export default function Index() {
           />
         </div>
       </div>
-      <div className="container text-center">
+      <div className="container text-center mt-5">
         {/* check文字 */}
         <div className="icon-check my-4"></div>
         <div className="my-5 h5">謝謝您！您的訂位已經成立！</div>
