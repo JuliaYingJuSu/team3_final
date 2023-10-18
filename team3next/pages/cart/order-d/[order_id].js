@@ -15,7 +15,7 @@ export default function OrderComplete() {
   // const order_id = "4354";
   useEffect(() => {
     if (router.isReady) {
-      const oid = router.query.order_id;
+      const oid = router.query.order_id.split("-")[0];
 
       fetch(`http://localhost:3002/api/cart/order-d/${oid}`, {
         method: "get",
@@ -221,6 +221,7 @@ export default function OrderComplete() {
       <div className="container d-flex flex-column my-5">
         <div className={styles.secondBox + " text-center py-4"}>
           <p className="m-0">
+            {/* 合計：NT${data.result && data.result[0].order_amount} */}
             合計：NT${data.result && data.result[0].order_amount}
           </p>
           <p className="m-0 pt-2">購物車(4件)</p>
@@ -256,7 +257,7 @@ export default function OrderComplete() {
                     <td className={styles.imgWidth + " w-20"}>
                       <img
                         className="img-fluid rounded-1"
-                        src={"images/product/" + "42.jpg"}
+                        src={"http://localhost:3080/images/product/" + "42.jpg"}
                         alt=""
                       />
                     </td>
@@ -275,7 +276,7 @@ export default function OrderComplete() {
                       {v.price * v.order_quantity}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
-                      {<ProductComment product={v} />}
+                    {<ProductComment product={v} />}
                     </td>
                   </tr>
                 </>
@@ -300,7 +301,7 @@ export default function OrderComplete() {
                 訂單號碼：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                {data.result && data.result[0].order_id}
+                {data.result && data.result[0].order_id.split("-")[0]}
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 訂單郵件：
@@ -372,6 +373,12 @@ export default function OrderComplete() {
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 田嘉瑞
+              </div>
+              <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
+                收件人電話號碼：
+              </div>
+              <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
+                0972051835
               </div>
               {/* 強迫col換行 */}
               {/* <div class="w-100"></div> */}
