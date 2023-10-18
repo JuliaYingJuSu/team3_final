@@ -118,7 +118,7 @@ export default function Index() {
         <title>食食嗑嗑-餐廳搜尋</title>
       </Head>
       <Navbar></Navbar>
-      <div className="container" style={{ marginTop: "250px" }}>
+      <div className="container" style={{ marginTop: "225px" }}>
         <BreadcrumbIndex></BreadcrumbIndex>
       </div>
       <div className="w-100 h400 d-flex justify-content-center align-items-end banner mt-5">
@@ -231,13 +231,6 @@ export default function Index() {
           className="btn btn-sm tags"
           onClick={handleTagSelect}
         >
-          美式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
           泰式
         </button>
         <button
@@ -274,6 +267,13 @@ export default function Index() {
           onClick={handleTagSelect}
         >
           晚餐
+        </button>
+        <button
+          type="button"
+          className="btn btn-sm tags"
+          onClick={handleTagSelect}
+        >
+          素食
         </button>
         <button
           type="button"
