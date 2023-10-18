@@ -5,9 +5,20 @@ import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import swal from "sweetalert2";
+import loadingLinePay from '@/components/cart/loading-linepay'
+
 
 export default function OrderComplete() {
   const [data, setData] = useState([]);
+//---------------- 做linePay Loading ---------------------
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+
   const sweet = () => {
     new swal({
       title: "訂單已成立!",

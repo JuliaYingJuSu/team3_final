@@ -313,8 +313,8 @@ cartRouter
     res.render("checkout", { order });
   });
 
-// create order--- 1. 建立order 2. 呼叫line pay request API 3. 取得付款連結, 給user做後需付款動作
-// 建立訂單給付款連結(尚未付款) res會拿到付款連結
+// create order--- 1. 建立order 2. 建立訂單給付款連結(尚未付款) 傳送line pay request API res會拿到付款連結 3. 取得付款連結, 給user做後需付款動作
+
 // 確認付款連結應如何呈現給user, ex: button / 直接轉址導到該頁面(無須button)
 // 若用button, 需要一個頁面呈現 按下create-order這api
 // 跑loading, 等api完成, get response 是事件監聽, 若有值進去, 就轉導
@@ -426,9 +426,12 @@ cartRouter.get("/payMethod", async (req, res) => {
 
     // 格式化 packages 1-1
     function formatData(result) {
+      const b = toString(result[0].order_date);
+      console.log(b);
       return [
         {
-          id: result[0].order_id,
+          id: b,
+          // id: result[0].order_id,
           amount: result[0].order_amount,
           products: [
             {
@@ -452,14 +455,15 @@ cartRouter.get("/payMethod", async (req, res) => {
       env: "development",
     });
 
-    const b = toString(result[0].order_date);
-    console.log(typeof b);
+    // 1018 -change orderId  & product_id
+    // const b = result[0].order_date;
+    // console.log(b);
     const toLine = await linePayClient.request.send({
       // body: req,
       body: {
         amount: result[0].order_amount,
         currency: "TWD",
-        orderId: b,
+        orderId: result[0].order_id,
         // 原本ok的 orderId: result[0].linpay,
         packages: formattedData,
         redirectUrls: {
@@ -470,7 +474,7 @@ cartRouter.get("/payMethod", async (req, res) => {
           // confirmUrl: "http:localhost:3080/cart",
           // cancelUrl: "http:localhost:3080/cart",
           // 1018 --> "http:localhost:3080/cart/order-complete"
-          confirmUrl: "linePay/confirm",
+          confirmUrl: "http:localhost:3080/cart/order-complete",
           cancelUrl: "linePay/cancel",
         },
       },
@@ -485,6 +489,11 @@ cartRouter.get("/payMethod", async (req, res) => {
       res.json(aaa);
       // console.log(webPaymentUrl);
     }
+
+
+// 1018
+const trans = toLine?.body?.info?.transactionId
+console.log(trans)
 
     // solution3
 
@@ -503,8 +512,9 @@ cartRouter.get("/payMethod", async (req, res) => {
   }
 });
 
+
 // 這段有需要嗎？
-cartRouter.get("/linePay/confirm", (req, res) => {
+cartRouter.get("http:localhost:3080/cart/order-complete", (req, res) => {
   const { transactionId, orderId } = req.query;
   console.log(transactionId, orderId);
   res.end();
@@ -519,11 +529,24 @@ cartRouter.get("/linePay/confirm", (req, res) => {
 //     body: {
 //       currency: "TWD",
 //       // amount需要查資料庫的訂單
-//       amount: 1000,
+//       amount: result[0].order_amount,
 //     },
 //   });
 //   console.log(util.inspect(res, { depth: Infinity, colors: true }));
 // } catch (e) {
 //   console.log("error", e);
 // }
+
+
+// -------------------------------- 7-11 ----------------------------------------
+const callback_url = process.env.SHIP_711_STORE_CALLBACK_URL;
+
+// POST
+cartRouter.post("/711", function (req, res, next) {
+  console.log(callback_url)
+  //console.log(req.body)
+  let searchParams = new URLSearchParams(req.body);
+  res.redirect(callback_url + "?" + searchParams.toString());
+});
+
 export default cartRouter;
