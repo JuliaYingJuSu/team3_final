@@ -26,9 +26,8 @@ export default function App() {
       theme: "outline",
       size: "large",
     });
-    google.accounts.id.prompt()
+    google.accounts.id.prompt();
   }, []);
-
 
   return (
     <>
@@ -40,7 +39,11 @@ export default function App() {
           <h3>{user.name}</h3>
         </div>
       )}
-      {user.email ? <button onClick={handleSignOut}>Sign Out</button> : <button>Sign In</button>}
+      {user.email ? (
+        <button onClick={handleSignOut}>Sign Out</button>
+      ) : (
+        <button>Sign In</button>
+      )}
     </>
   );
 }

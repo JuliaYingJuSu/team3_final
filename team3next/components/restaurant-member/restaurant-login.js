@@ -18,7 +18,8 @@ import { headers } from "@/next.config";
 export default function RestaurantLogin() {
   const router = useRouter();
   const [inputType, setInputType] = useState("password");
-  const { memberAuth, setMemberAuth } = useMemberAuthContext();
+  const { memberAuth, setMemberAuth, googleAuth, setGoogleAuth } =
+    useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
   axios.defaults.withCredentials = true;
   // const authCheck = async () => {
@@ -39,13 +40,33 @@ export default function RestaurantLogin() {
       router.push(`/restaurant-member/member-login`);
     }
   }, []);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
+  // const redirectToGoogle = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3002/member-login",
+  //       data
+  //     );
+  //     console.log("Server Response for google:", response.data);
 
+  //     localStorage.setItem("googleToken", JSON.stringify(response.data));
+  //     // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
+  //     setGoogleAuth(response.data);
+  //     // 在這裡把登入時獲得的response token設定為auth;
+  //     router.push("http://localhost:3002/auth/google");
+  //     // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //     setLoginState(false);
+  //   }
+  // };
+  // // google
   const onSubmit = async (data) => {
     // console.log(data);
     try {
@@ -178,7 +199,9 @@ export default function RestaurantLogin() {
                 <div className="row mb-2 mt-3">
                   <div className="col-sm-12 text-start">
                     <div className="d-flex justify-content-center">
-                      <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
+                      <Link href="http://localhost:3002/auth/google">
+                        <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
+                      </Link>
                     </div>
                   </div>
                 </div>

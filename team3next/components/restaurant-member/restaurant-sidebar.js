@@ -103,7 +103,7 @@ export default function RestaurantSidebar() {
           type="button"
           className="btn d-flex justify-content-center px-4 mb-3"
         >
-          <div className="d-flex justify-content-between w-100">
+          <div className="d-flex justify-content-center w-100">
             <div
               className="option justify-content-center"
               style={{ width: "140px" }}

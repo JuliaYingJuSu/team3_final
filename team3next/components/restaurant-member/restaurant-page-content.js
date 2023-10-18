@@ -8,7 +8,7 @@ import { FormItem } from "react-hook-form-antd";
 import CitySelector from "./form-component/city-selector";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
 
@@ -56,11 +56,12 @@ export default function PageContent() {
 
     // 將表單的name加到formdata,因為rhf的data是obj，可以這麼做
     formData.append("name", data.name);
+    formData.append("phone", data.phone);
     formData.append("city", data.city);
     formData.append("district", data.district);
     formData.append("address", data.address);
     formData.append("opening", data.opening);
-    formData.append("discription", data.discription);
+    formData.append("description", data.description);
     // 添加檔到 FormData，其中 "photo" 是欄位名稱
     // 拆解到只剩下file
     data.photo.forEach((file) => {
@@ -69,8 +70,8 @@ export default function PageContent() {
     // console.log(data.photo[0].originFileObj);
 
     try {
-      const response = await axios.post(
-        "http://localhost:3002/member-register",
+      const response = await axios.put(
+        "http://localhost:3002/api/restaurant/member-page-content-update",
         formData,
         {
           headers: {
@@ -79,6 +80,11 @@ export default function PageContent() {
         }
       );
       console.log("Server Response:", response.data);
+      Swal.fire({
+        icon: "success",
+        title: "修改成功",
+        text: "已成功修改資料",
+      });
     } catch (err) {
       console.error("Error:", err);
     }

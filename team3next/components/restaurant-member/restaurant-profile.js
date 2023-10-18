@@ -72,6 +72,11 @@ export default function Profile() {
         }
       );
       console.log("Updated Response:", response.data);
+      Swal.fire({
+        icon: "success",
+        title: "修改成功",
+        text: "已成功修改資料",
+      });
     } catch (err) {
       console.error("Error:", err);
     }

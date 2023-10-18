@@ -20,6 +20,10 @@ import productRouter from "./routes/product.js";
 import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
 import authRouter from "./routes/auth.js";
+import passport from "./config/passport-setup.js";
+import passportSetup from "./config/passport-setup.js";
+// 最早為了authrouter裡的第一個路由就導入了，#8
+import cookieSession from "cookie-session";
 import cartRouter from "./routes/cart.js";
 import { WebSocketServer } from "ws";
 import http from "http";
@@ -45,18 +49,30 @@ const corsOptions = {
 
 // *** 放在頂層 middlewares ***先檢查
 app.use(cors(corsOptions));
+// app.use(
+//   session({
+//     // 新用戶沒有使用到 session 物件時不會建立 session 和發送 cookie
+//     saveUninitialized: false,
+//     resave: false, // 沒變更內容是否強制回存
+//     secret: "123456789",
+//     store: sessionStore, //session資料儲存
+//     cookie: {
+//       maxAge: 600000,
+//     },
+//   })
+// );
+
 app.use(
-  session({
-    // 新用戶沒有使用到 session 物件時不會建立 session 和發送 cookie
-    saveUninitialized: false,
-    resave: false, // 沒變更內容是否強制回存
-    secret: "123456789",
-    store: sessionStore, //session資料儲存
-    cookie: {
-      maxAge: 600000,
-    },
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: ["prettysafekeyasjdkasjdkajsdkajd"],
   })
 );
+// 生成供客戶端使用的cookie(google login);
+
+app.use(passport.initialize());
+app.use(passport.session());
+// 通行證初始化(google login);
 
 //將URL轉成JSON格式
 app.use(express.urlencoded({ extended: false }));
