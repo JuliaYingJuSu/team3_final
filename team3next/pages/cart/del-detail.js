@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styles from "./del-detail.module.css";
+import styles from "@/pages/cart/del-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import productDetail from "../product/[pid]";
@@ -92,11 +92,15 @@ export default function DelDetail() {
         .then((r) => r.json())
         .then((obj) => {
           console.log(obj);
+           // 資料寫入成功，進行轉址
+          window.location.href = "http://localhost:3080/cart/payMethod";
         })
         .catch((ex) => {
           console.log(ex);
         });
+
     }
+  
   };
   const handleSubmit = (e) => {
     //阻擋表單預設的送出行為
@@ -156,6 +160,8 @@ export default function DelDetail() {
     }
     aaa(e);
     // 認證通過
+
+    
     setIsAuth(true);
   };
 
@@ -1085,15 +1091,17 @@ export default function DelDetail() {
         </div>
 
         <div className="container d-flex justify-content-center">
-          <a href="/cart">
+         
             <button className="btn btn-middle mt-5 mb-5 me-3">修改訂單</button>
-          </a>
+            {/* onClick={()=>{
+            window.location.href = " "
+          }} */}
           {/* <a href="/cart/pay-method"></a> */}
-          <a href="#">
+         <a href="http://localhost:3080/cart/payMethod">
             <button className="btn btn-middle mt-5 mb-5 ms-3" type="submit">
               前往付款方式
             </button>
-          </a>
+       </a>
         </div>
       </form>
 

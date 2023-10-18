@@ -228,7 +228,7 @@ export default function OrderComplete() {
             {/* 合計：NT${data.result && data.result[0].order_amount} */}
             合計：NT${data.result && data.result[0].order_amount}
           </p>
-          <p className="m-0 pt-2">購物車(4件)</p>
+          <p className="m-0 pt-2">購物車(1件)</p>
         </div>
 
         {/* 訂單細項 */}
@@ -261,7 +261,7 @@ export default function OrderComplete() {
                     <td className={styles.imgWidth + " w-20"}>
                       <img
                         className="img-fluid rounded-1"
-                        src={"http://localhost:3080/images/product/" + "42.jpg"}
+                        src={"http://localhost:3080/images/product/" + v.product_img}
                         alt=""
                       />
                     </td>
@@ -291,7 +291,8 @@ export default function OrderComplete() {
 
         {/* 計算 */}
         <div className={styles.totalBox + " text-end"}>
-          <p>小計NT$320</p>
+        {/* {`小計NT$` + data.price * data.order_quantity } */}
+          <p>小計NT$250</p>
           <p>運費NT$60</p>
           <p>合計NT$380</p>
         </div>

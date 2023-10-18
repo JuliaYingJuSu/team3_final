@@ -61,7 +61,7 @@ cartRouter.get("/my-order", async (req, res) => {
     rows: [],
   };
 
-  const sql = `SELECT * FROM order_general WHERE user_id = 36 ORDER BY order_date DESC `;
+  const sql = `SELECT * FROM order_general WHERE user_id = 22 ORDER BY order_date DESC `;
   const [rows] = await db.query(sql);
   for (let r of rows) {
     r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
@@ -106,7 +106,7 @@ cartRouter.get("/order-d/:oid", async (req, res) => {
   console.log(order_id);
   //   const order_id = req.params.order_id;
   // 沒問題的sql: SELECT * FROM order_general JOIN oder_detail ON oder_detail.order_id = order_general.order_id JOIN product_img ON product_img.product_id = oder_detail.product_id WHERE order_general.order_id ='4354' AND product_img.showed_1st=1;
-  const sql = `SELECT * FROM order_general JOIN oder_detail ON oder_detail.order_id = order_general.order_id JOIN product ON product.product_id = oder_detail.product_id JOIN product_img ON product_img.product_id = oder_detail.product_id JOIN user ON order_general.user_id = user.user_id WHERE oder_detail.order_id LIKE '%${order_id}%' AND product_img.showed_1st=1 AND user.user_id = 36 `;
+  const sql = `SELECT * FROM order_general JOIN oder_detail ON oder_detail.order_id = order_general.order_id JOIN product ON product.product_id = oder_detail.product_id JOIN product_img ON product_img.product_id = oder_detail.product_id JOIN user ON order_general.user_id = user.user_id WHERE oder_detail.order_id LIKE '%${order_id}%' AND product_img.showed_1st=1 AND user.user_id = 22 `;
   const [result] = await db.query(sql);
   console.log(result);
   console.log("-----------------------------------");
@@ -145,7 +145,7 @@ cartRouter.post("/", async (req, res) => {
   try {
     // 注意：user_id寫死 10
 
-    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '未付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
+    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
     console.log(sql);
 
     const [result] = await db.query(sql);
@@ -420,7 +420,7 @@ cartRouter.get("/payMethod", async (req, res) => {
     // console.log(todos);
 
     // '%${sql3.order_id}%'
-    const sql = `SELECT * FROM order_general JOIN oder_detail ON oder_detail.order_id = order_general.order_id JOIN product ON product.product_id = oder_detail.product_id JOIN product_img ON product_img.product_id = oder_detail.product_id JOIN user ON order_general.user_id = user.user_id WHERE oder_detail.order_id = '${oo}' AND product_img.showed_1st=1 AND user.user_id = 36 `;
+    const sql = `SELECT * FROM order_general JOIN oder_detail ON oder_detail.order_id = order_general.order_id JOIN product ON product.product_id = oder_detail.product_id JOIN product_img ON product_img.product_id = oder_detail.product_id JOIN user ON order_general.user_id = user.user_id WHERE oder_detail.order_id = '${oo}' AND product_img.showed_1st=1 AND user.user_id = 22`;
     const [result] = await db.query(sql);
     console.log(result);
 

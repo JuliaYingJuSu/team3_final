@@ -5,29 +5,21 @@ import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import swal from "sweetalert2";
-import LoadingLinePay from '@/components/cart/loading-linepay'
+import Pay from '@/components/cart/LoadingLinePay'
 
 
 export default function OrderComplete() {
   const [data, setData] = useState([]);
-//---------------- 做linePay Loading ---------------------
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(true);
-    }, 12000);
-  }, []);
-//---------------- 做linePay Loading end ---------------------
 
-  const sweet = () => {
-    new swal({
-      title: "訂單已成立!",
-      text: "訂單詳細內容請至會員中心查詢",
-      icon: "success",
-      timer: 1500,
-    });
-  };
+  // const sweet = () => {
+  //   new swal({
+  //     title: "訂單已成立!",
+  //     text: "訂單詳細內容請至會員中心查詢",
+  //     icon: "success",
+  //     timer: 1500,
+  //   });
+  // };
 
   useEffect(() => {
     fetch("http://localhost:3002/api/cart/order-complete")
@@ -37,6 +29,19 @@ export default function OrderComplete() {
         console.log(obj);
       });
   }, []);
+
+//---------------- 做linePay Loading ---------------------
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  setTimeout(() => {
+    setLoading(true);
+  }, 7000);
+}, []);
+//---------------- 做linePay Loading end ---------------------
+
+
+
   return (
     <>
       <MyNavbar />
@@ -224,14 +229,14 @@ export default function OrderComplete() {
 
       <div className="container text-center">
         {/* check文字 */}
-        <div className="icon-check mt-4"></div>
+        {/* <div className="icon-check mt-4"></div> */}
 
         <div className="my-5 h5">謝謝您！您的訂單已經成立！</div>
-        <button onClick={sweet}> 送出</button>
+        {/* <button onClick={sweet}> 送出</button> */}
       </div>
 {/* linePay-Loading畫面 */}
-{loading ? <LoadingLinePay/>:
-      data.map((v, i) => {
+{loading ?   
+data.map((v, i) => {
         return (
           <>
             <div
@@ -269,11 +274,7 @@ export default function OrderComplete() {
             </div>
           </>
         );
-      })}
-
-
-
-      
+      }):<Pay />}
 
       <Footer />
     </>
