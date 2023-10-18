@@ -1,14 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import styles from "./cart-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import { json } from "@files-ui/core";
 import { useRouter } from "next/router";
-import RunContext from "@/hooks/RunContext";
+import { useShip711StoreOpener } from "@/hooks/use-ship-711-store";
+
 export default function CartDetail() {
   const [data, setData] = useState([]);
-  const { run } = useContext(RunContext);
-  // console.log(run);
 
   useEffect(() => {
     // localStorage 取資料
@@ -17,9 +16,59 @@ export default function CartDetail() {
       //setData, 非同步的關係
       setData(getCartItem);
     }
-  }, [run]);
+  }, []);
+
+  // 購物車小計
+  const calculateTotal = () => {
+    // 計算所有商品的小計
+    const subtotal = data.reduce((acc, v) => acc + v.price * v.quantity, 0);
+
+    // 運費
+    const shippingFee = 60;
+
+    // 總計
+    const total = subtotal + shippingFee;
+
+    return { subtotal, shippingFee, total };
+  };
 
   // 數量增加寫入local Storage
+
+  const updateCount = (product_id, value) => {
+    // 更新 data 中的數量
+    const updatedData = data.map((v) => {
+      //  if (v.product_id === product_id) { return { ...v, quantity: v.quantity + value },
+      // 先比對product_id是否相同, 在return新的數量回去
+      if (v.product_id === product_id) {
+        return { ...v, quantity: v.quantity + value };
+      } else {
+        return { ...v };
+      }
+    });
+
+    // 更新 local storage
+    localStorage.setItem("cart", JSON.stringify(updatedData));
+
+    setData(updatedData);
+  };
+
+  // minus 寫入loccalStorage
+
+  const minusCount = (product_id, value) => {
+    // 更新 data 中的數量
+    const updatedMinus = data.map((v) => {
+      //  if (v.product_id === product_id) { return { ...v, quantity: v.quantity + value },
+      // 先比對product_id是否相同, 在return新的數量回去
+      if (v.product_id === product_id) {
+        return { ...v, quantity: v.quantity - value };
+      } else {
+        return { ...v };
+      }
+    });
+    // 更新 local storage
+    localStorage.setItem("cart", JSON.stringify(updatedMinus));
+    setData(updatedMinus);
+  };
 
   // ------------------------ localStorage 垃圾桶 -------------------------
   //findIndex, 返回返回符合條件的元素的index
@@ -42,20 +91,34 @@ export default function CartDetail() {
   const deliveryMethod = ["請選擇運送方式", "宅配", "7-11超商取貨"];
   const [delivery, setDelivery] = useState(["請選擇運送方式"]);
 
-  // 更新商品數量
-  const updateCount = (data, product_id, value) => {
-    return data.map((v) => {
-      if (v.product_id === product_id)
-        return { ...v, quantity: v.quantity + value };
-      else return { ...v };
-    });
-  };
+  // 訂單寫入資料庫
+  const insertDatabase = () => {
+    const getUserid = JSON.parse(localStorage.getItem("auth"));
+    const getUser = getUserid.user_id;
+    const orderTotal = calculateTotal().total;
 
-  // 刪除商品
-  const remove = (data, product_id) => {
-    return data.filter((v) => {
-      v.product_id !== product_id;
-    });
+    console.log(getUser);
+    if (getUser) {
+      fetch("http://localhost:3002/api/cart", {
+        method: "post",
+        body: JSON.stringify({
+          data: data,
+          user_id: getUser,
+          order_amount: orderTotal,
+          delivery_method: delivery,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((obj) => {
+          console.log(obj);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
   };
 
   // useEffect(() => {
@@ -85,6 +148,12 @@ export default function CartDetail() {
   //       console.log(123);
   //     });
   // };
+
+  // 7-11
+  const { store711, openWindow, closeWindow } = useShip711StoreOpener(
+    "http://localhost:3002/api/cart/711",
+    { autoCloseMins: 3 } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
+  );
 
   return (
     <>
@@ -120,7 +189,7 @@ export default function CartDetail() {
             {/* 若購物車要對齊 className={styles.productTitle + " border-0"} */}
             <tr>
               <th scope="col" className={styles.cartNum + " border-0"}>
-                購物車(1)
+                購物車(2)
               </th>
             </tr>
             <tr className={styles.productTitle}>
@@ -143,7 +212,10 @@ export default function CartDetail() {
                     <td className={styles.imgWidth + " w-20"}>
                       <imgs
                         className=" rounded-1"
-                        src={"images/product/" + v.product_img}
+                        src={
+                          "http://localhost:3080/images/product/" +
+                          v.product_img
+                        }
                         alt=""
                       />
                     </td>
@@ -155,22 +227,14 @@ export default function CartDetail() {
                       <button
                         className={styles.minus + " btn icon-minus me-3"}
                         onClick={() => {
-                          // 若要移除商品只有在減號按鈕按下時會發生
-                          // 臨界值信號：目前是1, 在按下減號按鈕, 會變為0, 變為0時要移除狀態
-                          if (v.quantity === 1) {
-                            setData(remove(data, v.product_id));
-                          } else {
-                            setData(updateCount(data, v.product_id, -1));
-                          }
+                          minusCount(v.product_id, 1);
                         }}
-                      >
-                        {/* <span className="icon-minus me-3"></span> */}
-                      </button>
+                      ></button>
                       {v.quantity}
                       <button
                         className={styles.minus + " btn icon-plus ms-3"}
                         onClick={() => {
-                          setData(updateCount(data, v.product_id, 1));
+                          updateCount(v.product_id, 1);
                         }}
                       >
                         {/* <span className="icon-plus ms-3"></span> */}
@@ -191,8 +255,9 @@ export default function CartDetail() {
                     <td></td>
                     <td>
                       <a
-                      //   href={"/cart/" + v.product_id}
-                      // href={`/cart/${product_id}`}
+                        className={styles.trash}
+                        //   href={"/cart/" + v.product_id}
+                        // href={`/cart/${product_id}`}
                       >
                         <span
                           className="icon-trash d-flex justify-content-end"
@@ -225,6 +290,21 @@ export default function CartDetail() {
                 <option value="宅配">宅配</option>
                 <option value="7-11超商取貨">7-11超商取貨</option>
               </select>
+
+              <div className={styles.chooseStore}>
+                {delivery == "7-11超商取貨" ? (
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      openWindow();
+                    }}
+                  >
+                    選擇超商
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
 
@@ -233,11 +313,13 @@ export default function CartDetail() {
             <div className="w-25">
               <div className="row">
                 <div className="col-6">小計</div>
-                <div className="col-6">NT$320</div>
+                <div className="col-6">{`NT$` + calculateTotal().subtotal}</div>
                 <div className="col-6 py-2">運費</div>
                 <div className="col-6 py-2">NT$60</div>
                 <div className="col-6 pt-2 border-top">總計</div>
-                <div className="col-6 pt-2 border-top">NT$380</div>
+                <div className="col-6 pt-2 border-top">
+                  {`NT$` + calculateTotal().total}
+                </div>
               </div>
             </div>
           </div>
@@ -256,10 +338,16 @@ export default function CartDetail() {
             </div>
           </div>
         </div>
-
-        <a href="/cart/del-detail" className={styles.linkText}>
+        <a href="/cart/del-detail " className={styles.linkText}>
           <div className="d-flex justify-content-center">
-            <button className="btn btn-middle mt-5 mb-5">前往結帳</button>
+            <button
+              className="btn btn-middle mt-5 mb-5"
+              onClick={() => {
+                insertDatabase();
+              }}
+            >
+              前往結帳
+            </button>
           </div>
         </a>
       </div>

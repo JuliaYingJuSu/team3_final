@@ -5,6 +5,7 @@ export default function Pagination({
   itemsPerPage,
   setCurrentPage,
   currentPage,
+  dataRows,
 }) {
   let pages = [];
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
@@ -14,17 +15,22 @@ export default function Pagination({
   return (
     <>
       <div className="pagination">
-        <button
-          className="btn-page"
-          onClick={() =>
-            setCurrentPage((prev) => {
-              if (prev === 1) return prev;
-              return prev - 1;
-            })
-          }
-        >
-          {"<"}
-        </button>
+        {dataRows?.length ? (
+          <button
+            className="btn-page"
+            onClick={() =>
+              setCurrentPage((prev) => {
+                if (prev === 1) return prev;
+                return prev - 1;
+              })
+            }
+          >
+            {"<"}
+          </button>
+        ) : (
+          ""
+        )}
+
         {pages.map((v, i) => {
           return (
             <button
@@ -40,17 +46,22 @@ export default function Pagination({
             </button>
           );
         })}
-        <button
-          onClick={() =>
-            setCurrentPage((prev) => {
-              if (prev === pages.length) return prev;
-              return prev + 1;
-            })
-          }
-          className=" btn-page"
-        >
-          {">"}
-        </button>
+
+        {dataRows?.length ? (
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => {
+                if (prev === pages.length) return prev;
+                return prev + 1;
+              })
+            }
+            className=" btn-page"
+          >
+            {">"}
+          </button>
+        ) : (
+          ""
+        )}
       </div>
       <style jsx>{`
         .pagination {

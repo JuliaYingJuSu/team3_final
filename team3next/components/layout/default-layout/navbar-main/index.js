@@ -24,7 +24,7 @@ export default function MyNavbar() {
       <header>
         <nav
           className="fixed-top bg-white navbar navbar-expand-lg forCheese"
-          style={{ height: 250 }}
+          style={{ height: 225 }}
         >
           <div className="container">
             {/* Logo區塊 */}
@@ -87,7 +87,7 @@ export default function MyNavbar() {
                             <span>
                               {auth.user_img ? (
                                 <img
-                                  src={auth.user_img}
+                                  src={`http://localhost:3002/img/${auth.user_img}`}
                                   className="rounded-circle img-thumbnail headshot-middle"
                                   alt="大頭照"
                                 />

@@ -6,6 +6,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import Link from "next/link";
 import BreadcrumbDetail from "@/components/book/breadcrumb-detail";
 import AuthContext from "@/hooks/AuthContext";
+import Swal from "sweetalert2";
 
 export default function Detail() {
   const { auth } = useContext(AuthContext);
@@ -64,13 +65,22 @@ export default function Detail() {
   const gender = ["小姐", "先生", "貴賓"];
   const bookGender = gender[data.rows?.book_gender];
 
+  // sweetAlert
+  const swalDelete = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+    },
+    buttonsStyling: false,
+  });
+
   return (
     <>
       <Head>
         <title>食食嗑嗑-訂位詳細頁</title>
       </Head>
       <Navbar></Navbar>
-      <div className="container" style={{ marginTop: "250px" }}>
+      <div className="container" style={{ marginTop: "225px" }}>
         <BreadcrumbDetail></BreadcrumbDetail>
       </div>
       <br />
@@ -181,29 +191,45 @@ export default function Detail() {
         </div>
         <br />
         <div className="container d-flex justify-content-center my-5">
-          <Link
-            href="/user/my-book"
+          <div
             className="btn btn-middle me-3"
-            onClick={(event) => {
-              const result = window.confirm("確認要取消這筆訂位嗎?");
-              if (result) {
-                const bid = data.rows?.book_id;
-                fetch(
-                  process.env.API_SERVER +
-                    `/api/user/${auth.user_id}/my-book/${bid}`,
-                  {
-                    method: "POST",
+            onClick={() => {
+              swalDelete
+                .fire({
+                  title: "是否要取消這筆訂位?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  cancelButtonText:
+                    '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                  confirmButtonText:
+                    '<i class="far fa-check-circle fs-5"></i> 取消訂位',
+                })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    const bid = data.rows?.book_id;
+                    fetch(
+                      process.env.API_SERVER +
+                        `/api/user/${auth.user_id}/my-book/${bid}`,
+                      {
+                        method: "POST",
+                      }
+                    )
+                      .then((r) => r.json())
+                      .then(data);
+                    swalDelete.fire({
+                      icon: "success",
+                      title: "您的訂位已取消!",
+                      showConfirmButton: false,
+                    });
+                    setTimeout(() => {
+                      window.location.href = "/user/:user_id/my-book";
+                    }, 2000);
                   }
-                )
-                  .then((r) => r.json())
-                  .then(data);
-              } else {
-                event.preventDefault();
-              }
+                });
             }}
           >
             取消訂位
-          </Link>
+          </div>
           <Link href="/user/:user_id/my-book" className="btn btn-middle ms-3">
             回上一頁
           </Link>

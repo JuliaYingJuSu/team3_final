@@ -32,6 +32,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("cart");
+    localStorage.removeItem("selectedFoodTagIds")
     setAuth(noLoginState);
     swal.fire({
       title: "登出成功",
@@ -73,7 +74,6 @@ export const AuthContextProvider = ({ children }) => {
       .then((r) => r.json())
       .then((r) => {
         setFav(r);
-        console.log(212);
         console.log(r);
       })
       .catch((ex) => {

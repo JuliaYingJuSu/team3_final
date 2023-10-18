@@ -20,7 +20,7 @@ export default function UserMyArticleI() {
       .then((r) => r.json())
       .then((r) => {
         setUserImgMyCard(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
@@ -33,12 +33,12 @@ export default function UserMyArticleI() {
       <div className="container bottom-line">
         <div className="container d-flex justify-content-around align-items-center my-3">
           <Link
-            href="/user/user-my-article-i"
+            href={`/user/${user_id}/user-my-article-i/`}
             className="icon-square-active"
             style={{ fontSize: 35 }}></Link>
 
           <Link
-            href="/user/user-my-article-card"
+            href={`/user/${user_id}/user-my-article-card/`}
             className="icon-list"
             style={{ fontSize: 35 }}></Link>
         </div>

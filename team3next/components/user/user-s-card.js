@@ -16,12 +16,12 @@ export default function UserSCard({author}) {
               <Link href={`/user/${author.user_id}/user-my-article-i/`}>
                 <img
                   className="rounded-circle img-thumbnail"
-                  src={author.user_img}
+                  src={process.env.API_SERVER + `/img/${author.user_img}`}
                   style={{ height: 70, width: 70, objectFit: "cover" }}></img>
               </Link>
             </div>
             <div className="middle">
-              <Link className="fs16b text-dark" href="/user/user-my-article-i">
+              <Link className="fs16b text-dark" href={`/user/${author.user_id}/user-my-article-i/`}>
                 {author.nickname}
               </Link>
             </div>

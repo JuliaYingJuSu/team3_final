@@ -1,20 +1,29 @@
 import { method } from "lodash";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
+import RunContext from "@/hooks/RunContext";
 
 export default function ProductComment({ product }) {
   const [show, setShow] = useState(false);
   const [content, setContent] = useState("");
+  console.log(content);
   const [hover, setHover] = useState(0);
   const [score, setScore] = useState(0);
+  const { run, setRun } = useContext(RunContext);
+  // console.log(score);
 
-  const handleClose = () => setShow(false);
+  const handleClose = async () => {
+    setContent("");
+    setScore(0);
+    setHover(0);
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
-  const comment = (product) => {
-    fetch("http://localhost:3002/api/product/add-comment", {
+  const comment = async (product) => {
+    await fetch("http://localhost:3002/api/product/add-comment", {
       method: "POST",
       body: JSON.stringify({
         uid: localStorage.getItem("auth").user_id,
@@ -96,7 +105,7 @@ export default function ProductComment({ product }) {
                 );
               })}
           </div>
-          <div class="mb-3">
+          <div className="mb-3">
             <textarea
               type="text"
               class="form-control"
@@ -131,27 +140,18 @@ export default function ProductComment({ product }) {
         >
           <Button
             className="btn-middle"
-            onClick={() => {
+            onClick={async () => {
               Swal.fire({
                 title: "已新增評論",
                 icon: "success",
                 showConfirmButton: false,
-                timer: 2000,
-                // showCancelButton: true,
-                // cancelButtonText:
-                //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                // confirmButtonText:
-                //   '<i class="far fa-check-circle fs-5"></i> 放棄',
+                timer: 1500,
               });
-              // .then((result) => {
-              //   if (result.isConfirmed) {
-              //     swalButtons.fire("結束發表", "", "success");
-              //   }
-              // });
 
               console.log(product);
 
-              comment(product);
+              await comment(product);
+              setRun(!run);
             }}
           >
             確定
@@ -163,8 +163,10 @@ export default function ProductComment({ product }) {
               border: "#869AAA",
               color: "#FFF",
             }}
-
-            // onClick={handleClose}
+            onClick={async () => {
+              await handleClose();
+              // setRun(!run);
+            }}
           >
             取消
           </Button>

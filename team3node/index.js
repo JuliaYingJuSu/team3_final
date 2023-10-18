@@ -99,6 +99,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(express.static('public'))
+
 const verifyJWT = (req, res, next) => {
   // 製作jwt驗證中間件
   const token = req.headers["authorization"].split(" ")[1];
@@ -332,6 +335,7 @@ wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
+    console.log("前端來的");
     console.log("received: %s", JSON.parse(data));
   });
 

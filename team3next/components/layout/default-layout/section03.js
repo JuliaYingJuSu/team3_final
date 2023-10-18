@@ -37,6 +37,14 @@ export default function Section03() {
           return item;
         });
 
+        for (let i = dataWithFirstImages.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [dataWithFirstImages[i], dataWithFirstImages[j]] = [
+            dataWithFirstImages[j],
+            dataWithFirstImages[i],
+          ];
+        }
+
         setData(dataWithFirstImages.slice(0, 3));
       })
       .catch((ex) => console.log(ex));
