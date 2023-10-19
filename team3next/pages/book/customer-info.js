@@ -122,7 +122,7 @@ export default function Index() {
             <div className="container2">
               <img
                 className="w-100"
-                src={`/images/book/${restaurant_img}`}
+                src={`http://localhost:3002/img/${restaurant_img}`}
                 alt="..."
               />
               <div className="h5 d-flex justify-content-center py-4 con1">
