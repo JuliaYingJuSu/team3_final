@@ -147,31 +147,6 @@ postRouter.post(
   }
 );
 
-//test upload
-// postRouter.post(
-//   "/upload",
-//   upload.array("post_image_name"),
-//   async (req, res) => {
-//     const files = req.files;
-//       console.log(req.files);
-//       if (files && files.length > 0) {
-//         files.forEach(async (file) => {
-//           const { filename } = file;
-//           // 從req.file結構出需要存入資料庫的filename
-//           const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (NULL, ?, ?)`;
-//           try {
-//             [result] = await db.query(sqlImg, [58, filename, 1]);
-//             console.log(`File ${filename} inserted into database.`);
-//           } catch (err) {
-//             console.error(
-//               `Error inserting file ${filename} into database: ${err}`
-//             );
-//           }
-
-//         });
-//       }
-//   }
-// );
 
 //新增留言
 postRouter.post("/add-comment", async (req, res) => {
@@ -242,5 +217,6 @@ postRouter.get("/toggle-fav/:post_id", async (req, res) => {
   }
   res.json(output);
 });
+
 
 export default postRouter;

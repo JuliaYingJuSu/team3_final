@@ -10,6 +10,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   const [favs, setFavs] = useState([]);
+  const [followed, setFollowed] = useState([]);
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
@@ -18,6 +19,21 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   useEffect(() => {
     if(auth && auth.token)
     fetch(process.env.API_SERVER + "/api/post/fav",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setFavs(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
+
+  //接收加入追蹤資料庫資料
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/follow",{
       headers: {
         Authorization: "Bearer " + auth.token,
       },
@@ -136,6 +152,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
                   post_id={post_id}
                   favs={favs}
                   setFavs={setFavs}
+                  followed={followed}
+                  setFollowed={setFollowed}
                   post_title={post_title}
                   post_content={post_content}
                   createTime={createTime}

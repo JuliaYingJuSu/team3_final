@@ -24,6 +24,22 @@ export default function Article() {
         console.log(ex);
       });
   }, [auth.user_id]);
+  const [favs, setFavs] = useState([]);
+  //接收加入收藏資料庫資料
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/fav",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setFavs(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
+
   return (
     <>
       <MyNavbar></MyNavbar>
@@ -35,7 +51,9 @@ export default function Article() {
         {article.map((usercard, i) => {
                 return (
                   <div className="col" key={i}>
-                    <UserCard usercard={usercard}></UserCard>
+                    <UserCard usercard={usercard}
+                    favs={favs}
+                  setFavs={setFavs}></UserCard>
                   </div>
                 );
               })}

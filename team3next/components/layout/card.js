@@ -24,6 +24,8 @@ export default function Card({
   food_tag_name,
   favs,
   setFavs,
+  followed,
+  setFollowed,
 }) {
   const { auth,fav } = useContext(AuthContext);
   const [saved, setSaved] = useState(false);
@@ -80,6 +82,8 @@ export default function Card({
         food_tag_name={food_tag_name}
         favs={favs}
         setFavs={setFavs}
+        followed={followed}
+        setFollowed={setFollowed}
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
