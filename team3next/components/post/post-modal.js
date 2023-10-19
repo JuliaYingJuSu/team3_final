@@ -24,6 +24,8 @@ export default function PostModal({
   setFavs,
   followed,
   setFollowed,
+  likes,
+        setLikes,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
@@ -202,7 +204,10 @@ export default function PostModal({
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
-                <Like />
+                <Like ifLike={likes && likes?.includes(post_id) ? true : false}
+                  likes={likes}
+                  setLikes={setLikes}
+                  post_id={post_id}/>
                 {/* <span>1</span> */}
               </span>
               <span className="middle">

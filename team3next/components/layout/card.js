@@ -26,30 +26,10 @@ export default function Card({
   setFavs,
   followed,
   setFollowed,
+  likes,
+  setLikes,
 }) {
-  const { auth,fav } = useContext(AuthContext);
-  const [saved, setSaved] = useState(false);
-
-  // const [fav, setFav] = useState(false);
-
-  // useEffect(() => {
-  //   if (user_id) {
-  //     fetch("http://localhost:3002/api/post/fav", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         user_id: user_id,
-  //         post_id: post_id,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((r) => r.json())
-  //     .then((r) => {
-  //       setSaved(r);
-  //     });
-  //   }
-  // }, []);
+  const { auth } = useContext(AuthContext);
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -84,6 +64,8 @@ export default function Card({
         setFavs={setFavs}
         followed={followed}
         setFollowed={setFollowed}
+        likes={likes}
+        setLikes={setLikes}
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
@@ -101,7 +83,12 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <Like />
+                <Like 
+                  ifLike={likes && likes?.includes(post_id) ? true : false}
+                  likes={likes}
+                  setLikes={setLikes}
+                  post_id={post_id}
+                />
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
@@ -111,10 +98,11 @@ export default function Card({
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
-                <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
-                favs={favs}
-                setFavs={setFavs}
-                post_id={post_id}
+                <Saved
+                  ifSave={favs && favs?.includes(post_id) ? true : false}
+                  favs={favs}
+                  setFavs={setFavs}
+                  post_id={post_id}
                 />
                 {/* <button
                   className="btn btn-sm btn-i"
@@ -165,7 +153,7 @@ export default function Card({
                   {nickname}
                 </Link>
               </p>
-              <FollowButton ifFollow={false}/>
+              <FollowButton ifFollow={false} />
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>
