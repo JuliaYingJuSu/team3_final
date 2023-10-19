@@ -474,7 +474,7 @@ cartRouter.get("/payMethod", async (req, res) => {
           // confirmUrl: "http:localhost:3080/cart",
           // cancelUrl: "http:localhost:3080/cart",
           // 1018 --> "http:localhost:3080/cart/order-complete"
-          confirmUrl: "http:localhost:3080/cart/order-complete",
+          confirmUrl: "linePay/confirm",
           cancelUrl: "linePay/cancel",
         },
       },
@@ -518,43 +518,44 @@ cartRouter.get("/payMethod", async (req, res) => {
 
 // --------------confirm--------------------------
 
-// cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
-//   router.use(cors(corsOptions));
-//   console.log('開始')
-//   let output = {
-//   success: false,
-//   result: [],
-//   };
-//   console.log('back')
-// const tran = req.params.transactionId
-// const orderId = req.params.orderId
-// //hahahha
-// const confirmRequest = {
-//   transactionId: tran,
-//   orderId: orderId, // 与支付请求时的 orderId 相同
-//   amount: 1160, // 与支付请求时的 amount 相同
-// };
+cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
+  // router.use(cors(corsOptions));
+  console.log('523----------',req.params)
+  console.log('開始')
+  let output = {
+  success: false,
+  result: [],
+  };
+  console.log('back')
+const tran = req.params.transactionId
+const orderId = req.params.orderId
+//hahahha
+const confirmRequest = {
+  transactionId: tran,
+  orderId: orderId, // 与支付请求时的 orderId 相同
+  amount: 1160, // 与支付请求时的 amount 相同
+};
 
 
-//   try {
-//       const lastLine = await createLinePayClient.confirm.send(
-//         {confirmRequest}
-//       //   {
-//       //   transactionId: tran,
-//       //   body: {
-//       //     currency: "TWD",
-//       //     // amount需要查資料庫的訂單
-//       //     amount: 1160,
-//       //   },
-//       // }
-//       );
-//       console.log('我成功了')
-//       console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
-//       console.log("hihihi")
-//     } catch (e) {
-//       console.log("error", e);
-//     }
-// });
+  try {
+      const lastLine = await createLinePayClient.confirm.send(
+        {confirmRequest},
+        {
+        transactionId: tran,
+        body: {
+          currency: "TWD",
+          // amount需要查資料庫的訂單
+          amount: 1160,
+        },
+      }
+      );
+      console.log('我成功了')
+      console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
+      console.log("hihihi")
+    } catch (e) {
+      console.log("error", e);
+    }
+});
 
 
 

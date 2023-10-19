@@ -28,27 +28,27 @@ export default function OrderComplete() {
         setData(obj);
         console.log(obj);
       });
+      
   }, []);
 
-  
-//   useEffect(() => {
+  const { transactionId, orderId } = router.query;
+      console.log('--------------')
+      console.log('35----------',transactionId)
+      console.log('36----------',orderId)
+  useEffect(() => {
 
-//     if (router.isReady) {
+    if (router.isReady) {
 
-//       const { transactionId, orderId } = router.query;
-//       console.log('--------------')
-//       console.log(transactionId)
-//       console.log(orderId)
-
-//       // 裡面放變數, 外面一定要是``, 不能是""
-//     fetch(`http://localhost:3002/api/cart/linePay/confirm/'${transactionId}'/${orderId}`)
-//       .then((r) => r.json())
-//       .then((obj) => {
-//         setData(obj);
-//         console.log('出現喔')
-//         console.log(obj);
-//       });
-// }}, [router.isReady]);
+      
+      // 裡面放變數, 外面一定要是``, 不能是""
+    fetch(`http://localhost:3002/api/cart/linePay/confirm/'${transactionId}'/${orderId}`)
+      .then((r) => r.json())
+      .then((obj) => {
+        setData(obj);
+        console.log('出現喔')
+        console.log(obj);
+      });
+}}, [router.isReady]);
 
 
 
@@ -58,7 +58,7 @@ const [loading, setLoading] = useState(false);
 useEffect(() => {
   setTimeout(() => {
     setLoading(true);
-  }, 3000000);
+  }, 3000);
 }, []);
 //---------------- 做linePay Loading end ---------------------
 

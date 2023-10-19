@@ -8,16 +8,15 @@ export default function loadingLinepay() {
     <>
         <div className='all'>
 
-        <div class="d-flex flex-sm-row bd-highlight mb-3 justify-content-center align-items-center">
-  {/* <div class="p-2 bd-highlight"></div> */}
+        <div className="d-flex flex-sm-row bd-highlight mb-3 justify-content-center align-items-center">
+ 
 
-  
 <img src="../images/薯哥去背.png" alt="" style={{ width: '460px', height: '335px' }} />
 </div>
 
 <div className="progress">
   <div className="color">
-  
+
   </div>
 </div>  
   </div>
