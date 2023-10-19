@@ -148,7 +148,7 @@ export default function PostModal({
                     <Link href="/user/user-my-article-i">
                       <img
                         className="rounded-circle headshot-sm img-thumbnail"
-                        src={user_img}
+                        src={`http://localhost:3002/img/${user_img}`}
                       ></img>
                     </Link>
                   </div>
@@ -253,7 +253,7 @@ export default function PostModal({
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={v.user_img}
+                          src={`http://localhost:3002/img/${v.user_img}`}
                         ></img>
                       </Link>
                     </div>

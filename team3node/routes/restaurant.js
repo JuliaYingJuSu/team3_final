@@ -207,13 +207,6 @@ restaurantRouter.put(
     }
   }
 );
-restaurantRouter.post(
-  "/image-upload",
-  upload.array("avatar"),
-  async (req, res) => {
-    console.log(req.files);
-    res.json(req.files);
-  }
-);
+
 
 export default restaurantRouter;

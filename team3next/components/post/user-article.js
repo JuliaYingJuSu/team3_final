@@ -79,7 +79,7 @@ export default function UserArticle({ userinfo }) {
                       {userinfo.user_img ? (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={userinfo.user_img}></img>
+                          src={`http://localhost:3002/img/${userinfo.user_img}`}></img>
                       ) : (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
@@ -169,7 +169,7 @@ export default function UserArticle({ userinfo }) {
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={v.user_img}></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
                     <div className="me-auto mb-3 text-start">

@@ -6,6 +6,7 @@ import registerSchema from "@/validation/register-validation";
 import { Upload, Modal, Form } from "antd";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Swal from "sweetalert2";
 // 製作form的外框，把含有上傳功能的form作為模板使用,因此使用rhf自帶的context從這裡往下傳送即可，其他地方不需要用到
 export default function FormLayout({
   children,
@@ -43,7 +44,15 @@ export default function FormLayout({
         formData
       );
       console.log("Server Response:", response.data);
-      router.push(`/restaurant-member/member-login`);
+      Swal.fire({
+        icon: "success",
+        title: "註冊成功",
+        text: "回到登入頁面",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push(`/restaurant-member/member-login`);
+        }
+      });
     } catch (err) {
       console.error("Error:", err);
     }

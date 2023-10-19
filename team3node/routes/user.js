@@ -109,6 +109,20 @@ userRouter.get("/:user_id/follown", async (req, res) => {
   }
 });
 
+//我的收藏
+userRouter.get("/:user_id/article", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * from post join post_image on post.post_id = post_image.post_id join post_restaurant on post.post_restaurant_id = post_restaurant.post_restaurant_id join post_food_tag on post.post_id = post_food_tag.post_id join food_tag on food_tag.food_tag_id = post_food_tag.food_tag_id JOIN post_favorite ON post.post_id=post_favorite.post_id WHERE post_favorite.user_id = ? GROUP BY post.post_id`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
 //其他使用者資訊---------------------
 userRouter.get("/:user_id/userInfoImg", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id

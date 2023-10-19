@@ -141,7 +141,7 @@ export default function Card({
                   {user_img ? (
                     <img
                       className="rounded-circle headshot-small img-thumbnail"
-                      src={user_img} // 顯示用戶頭像
+                      src={`http://localhost:3002/img/${user_img}`} // 顯示用戶頭像
                       alt="大頭照"
                     />
                   ) : (

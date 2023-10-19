@@ -105,7 +105,7 @@ export default function ProductComment({ product }) {
                 );
               })}
           </div>
-          <div class="mb-3">
+          <div className="mb-3">
             <textarea
               type="text"
               class="form-control"
@@ -146,11 +146,6 @@ export default function ProductComment({ product }) {
                 icon: "success",
                 showConfirmButton: false,
                 timer: 1500,
-                // showCancelButton: true,
-                // cancelButtonText:
-                //   '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                // confirmButtonText:
-                //   '<i class="far fa-check-circle fs-5"></i> 放棄',
               });
 
               console.log(product);

@@ -58,13 +58,13 @@ export default function MyOrder() {
             {data.map((i) => {
               return (
                 <tr key={i.order_id} className={styles.topLine}>
-                  <td className="align-middle pt-2">{i.order_id}</td>
+                  <td className="align-middle pt-2">{i.order_id.split("-")[0]}</td>
                   <td className="align-middle pt-2">{i.order_date}</td>
-                  <td className="align-middle pt-2">NT$380</td>
+                  <td className="align-middle pt-2">{`NT$` + i.order_amount}</td>
                   <td className="align-middle pt-2">{i.delivery_status}</td>
                   <td className="align-middle pt-2">
                     <div className="my-1 d-flex justify-content-end a">
-                      <div className="me-3 btn btn-big">編輯訂單</div>
+                      {/* <div className="me-3 btn btn-big">編輯訂單</div> */}
                       <a href="../cart/order-d">
                         <div>
                           <Link

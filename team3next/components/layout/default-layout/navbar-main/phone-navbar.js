@@ -1,18 +1,21 @@
 import Link from "next/link";
 import React from "react";
+import AuthContext from "@/hooks/AuthContext";
+import { useContext } from "react";
 
 export default function PhoneNavbar() {
+  const { auth, logout } = useContext(AuthContext);
   return (
     <>
       <div className="container card card-body my-1" style={{ width: 375 }}>
         <div className="user-info-area mt-4">
           <div>
             <img
-              src="/images/logo.png"
+              src={`http://localhost:3002/img/${auth.user_img}`}
               className="rounded-circle img-thumbnail headshot-middle"></img>
           </div>
           <div className="user-info-text">
-            <h4 className="fw-bolder">會員暱稱</h4>
+            <h4 className="fw-bolder">{}</h4>
             <Link className="btn btn-big" href="/user">
               編輯會員資訊
             </Link>

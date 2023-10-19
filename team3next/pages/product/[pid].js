@@ -58,7 +58,7 @@ export default function productDetail() {
       const pid = router.query.pid; //***
       console.log(`http://localhost:3080${router.asPath}`);
 
-      const uid = JSON.parse(localStorage.getItem("auth")).user_id || 0;
+      const uid = JSON.parse(localStorage.getItem("auth"))?.user_id || "";
       console.log(pid, uid);
       fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
@@ -77,6 +77,13 @@ export default function productDetail() {
         });
     }
   }, [router.isReady, run]);
+
+  const descSplit = data.rows?.product_description.split("\\n").map((v) => {
+    return <p>{v}</p>;
+  });
+  const specSplit = data.rows?.specification.split("\\n").map((v) => {
+    return <p>{v}</p>;
+  });
 
   // 取推薦商品
   useEffect(() => {
@@ -98,154 +105,147 @@ export default function productDetail() {
     }
   }, [data]);
 
-  const specSplit = data.rows?.specification.split("\\n").map((v) => {
-    return <p>{v}</p>;
-  });
-
   //增刪收藏
   const handleWish = () => {
-    if (router.isReady) {
-      //   // const pathName = router.pathname; // /product/[pid]
-      //   // const pathName = router.query; //{pid:27}
-      const pathName = router.query.pid; //{27}
-      console.log(pathName);
-      // }
+    if (!localStorage.getItem("auth")) {
+      Swal.fire({
+        icon: "error",
+        title: "請先登入",
+      });
+      return;
+    } else {
+      if (router.isReady) {
+        //   // const pathName = router.pathname; // /product/[pid]
+        //   // const pathName = router.query; //{pid:27}
+        const pathName = router.query.pid; //{27}
+        console.log(pathName);
 
-      if (!wish) {
-        fetch("http://localhost:3002/api/product/add-wish", {
-          method: "POST",
-          body: JSON.stringify({
-            pid: pathName,
-            uid: JSON.parse(localStorage.getItem("auth")).user_id || 0,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
-          // .then((r) => {
-          //   console.log(r); //defined
-          // })
-          .then((r) => r.json())
-          .then((r) => {
-            console.log(r); //true
+        if (!wish) {
+          fetch("http://localhost:3002/api/product/add-wish", {
+            method: "POST",
+            body: JSON.stringify({
+              pid: pathName,
+              uid: JSON.parse(localStorage.getItem("auth")).user_id,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
           })
-          .catch((ex) => {
-            console.log(ex);
-          });
-      }
-      if (wish) {
-        fetch("http://localhost:3002/api/product/del-wish", {
-          method: "POST",
-          body: JSON.stringify({
-            pid: pathName,
-            uid: JSON.parse(localStorage.getItem("auth")).user_id || 0,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            //#region (有無"Content-Type": "application/json"與req.body的關聯)
+            // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
+            // .then((r) => {
+            //   console.log(r); //defined
+            // })
+            .then((r) => r.json())
+            .then((r) => {
+              console.log(r); //true
+            })
+            .catch((ex) => {
+              console.log(ex);
+            });
+        }
+        if (wish) {
+          fetch("http://localhost:3002/api/product/del-wish", {
+            method: "POST",
+            body: JSON.stringify({
+              pid: pathName,
+              uid: JSON.parse(localStorage.getItem("auth")).user_id || 0,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              //#region (有無"Content-Type": "application/json"與req.body的關聯)
 
-            //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
+              //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
 
-            // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
+              // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
 
-            //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
+              //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
 
-            //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
+              //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
 
-            //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
-            //#endregion
-          },
-        })
-          .then((r) => r.json())
-          .then((r) => {
-            console.log(r); //true
+              //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
+              //#endregion
+            },
           })
-          .catch((ex) => {
-            console.log(ex);
-          });
+            .then((r) => r.json())
+            .then((r) => {
+              console.log(r); //true
+            })
+            .catch((ex) => {
+              console.log(ex);
+            });
+        }
       }
+      Swal.fire({
+        toast: true,
+        showConfirmButton: false,
+        timer: 1500,
+        position: "top",
+        width: "250px",
+        // height: "20px",
+        text: "已更新願望清單",
+        icon: "success",
+      });
     }
-    Swal.fire({
-      toast: true,
-      showConfirmButton: false,
-      timer: 1500,
-      position: "top",
-      width: "250px",
-      // height: "20px",
-      text: "已更新願望清單",
-      icon: "success",
-    });
   };
 
   //加入購物車
   const handleAddCart = () => {
-    // if (router.isReady) {
-    //   const pathName = router.query.pid;
-
     //1如果有登入
-    if (localStorage.getItem("auth")) {
-      //2如果商品已經設定到data了(防useEffect錯)
-      if (data.rows.product_id) {
-        //3如果localStorage已有購物車資料
-        if (localStorage.getItem("cart")) {
-          //拿出來找找看裡面有沒有目前頁面商品
-          let cart = JSON.parse(localStorage.getItem("cart"));
-          const existCart = cart.findIndex(
-            (v) => v.product_id == router.query.pid
-          );
-          //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
-          // -----------------新的------------------
-          if (
-            cart.findIndex((v) => v.product_id == data.rows.product_id) >= 0
-          ) {
-            const newCart = cart.map((v, i) => {
-              if (v.product_id == data.rows.product_id) {
-                return { ...v, quantity: v.quantity + quantity };
-              } else {
-                return { ...v };
-              }
-            });
-            localStorage.setItem("cart", JSON.stringify(newCart));
-            setRun(!run);
-          }
-          // -----------------舊的------------------
-          //   if (existCart >= 0) {
-          //   const updateQuantity =
-          //     parseInt(cart[existCart].quantity) + quantity;
-          //   console.log(updateQuantity);
-
-          //   const cartUpdateIndex = {
-          //     ...cart[existCart],
-          //     quantity: updateQuantity,
-          //   };
-          //   cart[existCart] = cartUpdateIndex;
-          //   localStorage.setItem("cart", JSON.stringify(cart));
-          // }
-          // ---------------------------------
-          else {
-            //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
-            cart.unshift({
-              product_id: data.rows.product_id,
-              product_name: data.rows.product_name,
-              price: data.rows.price,
-              product_img: data.rowsImgs[0].product_img,
-              quantity: quantity,
-            });
+    if (!localStorage.getItem("auth")) {
+      Swal.fire({
+        icon: "error",
+        title: "請先登入",
+      });
+      return;
+    } else {
+      if (localStorage.getItem("auth")) {
+        //2如果商品已經設定到data了(防useEffect錯)
+        if (data.rows.product_id) {
+          //3如果localStorage已有購物車資料
+          if (localStorage.getItem("cart")) {
+            //拿出來找找看裡面有沒有目前頁面商品
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            const existCart = cart.findIndex(
+              (v) => v.product_id == router.query.pid
+            );
+            //4如果localStorage cart有目前頁面商品 >>> 更新數量設定回去
+            // -----------------新的------------------
+            if (
+              cart.findIndex((v) => v.product_id == data.rows.product_id) >= 0
+            ) {
+              const newCart = cart.map((v, i) => {
+                if (v.product_id == data.rows.product_id) {
+                  return { ...v, quantity: v.quantity + quantity };
+                } else {
+                  return { ...v };
+                }
+              });
+              localStorage.setItem("cart", JSON.stringify(newCart));
+              setRun(!run);
+            } else {
+              //4如果localStorage cart沒有目前頁面商品 >>> 在cart陣列增一筆新的
+              cart.unshift({
+                product_id: data.rows.product_id,
+                product_name: data.rows.product_name,
+                price: data.rows.price,
+                product_img: data.rowsImgs[0].product_img,
+                quantity: quantity,
+              });
+              localStorage.setItem("cart", JSON.stringify(cart));
+            }
+          } else {
+            //3如果localStorage沒有購物車資料 >>> setItem
+            const cart = [
+              {
+                product_id: data.rows.product_id,
+                product_name: data.rows.product_name,
+                price: data.rows.price,
+                product_img: data.rowsImgs[0].product_img,
+                quantity: quantity,
+              },
+            ];
             localStorage.setItem("cart", JSON.stringify(cart));
           }
-        } else {
-          //3如果localStorage沒有購物車資料 >>> setItem
-          const cart = [
-            {
-              product_id: data.rows.product_id,
-              product_name: data.rows.product_name,
-              price: data.rows.price,
-              product_img: data.rowsImgs[0].product_img,
-              quantity: quantity,
-            },
-          ];
-          localStorage.setItem("cart", JSON.stringify(cart));
         }
       }
     }
@@ -526,12 +526,16 @@ export default function productDetail() {
                       handleAddCart();
                     }}
                   >
-                    <Link
-                      href="/cart"
-                      className="btn-big w-100 h-100 d-flex justify-content-center align-items-center"
-                    >
-                      立即購買
-                    </Link>
+                    {data.rows && localStorage.getItem("auth") ? (
+                      <Link
+                        href="/cart"
+                        className="btn-big w-100 h-100 d-flex justify-content-center align-items-center"
+                      >
+                        立即購買
+                      </Link>
+                    ) : (
+                      "立即購買"
+                    )}
                   </button>
                 </form>
               </div>
@@ -566,9 +570,7 @@ export default function productDetail() {
           <div className={styles.infoBox + " w-100"}>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品介紹</p>
-              <p className={styles.text}>
-                {data.rows && data.rows.product_description}
-              </p>
+              <p className={styles.text}>{data.rows && descSplit}</p>
             </div>
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品規格</p>

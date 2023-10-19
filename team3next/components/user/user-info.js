@@ -61,11 +61,11 @@ export default function UserInfo() {
     formData.append("user_id", auth.user_id);
     formData.append("user_img", file);
 
-    // 對照server上的檔案名稱 req.files.avatar
-    // formData.append("user_img", selectedFile);
+    //對照server上的檔案名稱 req.files.avatar
+    formData.append("user_img", selectedFile);
 
     fetch(
-      process.env.API_SERVER + "/api/user/update-img", //server url
+      process.env.API_SERVER + "/api/user/update-img", 
       {
         method: "PUT",
         body: formData,
@@ -109,9 +109,9 @@ export default function UserInfo() {
             <div className="middle ms-5">
               <div className="position-relative">
                 {selectedFile ? (
-                  auth.user_img ? (
+                  (auth.user_img&& !imgServerUrl) ? (
                     <img
-                      src={process.env.API_SERVER +`/img/${auth.user_img}`}
+                      src={process.env.API_SERVER + `/img/${auth.user_img}`}
                       alt="大頭照"
                       className="rounded-circle headshot-big img-thumbnail"
                     />
