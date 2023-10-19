@@ -2,38 +2,32 @@ import { useState, useEffect } from "react";
 import styles from "./nav-cart.module.css";
 // import { Router, useRouter } from "next/router";
 import Link from "next/link";
-import { HTML5_FMT } from "moment/moment";
+import RunContext from "@/hooks/RunContext";
+import { useContext } from "react";
 
 export default function NavCart() {
   const [data, setData] = useState([]);
-
+  const { run } = useContext(RunContext);
   useEffect(() => {
-    // fetch("http://localhost:3002/cart")
-    //   .then((r) => r.json())
-    //   .then((data) => {
-    //     setData(data);
-    //     console.log(data);
-    //   })
-    //   .catch((ex) => {
-    //     console.log(ex + "good");
-    //   });
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) {
       setData(cart);
     }
-  }, []);
+  }, [run]);
 
   // const router = useRouter();
   return (
     <>
       {data &&
         data.map((v, i) => {
+          // console.log(v || 0);
+
           return (
-            <div className="d-flex w-100 border-top border-bottom py-3">
+            <div key={i} className="d-flex w-100 border-top border-bottom py-3">
               <div className="w-50">
                 <img
                   className="img-fluid"
-                  src={"images/product/" + v.product_img}
+                  src={"/images/product/" + v.product_img}
                   alt=""
                 />
               </div>

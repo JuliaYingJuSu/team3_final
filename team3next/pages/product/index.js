@@ -21,6 +21,7 @@ export default function index() {
   console.log(data.rows?.length);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
+  const wsRef = useRef();
 
   const [inputText, setInputText] = useState("");
   const [fullText, setFullText] = useState("");
@@ -198,9 +199,9 @@ export default function index() {
   const [msgs, setMsgs] = useState([]);
   console.log(msgs);
 
-  let ws;
   useEffect(() => {
-    ws = new WebSocket("ws://localhost:3002/ws");
+    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
+
     ws.onopen = () => {
       console.log("open connection");
     };
@@ -213,32 +214,30 @@ export default function index() {
     //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
     //#endregion
     ws.onmessage = (res) => {
-      console.log("res");
+      console.log(res);
       const msg = JSON.parse(res.data);
-      if (msg.type === "message") {
-        setMsgs([...msgs, msg.data]);
+      console.log(msg, res.type);
+
+      if (res.type === "message") {
+        console.log("res.data === message");
+        const newMsgs = [...msgs, msg];
+        console.log(newMsgs);
+
+        setMsgs(newMsgs);
       }
     };
     ws.onclose = () => {
       console.log("close connection");
     };
-  }, []);
+  }, [msgs]);
 
   function sendMsg() {
+    let ws = wsRef.current;
     console.log("進sendMsg");
 
-    // -------------------
-
-    // 錯誤訊息 "Uncaught TypeError: Cannot read properties of undefined (reading 'send')" 意味著在你的前端程式碼中，WebSocket 的連接 ws 是 undefined。這可能是因為在 sendMsg 函數被呼叫時，ws 變數尚未被正確初始化。
-
-    // 在你的程式碼中，ws 變數是在 useEffect 內部聲明的，並且只在 useEffect 的作用域內有效。這意味著在 sendMsg 函數中無法正確訪問到 ws。
-
-    // 為了解決這個問題，你可以將 ws 變數保存在 useRef 中，這樣它的作用域就不會受限於 useEffect 了。
-    // ---------------------
-
-    if (ws.readyState === 1) {
+    if (ws.readyState == 1) {
       console.log("ws.readyState === 1");
-      ws.send(JSON.stringify({ type: "message", constent: msg }));
+      ws.send(JSON.stringify({ type: "message", content: msg }));
     } else {
       console.log("ws.readyState不等於 1");
     }
@@ -249,7 +248,7 @@ export default function index() {
   //------------------------------------------------
   return (
     <>
-      {/* <button
+      <button
         class="btn btn-primary"
         type="button"
         data-bs-toggle="offcanvas"
@@ -266,25 +265,34 @@ export default function index() {
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
       >
+        <h2 className="p-3">HELLO</h2>
         <div className="offcanvas-header">
-          {msgs.map((msg) => {
+          {/* {msgs.map((msg) => {
             return (
-              <h5 className="offcanvas-title" id="offcanvasBottomLabel">
+              <p className="offcanvas-title" id="offcanvasBottomLabel">
                 {msg}
-              </h5>
+              </p>
             );
-          })}
+          })} */}
 
           <button
             type="button"
-            className="btn-close"
+            className="btn-close ms-auto"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
         <div className="offcanvas-body small ">
           ...
-          <div></div>
+          <div>
+            {msgs.map((msg) => {
+              return (
+                <p className="offcanvas-title" id="offcanvasBottomLabel">
+                  {msg}
+                </p>
+              );
+            })}
+          </div>
           <input
             type="text"
             value={msg}
@@ -295,16 +303,17 @@ export default function index() {
           <button
             className="btn btn-warning"
             onClick={() => {
-              console.log("進sendMsg");
+              // console.log("進sendMsg");
 
               sendMsg();
+              setMsg("");
             }}
           >
             送出
           </button>
         </div>
-      </div> */}
-
+      </div>
+      {/* ---------------------------------- */}
       <Navbar />
       <div className="container" style={{ paddingTop: "225px" }}>
         <Bread typeList={typeList} data={data} />

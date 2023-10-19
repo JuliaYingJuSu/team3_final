@@ -210,15 +210,13 @@ export default function CartDetail() {
                     className={styles.productDetail + " container"}
                     key={v.product_id}
                   >
-                    <td className={styles.imgWidth + " w-20"}>
-                      <imgs
-                        className=" rounded-1"
-                        src={
-                          "http://localhost:3080/images/product/" +
-                          v.product_img
-                        }
+                    <td className={styles.imgWidth + " w-20r"}>
+                      <img
+                        className=" rounded-1 w-100 h-100 "
+                        src={`images/product/${v.product_img}`}
                         alt=""
                       />
+                      {/* <p>123</p> */}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
                       {v.product_name}

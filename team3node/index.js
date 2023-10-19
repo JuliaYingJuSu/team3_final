@@ -100,7 +100,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 const verifyJWT = (req, res, next) => {
   // 製作jwt驗證中間件
@@ -337,14 +337,16 @@ wss.on("connection", function connection(ws) {
   ws.on("message", function message(data) {
     console.log("前端來的");
     console.log("received: %s", JSON.parse(data));
-  });
 
-  ws.send(
-    JSON.stringify({
-      type: "message",
-      data: "test",
-    })
-  );
+    ws.send(
+      JSON.stringify(
+        //{ type: "message",
+        // data: JSON.parse(data).constent,}
+
+        JSON.parse(data).content
+      )
+    );
+  });
 });
 
 server.on("upgrade", function upgrade(request, socket, head) {

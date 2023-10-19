@@ -16,7 +16,7 @@ export default function WishList() {
   const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("auth")).user_id);
+    // console.log(JSON.parse(localStorage.getItem("auth")).user_id);
 
     const uid = JSON.parse(localStorage.getItem("auth")).user_id;
     // const uid = auth.user_id;
@@ -41,7 +41,7 @@ export default function WishList() {
   }, [run]);
 
   const handleWish = (v) => {
-    console.log(auth);
+    // console.log(auth);
     fetch("http://localhost:3002/api/product/del-wish", {
       method: "POST",
       body: JSON.stringify({
