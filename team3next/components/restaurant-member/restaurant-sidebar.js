@@ -70,7 +70,7 @@ export default function RestaurantSidebar() {
             >
               <Link
                 className="stretched-link text-dark"
-                href={`/restaurant-member/${memberAuth.result.restaurant_id}/orders`}
+                href={`/restaurant-member/${memberAuth.result.restaurant_id}/member-orders`}
               >
                 餐廳訂單管理
               </Link>
