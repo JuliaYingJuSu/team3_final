@@ -95,8 +95,8 @@ export default function CartDetail() {
   const insertDatabase = () => {
     const getUserid = JSON.parse(localStorage.getItem("auth"));
     const getUser = getUserid.user_id;
-    const orderTotal = total;
-    // const orderTotal = calculateTotal().total;
+    // const orderTotal = total;
+    const orderTotal = calculateTotal().total;
 
     console.log(getUser);
     if (getUser) {

@@ -23,6 +23,8 @@ export default function PayMethod() {
   // const order_id = "4354";
   useEffect(() => {
     if (router.isReady) {
+      console.log(router.asPath);
+      
       // 1018 先註
       // const oid = router.query.payMethod;
 
@@ -41,6 +43,7 @@ export default function PayMethod() {
         .then((r) => r.json())
         .then((obj) => {
           setData(obj);
+          console.log('---------------------------')
           console.log(obj);
         })
         .catch((ex) => {
