@@ -9,7 +9,7 @@ export default function Like({ ifLike, post_id }) {
   const likeToggle = async () => {
     if (!auth?.user_id) {
       Swal.fire({
-        title: "登入才能加入收藏喔",
+        title: "登入才能加入按讚喔",
         icon: "warning",
       });
     } else {

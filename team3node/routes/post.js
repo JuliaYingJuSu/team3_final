@@ -218,5 +218,22 @@ postRouter.get("/toggle-fav/:post_id", async (req, res) => {
   res.json(output);
 });
 
+//文章主頁要按讚訊息
+postRouter.get("/like", async (req, res) => {
+  if (!res.locals.jwtData?.user_id) {
+    return res.json({});
+  }
+  const loguid = res.locals.jwtData.user_id;
+  // console.log(loguid)
+  const sql = `SELECT post_id FROM likes WHERE user_id = ? `;
+
+  const [data] = await db.query(sql, [loguid]);
+
+  const newData = data.map((i) => i.post_id);
+
+  // console.log(newData)
+  res.json(newData); //回傳json格式
+});
+
 
 export default postRouter;
