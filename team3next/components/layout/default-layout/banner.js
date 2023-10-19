@@ -19,13 +19,13 @@ export default function Banner(
             {/* 下拉選單 */}
             <LocationSelect 
               selectedCity={selectedCity}
-        setSelectedCity={setSelectedCity}
+              setSelectedCity={setSelectedCity}
             />
           </div>
           {/* 搜尋條 */}
           <SearchBar 
             searchKeyword={searchKeyword}
-        setSearchKeyword={setSearchKeyword}
+            setSearchKeyword={setSearchKeyword}
           />
         </div>
       </div>
