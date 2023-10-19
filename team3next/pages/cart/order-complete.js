@@ -50,7 +50,7 @@ useEffect(() => {
       <div
         className={style.topBox + " container d-flex justify-content-around"}
       >
-        <button class="btn" type="button">
+        <button className="btn" type="button">
           全部商品
         </button>
         <div class="dropdown">
