@@ -95,7 +95,8 @@ export default function CartDetail() {
   const insertDatabase = () => {
     const getUserid = JSON.parse(localStorage.getItem("auth"));
     const getUser = getUserid.user_id;
-    const orderTotal = calculateTotal().total;
+    const orderTotal = total;
+    // const orderTotal = calculateTotal().total;
 
     console.log(getUser);
     if (getUser) {
@@ -189,7 +190,7 @@ export default function CartDetail() {
             {/* 若購物車要對齊 className={styles.productTitle + " border-0"} */}
             <tr>
               <th scope="col" className={styles.cartNum + " border-0"}>
-                購物車(2)
+                購物車(1)
               </th>
             </tr>
             <tr className={styles.productTitle}>

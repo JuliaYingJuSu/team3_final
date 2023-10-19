@@ -64,7 +64,7 @@ export default function AddPost() {
         post_restaurant_id: selectedOption.value,
         food_tag_id:selectedOptionValues,
       }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "multipart/form-data" },
     })
       .then((r) => r.json())
       .then((r) => {
@@ -145,13 +145,6 @@ export default function AddPost() {
               </div>
               <div className="input-group mb-3 w-100 ">
                 <span className="input-group-text icon-map"></span>
-                {/* <input
-                type="text"
-                className="form-control"
-                placeholder="新增餐廳"
-                aria-label="Postlocation"
-                aria-describedby="button-addon2"
-              /> */}
                 <PostRestaurant
                   className="input-group-text"
                   selectedOption={selectedOption}
@@ -167,13 +160,6 @@ export default function AddPost() {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 />
-                {/* <input
-                type="text"
-                className="form-control"
-                placeholder="新增標籤"
-                aria-label="Posttag"
-                aria-describedby="button-addon3"
-              /> */}
               </div>
               <div className="input-group mb-3 ">
                 <span className="input-group-text icon-edit"></span>

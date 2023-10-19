@@ -53,6 +53,8 @@ export default function RestaurantDetail() {
     }
   }, [router.isReady]);
 
+  const openingShort = data.rows?.restaurant_opening.split("\\n")[0];
+
   const specSplit1 = data.rows?.restaurant_info.split("\\n").map((v, i) => {
     return <>{v ? <p key={i}>{v}</p> : <br key={i}></br>}</>;
   });
@@ -154,7 +156,7 @@ export default function RestaurantDetail() {
             <SwiperSlide key={i}>
               <img
                 className="w-100 swiper1Img"
-                src={"/images/book/" + v.r_img_route}
+                src={`http://localhost:3002/img/${v.r_img_route}`}
                 alt=""
               />
             </SwiperSlide>
@@ -192,7 +194,7 @@ export default function RestaurantDetail() {
             <span className="pe-2">
               <span className="icon-calender"></span>
             </span>
-            <div>每週一休息</div>
+            <div>{openingShort}</div>
           </div>
         </div>
         <br />
@@ -248,7 +250,7 @@ export default function RestaurantDetail() {
               <SwiperSlide key={i}>
                 <img
                   className="w-100 swiper2Img"
-                  src={"/images/book/" + v.menu_img_route}
+                  src={`http://localhost:3002/img/${v.menu_img_route}`}
                   alt=""
                 />
               </SwiperSlide>

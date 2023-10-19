@@ -13,7 +13,7 @@ export default function loadingLinepay() {
 
  <Skeleton width='100%' height='100%' count={20} />
       <div className="progress">
-  <div className="color">
+  <div className="color">hhhhhh
   </div>
 </div>  
   </div>
@@ -29,9 +29,9 @@ export default function loadingLinepay() {
 .all{
     position: relative;
     background-color: #2a9d8f;
-    {/* transform: translate(-50%,-50%); */}
-    {/* top: 50%;
-    left: 45%; */}
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 45%;
 }
 .progress{
     position: relative;
@@ -60,12 +60,13 @@ export default function loadingLinepay() {
 } */}
 
 .progress .color{
-    position: absolute;
+    position: relative;
     background-color: #ffffff;
-    width: 0px;
+    width: 7px;
     height: 10px;
     border-radius: 15px;
-    animation: progres 4s infinite linear;    
+    animation: progres 4s infinite linear; 
+    z-index: 1;   
 }
 
 @keyframes progres {
