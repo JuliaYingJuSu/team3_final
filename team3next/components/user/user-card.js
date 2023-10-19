@@ -9,7 +9,7 @@ import Saved from "../post/saved";
 import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
-export default function WhoCard({
+export default function UserCard({
   usercard,
   // post_id,
   // post_title,
@@ -124,12 +124,38 @@ export default function WhoCard({
                 </a>
               ))}
             </div>
-            <h6 className="card-title w-100 mt-3 fw-bolder text-start mb-4">
+            <h6 className="card-title w-100 mt-3 fw-bolder text-start">
               {usercard.post_title}
             </h6>
-            <span className="fs12 mt-2 mb-3 text-start">
-              {usercard.createTime.substr(0, 10)}
-            </span>
+            <div className="d-flex align-items-center w-100">
+              <div className="pe-2">
+                <Link href="/user/user-my-article-i">
+                  {/* 三元運算還是不成功，要如何才能使突變薯哥，如果大頭照沒有上傳的時候 */}
+                  {usercard.user_img ? (
+                    <img
+                      className="rounded-circle headshot-small img-thumbnail"
+                      src={process.env.API_SERVER + `/img/${usercard.user_img}`} // 顯示用戶頭像
+                      alt="大頭照"
+                    />
+                  ) : (
+                    <img
+                      className="rounded-circle headshot-small img-thumbnail"
+                      src="/images/logo/png"
+                      alt="大頭照"
+                    />
+                  )}
+                </Link>
+              </div>
+              <p className="middle">
+                <Link
+                  className="fs16b pt-3 text-dark"
+                  href="/user/user-my-article-i">
+                  {usercard.nickname}
+                </Link>
+              </p>
+              <FollowButton ifFollow={false} />
+            </div>
+            <span className="fs12 mt-2 mb-3 text-start">{usercard.createTime.substr(0, 10)}</span>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import Head from "next/head";
 import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import Styles from "@/components/user/user-information.module.scss";
-import WhoCard from "@/components/user/who-card";
+import UserCard from "@/components/user/user-card";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
@@ -35,7 +35,7 @@ export default function Article() {
         {article.map((usercard, i) => {
                 return (
                   <div className="col" key={i}>
-                    <WhoCard usercard={usercard}></WhoCard>
+                    <UserCard usercard={usercard}></UserCard>
                   </div>
                 );
               })}
@@ -47,5 +47,5 @@ export default function Article() {
         <title>收藏文章</title>
       </Head>
     </>
-  );
+  );+9
 }
