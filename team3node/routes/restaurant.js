@@ -210,14 +210,24 @@ restaurantRouter.put(
 
 restaurantRouter.get("/member-orders", async (req, res) => {
   const restaurantId = parseInt(req.id);
-  const sql = "SELECT * FROM `book` WHERE `restaurant_id` = ?";
+  const sql =
+    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC;";
   try {
     const [result] = await db.query(sql, [restaurantId]);
-    console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
+});
+
+restaurantRouter.get("/member-orders-count", async (req, res) => {
+  const restaurantId = parseInt(req.id);
+  const [[totalRecords]] = await db.query(
+    "SELECT COUNT(*) AS total_records FROM `book`  WHERE `restaurant_id` = ?;",
+    [restaurantId]
+  );
+  res.json(totalRecords);
 });
 
 export default restaurantRouter;
