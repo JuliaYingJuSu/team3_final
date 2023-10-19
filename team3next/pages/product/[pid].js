@@ -4,7 +4,6 @@ import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./list.module.css";
-// import indexStyles from "./index.module.css";
 import Form from "react-bootstrap/Form";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -58,14 +57,13 @@ export default function productDetail() {
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
-      console.log(`http://localhost:3080${router.asPath}`);
+      // console.log(`http://localhost:3080${router.asPath}`);
 
       const uid = JSON.parse(localStorage.getItem("auth"))?.user_id || "";
       console.log(pid, uid);
       fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
-          console.log(r);
           setData(r);
           setWish(r.rowsWished);
 
@@ -78,7 +76,7 @@ export default function productDetail() {
           );
         });
     }
-  }, [router.isReady, run]);
+  }, [router.query.pid, run]);
 
   const descSplit = data.rows?.product_description.split("\\n").map((v, i) => {
     return <p key={i}>{v}</p>;
@@ -626,14 +624,21 @@ export default function productDetail() {
                   justify-content-center align-items-center "
                           >
                             <div>
-                              <img
-                                src={"/images/product/" + v.product_img}
-                                alt=""
-                                className="object-fit-cover w-100 h-100"
-                              />
+                              <Link href={`/product/${v.product_id}`}>
+                                <img
+                                  src={"/images/product/" + v.product_img}
+                                  alt=""
+                                  className="object-fit-cover w-100 h-100"
+                                />
+                              </Link>
                             </div>
                             <div>
-                              <span>{v.product_name}</span>
+                              <Link
+                                href={`/product/${v.product_id}`}
+                                style={{ color: "black" }}
+                              >
+                                <span>{v.product_name}</span>
+                              </Link>
                             </div>
                             <div>
                               <span>NT$</span>
