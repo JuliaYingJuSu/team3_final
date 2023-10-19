@@ -25,7 +25,7 @@ export default function CardR2({
       <div className="col mt-2" style={{ height: "780px" }}>
         <div className="card h-100 overflow-hidden">
           <img
-            src={`/images/book/${r_img_route}`}
+            src={`http://localhost:3002/img/${r_img_route}`}
             className="card-img"
             alt="..."
           />

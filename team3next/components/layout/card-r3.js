@@ -27,7 +27,7 @@ export default function CardR3({
         <div className="card3 overflow-hidden row">
           <div className="col-12 col-xl-5" style={{ padding: "0px" }}>
             <img
-              src={`/images/book/${r_img_route}`}
+              src={`http://localhost:3002/img/${r_img_route}`}
               className="card3-img"
               alt="..."
             />
