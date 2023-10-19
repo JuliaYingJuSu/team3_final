@@ -18,8 +18,8 @@ export default function AddPost1() {
   const [content, setContent] = useState("");
   const swalButtons = Swal.mixin({
     customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
+      confirmButton: "btn btn-middle",
+      cancelButton: "btn btn-middle",
     },
     buttonsStyling: false,
   });
@@ -30,7 +30,7 @@ export default function AddPost1() {
     listType: "picture-card",
     maxCount: 10,
     onChange({ file, fileList }) {
-      if (file.status !== 'uploading') {
+      if (file.status !== "uploading") {
         console.log(file, fileList);
       }
     },
@@ -47,7 +47,7 @@ export default function AddPost1() {
         formData.append(`post_image${index + 1}`, file.originFileObj);
       });
     }
-    
+
     formData.append("user_id", auth.user_id);
     formData.append("post_title", title);
     formData.append("post_content", content);
@@ -73,7 +73,7 @@ export default function AddPost1() {
         // setSelectedOptions([]);
         // setTitle("");
         // setContent("");
-        router.push("/post")
+        router.push("/post");
       } else {
         Swal.fire("文章發表失敗", "", "error");
       }
@@ -115,7 +115,9 @@ export default function AddPost1() {
                   <p className="ant-upload-drag-icon">
                     <PictureOutlined style={{ color: "#ae4818" }} />
                   </p>
-                  <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
+                  <p className="ant-upload-text">
+                    請從電腦選擇照片或拖曳到這裡
+                  </p>
                   <p className="ant-upload-hint">可多選，最多十張</p>
                 </div>
               </Upload.Dragger>
@@ -146,7 +148,6 @@ export default function AddPost1() {
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                 />
- 
               </div>
             </Form.Item>
             <Form.Item>
@@ -156,7 +157,6 @@ export default function AddPost1() {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 />
-
               </div>
             </Form.Item>
             <Form.Item>
@@ -173,34 +173,39 @@ export default function AddPost1() {
                     height: 120,
                     resize: "none",
                     width: 387,
-                    
                   }}
                   name="post_content"
                 />
               </div>
             </Form.Item>
             <Form.Item>
-            <a htmlType="submit" className="btn btn-big" onClick={() => {
-                    swalButtons
-                      .fire({
-                        title: "確定要放棄這篇文章?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        cancelButtonText:
-                          '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                        confirmButtonText:
-                          '<i class="far fa-check-circle fs-5"></i> 放棄',
-                      })
-                      .then((result) => {
-                        if (result.isConfirmed) {
-                          swalButtons.fire("結束發表", "", "success");
-                        }
-                        // router.push("/user/:user_id")
-                      });
-                  }}>
+              <a
+                className="btn btn-big me-5"
+                onClick={() => {
+                  swalButtons
+                    .fire({
+                      title: "確定要放棄這篇文章?",
+                      text: "放棄文章將不會被保留喔！",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText:
+                        '<i class="far fa-check-circle fs-5"></i>確定放棄',
+                      cancelButtonText: "先不要",
+                      reverseButtons: true,
+                    })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire("放棄成功", "您已放棄發表", "success");
+                        router.push("/user/:user_id");
+                      } else if (result.dismiss == Swal.DismissReason.cancel) {
+                        swalButtons.fire("取消放棄", "請繼續編輯文章", "error");
+                      }
+                    });
+                }}
+              >
                 捨棄文章
               </a>
-              <Button htmlType="submit" className="btn btn-big">
+              <Button htmlType="submit" className="btn btn-big ">
                 發表文章
               </Button>
             </Form.Item>
