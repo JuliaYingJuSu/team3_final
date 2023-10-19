@@ -65,7 +65,7 @@ export default function UserInfo() {
     formData.append("user_img", selectedFile);
 
     fetch(
-      process.env.API_SERVER + "/api/user/update-img", //server url
+      process.env.API_SERVER + "/api/user/update-img", 
       {
         method: "PUT",
         body: formData,
