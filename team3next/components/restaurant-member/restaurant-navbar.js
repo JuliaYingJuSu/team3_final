@@ -59,7 +59,7 @@ export default function RestaurantNavbar() {
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
-              歡迎回來，{memberAuth.result?.restaurant_name || "加載中..."}
+              歡迎回來，{memberAuth.result.restaurant_name || "加載中..."}
             </div>
           </div>
         </div>

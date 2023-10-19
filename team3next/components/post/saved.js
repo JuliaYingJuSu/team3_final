@@ -2,14 +2,14 @@ import React, { useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
 import {useRouter } from "next/router";
-import axios from "axios";
+
 
 export default function Saved({ ifSave, post_id }) {
   // console.log(post_id);
   // console.log(ifSave);
   const [saved, setSaved] = useState(ifSave);
   const { auth } = useContext(AuthContext);
-  const router = useRouter();
+
 
   const favToggle = async () => {
     if (!auth?.user_id) {

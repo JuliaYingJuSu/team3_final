@@ -200,13 +200,24 @@ restaurantRouter.put(
       // send response
       res.json(output);
     } catch (err) {
-      console.error("路由处理错误:", err);
-      output.errors = "路由处理错误";
+      console.error("路由處理錯誤:", err);
+      output.errors = "路由處理錯誤";
       output.err = err;
       res.status(500).json(output); //
     }
   }
 );
 
+restaurantRouter.get("/member-orders", async (req, res) => {
+  const restaurantId = parseInt(req.id);
+  const sql = "SELECT * FROM `book` WHERE `restaurant_id` = ?";
+  try {
+    const [result] = await db.query(sql, [restaurantId]);
+    console.log(result);
+    res.json(result);
+  } catch (err) {
+    console.error(err)
+  }
+});
 
 export default restaurantRouter;

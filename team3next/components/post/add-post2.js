@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import AuthContext from "@/hooks/AuthContext";
 import AntdFoodtag from "./antd_foodtag";
 import AntdRestaurant from "./antd_restaurant";
+import router from "next/router";
 
 export default function AddPost1() {
   const { auth } = useContext(AuthContext);
@@ -17,8 +18,8 @@ export default function AddPost1() {
   const [content, setContent] = useState("");
   const swalButtons = Swal.mixin({
     customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
+      confirmButton: "btn btn-middle",
+      cancelButton: "btn btn-middle",
     },
     buttonsStyling: false,
   });
@@ -72,6 +73,7 @@ export default function AddPost1() {
         // setSelectedOptions([]);
         // setTitle("");
         // setContent("");
+        router.push("/post");
       } else {
         Swal.fire("文章發表失敗", "", "error");
       }
@@ -175,26 +177,33 @@ export default function AddPost1() {
               </div>
             </Form.Item>
             <Form.Item>
-              {/* <Button htmlType="submit" className="btn btn-big" onClick={() => {
-                    swalButtons
-                      .fire({
-                        title: "確定要放棄這篇文章?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        cancelButtonText:
-                          '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
-                        confirmButtonText:
-                          '<i class="far fa-check-circle fs-5"></i> 放棄',
-                      })
-                      .then((result) => {
-                        if (result.isConfirmed) {
-                          swalButtons.fire("結束發表", "", "success");
-                        }
-                      });
-                  }}>
+              <a
+                className="btn btn-big me-5"
+                onClick={() => {
+                  swalButtons
+                    .fire({
+                      title: "確定要放棄這篇文章?",
+                      text: "放棄文章將不會被保留喔！",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText:
+                        '<i class="far fa-check-circle fs-5"></i>確定放棄',
+                      cancelButtonText: "先不要",
+                      reverseButtons: true,
+                    })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire("放棄成功", "您已放棄發表", "success");
+                        router.push("/user/:user_id");
+                      } else if (result.dismiss == Swal.DismissReason.cancel) {
+                        swalButtons.fire("取消放棄", "請繼續編輯文章", "error");
+                      }
+                    });
+                }}
+              >
                 捨棄文章
-              </Button> */}
-              <Button htmlType="submit" className="btn btn-big">
+              </a>
+              <Button htmlType="submit" className="btn btn-big ">
                 發表文章
               </Button>
             </Form.Item>

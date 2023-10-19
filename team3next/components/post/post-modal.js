@@ -22,6 +22,8 @@ export default function PostModal({
   ifSave,
   favs,
   setFavs,
+  followed,
+  setFollowed,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
@@ -95,7 +97,7 @@ export default function PostModal({
       fetch(`http://localhost:3002/api/post/post-pid`, {
         method: "POST",
         body: JSON.stringify({
-          post_id: post_id,
+        post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",

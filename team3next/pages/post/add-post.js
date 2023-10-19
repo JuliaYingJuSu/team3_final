@@ -4,7 +4,6 @@ import Navbar from "@/components/layout/default-layout/navbar-main";
 import Footer from "@/components/layout/default-layout/footer";
 import UserInfo from "@/components/user/user-info";
 import UserNavbar from "@/components/user/user-navbar";
-import PostRestaurant from "@/components/post/post_restaurant";
 import AddPost1 from "@/components/post/add-post2";
 
 

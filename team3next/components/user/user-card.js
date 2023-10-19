@@ -23,11 +23,11 @@ export default function UserCard({
   // nickname,
   // user_img,
   // food_tag_name,
-  // favs,
-  // setFavs,
+  favs,
+  setFavs,
 }) {
   const { auth, fav } = useContext(AuthContext);
-  const [favs, setFavs] = useState([]);
+  // const [favs, setFavs] = useState([]);
   const [saved, setSaved] = useState(false);
 
   // const [fav, setFav] = useState(false);
