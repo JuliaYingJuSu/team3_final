@@ -186,7 +186,6 @@ app.post("/login-jwt", async (req, res) => {
       user_email: user.user_email,
       nickname: user.nickname,
       user_phone: user.user_phone,
-      user_img: user.user_img,
       self_intr: user.self_intr,
       isVaild: user.isValid,
       user_password: user.user_password,

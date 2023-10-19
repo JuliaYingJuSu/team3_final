@@ -29,7 +29,7 @@ export default function AddPost1() {
     listType: "picture-card",
     maxCount: 10,
     onChange({ file, fileList }) {
-      if (file.status !== 'uploading') {
+      if (file.status !== "uploading") {
         console.log(file, fileList);
       }
     },
@@ -46,7 +46,7 @@ export default function AddPost1() {
         formData.append(`post_image${index + 1}`, file.originFileObj);
       });
     }
-    
+
     formData.append("user_id", auth.user_id);
     formData.append("post_title", title);
     formData.append("post_content", content);
@@ -94,8 +94,7 @@ export default function AddPost1() {
       <div className="container bg-color mb-2 d-flex justify-content-around">
         <Form
           onFinish={onFinish}
-          initialValues={{ title: title, content: content }}
-        >
+          initialValues={{ title: title, content: content }}>
           <div className="my-3">
             <Form.Item
               name="photo"
@@ -106,14 +105,15 @@ export default function AddPost1() {
                 }
                 return e && e.fileList;
               }}
-              noStyle
-            >
+              noStyle>
               <Upload.Dragger {...props}>
                 <div className="mt-5">
                   <p className="ant-upload-drag-icon">
                     <PictureOutlined style={{ color: "#ae4818" }} />
                   </p>
-                  <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
+                  <p className="ant-upload-text">
+                    請從電腦選擇照片或拖曳到這裡
+                  </p>
                   <p className="ant-upload-hint">可多選，最多十張</p>
                 </div>
               </Upload.Dragger>
@@ -144,7 +144,6 @@ export default function AddPost1() {
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                 />
- 
               </div>
             </Form.Item>
             <Form.Item>
@@ -154,7 +153,6 @@ export default function AddPost1() {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 />
-
               </div>
             </Form.Item>
             <Form.Item>
@@ -171,14 +169,13 @@ export default function AddPost1() {
                     height: 120,
                     resize: "none",
                     width: 387,
-                    
                   }}
                   name="post_content"
                 />
               </div>
             </Form.Item>
             <Form.Item>
-            {/* <Button htmlType="submit" className="btn btn-big" onClick={() => {
+              {/* <Button htmlType="submit" className="btn btn-big" onClick={() => {
                     swalButtons
                       .fire({
                         title: "確定要放棄這篇文章?",
@@ -214,6 +211,21 @@ export default function AddPost1() {
             border-radius: 10px 10px 10px 10px;
             width: 900px;
             height: 800px;
+          }
+           {
+            /* .bgc {
+            border-radius: 0px 0px 10px 10px;
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+            background: linear-gradient(
+              106deg,
+              rgba(255, 255, 255, 0) 6.21%,
+              rgba(249, 231, 166, 0.5) 45%
+            );
+            margin-bottom: 50px;
+            box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);
+          } */
           }
         `}
       </style>
