@@ -71,24 +71,7 @@ export default function AddPost() {
         console.log(r);
       });
 
-    // const sendPost = async (data) => {
-    //   const formData = new FormData();
-    //   for (let key in data) {
-    //     formData.append(key, data[key]);
-    //   }
-    //   data.photo.forEach((file) => {
-    //     formData.append("photo", file.originFileObj);
-    //   });
-    //   try {
-    //     const response = await axios.post(
-    //       "http://localhost:3002/api/post/add-post",
-    //       formData
-    //     );
-    //     console.log("Server Response:", response.data);
-    //   } catch (err) {
-    //     console.error("Error:", err);
-    //   }
-    // };
+
   };
   return (
     <>

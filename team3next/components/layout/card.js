@@ -43,7 +43,7 @@ export default function Card({
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
-
+if(post_id==44){console.log(likes);console.log({fromCard:favs})}
   return (
     <>
       <PostModal
@@ -85,8 +85,6 @@ export default function Card({
               <span className="middle">
                 <Like 
                   ifLike={likes && likes?.includes(post_id) ? true : false}
-                  likes={likes}
-                  setLikes={setLikes}
                   post_id={post_id}
                 />
                 {/* <span>1</span> */}
@@ -100,8 +98,6 @@ export default function Card({
               <span className="middle">
                 <Saved
                   ifSave={favs && favs?.includes(post_id) ? true : false}
-                  favs={favs}
-                  setFavs={setFavs}
                   post_id={post_id}
                 />
                 {/* <button

@@ -25,7 +25,7 @@ export default function PostModal({
   followed,
   setFollowed,
   likes,
-        setLikes,
+  setLikes,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
