@@ -6,32 +6,26 @@ import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./my-order.module.css";
 import Link from "next/link";
+import { post } from "request";
 
 export default function MyOrder() {
-  // const data = [
-  //   {
-  //     order_id: 202307141125,
-  //     order_date: "2023/09/21",
-  //     total: 380,
-  //     order_status: "備貨中",
-  //   },
-  //   {
-  //     order_id: 202307141126,
-  //     order_date: "2023/09/27",
-  //     total: 650,
-  //     order_status: "備貨中",
-  //   },
-  // ];
 
   const [data, setData] = useState([]);
+  const getUid = JSON.parse(localStorage.getItem("auth"))
+  const getUser = getUid.user_id;
+  console.log(getUser)
   useEffect(() => {
-    fetch("http://localhost:3002/api/cart/my-order")
+    fetch("http://localhost:3002/api/cart/my-order", {
+      method: "post",
+      body:JSON.stringify({user_id: getUser}),
+      headers: {"Content-Type": "application/json",}
+    })
       .then((r) => r.json())
       .then((obj) => {
         setData(obj);
         console.log(obj);
       });
-    // [data], 指當data有個更新時, 重做useEffect
+    // [data], 指當data有個更新時, 重做useEffect !
   }, []);
   return (
     <>
