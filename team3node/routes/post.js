@@ -1,8 +1,10 @@
 import express from "express";
 import db from "../module/connect.js";
 import upload from "../module/upload-imgs.js";
+import multer from 'multer'
 
 const postRouter = express.Router();
+// const uploadImg = multer()
 
 //送資料給post主頁
 postRouter.get("/", async (req, res) => {
@@ -35,78 +37,141 @@ postRouter.post("/post-comment", async (req, res) => {
   res.json(rowsComments);
 });
 
+const uploadImg=multer({dest:'tmp_uploads/',  fieldname: 'photo'});//設定上傳檔案位置
 //新增文章路由
-postRouter.post("/add-post", upload.array("post_image_name"), async (req, res) => {
-  // console.log(req.body);
-  let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } = req.body;
-  console.log(food_tag_id);
-  const output = {
-    success: false,
-    errors: {},
-    result: {},
-    postData: {}, // 除錯檢查用
-  };
-  const sqlPost = `INSERT INTO post (post_id, post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (NULL, ?, ?, ?, NOW(),  ?,  NOW(), 1)`;
-
-  let result;
-
-  try {
-    [result] = await db.query(sqlPost, [
-      post_title,
-      post_content,
-      post_restaurant_id,
-      user_id,
-    ]);
-    output.success = !!result.affectedRows;
-    output.result = result;
-
-    const postId = result.insertId;
-    // food_tag_id.forEach(async (v,i) => {
-    //       const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`
-    //             [result] = await db.query(sqlTags, [postId,food_tag_id ])
-    // })
-
-    const foodTagInsertPromises = [];
-
-    for(let i = 0; i < food_tag_id.length; i++) {
-      const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`;
-    const foodTagInsertPromise = db.query(sqlTags, [postId, food_tag_id[i]]);
-    foodTagInsertPromises.push(foodTagInsertPromise);
-    }
-    try {
-      await Promise.all(foodTagInsertPromises);
-    }catch (err) {
-      console.error("Error while inserting food tags:", err);
-    }
-
-
-
-    const files = req.files;
-    console.log(req.files);
-    if (files && files.length > 0) {
-      files.forEach(async (file) => {
-        const { filename } = file;
-        // 從req.file結構出需要存入資料庫的filename
-        const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (NULL, ?, ?)`;
-
-        try {
-          [result] = await db.query(sqlImg, [postId, filename, 1]);
-          console.log(`File ${filename} inserted into database.`);
-        } catch (err) {
-          console.error(
-            `Error inserting file ${filename} into database: ${err}`
-          );
+postRouter.post(
+  "/add-post",
+  upload.any(),
+  async (req, res) => {
+    //return res.json([req.files,req.body])
+    /*
+    [
+    [
+        {
+            "fieldname": "post_image1",
+            "originalname": "Group 76_0.png",
+            "encoding": "7bit",
+            "mimetype": "image/png",
+            "destination": "public/img",
+            "filename": "3d03b0b8-59fc-4c43-8a38-8bb1850bbae3.png",
+            "path": "public/img/3d03b0b8-59fc-4c43-8a38-8bb1850bbae3.png",
+            "size": 114993
+        },
+        {
+            "fieldname": "post_image2",
+            "originalname": "Group 77_0.png",
+            "encoding": "7bit",
+            "mimetype": "image/png",
+            "destination": "public/img",
+            "filename": "7ca84900-3c59-4969-88aa-02389f431115.png",
+            "path": "public/img/7ca84900-3c59-4969-88aa-02389f431115.png",
+            "size": 126211
         }
-
-      });
+    ],
+    {
+        "user_id": "22",
+        "post_title": "好吃的2",
+        "post_content": "123",
+        "post_restaurant_id": "2",
+        "food_tag_id": [
+            "2",
+            "7"
+        ]
     }
-  }catch (err) {
-    output.errors = "SQL 錯誤";
-    output.err = err;
-  }
+]
+    */
+    // console.log(req.body);
+    let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } =
+      req.body;
+    console.log(food_tag_id);
+    const output = {
+      success: false,
+      errors: {},
+      result: {},
+      postData: {}, // 除錯檢查用
+    };
+    const sqlPost = `INSERT INTO post ( post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, NOW(),  ?,  NOW(), 1)`;
 
-  res.json(output);
-});
+    let result;
+
+    try {
+      [result] = await db.query(sqlPost, [
+        post_title,
+        post_content,
+        post_restaurant_id,
+        user_id,
+      ]);
+      output.success = !!result.affectedRows;
+      output.result = result;
+
+      const postId = result.insertId;
+
+      const foodTagInsertPromises = [];
+
+      for (let i = 0; i < food_tag_id.length; i++) {
+        const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`;
+        const foodTagInsertPromise = await db.query(sqlTags, [
+          postId,
+          food_tag_id[i],
+        ]);
+        foodTagInsertPromises.push(foodTagInsertPromise);
+      }/*
+      try {
+        await Promise.all(foodTagInsertPromises);
+      } catch (err) {
+        console.error("Error while inserting food tags:", err);
+      }
+      */
+
+      if (req.files && req.files.length > 0) {
+        const sqlImg = `INSERT INTO post_image (post_id, post_image_name) VALUES (?, ?)`;
+
+        for(let f of req.files){
+          try {
+            [result] = await db.query(sqlImg, [postId, f.filename]);
+            console.log(`File ${f.filename} inserted into database.`);
+          } catch (err) {
+            console.error(
+              `Error inserting file ${f.filename} into database: ${err}`
+            );
+          }
+        }
+      }
+    } catch (err) {
+      console.log({err})
+      output.errors = "SQL 錯誤";
+      output.err = err;
+    }
+    output.reqfiles = req.files;
+    res.json(output);
+  }
+);
+
+//test upload
+// postRouter.post(
+//   "/upload",
+//   upload.array("post_image_name"),
+//   async (req, res) => {
+//     const files = req.files;
+//       console.log(req.files);
+//       if (files && files.length > 0) {
+//         files.forEach(async (file) => {
+//           const { filename } = file;
+//           // 從req.file結構出需要存入資料庫的filename
+//           const sqlImg = `INSERT INTO post_image (post_image_id, post_id, post_image_name) VALUES (NULL, ?, ?)`;
+//           try {
+//             [result] = await db.query(sqlImg, [58, filename, 1]);
+//             console.log(`File ${filename} inserted into database.`);
+//           } catch (err) {
+//             console.error(
+//               `Error inserting file ${filename} into database: ${err}`
+//             );
+//           }
+
+//         });
+//       }
+//   }
+// );
 
 //新增留言
 postRouter.post("/add-comment", async (req, res) => {
@@ -128,57 +193,54 @@ postRouter.post("/add-comment", async (req, res) => {
 });
 
 //文章主頁要收藏訊息
-postRouter.get('/fav', async(req,res)=>{
-  
-  if(!res.locals.jwtData?.user_id){
+postRouter.get("/fav", async (req, res) => {
+  if (!res.locals.jwtData?.user_id) {
     return res.json({});
   }
-  const loguid = res.locals.jwtData.user_id
+  const loguid = res.locals.jwtData.user_id;
   // console.log(loguid)
   const sql = `SELECT post_id FROM post_favorite WHERE user_id = ? `;
 
   const [data] = await db.query(sql, [loguid]);
-  
-  const newData = data.map(i=>i.post_id);
+
+  const newData = data.map((i) => i.post_id);
 
   // console.log(newData)
-  res.json(newData);//回傳json格式
-})
-
+  res.json(newData); //回傳json格式
+});
 
 //加入收藏
 postRouter.get("/toggle-fav/:post_id", async (req, res) => {
-  console.log("running route")
+  console.log("running route");
   const post_id = req.params.post_id || 0;
   const output = {
-    action: '', // insert, delete
+    action: "", // insert, delete
     post_id,
   };
-  console.log(req.query)
-  
-  console.log(res.locals.jwtData?.user_id)
+  console.log(req.query);
 
-  if(!res.locals.jwtData?.user_id){
+  console.log(res.locals.jwtData?.user_id);
+
+  if (!res.locals.jwtData?.user_id) {
     return res.json({});
   }
-  const user_id = res.locals.jwtData.user_id
+  const user_id = res.locals.jwtData.user_id;
 
   const sql1 = `SELECT * FROM post_favorite WHERE user_id=? AND post_id=?`;
   const [rows1] = await db.query(sql1, [user_id, post_id]);
-  if(rows1.length){
+  if (rows1.length) {
     // delete
     const sql2 = `DELETE FROM post_favorite WHERE user_id=? AND post_id=?`;
     await db.query(sql2, [user_id, post_id]);
-    output.action = 'delete';
+    output.action = "delete";
   } else {
     // insert
     const sql3 = `INSERT INTO post_favorite (user_id, post_id) VALUES (?, ?)`;
     await db.query(sql3, [user_id, post_id]);
-    output.action = 'insert';
-    console.log(sql3)
+    output.action = "insert";
+    console.log(sql3);
   }
-  res.json(output)
+  res.json(output);
 });
-
 
 export default postRouter;

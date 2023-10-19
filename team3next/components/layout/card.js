@@ -89,7 +89,7 @@ export default function Card({
             data-bs-target={"#exampleModal" + post_id}
           >
             <img
-              src={`/images/post/${post_image_name}`}
+              src={`http://localhost:3002/img/${post_image_name}`}
               className="card-img"
               alt="..."
             />
