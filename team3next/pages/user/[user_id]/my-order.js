@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import MyNavbar from "@/components/layout/default-layout/navbar-main";
 import UserNavbar from "@/components/user/user-navbar";
 import Head from "next/head";
@@ -6,27 +6,33 @@ import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./my-order.module.css";
 import Link from "next/link";
-import { post } from "request";
+import {useRouter} from 'next/router'
+import AuthContext from "@/hooks/AuthContext";
 
 export default function MyOrder() {
-
+  const router = useRouter();
   const [data, setData] = useState([]);
-  const getUid = JSON.parse(localStorage.getItem("auth"))
-  const getUser = getUid.user_id;
-  console.log(getUser)
+  const { auth } = useContext(AuthContext);
+  // const getUserid = JSON.parse(localStorage.getItem("auth"));
+  //   const getUser = getUserid.user_id;
+  //   console.log("------", getUser)
   useEffect(() => {
-    fetch("http://localhost:3002/api/cart/my-order", {
-      method: "post",
-      body:JSON.stringify({user_id: getUser}),
-      headers: {"Content-Type": "application/json",}
-    })
+    if(router.isReady){
+    //  const uu = JSON.parse(localStorage.getItem("auth"));
+    //  const getuserId = uu.user_id;
+    //  console.log("20------", getuserId)
+      // const a = router.query['user_id'];
+      // console.log("21--------", a)
+       fetch(`http://localhost:3002/api/cart/${auth.user_id}/my-order`)
       .then((r) => r.json())
       .then((obj) => {
         setData(obj);
         console.log(obj);
       });
-    // [data], 指當data有個更新時, 重做useEffect !
-  }, []);
+    // [data], 指當data有個更新時, 重做useEffect
+  
+    }
+   }, [auth.user_id]);
   return (
     <>
       <MyNavbar></MyNavbar>
@@ -35,7 +41,7 @@ export default function MyOrder() {
 
       {/* 消費紀錄開始 */}
       <div className={styles.recordBox + " container p-5 w-100"}>
-        <p className={styles.head + " grey"}>消費紀錄</p>
+        <p className={styles.head + " grey"}> {data.length > 0 ? `消費紀錄(${data.length})` : "尚未有消費紀錄～"}</p>
 
         <table className="table table-hover">
           <thead className=" bottom-line-g">

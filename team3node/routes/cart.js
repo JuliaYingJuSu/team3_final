@@ -55,20 +55,33 @@ const corsOptions = {
 // });
 
 // ----------------------消費紀錄 my-order,寫死user_id=36 ----------------------
-cartRouter.get("/my-order", async (req, res) => {
-  let output = {
-    success: false,
-    rows: [],
-  };
+cartRouter.get("/:user_id/my-order", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  // let output = {
+  //   success: false,
+  //   rows: [],
+  // };
+  // const sql = `SELECT * FROM order_general WHERE 
+  // user_id = ${user_id} ORDER BY order_date DESC `;
+  // const [rows] = await db.query(sql);
+  // for (let r of rows) {
+  //   r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
+  // }
 
-  const sql = `SELECT * FROM order_general WHERE user_id = 22 ORDER BY order_date DESC `;
+ const sql = `SELECT * FROM order_general WHERE 
+  user_id = ${user_id} ORDER BY order_date DESC `;
+
+  try{ 
   const [rows] = await db.query(sql);
+  console.log('這裡')
+  console.log(rows);
   for (let r of rows) {
     r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
   }
-
-  console.log(rows);
-  res.json(rows);
+   res.json(rows);
+}catch(ex){console.log(ex)}
+ 
+  
 });
 
 // ---------------------- order-complete -------------------------------
