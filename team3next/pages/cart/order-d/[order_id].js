@@ -7,6 +7,7 @@ import productDetail from "@/pages/product/[pid]";
 import ProductComment from "@/components/cart/product-comment";
 import { useRouter } from "next/router";
 import RunContext from "@/hooks/RunContext";
+import Link from "next/link";
 
 export default function OrderComplete() {
   const { run, setRun } = useContext(RunContext);
@@ -261,12 +262,20 @@ export default function OrderComplete() {
                     <td className={styles.imgWidth + " w-20"}>
                       <img
                         className="img-fluid rounded-1"
-                        src={"http://localhost:3080/images/product/" + v.product_img}
+                        src={
+                          "http://localhost:3080/images/product/" +
+                          v.product_img
+                        }
                         alt=""
                       />
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
-                      {v.product_name}
+                      <Link
+                        href={`/product/${v.product_id}`}
+                        style={{ color: "#666666" }}
+                      >
+                        {v.product_name}
+                      </Link>
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
                       {/* <span className="icon-minus me-3"></span> */}
@@ -280,7 +289,7 @@ export default function OrderComplete() {
                       {v.price * v.order_quantity}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
-                    {<ProductComment product={v} />}
+                      {<ProductComment product={v} />}
                     </td>
                   </tr>
                 </>
@@ -290,11 +299,12 @@ export default function OrderComplete() {
         </table>
 
         {/* 計算 */}
+       
         <div className={styles.totalBox + " text-end"}>
-        {/* {`小計NT$` + data.price * data.order_quantity } */}
-          <p>小計NT$250</p>
+          {/* {`小計NT$` + data.price * data.order_quantity } */}
+          <p>小計NT${data.result && data.result[0].order_amount}</p>
           <p>運費NT$60</p>
-          <p>合計NT$380</p>
+          <p>合計NT${data.result && data.result[0].order_amount + 60}</p>
         </div>
 
         {/* 底下訂單資訊 */}

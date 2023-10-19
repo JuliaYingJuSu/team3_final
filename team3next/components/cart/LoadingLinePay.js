@@ -1,19 +1,22 @@
 import React from 'react'
 // import styles from '@/components/cart/loading-linepay.module.css'
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-// import "react-loading-skeleton/dist/skeleton.css";
+
 
 
 export default function loadingLinepay() {
   return (
     <>
-    <SkeletonTheme baseColor={"#2a9d8f"}>
- 
- <div className='all'>
+        <div className='all'>
 
- <Skeleton width='100%' height='100%' count={20} />
-      <div className="progress">
-  <div className="color">hhhhhh
+        <div className="d-flex flex-sm-row bd-highlight mb-3 justify-content-center align-items-center">
+ 
+
+<img src="../images/薯哥去背.png" alt="" style={{ width: '460px', height: '335px' }} />
+</div>
+
+<div className="progress">
+  <div className="color">
+
   </div>
 </div>  
   </div>
@@ -28,14 +31,19 @@ export default function loadingLinepay() {
 
 .all{
     position: relative;
-    background-color: #2a9d8f;
-    transform: translate(-50%,-50%);
-    top: 50%;
-    left: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 880px;
+    width: 100%;
+    background-color: #ebd8a9;
+    {/* transform: translate(-50%,-50%); */}
+    top: 70%;
+    {/* left: 45%; */}
 }
 .progress{
     position: relative;
-    height: 10px;
+    height: 35px;
     width: 20%;
     border: 10px solid #f4a261;
     border-radius: 15px;
@@ -60,13 +68,12 @@ export default function loadingLinepay() {
 } */}
 
 .progress .color{
-    position: relative;
-    background-color: #ffffff;
+    background-color: #ebd8a9;
+    top: 5px
     width: 7px;
-    height: 10px;
+    height: 16px;
     border-radius: 15px;
-    animation: progres 4s infinite linear; 
-    z-index: 1;   
+    animation: progres 3s infinite linear; 
 }
 
 @keyframes progres {
@@ -91,7 +98,6 @@ export default function loadingLinepay() {
     }
 }
       `}</style>
-      </SkeletonTheme>
     </>
   )
 }

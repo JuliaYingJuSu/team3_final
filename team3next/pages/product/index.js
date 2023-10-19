@@ -8,11 +8,13 @@ import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
+
 import Pagination from "@/components/product/pagination";
 import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
+import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
 
 export default function index() {
@@ -21,6 +23,7 @@ export default function index() {
   console.log(data.rows?.length);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
+  const wsRef = useRef();
 
   const [inputText, setInputText] = useState("");
   const [fullText, setFullText] = useState("");
@@ -195,12 +198,13 @@ export default function index() {
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
   console.log(msg);
-  const [msgs, setMsgs] = useState([]);
-  console.log(msgs);
+  const { wsMsgs, setWsMsgs } = useContext(WsContext);
+  // const [msgs, setMsgs] = useState([]);
+  console.log(wsMsgs);
 
-  let ws;
   useEffect(() => {
-    ws = new WebSocket("ws://localhost:3002/ws");
+    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws")); //***用useRef抓住ws不受渲染影響
+
     ws.onopen = () => {
       console.log("open connection");
     };
@@ -213,10 +217,21 @@ export default function index() {
     //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
     //#endregion
     ws.onmessage = (res) => {
-      console.log("res");
+      // console.log(res);
       const msg = JSON.parse(res.data);
-      if (msg.type === "message") {
-        setMsgs([...msgs, msg.data]);
+      // console.log(msg, res.type);
+
+      if (res.type === "message") {
+        console.log("res.data === message");
+        // const newMsgs = [...wsMsgs, msg];
+        // console.log(newMsgs);
+        // const newMsgs = (prevMsgs)=>{
+        (prevMsgs) => {
+          console.log(prevMsgs);
+        }; //["888","888"] prevMsgs?????
+        // }
+        setWsMsgs((prevMsgs) => [...prevMsgs, msg]);
+        // setWsMsgs(newMsgs);
       }
     };
     ws.onclose = () => {
@@ -225,20 +240,12 @@ export default function index() {
   }, []);
 
   function sendMsg() {
-    console.log("進sendMsg");
+    let ws = wsRef.current;
+    // console.log("進sendMsg");
 
-    // -------------------
-
-    // 錯誤訊息 "Uncaught TypeError: Cannot read properties of undefined (reading 'send')" 意味著在你的前端程式碼中，WebSocket 的連接 ws 是 undefined。這可能是因為在 sendMsg 函數被呼叫時，ws 變數尚未被正確初始化。
-
-    // 在你的程式碼中，ws 變數是在 useEffect 內部聲明的，並且只在 useEffect 的作用域內有效。這意味著在 sendMsg 函數中無法正確訪問到 ws。
-
-    // 為了解決這個問題，你可以將 ws 變數保存在 useRef 中，這樣它的作用域就不會受限於 useEffect 了。
-    // ---------------------
-
-    if (ws.readyState === 1) {
-      console.log("ws.readyState === 1");
-      ws.send(JSON.stringify({ type: "message", constent: msg }));
+    if (ws.readyState == 1) {
+      // console.log("ws.readyState === 1");
+      ws.send(JSON.stringify({ type: "message", content: msg }));
     } else {
       console.log("ws.readyState不等於 1");
     }
@@ -249,7 +256,7 @@ export default function index() {
   //------------------------------------------------
   return (
     <>
-      {/* <button
+      <button
         class="btn btn-primary"
         type="button"
         data-bs-toggle="offcanvas"
@@ -266,25 +273,34 @@ export default function index() {
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
       >
+        <h2 className="p-3">HELLO</h2>
         <div className="offcanvas-header">
-          {msgs.map((msg) => {
+          {/* {msgs.map((msg) => {
             return (
-              <h5 className="offcanvas-title" id="offcanvasBottomLabel">
+              <p className="offcanvas-title" id="offcanvasBottomLabel">
                 {msg}
-              </h5>
+              </p>
             );
-          })}
+          })} */}
 
           <button
             type="button"
-            className="btn-close"
+            className="btn-close ms-auto"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
         <div className="offcanvas-body small ">
           ...
-          <div></div>
+          <div>
+            {wsMsgs.map((m) => {
+              return (
+                <p className="offcanvas-title" id="offcanvasBottomLabel">
+                  {m}
+                </p>
+              );
+            })}
+          </div>
           <input
             type="text"
             value={msg}
@@ -295,16 +311,17 @@ export default function index() {
           <button
             className="btn btn-warning"
             onClick={() => {
-              console.log("進sendMsg");
+              // console.log("進sendMsg");
 
               sendMsg();
+              setMsg("");
             }}
           >
             送出
           </button>
         </div>
-      </div> */}
-
+      </div>
+      {/* ---------------------------------- */}
       <Navbar />
       <div className="container" style={{ paddingTop: "225px" }}>
         <Bread typeList={typeList} data={data} />
@@ -402,16 +419,18 @@ export default function index() {
                   {typeList
                     ? data.items
                         ?.filter((v) => {
-                          console.log("data.items");
-                          console.log(data.items);
+                          // console.log("data.items");
+                          // console.log(data.items);
                           return v.product_type_list_id
                             .split(",")
                             .includes(typeList.split(",")[0]);
                         })
                         .map((v, i) => {
-                          console.log("items");
-                          console.log(items);
-                          console.log(items.includes(v.item_id));
+                          //動態篩選條件
+
+                          // console.log("items");
+                          // console.log(items);
+                          // console.log(items.includes(v.item_id));
 
                           return (
                             <label key={i}>
@@ -419,13 +438,13 @@ export default function index() {
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-1"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
                                   if (!items.includes(v.item_id)) {
                                     const newItems = [...items, v.item_id];
-                                    console.log(newItems);
+                                    // console.log(newItems);
 
                                     setItems(newItems);
                                   } else {
@@ -454,13 +473,14 @@ export default function index() {
                       data.items
                         // .filter((v) => v.price_range == 1)
                         .map((v, i) => {
+                          //預設篩選條件
                           return (
                             <label key={i}>
                               <input
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-4"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
@@ -509,7 +529,7 @@ export default function index() {
                   // console.log(v);
                   return (
                     // 畫面渲染後不會再變動key才能用索引
-                    <label key={i} className="w-100 ps-2 my-2">
+                    <label key={i} className="w-100 ps-2 my-1">
                       <input
                         className="me-2"
                         // className="----------------------------"
