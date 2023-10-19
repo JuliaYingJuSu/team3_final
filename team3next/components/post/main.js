@@ -10,6 +10,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
   const [favs, setFavs] = useState([]);
+  const [followed, setFollowed] = useState([]);
+  const [likes, setLikes] = useState([]);
+  
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
@@ -25,6 +28,36 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       .then((r) => r.json())
       .then((f) => {
         setFavs(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
+
+  //接收加入追蹤資料庫資料
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/follow",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setFollowed(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
+
+  //接收加入收藏資料庫資料
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/like",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setLikes(f);
       })
       .catch((ex) => console.log(ex));
   }, [auth]);
@@ -107,7 +140,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     });
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword,favs]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs,likes]);
   
 
   return (
@@ -126,6 +159,12 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
               food_tag_names,
               user_id, 
               food_tag_name,
+              favs,
+                  setFavs,
+                  followed,
+                  setFollowed,
+                  likes,
+                  setLikes,
             }) => {
               const nickname = userData && userData[user_id]?.nickname;
               const user_img = userData && userData[user_id]?.user_img;
@@ -136,6 +175,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
                   post_id={post_id}
                   favs={favs}
                   setFavs={setFavs}
+                  followed={followed}
+                  setFollowed={setFollowed}
+                  likes={likes} setLikes={setLikes}
                   post_title={post_title}
                   post_content={post_content}
                   createTime={createTime}

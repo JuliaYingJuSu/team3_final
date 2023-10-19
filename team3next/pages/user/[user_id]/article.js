@@ -5,7 +5,7 @@ import Head from "next/head";
 import UserInfo from "@/components/user/user-info";
 import Footer from "@/components/layout/default-layout/footer";
 import Styles from "@/components/user/user-information.module.scss";
-import WhoCard from "@/components/user/who-card";
+import UserCard from "@/components/user/user-card";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
@@ -24,6 +24,22 @@ export default function Article() {
         console.log(ex);
       });
   }, [auth.user_id]);
+  const [favs, setFavs] = useState([]);
+  //接收加入收藏資料庫資料
+  useEffect(() => {
+    if(auth && auth.token)
+    fetch(process.env.API_SERVER + "/api/post/fav",{
+      headers: {
+        Authorization: "Bearer " + auth.token,
+      },
+    })
+      .then((r) => r.json())
+      .then((f) => {
+        setFavs(f);
+      })
+      .catch((ex) => console.log(ex));
+  }, [auth]);
+
   return (
     <>
       <MyNavbar></MyNavbar>
@@ -35,7 +51,9 @@ export default function Article() {
         {article.map((usercard, i) => {
                 return (
                   <div className="col" key={i}>
-                    <WhoCard usercard={usercard}></WhoCard>
+                    <UserCard usercard={usercard}
+                    favs={favs}
+                  setFavs={setFavs}></UserCard>
                   </div>
                 );
               })}
@@ -47,5 +65,5 @@ export default function Article() {
         <title>收藏文章</title>
       </Head>
     </>
-  );
+  );+9
 }

@@ -197,7 +197,7 @@ cartRouter.post("/del-detail", async (req, res) => {
     );
     const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
     order_id='${sql3.order_id}'`;
-    console.log(sql);
+    // console.log(sql);
     const [result] = await db.query(sql);
     res.json({
       success: !!result.affectedRows,
@@ -426,7 +426,7 @@ cartRouter.get("/payMethod", async (req, res) => {
 
     // 格式化 packages 1-1
     function formatData(result) {
-      const b = toString(result[0].order_date);
+      const b = result[0].order_date;
       console.log(b);
       return [
         {
@@ -492,8 +492,8 @@ cartRouter.get("/payMethod", async (req, res) => {
 
 
 // 1018
-const trans = toLine?.body?.info?.transactionId
-console.log(trans)
+// const trans = toLine?.body?.info?.transactionId
+// console.log(trans)
 
     // solution3
 
@@ -514,13 +514,49 @@ console.log(trans)
 
 
 // 這段有需要嗎？
-cartRouter.get("http:localhost:3080/cart/order-complete", (req, res) => {
-  const { transactionId, orderId } = req.query;
-  console.log(transactionId, orderId);
-  res.end();
-});
+
 
 // --------------confirm--------------------------
+
+// cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
+//   router.use(cors(corsOptions));
+//   console.log('開始')
+//   let output = {
+//   success: false,
+//   result: [],
+//   };
+//   console.log('back')
+// const tran = req.params.transactionId
+// const orderId = req.params.orderId
+// //hahahha
+// const confirmRequest = {
+//   transactionId: tran,
+//   orderId: orderId, // 与支付请求时的 orderId 相同
+//   amount: 1160, // 与支付请求时的 amount 相同
+// };
+
+
+//   try {
+//       const lastLine = await createLinePayClient.confirm.send(
+//         {confirmRequest}
+//       //   {
+//       //   transactionId: tran,
+//       //   body: {
+//       //     currency: "TWD",
+//       //     // amount需要查資料庫的訂單
+//       //     amount: 1160,
+//       //   },
+//       // }
+//       );
+//       console.log('我成功了')
+//       console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
+//       console.log("hihihi")
+//     } catch (e) {
+//       console.log("error", e);
+//     }
+// });
+
+
 
 // 1016註掉
 // try {

@@ -24,7 +24,7 @@ export default function index() {
   return (
     <>
       <Navbar />
-      <div className="container" style={{marginTop:250}}>
+      <div className="container" style={{marginTop:225}}>
         <Breadcrumb />
       </div>
       <Banner
