@@ -36,7 +36,7 @@ const [loading, setLoading] = useState(false);
 useEffect(() => {
   setTimeout(() => {
     setLoading(true);
-  }, 7000);
+  }, 1200000);
 }, []);
 //---------------- 做linePay Loading end ---------------------
 
