@@ -7,7 +7,6 @@ export default function UserInfo() {
   const [follown, setFollowN] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [imgServerUrl, setImgServerUrl] = useState("");
-  const [rerender, setRerender] = useState(0);
   const [isFilePicked, setIsFilePicked] = useState(false);
 
   useEffect(() => {
@@ -22,6 +21,27 @@ export default function UserInfo() {
       });
   }, [auth.user_id]);
 
+  const [userinfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/user`)
+      .then((r) => r.json())
+      .then((r) => {
+        setUserInfo(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
+
+  useEffect(() => {
+    if (selectedFile) {
+      const newFilename = `${auth.user_id}_${Date.now()}_${selectedFile.name}`;
+      handleSubmission(newFilename);
+    }
+  }, [selectedFile]);
+
   const changeHandler = (e) => {
     const file = e.target.files[0];
 
@@ -29,32 +49,54 @@ export default function UserInfo() {
       console.log("File selected:", file);
       setSelectedFile(file);
       setImgServerUrl(""); // 清除先前的服务器 URL
-      setIsFilePicked(true);
-      handleSubmission();
+      // setIsFilePicked(true);
+      // handleSubmission();
+
+      const newFilename = `${auth.user_id}_${Date.now()}_${file.name}`;
+      handleSubmission(newFilename);
     }
   };
 
-  const handleSubmission = () => {
-    if (isFilePicked) {
+  const handleSubmission = async (newFilename) => {
+    if (selectedFile) {
       console.log("Uploading file:", selectedFile);
       const formData = new FormData();
       formData.append("user_id", auth.user_id);
       formData.append("user_img", selectedFile);
+      formData.append("new_filename", newFilename); // 传递新的文件名
 
-      fetch(process.env.API_SERVER + "/api/user/update-img", {
-        method: "PUT",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((result) => {
+      try {
+        const response = await fetch(
+          process.env.API_SERVER + "/api/user/update-img",
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
+        if (response.ok) {
+          const result = await response.json();
           console.log("成功:", result);
           setImgServerUrl(result.imgServerUrl);
 
-          setRerender(Math.random());
-        })
-        .catch((error) => {
-          console.error("失敗:", error);
-        });
+          // 更新使用者資訊
+          const userResponse = await fetch(
+            process.env.API_SERVER + `/api/user/${auth.user_id}/user`
+          );
+          if (userResponse.ok) {
+            const userResult = await userResponse.json();
+            setUserInfo(userResult);
+          } else {
+            console.error("無法獲取更新的用戶資訊");
+          }
+
+          // 设置 isFilePicked 为 true，表示已成功上传
+          setIsFilePicked(true);
+        } else {
+          console.error("失敗:", response.statusText);
+        }
+      } catch (error) {
+        console.error("錯誤:", error);
+      }
     }
   };
   return (
@@ -78,15 +120,20 @@ export default function UserInfo() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmission();
+              const newFilename = `${auth.user_id}_${Date.now()}_${
+                selectedFile.name
+              }`;
+              handleSubmission(newFilename);
             }}
             encType="multipart/form-data">
             <input name="user_id" type="hidden" value={auth.user_id} />
             <div className="middle ms-5">
               <div className="position-relative">
-                {/* {auth.user_img ? (
+                {userinfo && userinfo.length > 0 && userinfo[0].user_img ? (
                   <img
-                    src={process.env.API_SERVER + `/img/${auth.user_img}`}
+                    src={
+                      process.env.API_SERVER + `/img/${userinfo[0].user_img}`
+                    }
                     alt="大頭照"
                     className="rounded-circle headshot-big img-thumbnail"
                   />
@@ -96,17 +143,17 @@ export default function UserInfo() {
                     alt="大頭照"
                     className="rounded-circle headshot-big img-thumbnail"
                   />
-                )} */}
-                <img
+                )}
+                {/* <img
                   src={
                     imgServerUrl ||
-                    (auth.user_img
-                      ? `${process.env.API_SERVER}/img/${auth.user_img}?${Math.random()}`
+                    (userinfo.user_img
+                      ? `${process.env.API_SERVER}/img/${userinfo[0].user_img}}`
                       : "/images/logo.png")
                   }
                   alt="大頭照"
                   className="rounded-circle headshot-big img-thumbnail"
-                />
+                /> */}
                 <label className="img-thumbnail rounded-circle position-absolute bottom-0 end-0">
                   <input
                     style={{ display: "none" }}
