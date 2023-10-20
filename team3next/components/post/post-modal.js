@@ -194,7 +194,7 @@ export default function PostModal({
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
-                      src={`/images/post/${v.post_image_name}`}
+                      src={`http://localhost:3002/img/${v.post_image_name}`}
                       className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
