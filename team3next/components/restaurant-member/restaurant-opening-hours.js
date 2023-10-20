@@ -18,6 +18,7 @@ export default function OpeningHours() {
     watch,
     formState: { errors },
   } = useForm();
+  console.log(watch());
 
   // useEffect(() => {
   //     const subscription = watch(data =>
@@ -30,7 +31,15 @@ export default function OpeningHours() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:3002/try-post", data);
+      const response = await axios.post(
+        "http://localhost:3002/member-opening-hours",
+        data,
+        {
+          headers: {
+            Authorization: "Bearer " + memberAuth.result.token,
+          },
+        }
+      );
       console.log("Server Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
@@ -63,6 +72,22 @@ export default function OpeningHours() {
             className="d-flex flex-column"
             onSubmit={handleSubmit(onSubmit)}
           >
+            <lable
+              htmlFor="limit"
+              style={{ color: "#666666", fontSize: "22px" }}
+            >
+              人數上限：
+              <span>{watch("limit")}</span>
+            </lable>
+            <input
+              type="range"
+              {...register("limit")}
+              className="w-50 form-range"
+              min="0"
+              max="50"
+              id="limit"
+            />
+
             {daysOfWeek.map((v, i) => {
               return (
                 <motion.div

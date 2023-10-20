@@ -115,7 +115,7 @@ const verifyJWT = (req, res, next) => {
       next(); // 继续处理下一個中間件或者路由
     } catch (err) {
       // console.log(req.headers["authorization"]);
-      res.json({ message: "token is not ok" });
+      res.json({ message: "token is not ok or no response. please check." });
     }
   }
 };
