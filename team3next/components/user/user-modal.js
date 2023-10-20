@@ -26,6 +26,7 @@ export default function UserModal({
   // likes,
   // setLikes,
   usercard,
+  artcard,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
@@ -161,21 +162,25 @@ export default function UserModal({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                <div className="d-flex align-items-center p-1">
-                  <div className="me-2">
-                    <Link href="/user/user-my-article-i">
-                      <img
-                        className="rounded-circle headshot-sm img-thumbnail"
-                        src={`http://localhost:3002/img/${usercard.user_img}`}></img>
-                    </Link>
+                {artcard && artcard.length > 0 ? (
+                  <div className="d-flex align-items-center p-1">
+                    <div className="me-2">
+                      <Link href={`/user/${artcard[0].user_id}user-my-article-i`}>
+                        <img
+                          className="rounded-circle headshot-sm img-thumbnail"
+                          src={`http://localhost:3002/img/${artcard[0].user_img}`}></img>
+                      </Link>
+                    </div>
+                    <p className="middle me-2">
+                      <a className="fs16b pt-3 text-dark" href="#">
+                        {artcard[0].nickname}
+                      </a>
+                    </p>
+                    <FollowButton />
                   </div>
-                  <p className="middle me-2">
-                    <a className="fs16b pt-3 text-dark" href="#">
-                      {usercard.nickname}
-                    </a>
-                  </p>
-                  <FollowButton />
-                </div>
+                ) : (
+                  ""
+                )}
                 <div className="d-flex align-items-center p-1">
                   <p className="icon-map me-1">
                     <a className="me-1 restaurant" href="#">
@@ -246,12 +251,12 @@ export default function UserModal({
             <div className="ms-3">
               <div className="mb-3">
                 {contentParagraphs.map((paragraph, i) => (
-                  <div className="mb-3" key={i}>
+                  <div className="mb-3 text-start" key={i}>
                     {paragraph}
                   </div>
                 ))}
               </div>
-              <p className="icon-tag">
+              <p className="icon-tag text-start">
                 <a href="#" className="ms-2" style={{ color: "#666666" }}>
                   {usercard.food_tag_name}
                 </a>
@@ -267,13 +272,13 @@ export default function UserModal({
                 return (
                   <div className="info d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">
-                      <Link href={`/user/${usercard.user_id}user-my-article-i`}>
+                      <Link href={`/user/${v.user_id}user-my-article-i`}>
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
                           src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
-                    <div className="me-auto">
+                    <div className="me-auto text-start">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>

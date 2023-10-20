@@ -69,7 +69,7 @@ export default function UserCard({ usercard, favs, setFavs }) {
 
   return (
     <>
-      <UserModal usercard={usercard} favs={favs} setFavs={setFavs}></UserModal>
+      <UserModal usercard={usercard} favs={favs} setFavs={setFavs} artcard={artcard}></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a
@@ -77,7 +77,7 @@ export default function UserCard({ usercard, favs, setFavs }) {
             data-bs-toggle="modal"
             data-bs-target={"#exampleModal" + usercard.post_id}>
             <img
-              src={`/images/post/${usercard.post_image_name}`}
+              src={`http://localhost:3002/img/${usercard.post_image_name}`}
               className="card-img"
               alt="..."
             />
@@ -99,8 +99,6 @@ export default function UserCard({ usercard, favs, setFavs }) {
                   ifSave={
                     favs && favs?.includes(usercard.post_id) ? true : false
                   }
-                  favs={favs}
-                  setFavs={setFavs}
                   post_id={usercard.post_id}
                 />
                 {/* <button

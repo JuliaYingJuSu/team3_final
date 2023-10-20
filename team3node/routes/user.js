@@ -185,7 +185,22 @@ userRouter.get("/user_card/:post_id", async (req, res) => {
   const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id JOIN post_favorite ON post.post_id = post_favorite.post_id WHERE post.post_id = ? GROUP BY post.post_id;`;
 
   try {
-    const [rows] = await db.query(sql,[post_id]);
+    const [rows] = await db.query(sql, [post_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+//抓餐廳資料用-------------------
+userRouter.get("/:post_id/restinfo", async (req, res) => {
+  const post_id = parseInt(req.params.post_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * FROM post_restaurant JOIN post on post.post_restaurant_id=post_restaurant.post_restaurant_id WHERE post.post_id=?;
+  `;
+
+  try {
+    const [rows] = await db.query(sql, [post_id]);
     console.log(rows);
     res.json(rows);
   } catch (ex) {

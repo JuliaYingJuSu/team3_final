@@ -329,8 +329,8 @@ body {
 /* 大頭照-小 */
 .headshot-small {
   display: flex;
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -339,8 +339,8 @@ body {
 }
 /* 大頭照-中小 */
 .headshot-sm {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
 }
 
