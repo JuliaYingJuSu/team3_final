@@ -43,7 +43,7 @@ export default function Card({
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
-if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
+// if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
   return (
     <>
       <PostModal
@@ -149,8 +149,8 @@ if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
                   {nickname}
                 </Link>
               </p>
-              <FollowButton ifFollow={followed && (followed?.includes(post_id)) ? true : false}
-                  post_id={post_id}/>
+              <FollowButton ifFollow={followed && (followed?.includes(user_id)) ? true : false}
+                  user_id={user_id}/>
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>

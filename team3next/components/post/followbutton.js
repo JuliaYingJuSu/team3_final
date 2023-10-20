@@ -21,7 +21,7 @@ export default function FollowButton({ifFollow, post_id}) {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:3002/api/post/toggle-follow/${post_id}`,
+          `http://localhost:3002/api/post/toggle-follow/${user.user_id}`,
           {
             headers: {
               Authorization: "Bearer " + auth.token,

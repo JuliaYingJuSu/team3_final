@@ -9,10 +9,18 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
 import UserModal from "./user-modal";
 
-export default function UserCard({ usercard, favs, setFavs }) {
-  const { auth, fav } = useContext(AuthContext);
+export default function UserCard({
+  usercard,
+  favs,
+  setFavs,
+  followed,
+  setFollowed,
+  likes,
+  setLikes,
+}) {
+  const { auth } = useContext(AuthContext);
   // const [favs, setFavs] = useState([]);
-  const [saved, setSaved] = useState(false);
+ 
   const [artcard, setArtCard] = useState([]);
 
   // const [fav, setFav] = useState(false);
@@ -69,13 +77,23 @@ export default function UserCard({ usercard, favs, setFavs }) {
 
   return (
     <>
-      <UserModal usercard={usercard} favs={favs} setFavs={setFavs} artcard={artcard}></UserModal>
+      <UserModal
+        usercard={usercard}
+        favs={favs}
+        setFavs={setFavs}
+        followed={followed}
+        setFollowed={setFollowed}
+        likes={likes}
+        setLikes={setLikes}
+        artcard={artcard}
+      ></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a
             href="#"
             data-bs-toggle="modal"
-            data-bs-target={"#exampleModal" + usercard.post_id}>
+            data-bs-target={"#exampleModal" + usercard.post_id}
+          >
             <img
               src={`http://localhost:3002/img/${usercard.post_image_name}`}
               className="card-img"
@@ -148,14 +166,20 @@ export default function UserCard({ usercard, favs, setFavs }) {
                 {artcard && artcard.length > 0 ? (
                   <Link
                     className="fs16b pt-3 text-dark"
-                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}>
+                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}
+                  >
                     {artcard[0].nickname}
                   </Link>
                 ) : (
                   ""
                 )}
               </p>
-              <FollowButton ifFollow={false} />
+              <FollowButton
+                ifFollow={
+                  followed && followed?.includes(post_id) ? true : false
+                }
+                post_id={post_id}
+              />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
               {usercard.createTime.substr(0, 10)}
