@@ -337,14 +337,22 @@ wss.on("connection", function connection(ws) {
     console.log("前端來的");
     console.log("received: %s", JSON.parse(data));
 
-    ws.send(
-      JSON.stringify(
-        //{ type: "message",
-        // data: JSON.parse(data).constent,}
+    // wss.send(
+    //   JSON.stringify(
+    //     //{ type: "message",
+    //     // data: JSON.parse(data).constent,}
 
-        JSON.parse(data).content
-      )
-    );
+    //     JSON.parse(data).content
+    //   )
+    // );
+
+    wss.clients.forEach((c) => {
+      console.log("forEach裡");
+      if (c.readyState == 1) {
+        console.log("有開著");
+        c.send(JSON.stringify(JSON.parse(data).content));
+      }
+    });
   });
 });
 

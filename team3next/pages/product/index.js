@@ -215,12 +215,12 @@ export default function index() {
     //#endregion
     ws.onmessage = (res) => {
       console.log(res);
-      const msg = JSON.parse(res.data);
+      const msgBack = JSON.parse(res.data);
       console.log(msg, res.type);
 
       if (res.type === "message") {
         console.log("res.data === message");
-        const newMsgs = [...msgs, msg];
+        const newMsgs = [...msgs, msgBack];
         console.log(newMsgs);
 
         setMsgs(newMsgs);
