@@ -178,7 +178,7 @@ export default function UserCard({
                 ifFollow={
                   followed && followed?.includes(user_id) ? true : false
                 }
-                user_id={usercard.user_id}
+                user_id={user_id}
               />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
