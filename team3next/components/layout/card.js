@@ -149,7 +149,8 @@ if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
                   {nickname}
                 </Link>
               </p>
-              <FollowButton ifFollow={false} />
+              <FollowButton ifFollow={followed && (followed?.includes(post_id)) ? true : false}
+                  post_id={post_id}/>
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>

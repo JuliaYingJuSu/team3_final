@@ -1,13 +1,14 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
 
-export default function FollowButton({ifFollow}) {
+export default function FollowButton({ifFollow, post_id}) {
   //follow true增加
   //follow false刪除
   // console.log(ifFollow);
   const { auth } = useContext(AuthContext);
   const [follow, setFollow] = useState(ifFollow);
+  useEffect(()=>{setFollow(ifFollow)},[ifFollow])
 
 
   const followToggle = async () => {

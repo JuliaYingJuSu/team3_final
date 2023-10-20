@@ -269,5 +269,56 @@ postRouter.get("/toggle-like/:post_id", async (req, res) => {
   res.json(output);
 });
 
+//接收追蹤資訊
+postRouter.get("/follow", async (req, res) => {
+  if (!res.locals.jwtData?.user_id) {
+    return res.json({});
+  }
+  const loguid = res.locals.jwtData.user_id;
+  // console.log(loguid)
+  const sql = `SELECT user_id_followed FROM followers where user_id_following = ?;`;
+
+  const [data] = await db.query(sql, [loguid]);
+
+  const newData = data.map((i) => i.user_id_followed);
+
+  // console.log(newData)
+  res.json(newData); //回傳json格式
+});
+
+//新增追蹤取消追蹤
+postRouter.get("/toggle-follow/:user_id", async (req, res) => {
+  console.log("running route");
+  const post_id = req.params.user_id || 0;
+  const output = {
+    action: "", // insert, delete
+    user_id,
+  };
+  console.log(req.query);
+
+  console.log(res.locals.jwtData?.user_id);
+
+  if (!res.locals.jwtData?.user_id) {
+    return res.json({});
+  }
+  const user_id_following = res.locals.jwtData.user_id;
+
+  const sql1 = `SELECT * FROM followers WHERE user_id_following = ? AND user_id_followed= ?`;
+  const [rows1] = await db.query(sql1, [user_id_following, user_id]);
+  if (rows1.length) {
+    // delete
+    const sql2 = `DELETE FROM followers WHERE user_id_following = ? AND user_id_followed= ?`;
+    await db.query(sql2, [user_id_following, user_id]);
+    output.action = "delete";
+  } else {
+    // insert
+    const sql3 = `INSERT INTO followers (user_id_following, user_id_followed) VALUES (?, ?)`;
+    await db.query(sql3, [user_id_following, user_id]);
+    output.action = "insert";
+    console.log(sql3);
+  }
+  res.json(output);
+});
+
 
 export default postRouter;
