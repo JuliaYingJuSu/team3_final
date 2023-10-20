@@ -101,7 +101,7 @@ export default function AddPost1() {
           display: 'flex',
           width: 600, // Adjust the width as needed
         }}>
-          <div className="my-3" style={{ flex: 2 }}>
+          <div className="my-3" style={{ flex: 1, marginRight: '50px' }}>
             <Form.Item
               name="photo"
               valuePropName="fileList"
