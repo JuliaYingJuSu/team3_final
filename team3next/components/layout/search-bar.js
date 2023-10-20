@@ -33,7 +33,7 @@ export default function SearchBar(
           .search-banner {
             position: absolute;
             font-size: 24px;
-            right: 870px;
+            right: 540px;
             
           }
           .search-banner:before {
