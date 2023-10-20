@@ -66,7 +66,7 @@ export default function WhoCard({
   // }, []);
 
   //使用 Set 來去重除重複的 food_tag_names 數組
-  const uniqueFoodTags = [...new Set(usercard.food_tag_names)];
+  // const uniqueFoodTags = [...new Set(usercard.food_tag_name)];
 
   return (
     <>
@@ -118,11 +118,9 @@ export default function WhoCard({
                 {usercard.restaurant_city}
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
-              {uniqueFoodTags.map((food_tag_id, index) => (
-                <a href="#" className="tag-f" key={index}>
-                  {food_tag_name}
+                <a href="#" className="tag-f">
+                  {usercard.food_tag_name}
                 </a>
-              ))}
             </div>
             <h6 className="card-title w-100 mt-3 fw-bolder text-start mb-4">
               {usercard.post_title}
