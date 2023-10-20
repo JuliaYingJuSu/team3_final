@@ -275,6 +275,7 @@ postRouter.get("/follow", async (req, res) => {
     return res.json({});
   }
   const loguid = res.locals.jwtData.user_id;
+  console.log(res.json)
   // console.log(loguid)
   const sql = `SELECT user_id_followed FROM followers where user_id_following = ?;`;
 
@@ -289,7 +290,7 @@ postRouter.get("/follow", async (req, res) => {
 //新增追蹤取消追蹤
 postRouter.get("/toggle-follow/:user_id", async (req, res) => {
   console.log("running route");
-  const post_id = req.params.user_id || 0;
+  const user_id = req.params.user_id || 0;
   const output = {
     action: "", // insert, delete
     user_id,
