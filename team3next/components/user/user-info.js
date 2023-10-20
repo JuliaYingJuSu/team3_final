@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import { useContext, useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function UserInfo() {
   const { auth } = useContext(AuthContext);
@@ -8,6 +9,17 @@ export default function UserInfo() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imgServerUrl, setImgServerUrl] = useState("");
   const [isFilePicked, setIsFilePicked] = useState(false);
+
+  // sweetalert設定
+  const swalTest1 = Swal.mixin({
+    showConfirmButton: false,
+    timer: 800,
+    timerProgressBar: true,
+    didOpen: (swalTest1) => {
+      swalTest1.addEventListener("mouseenter", Swal.stopTimer);
+      swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
 
   useEffect(() => {
     fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/follown`)
@@ -91,6 +103,10 @@ export default function UserInfo() {
 
           // 设置 isFilePicked 为 true，表示已成功上传
           setIsFilePicked(true);
+          swalTest1.fire({
+            title: "更改大頭照成功",
+            icon: "success",
+          });
         } else {
           console.error("失敗:", response.statusText);
         }
