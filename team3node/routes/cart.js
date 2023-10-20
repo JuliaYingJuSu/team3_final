@@ -158,7 +158,12 @@ cartRouter.post("/", async (req, res) => {
   try {
     // 注意：user_id寫死 10
 
-    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
+    //1020--
+    // const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
+    // console.log(sql);
+
+    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, '${delivery_address}', '備貨中')`;
+    console.log('看這裡ㄚ')
     console.log(sql);
 
     const [result] = await db.query(sql);
@@ -196,7 +201,7 @@ cartRouter.post("/", async (req, res) => {
 
 cartRouter.post("/del-detail", async (req, res) => {
   console.log("nnice");
-  let { delivery_name, delivery_phone, delivery_address } = req.body;
+  let { delivery_name, delivery_phone} = req.body;
   console.log(req.body);
 
   let output = {
@@ -208,7 +213,9 @@ cartRouter.post("/del-detail", async (req, res) => {
     const [[sql3]] = await db.query(
       `SELECT order_id FROM order_general ORDER BY order_date DESC LIMIT 1`
     );
-    const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
+    // const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
+    // order_id='${sql3.order_id}'`;
+    const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}' WHERE 
     order_id='${sql3.order_id}'`;
     // console.log(sql);
     const [result] = await db.query(sql);

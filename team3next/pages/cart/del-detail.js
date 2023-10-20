@@ -18,8 +18,8 @@ export default function DelDetail() {
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
-    purchaserAddress: "",
-    receiveAddress: "",
+    // purchaserAddress: "",
+    // receiveAddress: "",
   });
   console.log(purchaser);
   const router = useRouter();
@@ -83,7 +83,7 @@ export default function DelDetail() {
           user_id: getUser,
           delivery_name: getName,
           delivery_phone: getPhone,
-          delivery_address: getCity,
+          // delivery_address: getCity,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -1009,7 +1009,7 @@ export default function DelDetail() {
         </div>
 
         {/* 地址 */}
-        <div className="row mb-2">
+        {/* <div className="row mb-2">
           <label
             htmlFor="readdress"
             className="form-label col-12 col-form-label"
@@ -1064,7 +1064,7 @@ export default function DelDetail() {
               placeholder=" 請輸入地址"
             />
           </div>
-        </div>
+        </div> */}
         {/* part3 */}
         <div className={styles.buyertitle + " mt-3 pb-1"}>配送資訊</div>
         <div className="row mt-3 mb-2">
