@@ -1,11 +1,14 @@
 import React from "react";
 import Card from "../card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext  } from "react";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function Section02() {
+  const {auth} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({}); 
+ 
 
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
@@ -54,6 +57,52 @@ export default function Section02() {
       .catch((ex) => console.log(ex));
   }, []);
 
+  
+  //接收加入收藏資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/fav",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setFavs(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
+
+//接收加入追蹤資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/follow",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setFollowed(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
+
+//接收加入收藏資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/like",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setLikes(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
+
   return (
     <>
       <div className="container mt-5">
@@ -87,12 +136,18 @@ export default function Section02() {
                   user_id={user_id}
                   nickname={nickname}
                   user_img={user_img}
+                  favs={favs}
+                  setFavs={setFavs}
+                  followed={followed}
+                  setFollowed={setFollowed}
+                  likes={likes} 
+                  setLikes={setLikes}
                 />
               );
             }
           )}
         </div>
-        <Link href={"/"} className="middle grey fs18b mt-5">
+        <Link href={"/post"} className="middle grey fs18b mt-5">
           看更多
         </Link>
       </div>

@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 export default function index() {
   //資料用
   const [data, setData] = useState([]);
-  console.log(data.rows?.length);
+  // console.log(data.rows?.length);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
   const wsRef = useRef();
@@ -198,12 +198,13 @@ export default function index() {
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
   console.log(msg);
-  const { wsMsgs, setWsMsgs } = useContext(WsContext);
-  // const [msgs, setMsgs] = useState([]);
-  console.log(wsMsgs);
+  const [msgs, setMsgs] = useState([]);
+  console.log(msgs);
+  const { auth } = useContext(AuthContext);
+  console.log(auth);
 
   useEffect(() => {
-    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws")); //***用useRef抓住ws不受渲染影響
+    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
 
     ws.onopen = () => {
       console.log("open connection");
@@ -217,35 +218,36 @@ export default function index() {
     //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
     //#endregion
     ws.onmessage = (res) => {
-      // console.log(res);
-      const msg = JSON.parse(res.data);
-      // console.log(msg, res.type);
+      console.log(JSON.parse(res.data));
+      const msg = JSON.parse(res.data).content;
+      console.log(msg, res.type);
 
       if (res.type === "message") {
-        console.log("res.data === message");
-        // const newMsgs = [...wsMsgs, msg];
-        // console.log(newMsgs);
-        // const newMsgs = (prevMsgs)=>{
-        (prevMsgs) => {
-          console.log(prevMsgs);
-        }; //["888","888"] prevMsgs?????
-        // }
-        setWsMsgs((prevMsgs) => [...prevMsgs, msg]);
-        // setWsMsgs(newMsgs);
+        // console.log("res.data === message");
+        const newMsgs = [...msgs, msg];
+        console.log(newMsgs);
+
+        setMsgs(newMsgs);
       }
     };
     ws.onclose = () => {
       console.log("close connection");
     };
-  }, []);
+  }, [msgs]);
 
   function sendMsg() {
     let ws = wsRef.current;
-    // console.log("進sendMsg");
+    console.log("進sendMsg");
 
     if (ws.readyState == 1) {
-      // console.log("ws.readyState === 1");
-      ws.send(JSON.stringify({ type: "message", content: msg }));
+      console.log("ws.readyState === 1");
+      ws.send(
+        JSON.stringify({
+          type: "message",
+          id: auth.user_id || "stranger",
+          content: msg,
+        })
+      );
     } else {
       console.log("ws.readyState不等於 1");
     }
@@ -253,6 +255,7 @@ export default function index() {
     // if (!ws) return;
     // ws.send(JSON.stringify({ constent: msg }));
   }
+
   //------------------------------------------------
   return (
     <>
@@ -262,7 +265,7 @@ export default function index() {
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
-        style={{ position: "absolute", right: "0px", bottom: "300px" }}
+        style={{ position: "absolute", right: "0px", bottom: "120px" }}
       >
         找小編
       </button>
@@ -293,7 +296,7 @@ export default function index() {
         <div className="offcanvas-body small ">
           ...
           <div>
-            {wsMsgs.map((m) => {
+            {msgs.map((m) => {
               return (
                 <p className="offcanvas-title" id="offcanvasBottomLabel">
                   {m}

@@ -1,34 +1,19 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import PostModal from "../post/post-modal";
 import Link from "next/link";
 import FollowButton from "../post/followbutton";
 import Like from "../post/like";
 import Saved from "../post/saved";
 import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
+import UserModal from "./user-modal";
 
-export default function UserCard({
-  usercard,
-  // post_id,
-  // post_title,
-  // post_content,
-  // createTime,
-  // post_image_name,
-  // restaurant_city,
-  // restaurant_name,
-  // food_tag_names, // 注意這裡是一個數組
-  // user_id,
-  // nickname,
-  // user_img,
-  // food_tag_name,
-  favs,
-  setFavs,
-}) {
+export default function UserCard({ usercard, favs, setFavs }) {
   const { auth, fav } = useContext(AuthContext);
   // const [favs, setFavs] = useState([]);
   const [saved, setSaved] = useState(false);
+  const [artcard, setArtCard] = useState([]);
 
   // const [fav, setFav] = useState(false);
 
@@ -45,6 +30,20 @@ export default function UserCard({
         })
         .catch((ex) => console.log(ex));
   }, [auth]);
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/user_card/${usercard.post_id}`)
+      .then((r) => r.json())
+      .then((r) => {
+        setArtCard(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [usercard.post_id]);
+
+  // const [favs, setFavs] = useState([]);
 
   // useEffect(() => {
   //   if (user_id) {
@@ -66,10 +65,11 @@ export default function UserCard({
   // }, []);
 
   //使用 Set 來去重除重複的 food_tag_names 數組
-  const uniqueFoodTags = [...new Set(usercard.food_tag_names)];
+  // const uniqueFoodTags = [...new Set(usercard.food_tag_name)];
 
   return (
     <>
+      <UserModal usercard={usercard} favs={favs} setFavs={setFavs}></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a
@@ -118,11 +118,9 @@ export default function UserCard({
                 {usercard.restaurant_city}
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
-              {uniqueFoodTags.map((food_tag_id, index) => (
-                <a href="#" className="tag-f" key={index}>
-                  {food_tag_name}
-                </a>
-              ))}
+              <a href="#" className="tag-f">
+                {usercard.food_tag_name}
+              </a>
             </div>
             <h6 className="card-title w-100 mt-3 fw-bolder text-start">
               {usercard.post_title}
@@ -131,10 +129,12 @@ export default function UserCard({
               <div className="pe-2">
                 <Link href="/user/user-my-article-i">
                   {/* 三元運算還是不成功，要如何才能使突變薯哥，如果大頭照沒有上傳的時候 */}
-                  {usercard.user_img ? (
+                  {artcard.length > 0 ? (
                     <img
                       className="rounded-circle headshot-small img-thumbnail"
-                      src={process.env.API_SERVER + `/img/${usercard.user_img}`} // 顯示用戶頭像
+                      src={
+                        process.env.API_SERVER + `/img/${artcard[0].user_img}`
+                      } // 顯示用戶頭像
                       alt="大頭照"
                     />
                   ) : (
@@ -147,15 +147,21 @@ export default function UserCard({
                 </Link>
               </div>
               <p className="middle">
-                <Link
-                  className="fs16b pt-3 text-dark"
-                  href="/user/user-my-article-i">
-                  {usercard.nickname}
-                </Link>
+                {artcard && artcard.length > 0 ? (
+                  <Link
+                    className="fs16b pt-3 text-dark"
+                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}>
+                    {artcard[0].nickname}
+                  </Link>
+                ) : (
+                  ""
+                )}
               </p>
               <FollowButton ifFollow={false} />
             </div>
-            <span className="fs12 mt-2 mb-3 text-start">{usercard.createTime.substr(0, 10)}</span>
+            <span className="fs12 mt-2 mb-3 text-start">
+              {usercard.createTime.substr(0, 10)}
+            </span>
           </div>
         </div>
       </div>

@@ -67,6 +67,20 @@ userRouter.post("/:user_id/my-book/:bid?", (req, res) => {
   });
 });
 
+//抓會員資訊-------------------
+userRouter.get("/:user_id/user", async (req, res) => {
+  const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * FROM user WHERE user.user_id=?`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id_followed]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
 //我的文章---------------------
 userRouter.get("/:user_id/my-article", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
@@ -158,6 +172,20 @@ userRouter.get("/:user_id/userinfo", async (req, res) => {
 
   try {
     const [rows] = await db.query(sql, [user_id]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
+//收藏卡片用-------------------
+userRouter.get("/user_card/:post_id", async (req, res) => {
+  const post_id = parseInt(req.params.post_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * FROM user JOIN post ON user.user_id = post.user_id JOIN post_favorite ON post.post_id = post_favorite.post_id WHERE post.post_id = ? GROUP BY post.post_id;`;
+
+  try {
+    const [rows] = await db.query(sql,[post_id]);
     console.log(rows);
     res.json(rows);
   } catch (ex) {
