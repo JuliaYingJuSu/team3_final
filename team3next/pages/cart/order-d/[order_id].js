@@ -299,11 +299,12 @@ export default function OrderComplete() {
         </table>
 
         {/* 計算 */}
+       
         <div className={styles.totalBox + " text-end"}>
           {/* {`小計NT$` + data.price * data.order_quantity } */}
-          <p>小計NT$250</p>
+          <p>小計NT${data.result && data.result[0].order_amount}</p>
           <p>運費NT$60</p>
-          <p>合計NT$380</p>
+          <p>合計NT${data.result && data.result[0].order_amount + 60}</p>
         </div>
 
         {/* 底下訂單資訊 */}

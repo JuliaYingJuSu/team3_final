@@ -27,7 +27,6 @@ export default function StepThird() {
     <>
       <div className="d-flex flex-column mb-3">
         <label className="fs18b" htmlFor="photo">
-          {" "}
           餐廳照片
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -49,7 +48,6 @@ export default function StepThird() {
           }}
           noStyle
           // bug fixed用來解決filelist錯誤
-
         >
           <Upload.Dragger {...props}>
             <p className="ant-upload-drag-icon">

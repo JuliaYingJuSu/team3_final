@@ -16,23 +16,25 @@ export default function Profile() {
   const [inputType, setInputType] = useState("password");
   const [reInputType, reSetInputType] = useState("password");
   const fetchData = async () => {
-    try {
-      const authObj = JSON.parse(localStorage.getItem("token"));
-      if (memberAuth && memberAuth.result.token) {
-        const response = await axios.get(
-          "http://localhost:3002/api/restaurant/member-info",
-          {
-            headers: {
-              Authorization: "Bearer " + memberAuth.result.token,
-            },
-          }
-        );
-        console.log("fetch result:", response.data);
-        setFetchedData(response.data);
-        setDataLoaded(true);
+    if (memberAuth && memberAuth.result && memberAuth.result.token) {
+      try {
+        const authObj = JSON.parse(localStorage.getItem("token"));
+        if (memberAuth && memberAuth.result.token) {
+          const response = await axios.get(
+            "http://localhost:3002/api/restaurant/member-info",
+            {
+              headers: {
+                Authorization: "Bearer " + memberAuth.result.token,
+              },
+            }
+          );
+          console.log("fetch result:", response.data);
+          setFetchedData(response.data);
+          setDataLoaded(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {

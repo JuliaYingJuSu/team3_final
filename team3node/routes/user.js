@@ -67,6 +67,20 @@ userRouter.post("/:user_id/my-book/:bid?", (req, res) => {
   });
 });
 
+//抓會員資訊-------------------
+userRouter.get("/:user_id/user", async (req, res) => {
+  const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
+  const sql = `SELECT * FROM user WHERE user.user_id=?`;
+
+  try {
+    const [rows] = await db.query(sql, [user_id_followed]);
+    console.log(rows);
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
+  }
+});
+
 //我的文章---------------------
 userRouter.get("/:user_id/my-article", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id

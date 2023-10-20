@@ -84,7 +84,7 @@ export default function MemberOrders() {
                         <li className="mb-2 fs-5">小孩：{v.book_num_kid}位</li>
                         <li className="mb-2 fs-5">電話：{v.book_phone}</li>
                       </ul>
-                        <p className="fs-5 ms-4 ">備註:{v.book_note}</p>
+                      <p className="fs-5 ms-4 ">備註:{v.book_note}</p>
                     </div>
                     <div className="accordion-body"></div>
                   </div>

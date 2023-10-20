@@ -8,11 +8,13 @@ import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
+
 import Pagination from "@/components/product/pagination";
 import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
+import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
 
 export default function index() {
@@ -196,11 +198,12 @@ export default function index() {
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
   console.log(msg);
-  const [msgs, setMsgs] = useState([]);
-  console.log(msgs);
+  const { wsMsgs, setWsMsgs } = useContext(WsContext);
+  // const [msgs, setMsgs] = useState([]);
+  console.log(wsMsgs);
 
   useEffect(() => {
-    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
+    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws")); //***用useRef抓住ws不受渲染影響
 
     ws.onopen = () => {
       console.log("open connection");
@@ -229,14 +232,14 @@ export default function index() {
     ws.onclose = () => {
       console.log("close connection");
     };
-  }, [msgs]);
+  }, []);
 
   function sendMsg() {
     let ws = wsRef.current;
-    console.log("進sendMsg");
+    // console.log("進sendMsg");
 
     if (ws.readyState == 1) {
-      console.log("ws.readyState === 1");
+      // console.log("ws.readyState === 1");
       ws.send(JSON.stringify({ type: "message", content: msg }));
     } else {
       console.log("ws.readyState不等於 1");
@@ -285,10 +288,10 @@ export default function index() {
         <div className="offcanvas-body small ">
           ...
           <div>
-            {msgs.map((msg) => {
+            {wsMsgs.map((m) => {
               return (
                 <p className="offcanvas-title" id="offcanvasBottomLabel">
-                  {msg}
+                  {m}
                 </p>
               );
             })}
@@ -411,16 +414,18 @@ export default function index() {
                   {typeList
                     ? data.items
                         ?.filter((v) => {
-                          console.log("data.items");
-                          console.log(data.items);
+                          // console.log("data.items");
+                          // console.log(data.items);
                           return v.product_type_list_id
                             .split(",")
                             .includes(typeList.split(",")[0]);
                         })
                         .map((v, i) => {
-                          console.log("items");
-                          console.log(items);
-                          console.log(items.includes(v.item_id));
+                          //動態篩選條件
+
+                          // console.log("items");
+                          // console.log(items);
+                          // console.log(items.includes(v.item_id));
 
                           return (
                             <label key={i}>
@@ -428,13 +433,13 @@ export default function index() {
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-1"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
                                   if (!items.includes(v.item_id)) {
                                     const newItems = [...items, v.item_id];
-                                    console.log(newItems);
+                                    // console.log(newItems);
 
                                     setItems(newItems);
                                   } else {
@@ -463,13 +468,14 @@ export default function index() {
                       data.items
                         // .filter((v) => v.price_range == 1)
                         .map((v, i) => {
+                          //預設篩選條件
                           return (
                             <label key={i}>
                               <input
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-4"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
@@ -518,7 +524,7 @@ export default function index() {
                   // console.log(v);
                   return (
                     // 畫面渲染後不會再變動key才能用索引
-                    <label key={i} className="w-100 ps-2 my-2">
+                    <label key={i} className="w-100 ps-2 my-1">
                       <input
                         className="me-2"
                         // className="----------------------------"

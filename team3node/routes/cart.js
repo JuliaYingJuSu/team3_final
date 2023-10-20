@@ -55,20 +55,33 @@ const corsOptions = {
 // });
 
 // ----------------------消費紀錄 my-order,寫死user_id=36 ----------------------
-cartRouter.get("/my-order", async (req, res) => {
-  let output = {
-    success: false,
-    rows: [],
-  };
+cartRouter.get("/:user_id/my-order", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  // let output = {
+  //   success: false,
+  //   rows: [],
+  // };
+  // const sql = `SELECT * FROM order_general WHERE 
+  // user_id = ${user_id} ORDER BY order_date DESC `;
+  // const [rows] = await db.query(sql);
+  // for (let r of rows) {
+  //   r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
+  // }
 
-  const sql = `SELECT * FROM order_general WHERE user_id = 22 ORDER BY order_date DESC `;
+ const sql = `SELECT * FROM order_general WHERE 
+  user_id = ${user_id} ORDER BY order_date DESC `;
+
+  try{ 
   const [rows] = await db.query(sql);
+  console.log('這裡')
+  console.log(rows);
   for (let r of rows) {
     r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
   }
-
-  console.log(rows);
-  res.json(rows);
+   res.json(rows);
+}catch(ex){console.log(ex)}
+ 
+  
 });
 
 // ---------------------- order-complete -------------------------------
@@ -474,7 +487,7 @@ cartRouter.get("/payMethod", async (req, res) => {
           // confirmUrl: "http:localhost:3080/cart",
           // cancelUrl: "http:localhost:3080/cart",
           // 1018 --> "http:localhost:3080/cart/order-complete"
-          confirmUrl: "http:localhost:3080/cart/order-complete",
+          confirmUrl: "linePay/confirm",
           cancelUrl: "linePay/cancel",
         },
       },
@@ -518,43 +531,44 @@ cartRouter.get("/payMethod", async (req, res) => {
 
 // --------------confirm--------------------------
 
-// cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
-//   router.use(cors(corsOptions));
-//   console.log('開始')
-//   let output = {
-//   success: false,
-//   result: [],
-//   };
-//   console.log('back')
-// const tran = req.params.transactionId
-// const orderId = req.params.orderId
-// //hahahha
-// const confirmRequest = {
-//   transactionId: tran,
-//   orderId: orderId, // 与支付请求时的 orderId 相同
-//   amount: 1160, // 与支付请求时的 amount 相同
-// };
+cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
+  // router.use(cors(corsOptions));
+  console.log('523----------',req.params)
+  console.log('開始')
+  let output = {
+  success: false,
+  result: [],
+  };
+  console.log('back')
+const tran = req.params.transactionId
+const orderId = req.params.orderId
+//hahahha
+const confirmRequest = {
+  transactionId: tran,
+  orderId: orderId, // 与支付请求时的 orderId 相同
+  amount: 1160, // 与支付请求时的 amount 相同
+};
 
 
-//   try {
-//       const lastLine = await createLinePayClient.confirm.send(
-//         {confirmRequest}
-//       //   {
-//       //   transactionId: tran,
-//       //   body: {
-//       //     currency: "TWD",
-//       //     // amount需要查資料庫的訂單
-//       //     amount: 1160,
-//       //   },
-//       // }
-//       );
-//       console.log('我成功了')
-//       console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
-//       console.log("hihihi")
-//     } catch (e) {
-//       console.log("error", e);
-//     }
-// });
+  try {
+      const lastLine = await createLinePayClient.confirm.send(
+        {confirmRequest},
+        {
+        transactionId: tran,
+        body: {
+          currency: "TWD",
+          // amount需要查資料庫的訂單
+          amount: 1160,
+        },
+      }
+      );
+      console.log('我成功了')
+      console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
+      console.log("hihihi")
+    } catch (e) {
+      console.log("error", e);
+    }
+});
 
 
 
