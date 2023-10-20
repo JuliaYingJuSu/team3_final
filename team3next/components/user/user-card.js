@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import PostModal from "../post/post-modal";
 import Link from "next/link";
 import FollowButton from "../post/followbutton";
 import Like from "../post/like";
 import Saved from "../post/saved";
 import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
+import UserModal from "./user-modal";
 
 export default function UserCard({ usercard, favs, setFavs }) {
   const { auth, fav } = useContext(AuthContext);
@@ -69,6 +69,7 @@ export default function UserCard({ usercard, favs, setFavs }) {
 
   return (
     <>
+      <UserModal usercard={usercard} favs={favs} setFavs={setFavs}></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a

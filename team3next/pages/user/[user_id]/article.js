@@ -9,6 +9,7 @@ import UserCard from "@/components/user/user-card";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
+
 export default function Article() {
   const { auth } = useContext(AuthContext);
   const [article, setArticle] = useState([]);
