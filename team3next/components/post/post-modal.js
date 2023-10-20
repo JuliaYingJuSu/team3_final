@@ -118,7 +118,7 @@ export default function PostModal({
       const r = await fetch(`http://localhost:3002/api/post/post-comment`, {
         method: "POST",
         body: JSON.stringify({
-          post_id: post_id,
+        post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",

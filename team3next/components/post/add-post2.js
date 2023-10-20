@@ -96,8 +96,12 @@ export default function AddPost1() {
       <div className="container bg-color mb-2 d-flex justify-content-around">
         <Form
           onFinish={onFinish}
-          initialValues={{ title: title, content: content }}>
-          <div className="my-3">
+          initialValues={{ title: title, content: content }}
+          style={{
+          display: 'flex',
+          width: 600, // Adjust the width as needed
+        }}>
+          <div className="my-3" style={{ flex: 2 }}>
             <Form.Item
               name="photo"
               valuePropName="fileList"
@@ -131,20 +135,25 @@ export default function AddPost1() {
                   onChange={titleChanged}
                   placeholder="新增標題"
                   style={{
-                    width: 387,
+                    width: 268
                   }}
                   showCount
                   maxLength={30}
                   name="post_title"
+                  autoFocus
                 />
               </div>
             </Form.Item>
-            <Form.Item>
+            <Form.Item  >
               <div className="input-group  w-100">
                 <span className="input-group-text icon-map"></span>
                 <PostRestaurant
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
+                  classNames={{
+    control: (state) =>
+      state.isFocused ? 'border-red-600' : 'border-grey-300',
+  }}
                 />
               </div>
             </Form.Item>
@@ -170,15 +179,16 @@ export default function AddPost1() {
                   style={{
                     height: 120,
                     resize: "none",
-                    width: 387,
+                    width: 268,
                   }}
                   name="post_content"
+                  autoFocus
                 />
               </div>
             </Form.Item>
             <Form.Item>
               <a
-                className="btn btn-big me-5"
+                className="btn btn-big me-3"
                 onClick={() => {
                   swalButtons
                     .fire({
@@ -219,7 +229,7 @@ export default function AddPost1() {
             background-color: #fbf9ef;
             border-radius: 10px 10px 10px 10px;
             width: 900px;
-            height: 800px;
+            height: 500px;
           }
            {
             /* .bgc {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext ,useEffect} from "react";
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
 import {useRouter } from "next/router";
@@ -9,7 +9,8 @@ export default function Saved({ ifSave, post_id }) {
   // console.log(ifSave);
   const [saved, setSaved] = useState(ifSave);
   const { auth } = useContext(AuthContext);
-
+  useEffect(()=>{setSaved(ifSave)},[ifSave])
+if(post_id==40){console.log(saved)}
 
   const favToggle = async () => {
     if (!auth?.user_id) {
