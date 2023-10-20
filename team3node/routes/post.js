@@ -275,7 +275,7 @@ postRouter.get("/follow", async (req, res) => {
     return res.json({});
   }
   const loguid = res.locals.jwtData.user_id;
-  console.log(res.json)
+  // console.log(res.json)
   // console.log(loguid)
   const sql = `SELECT user_id_followed FROM followers JOIN user ON followers.user_id_followed=user.user_id WHERE followers.user_id_following=?;`;
 

@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
 
-export default function FollowButton({ifFollow, post_id}) {
+export default function FollowButton({ifFollow, user_id}) {
   //follow true增加
   //follow false刪除
   // console.log(ifFollow);
@@ -21,7 +21,7 @@ export default function FollowButton({ifFollow, post_id}) {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:3002/api/post/toggle-follow/${user.user_id}`,
+          `http://localhost:3002/api/post/toggle-follow/${user_id}`,
           {
             headers: {
               Authorization: "Bearer " + auth.token,
