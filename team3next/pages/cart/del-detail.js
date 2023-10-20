@@ -21,6 +21,13 @@ export default function DelDetail() {
     // purchaserAddress: "",
     // receiveAddress: "",
   });
+  const handleCLick = ()=>{
+    setPurchaser({purchaserName: "碩紅",
+      purchaserPhone: "0953868686",
+      purchaserEmail: "wait4321@gmail",}
+      
+    )
+  }
   console.log(purchaser);
   const router = useRouter();
   // useEffect(() => {
@@ -815,8 +822,10 @@ export default function DelDetail() {
       >
         <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
         <div className="row mt-3 mb-2">
+        <span onClick={handleCLick}>1234</span>
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
+           
           </label>
           {/* 錯誤訊息 */}
           <div
@@ -829,6 +838,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
+            value={purchaser.purchaserName}
               name="purchaserName"
               type="text"
               className={styles.inputframe + " purchaserName"}
@@ -858,6 +868,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
+            value={purchaser.purchaserPhone}
               name="purchaserPhone"
               type="text"
               className={styles.inputframe + " purchaserPhone"}
@@ -883,6 +894,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
+            value={purchaser.purchaserEmail}
               name="purchaserEmail"
               type="text"
               className={styles.inputframe + " purchaserEmail"}
