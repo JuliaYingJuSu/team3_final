@@ -179,7 +179,8 @@ export default function PostModal({
                       {nickname}
                     </a>
                   </p>
-                  <FollowButton />
+                  <FollowButton ifFollow={followed && (followed?.includes(user_id)) ? true : false}
+                  user_id={user_id}/>
                 </div>
                 <div className="d-flex align-items-center p-1">
                   <div className="icon-map me-1">

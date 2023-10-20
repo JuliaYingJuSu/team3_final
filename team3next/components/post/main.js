@@ -94,7 +94,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     });
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword,favs,likes]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed]);
   
   //接收加入收藏資料庫資料
   useEffect(() => {
