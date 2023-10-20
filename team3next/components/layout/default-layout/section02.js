@@ -8,6 +8,9 @@ export default function Section02() {
   const {auth} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({}); 
+  const [favs, setFavs] = useState([]);
+  const [followed, setFollowed] = useState([]);
+  const [likes, setLikes] = useState([]);
  
 
   useEffect(() => {
