@@ -1,10 +1,11 @@
-import React, { useState ,useContext} from "react";
+import React, { useState ,useContext, useEffect} from "react";
 import AuthContext from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
 
 export default function Like({ ifLike, post_id }) {
   const [like, setLike] = useState(ifLike);
   const { auth } = useContext(AuthContext);
+  useEffect(()=>{setLike(ifLike)},[ifLike])
 
   const likeToggle = async () => {
     if (!auth?.user_id) {

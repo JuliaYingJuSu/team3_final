@@ -16,7 +16,6 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
   
-
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")

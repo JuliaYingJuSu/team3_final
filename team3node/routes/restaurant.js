@@ -224,10 +224,77 @@ restaurantRouter.get("/member-orders", async (req, res) => {
 restaurantRouter.get("/member-orders-count", async (req, res) => {
   const restaurantId = parseInt(req.id);
   const [[totalRecords]] = await db.query(
-    "SELECT COUNT(*) AS total_records FROM `book`  WHERE `restaurant_id` = ?;",
+    "SELECT COUNT(*) AS total_records FROM `book`  WHERE `restaurant_id` = ? && `book_notification` = 1;",
     [restaurantId]
   );
   res.json(totalRecords);
 });
+
+restaurantRouter.put("/member-orders-read", async (req, res) => {
+  let {off} = req.body
+  const restaurantId = parseInt(req.id);
+  const [read] = await db.query(
+    "UPDATE `book` SET `book_notification` = '?' WHERE `restaurant_id` = ?;",
+    [off,restaurantId]
+  );
+  console.log(read)
+  res.json(read)
+});
+
+restaurantRouter.get("/member-opening-hours", async (req, res) => {
+ const {
+    limit,
+    weekday1,
+    startTime1,
+    endTime1,
+    weekday2,
+    startTime2,
+    endTime2,
+    weekday3,
+    startTime3,
+    endTime3,
+    weekday4,
+    startTime4,
+    endTime4,
+    weekday5,
+    startTime5,
+    endTime5,
+    weekday6,
+    startTime6,
+    endTime6,
+    weekday0,
+    startTime0,
+    endTime0,
+  }= req.body
+  const openingHoursData = [
+    { dayOfWeek: 1, startTime: startTime1, endTime: endTime1, isOpen: weekday1 },
+    { dayOfWeek: 2, startTime: startTime2, endTime: endTime2, isOpen: weekday2 },
+    { dayOfWeek: 3, startTime: startTime3, endTime: endTime3, isOpen: weekday3 },
+    { dayOfWeek: 4, startTime: startTime4, endTime: endTime4, isOpen: weekday4 },
+    { dayOfWeek: 5, startTime: startTime5, endTime: endTime5, isOpen: weekday5 },
+    { dayOfWeek: 6, startTime: startTime6, endTime: endTime6, isOpen: weekday6 },
+    { dayOfWeek: 0, startTime: startTime0, endTime: endTime0, isOpen: weekday0 },
+  ];
+
+  try {
+    // 使用 Promise.all 执行插入操作
+    const insertPromises = openingHoursData.map(async (data) => {
+      const result = await db.query(
+        "INSERT INTO `restaurant_opening_hours`(`restaurant_id`, `day_of_week`, `start_time`, `end_time`, `is_open`, `max_capacity`) VALUES (?,?,?,?,?,?)",
+        [restaurantId, data.dayOfWeek, data.startTime, data.endTime, data.isOpen, limit]
+      );
+      return result;
+    });
+
+    // 等待所有插入操作完成
+    await Promise.all(insertPromises);
+
+    res.json({ message: "Opening hours added successfully" });
+  } catch (error) {
+    console.error("Error adding opening hours:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 export default restaurantRouter;

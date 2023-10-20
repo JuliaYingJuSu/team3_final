@@ -18,9 +18,16 @@ export default function DelDetail() {
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
-    purchaserAddress: "",
-    receiveAddress: "",
+    // purchaserAddress: "",
+    // receiveAddress: "",
   });
+  const handleCLick = ()=>{
+    setPurchaser({purchaserName: "碩紅",
+      purchaserPhone: "0953868686",
+      purchaserEmail: "wait4321@gmail",}
+      
+    )
+  }
   console.log(purchaser);
   const router = useRouter();
   // useEffect(() => {
@@ -83,7 +90,7 @@ export default function DelDetail() {
           user_id: getUser,
           delivery_name: getName,
           delivery_phone: getPhone,
-          delivery_address: getCity,
+          // delivery_address: getCity,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -815,8 +822,10 @@ export default function DelDetail() {
       >
         <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
         <div className="row mt-3 mb-2">
+        <span onClick={handleCLick}>1234</span>
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
+           
           </label>
           {/* 錯誤訊息 */}
           <div
@@ -829,6 +838,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
+            value={purchaser.purchaserName}
               name="purchaserName"
               type="text"
               className={styles.inputframe + " purchaserName"}
@@ -858,6 +868,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
+            value={purchaser.purchaserPhone}
               name="purchaserPhone"
               type="text"
               className={styles.inputframe + " purchaserPhone"}
@@ -883,6 +894,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
+            value={purchaser.purchaserEmail}
               name="purchaserEmail"
               type="text"
               className={styles.inputframe + " purchaserEmail"}
@@ -1009,7 +1021,7 @@ export default function DelDetail() {
         </div>
 
         {/* 地址 */}
-        <div className="row mb-2">
+        {/* <div className="row mb-2">
           <label
             htmlFor="readdress"
             className="form-label col-12 col-form-label"
@@ -1064,7 +1076,7 @@ export default function DelDetail() {
               placeholder=" 請輸入地址"
             />
           </div>
-        </div>
+        </div> */}
         {/* part3 */}
         <div className={styles.buyertitle + " mt-3 pb-1"}>配送資訊</div>
         <div className="row mt-3 mb-2">

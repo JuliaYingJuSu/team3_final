@@ -1,12 +1,17 @@
 import React from "react";
 import Card from "../card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function Section01({selectedCity, selectedStyle, searchKeyword}) {
+  const {auth} = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
+  const [favs, setFavs] = useState([]);
+  const [followed, setFollowed] = useState([]);
+  const [likes, setLikes] = useState([]);
   // console.log('frontpage:', {selectedCity})
   // console.log('frontpage:', {searchKeyword})
   // console.log('frontpage:', {selectedStyle})
@@ -89,6 +94,50 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
     setDisplayData(newData.slice(0, 3));
   }, [selectedCity, selectedStyle, searchKeyword]);
 
+//接收加入收藏資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/fav",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setFavs(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
+
+//接收加入追蹤資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/follow",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setFollowed(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
+
+//接收加入收藏資料庫資料
+useEffect(() => {
+  if(auth && auth.token)
+  fetch(process.env.API_SERVER + "/api/post/like",{
+    headers: {
+      Authorization: "Bearer " + auth.token,
+    },
+  })
+    .then((r) => r.json())
+    .then((f) => {
+      setLikes(f);
+    })
+    .catch((ex) => console.log(ex));
+}, [auth]);
 
 
   return (
@@ -128,6 +177,12 @@ export default function Section01({selectedCity, selectedStyle, searchKeyword}) 
                   user_id={user_id}
                   nickname={nickname}
                   user_img={user_img}
+                  favs={favs}
+                  setFavs={setFavs}
+                  followed={followed}
+                  setFollowed={setFollowed}
+                  likes={likes} 
+                  setLikes={setLikes}
                 />
               );
             }
