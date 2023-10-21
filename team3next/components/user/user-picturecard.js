@@ -25,7 +25,7 @@ export default function UserPictureCard({article}) {
           data-bs-toggle="modal"
           data-bs-target={"#exampleModal"+article.post_id}>
           <img
-            src={`/images/post/${article.post_image_name}`}
+            src={`http://localhost:3002/img/${article.post_image_name}`}
             className={Styles.imgStyle}
             alt="User Image"></img>
           <span

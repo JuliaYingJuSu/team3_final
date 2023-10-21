@@ -14,7 +14,7 @@ export default function WhoPictureCard({ userinfo }) {
           data-bs-toggle="modal"
           data-bs-target={"#exampleModal" + userinfo.post_id}>
           <img
-            src={`/images/post/${userinfo.post_image_name}`}
+            src={`http://localhost:3002/img/${userinfo.post_image_name}`}
             className={Styles.imgStyle}></img>
           <span
             className="icon-multi position-absolute z-1 fs-4 top-50"

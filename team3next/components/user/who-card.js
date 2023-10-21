@@ -77,7 +77,7 @@ export default function WhoCard({
             data-bs-toggle="modal"
             data-bs-target={"#exampleModal" + usercard.post_id}>
             <img
-              src={`/images/post/${usercard.post_image_name}`}
+              src={`http://localhost:3002/img/${usercard.post_image_name}`}     
               className="card-img"
               alt="..."
             />
