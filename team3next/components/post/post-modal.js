@@ -294,7 +294,7 @@ export default function PostModal({
                   /* console.log(v);  */
                 }
                 return (
-                  <div className="info d-flex align-items-start ms-2" key={i}>
+                  <div className="info d-flex align-items-start ms-2 mb-2" key={i}>
                     <div className="me-2">
                       <Link href="/user/user-my-article-i">
                         <img
@@ -302,7 +302,7 @@ export default function PostModal({
                           src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
-                    <div className="me-auto">
+                    <div className="me-auto mt-2">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>
