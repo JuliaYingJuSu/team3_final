@@ -43,8 +43,7 @@ export default function Author() {
   return (
     <>
       <MyNavbar></MyNavbar>
-      <UserInfo myauthor={myauthor} followed={followed}
-                  setFollowed={setFollowed}></UserInfo>
+      <UserInfo myauthor={myauthor}></UserInfo>
       <UserNavbar />
       {followed.length > 0 ? (
         <div className={"container mb-5" + " " + `${Styles.afs}`}>

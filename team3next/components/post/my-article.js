@@ -11,7 +11,7 @@ export default function MyArticle({ article }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
   const contentParagraphs = article.post_content.split("\n");
-  console.log({ article });
+  // console.log({ article });
 
   // 初始化輪播的 activeIndex
   const [activeIndex, setActiveIndex] = useState(0);
@@ -169,7 +169,7 @@ export default function MyArticle({ article }) {
             <hr />
             {comments &&
               comments.map((v, i) => {
-                console.log(v);
+                {/* console.log(v); */}
                 return (
                   <div className="d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">

@@ -19,7 +19,7 @@ export default function Article() {
       .then((r) => r.json())
       .then((r) => {
         setArticle(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
