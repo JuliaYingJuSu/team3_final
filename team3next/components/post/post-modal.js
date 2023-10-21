@@ -252,7 +252,7 @@ export default function PostModal({
               </span>
               <span className="middle">
                 <a className="btn btn-sm btn-i" href="#message">
-                  <i className="fa-regular fa-comment"></i>
+                  <i className="icon-msg"></i>
                 </a>
                 {/* <span>1</span> */}
               </span>
