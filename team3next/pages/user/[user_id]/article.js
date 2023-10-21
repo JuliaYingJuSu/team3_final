@@ -63,7 +63,7 @@ export default function Article() {
       </div>
       <Footer></Footer>
       <Head>
-        <title>收藏文章</title>
+        <title>食食嗑嗑-收藏文章</title>
       </Head>
     </>
   );+9

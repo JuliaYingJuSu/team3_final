@@ -74,6 +74,7 @@ export default function UserMyArticleI() {
       <Head>
         {/* 一開始沒有值所以要判斷 */}
         <title>
+        食食嗑嗑-
           {usermyimgcard.length > 0
             ? `${usermyimgcard[0].nickname}`
             : "讀取中..."}

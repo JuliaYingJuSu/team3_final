@@ -58,7 +58,7 @@ export default function UserMyfrom() {
       )}
       <Footer></Footer>
       <Head>
-        <title>我的文章</title>
+        <title>食食嗑嗑-我的文章</title>
       </Head>
     </>
   );

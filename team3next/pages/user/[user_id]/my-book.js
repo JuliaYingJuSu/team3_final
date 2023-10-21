@@ -27,7 +27,7 @@ export default function MyBook() {
   return (
     <>
       <Head>
-        <title>訂位紀錄</title>
+        <title>食食嗑嗑-訂位紀錄</title>
       </Head>
       <MyNavbar></MyNavbar>
       <UserInfo></UserInfo>

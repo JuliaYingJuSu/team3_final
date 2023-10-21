@@ -79,7 +79,7 @@ export default function Author() {
 
       <Footer></Footer>
       <Head>
-        <title>追蹤作者</title>
+        <title>食食嗑嗑-追蹤作者</title>
       </Head>
     </>
   );
