@@ -18,7 +18,7 @@ export default function Author() {
       .then((r) => r.json())
       .then((r) => {
         setMyAuthor(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
@@ -27,17 +27,17 @@ export default function Author() {
 
   //接收加入追蹤資料庫資料
   useEffect(() => {
-    if(auth && auth.token)
-    fetch(process.env.API_SERVER + "/api/post/follow",{
-      headers: {
-        Authorization: "Bearer " + auth.token,
-      },
-    })
-      .then((r) => r.json())
-      .then((f) => {
-        setFollowed(f);
+    if (auth && auth.token)
+      fetch(process.env.API_SERVER + "/api/post/follow", {
+        headers: {
+          Authorization: "Bearer " + auth.token,
+        },
       })
-      .catch((ex) => console.log(ex));
+        .then((r) => r.json())
+        .then((f) => {
+          setFollowed(f);
+        })
+        .catch((ex) => console.log(ex));
   }, [auth]);
 
   return (
@@ -45,17 +45,17 @@ export default function Author() {
       <MyNavbar></MyNavbar>
       <UserInfo myauthor={myauthor}></UserInfo>
       <UserNavbar />
-      {followed.length > 0 ? (
+      {myauthor.length > 0 ? (
         <div className={"container mb-5" + " " + `${Styles.afs}`}>
-          <div className={Styles.authorText}>追蹤中作者共 {followed.length} 位</div>
+          <div className={Styles.authorText}>
+            追蹤中作者共 {myauthor.length} 位
+          </div>
           <div className="container mt-4">
             <div className="row row-cols-auto g-4">
-              {followed.map((author, i) => {
+              {myauthor.map((author, i) => {
                 return (
                   <div className="col" key={i}>
-                    <UserSCard author={author}
-                    followed={followed}
-                  setFollowed={setFollowed}></UserSCard>
+                    <UserSCard author={author} followed={followed}></UserSCard>
                   </div>
                 );
               })}

@@ -16,7 +16,7 @@ export default function Section03() {
     })
       .then((r) => r.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const groupedData = {};
         data.forEach(({ restaurant_id, ...rest }) => {
           if (groupedData[restaurant_id]) {

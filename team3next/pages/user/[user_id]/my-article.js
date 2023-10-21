@@ -17,7 +17,7 @@ export default function UserMyfrom() {
       .then((r) => r.json())
       .then((r) => {
         setMyAricle(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
