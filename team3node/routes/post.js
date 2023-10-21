@@ -147,6 +147,75 @@ postRouter.post(
   }
 );
 
+//修改文章路由
+postRouter.get(
+  "/edit-post",
+  upload.any(),
+  async (req, res) => {
+    if (!res.locals.jwtData?.user_id) {
+      return res.json({});
+    }
+    const loguid = res.locals.jwtData.user_id;
+    // console.log(req.body);
+    let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } =
+      req.body;
+    console.log(food_tag_id);
+    const output = {
+      success: false,
+      errors: {},
+      result: {},
+      postData: {}, // 除錯檢查用
+    };
+    const sqlPost = `INSERT INTO post ( post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, NOW(),  ?,  NOW(), 1)`;
+
+    let result;
+
+    try {
+      [result] = await db.query(sqlPost, [
+        post_title,
+        post_content,
+        post_restaurant_id,
+        user_id,
+      ]);
+      output.success = !!result.affectedRows;
+      output.result = result;
+
+      const postId = result.insertId;
+
+      const foodTagInsertPromises = [];
+
+      for (let i = 0; i < food_tag_id.length; i++) {
+        const sqlTags = `INSERT INTO post_food_tag (post_food_tag_id, post_id, food_tag_id) VALUES (NULL, ?, ?)`;
+        const foodTagInsertPromise = await db.query(sqlTags, [
+          postId,
+          food_tag_id[i],
+        ]);
+        foodTagInsertPromises.push(foodTagInsertPromise);
+      }
+
+      if (req.files && req.files.length > 0) {
+        const sqlImg = `INSERT INTO post_image (post_id, post_image_name) VALUES (?, ?)`;
+
+        for(let f of req.files){
+          try {
+            [result] = await db.query(sqlImg, [postId, f.filename]);
+            console.log(`File ${f.filename} inserted into database.`);
+          } catch (err) {
+            console.error(
+              `Error inserting file ${f.filename} into database: ${err}`
+            );
+          }
+        }
+      }
+    } catch (err) {
+      console.log({err})
+      output.errors = "SQL 錯誤";
+      output.err = err;
+    }
+    output.reqfiles = req.files;
+    res.json(output);
+  }
+);
 
 //新增留言
 postRouter.post("/add-comment", async (req, res) => {

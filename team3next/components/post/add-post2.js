@@ -8,6 +8,7 @@ import AuthContext from "@/hooks/AuthContext";
 import AntdFoodtag from "./antd_foodtag";
 import AntdRestaurant from "./antd_restaurant";
 import router from "next/router";
+import Head from "next/head";
 
 export default function AddPost1() {
   const { auth } = useContext(AuthContext);
@@ -198,7 +199,7 @@ export default function AddPost1() {
                       showCancelButton: true,
                       confirmButtonText:
                         '<i class="far fa-check-circle fs-5"></i>確定放棄',
-                      cancelButtonText: "先不要",
+                      cancelButtonText: '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
                       reverseButtons: true,
                     })
                     .then((result) => {
@@ -248,6 +249,9 @@ export default function AddPost1() {
           }
         `}
       </style>
+      <Head>
+        <title>食食嗑嗑-發表文章</title>
+      </Head>
     </>
   );
 }

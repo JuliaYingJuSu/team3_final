@@ -3,6 +3,7 @@ import Card from "../layout/card";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
+import Head from "next/head";
 
 export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const {auth} = useContext(AuthContext);
@@ -192,6 +193,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
           </Link> */}
         </div>
       </div>
+      <Head>
+        <title>食食嗑嗑-食好料</title>
+      </Head>
     </>
   );
 }

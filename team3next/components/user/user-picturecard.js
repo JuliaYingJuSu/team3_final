@@ -10,8 +10,8 @@ export default function UserPictureCard({article}) {
   //sweetalert 設定
   const swalButtons = Swal.mixin({
     customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
+      confirmButton: "btn btn-big",
+      cancelButton: "btn btn-big",
     },
     buttonsStyling: false,
   });
@@ -44,7 +44,7 @@ export default function UserPictureCard({article}) {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-              <a className="dropdown-item fs16b" href="#">
+              <a className="dropdown-item fs16b" href="/post/edit-post">
                 修改文章
               </a>
             </li>
