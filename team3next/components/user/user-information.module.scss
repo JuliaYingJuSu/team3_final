@@ -79,9 +79,14 @@
     height: 360px;
     border-radius: 10px;
     /* 陰影 */
-    box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25);  
+    box-shadow: 8px 10px 20px 0px rgba(142, 142, 142, 0.25); 
+    transform: scale(1,1);
+    transition: all 1s ease-out
 }
 
+    
+.imgStyle:hover{
+    transform: scale(1.04,1.04)}
 
 // 追蹤作者外框設定
 .afs{
