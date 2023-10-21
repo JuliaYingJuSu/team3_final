@@ -19,6 +19,7 @@ export default function UserCard({
   // const [favs, setFavs] = useState([]);
  
   const [artcard, setArtCard] = useState([]);
+  console.log([artcard]);
 
   // const [fav, setFav] = useState(false);
 
@@ -41,7 +42,7 @@ export default function UserCard({
       .then((r) => r.json())
       .then((r) => {
         setArtCard(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);

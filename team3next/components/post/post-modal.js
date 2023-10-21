@@ -117,7 +117,7 @@ export default function PostModal({
       const r = await fetch(`http://localhost:3002/api/post/post-comment`, {
         method: "POST",
         body: JSON.stringify({
-        post_id: post_id,
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -164,7 +164,7 @@ export default function PostModal({
                 className="btn-close position-absolute fs-5"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                style={{top:20,right:20}}></button>
+                style={{ top: 20, right: 20 }}></button>
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
@@ -179,39 +179,42 @@ export default function PostModal({
                       {nickname}
                     </a>
                   </p>
-                  <FollowButton ifFollow={followed && (followed?.includes(user_id)) ? true : false}
-                  user_id={user_id}/>
+                  <FollowButton
+                    ifFollow={
+                      followed && followed?.includes(user_id) ? true : false
+                    }
+                    user_id={user_id}
+                  />
                 </div>
-                <div className="d-flex align-items-center p-1">
-                  <div className="icon-map me-1">
-                    <div className="dropdown">
-                      <button
-                        className="dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        {restaurant_name}
-                      </button>
-                      <ul className="dropdown-menu">
-                        {restinfo.map((v, i) => (
-                          <li key={i}>
-                            <iframe
-                              className="dropdown-item"
-                              style={{ minHeight: 400, width: 500 }}
-                              src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${v.restaurant_city}
+                <div className="d-flex align-items-center p-1 mt-1">
+                  <div className="dropdown d-flex">
+                    <span className="icon-map me-2 fs-4"></span>
+                    <p
+                      className="dropdown-toggle restaurant d-flex align-items-center pe-3"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      {restaurant_name}
+                    </p>
+                    <ul className="dropdown-menu">
+                      {restinfo.map((v, i) => (
+                        <li key={i}>
+                          <iframe
+                            className="dropdown-item"
+                            style={{ minHeight: 400, width: 500 }}
+                            src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${v.restaurant_city}
               ${v.restaurant_district}
               ${v.restaurant_address}&output=embed&t=`}></iframe>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {/* <Link
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  {/* <Link
                       className="me-1 restaurant"
                       href=>
                       
                     </Link> */}
-                  </div>
-                  <p className="me-1">
+                  <p>
                     <a href="#" className="text-dark">
                       {restaurant_city}
                     </a>
