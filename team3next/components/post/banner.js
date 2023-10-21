@@ -30,7 +30,8 @@ export default function Banner({
             className="btn dropdown-toggle btn-middle"
             type="button"
             data-bs-toggle="dropdown"
-            aria-expanded="false">
+            aria-expanded="false"
+          >
             <span className="icon-map fs-5 pe-2 fw-bold"></span>
             {selectedCity || "不分地區"}
           </button>
@@ -61,7 +62,8 @@ export default function Banner({
                 placeholder=""
                 aria-label="Search"
                 value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}></input>
+                onChange={(e) => setSearchKeyword(e.target.value)}
+              ></input>
               <span className="icon-search search-banner"></span>
             </form>
           </div>
@@ -72,79 +74,92 @@ export default function Banner({
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           台式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           中式
         </button>
         <button
           type="button"
           className="btn  btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           日式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           韓式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           港式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           美式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           義式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           越式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           西式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           泰式
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           早餐
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           午餐
         </button>
         <button
           type="button"
           className="btn btn-sm tags"
-          onClick={handleTagSelect}>
+          onClick={handleTagSelect}
+        >
           晚餐
         </button>
       </div>
@@ -161,7 +176,7 @@ export default function Banner({
             position: absolute;
             font-size: 24px;
             margin: 20px 0px;
-            right:640px;
+            right: 640px;
           }
           .search-banner:before {
             position: absolute;
@@ -171,9 +186,14 @@ export default function Banner({
           .tags {
             border-radius: 40px;
             border: 0.5px solid #666666;
-            margin-right: 5px;
+            margin-right: 10px;
             color: #666666;
             font-size: 16px;
+            cursor: pointer;
+          }
+          .tags:hover {
+            background-color: #666666; 
+            color: #fff; 
           }
           @media screen and (max-width: 500px) {
             .tags {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState, useContext, useEffect }from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { Upload, Form, Button, Input } from "antd";
 import PostRestaurant from "./post_restaurant";
@@ -10,248 +10,244 @@ import router from "next/router";
 import { PictureOutlined } from "@ant-design/icons";
 import { Carousel } from "react-bootstrap";
 
-export default function EditPost() {
+export default function EditPost({ post_id }) {
   const { auth } = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  console.log({ selectedOption, selectedOptions });
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [imgs, setImgs] = useState([]);
+  // 初始化輪播的 activeIndex
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 處理輪播的下一張圖片
+  const handleSelect = (selectedIndex) => {
+    setActiveIndex(selectedIndex);
+  };
+  // 要照片
+  useEffect(() => {
+    if ((post_id = 1)) {
+      fetch(`http://localhost:3002/api/post/post-pid`, {
+        method: "POST",
+        body: JSON.stringify({
+        post_id: post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          setImgs(r);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if ((post_id = 1)) {
+      fetch(`http://localhost:3002/api/post/edit-post/:uid/:pid`, {
+        method: "POST",
+        body: JSON.stringify({
+        post_id: post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          set(r);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  }, []);
+
+  //sweetalert 設定
   const swalButtons = Swal.mixin({
     customClass: {
-      confirmButton: "btn btn-middle",
-      cancelButton: "btn btn-middle",
+      confirmButton: "btn btn-big",
+      cancelButton: "btn btn-big",
     },
     buttonsStyling: false,
   });
-  const props = {
-    name: "photo",
-    multiple: true,
-    listType: "picture-card",
-    maxCount: 10,
-    onChange({ file, fileList }) {
-      if (file.status !== "uploading") {
-        console.log(file, fileList);
-      }
-    },
-    style: {
-      backgroundColor: "#FBF9EF",
-      border: "none",
-    },
-  };
 
-  const onFinish = async (values) => {
-    const formData = new FormData();
-    if (values.photo && values.photo.length > 0) {
-      values.photo.forEach((file, index) => {
-        formData.append(`post_image${index + 1}`, file.originFileObj);
-      });
-    }
-
-    formData.append("user_id", auth.user_id);
-    formData.append("post_title", title);
-    formData.append("post_content", content);
-    formData.append("post_restaurant_id", selectedOption.value);
-    selectedOptions.forEach((value, index) => {
-      formData.append(`food_tag_id[${index}]`, value.value);
-    });
-
-    try {
-      const response = await fetch("http://localhost:3002/api/post/edit-post", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      console.log(result);
-
-      if (result.success) {
-        Swal.fire("文章發表成功", "", "success");
-
-        router.push("/post");
-      } else {
-        Swal.fire("文章發表失敗", "", "error");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      Swal.fire("發表文章時發生錯誤", "", "error");
-    }
-  };
-
+  const [title, setTitle] = useState({ title: "" });
+  const [content, setContent] = useState({ content: "" });
   const titleChanged = (e) => {
-    setTitle(e.target.value);
+    const { id, value } = e.target;
+    // console.log({ id, value });
+    const newTitle = { ...title, [id]: value };
+    setTitle(newTitle);
+  };
+  const contentChanged = (e) => {
+    const { id, value } = e.target;
+    console.log({ id, value });
+    const newContent = { ...content, [id]: value };
+    setContent(newContent);
   };
 
-  const contentChanged = (e) => {
-    setContent(e.target.value);
+  const updateArticle = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3002/api/post/edit-post", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: auth.user_id,
+        post_title: title.Posttitle,
+        post_content: content.content,
+      }),
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+      });
   };
-  // useEffect(()=>{
-  //   fetch(process.env.API_SERVER +"/edit-post/:uid/:pid")
-  //   .then((r)=> r.json())
-  //   .then((data)=>{
-  //     const groupedData ={};
-  //     data.forEach(({post_id, ...rest})=>{
-  //       if(groupedData[post_id]){
-  //         groupedData[post_id].food_tag_names.push(rest.food_tag_name);
-  //       }else{
-  //         groupedData[post_id]={
-  //           post_id,
-  //           ...rest,
-  //           food_tag_names:[rest.food_tag_name],
-  //         };
-  //       }
-  //     });
-  //     setData(data)
-  //   })
-  //   .catch((ex) => console.log(ex));
-  // },[]);
-  
-  
+
   return (
     <>
-      <div className="container bg-color mb-2 d-flex justify-content-around">
-      <Form
-          onFinish={onFinish}
-          initialValues={{ title: title, content: content }}
-          style={{
-          display: 'flex',
-          width: 600, // Adjust the width as needed
-        }}>
-          <div className="my-3" style={{ flex: 1, marginRight: '50px' }}>
-            <Form.Item
-              name="photo"
-              valuePropName="fileList"
-              getValueFromEvent={(e) => {
-                if (Array.isArray(e)) {
-                  return e;
-                }
-                return e && e.fileList;
-              }}
-              noStyle>
-              <Upload.Dragger {...props}>
-                <div className="mt-5">
-                  <p className="ant-upload-drag-icon">
-                    <PictureOutlined style={{ color: "#ae4818" }} />
-                  </p>
-                  <p className="ant-upload-text">
-                    請從電腦選擇照片或拖曳到這裡
-                  </p>
-                  <p className="ant-upload-hint">可多選，最多十張</p>
-                </div>
-              </Upload.Dragger>
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item>
-              <div className="input-group mt-5">
-                <span className="input-group-text icon-edit"></span>
-                <Input
-                  type="text"
-                  value={title}
-                  onChange={titleChanged}
-                  style={{
-                    width: 268
-                  }}
-                  showCount
-                  maxLength={30}
-                  name="post_title"
-                  autoFocus
-                />
-              </div>
-            </Form.Item>
-            <Form.Item  >
-              <div className="input-group  w-100">
-                <span className="input-group-text icon-map"></span>
-                <PostRestaurant
-                  selectedOption={selectedOption}
-                  setSelectedOption={setSelectedOption}
-                  classNames={{
-                  control: (state) =>
-                  state.isFocused ? 'border-red-600' : 'border-grey-300',
-                  }}
-                />
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div className="input-group w-100">
-                <span className="input-group-text icon-tag"></span>
-                <FoodTags
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
-                />
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div className="input-group ">
-                <span className="input-group-text icon-edit"></span>
-                <Input.TextArea
-                  value={content}
-                  onChange={contentChanged}
-                  placeholder="撰寫內文..."
-                  rows={10}
-                  maxLength={500}
-                  showCount
-                  style={{
-                    height: 120,
-                    resize: "none",
-                    width: 268,
-                  }}
-                  name="post_content"
-                  autoFocus
-                />
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <a
-                className="btn btn-big me-3"
-                onClick={() => {
-                  swalButtons
-                    .fire({
-                      title: "確定要放棄這篇文章?",
-                      text: "放棄文章將不會被保留喔！",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonText:
-                        '<i class="far fa-check-circle fs-5"></i>確定放棄',
-                      cancelButtonText: '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
-                      reverseButtons: true,
-                    })
-                    .then((result) => {
-                      if (result.isConfirmed) {
-                        Swal.fire("放棄成功", "您已放棄發表", "success");
-                        router.push("/user/:user_id");
-                      } else if (result.dismiss == Swal.DismissReason.cancel) {
-                        swalButtons.fire("取消放棄", "請繼續編輯文章", "error");
-                      }
-                    });
-                }}
+      <div className="container-sm  bg-color mb-2  ">
+        <div className="container mt-2">
+          <div className="row">
+            <div className="col-lg-6">
+              <Carousel
+                activeIndex={activeIndex}
+                onSelect={handleSelect}
+                interval={null} // 停用自動播放
+                className="image-radius my-3"
               >
-                捨棄文章
-              </a>
-              <Button htmlType="submit" className="btn btn-big ">
-                發表文章
-              </Button>
-            </Form.Item>
+                {imgs.map((v, i) => (
+                  <Carousel.Item key={i}>
+                    <img
+                      src={`http://localhost:3002/img/${v.post_image_name}`}
+                      className="d-block w-100 carousel-image"
+                      alt="..."
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </div>
+            <div className="col-lg-6">
+              <div>
+                <form onSubmit={updateArticle}>
+                  <div>
+                    <div className="input-group mb-3 mt-3 ">
+                      <span
+                        className="input-group-text icon-edit"
+                        id="basic-addon1"
+                      ></span>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="我是測試"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        id="Posttitle"
+                        onChange={titleChanged}
+                        value={title.Posttitle}
+                      />
+                    </div>
+                    <div className="input-group mb-3 w-100 ">
+                      <span className="input-group-text icon-map"></span>
+                      {/* <PostRestaurant
+                        className="input-group-text"
+                        selectedOption={selectedOption}
+                        setSelectedOption={setSelectedOption}
+                      /> */}
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="SABATINI CUCINA 深庭義式餐廳"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        disabled
+                      />
+                    </div>
+                    <div
+                      className="input-group mb-3 w-100"
+                      style={{ width: "310px" }}
+                    >
+                      <span className="input-group-text icon-tag"></span>
+                      {/* <FoodTags
+                        selectedOptions={selectedOptions}
+                        setSelectedOptions={setSelectedOptions}
+                      /> */}
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="義式、午餐、晚餐"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        disabled
+                      />
+                    </div>
+                    <div className="input-group mb-3 ">
+                      <span className="input-group-text icon-edit"></span>
+                      <textarea
+                        className="form-control"
+                        aria-label="content"
+                        placeholder="該拿這個會縮小的介面怎麼辦啊
+                                                            我揪竟能轉職成功嗎"
+                        rows="10"
+                        cols="20"
+                        maxLength="500"
+                        id="content"
+                        onChange={contentChanged}
+                        value={content.content}
+                      ></textarea>
+                    </div>
+                    <div className="d-flex justify-content-center mb-3">
+                      <button
+                        className="btn btn-big me-2"
+                        onClick={() => {
+                          swalButtons
+                            .fire({
+                              title: "確定要放棄修改這篇文章?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              cancelButtonText:
+                                '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                              confirmButtonText:
+                                '<i class="far fa-check-circle fs-5"></i> 放棄',
+                            })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                swalButtons.fire("結束修改", "", "success");
+                              }
+                            });
+                        }}
+                      >
+                        放棄修改
+                      </button>
+                      <button type="submit" className="btn btn-big">
+                        修改文章
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-        </Form>
-      
-        
+        </div>
       </div>
+
       <style jsx>
         {`
           .btn {
             color: #ae4818;
           }
-          .object-fit-cover {
-            width: 600px;
-            height: 520px;
-          }
           .bg-color {
             background-color: #fbf9ef;
             border-radius: 10px 10px 10px 10px;
-            width: 850px;
-            height: 550px;
+          }
+          .carousel-image {
+            width: 100%;
+            height: 500px; 
+            object-fit: cover; 
           }
         `}
       </style>
