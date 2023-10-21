@@ -1,14 +1,16 @@
 import React from "react";
 import FollowButton from "../post/followbutton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import AuthContext from "@/hooks/AuthContext";
 
 export default function WhoInfo() {
   const router = useRouter();
   const [whofollow, setWhoFollow] = useState([]);
   const [whoinfo, setWhoInfo] = useState([]);
+  const { auth } = useContext(AuthContext);
   //由動態變數獲得user_id
-  const { user_id } = router.query;
+  let { user_id } = router.query;
 
   //抓追蹤數
   useEffect(() => {
@@ -36,9 +38,25 @@ export default function WhoInfo() {
       });
   }, [user_id]);
 
+  //接收加入追蹤資料庫資料
+  const [followed, setFollowed] = useState([]);
+  useEffect(() => {
+    if (auth && auth.token)
+      fetch(process.env.API_SERVER + "/api/post/follow", {
+        headers: {
+          Authorization: "Bearer " + auth.token,
+        },
+      })
+        .then((r) => r.json())
+        .then((f) => {
+          setFollowed(f);
+        })
+        .catch((ex) => console.log(ex));
+  }, [auth]);
+
   return (
     <>
-      {whoinfo.map((whoinfo,i) => {
+      {whoinfo.map((whoinfo, i) => {
         return (
           <main
             className="container bottom-line"
@@ -50,10 +68,12 @@ export default function WhoInfo() {
               <div className="d-flex flex-column ms-5 align-self-start mt-4">
                 <div className="d-inline-flex align-items-center">
                   <h2 className="fw-bold pe-3">{whoinfo.nickname}</h2>
-                  <FollowButton />
-                  {/* <button className="btn btn-follow">
-                  追蹤中
-                </button> */}
+                  <FollowButton
+                    ifFollow={
+                      followed && followed?.includes(user_id) ? true : false
+                    }
+                    user_id={user_id}
+                  />
                 </div>
                 <div className="mt-2 fw-semibold ps-4">
                   <span>{whofollow.length} 人</span>
