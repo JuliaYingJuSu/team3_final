@@ -29,14 +29,21 @@ export default function Card({
   likes,
   setLikes,
   clickCity, 
-  setClickCity
+  setClickCity,
+  clickStyle, 
+  setClickStyle,
 
 }) {
   const { auth } = useContext(AuthContext);
   const handleCityClick = (e) => {
     setClickCity(e.target.innerText);
   };
-  console.log('card:',{clickCity})
+  // console.log('card:',{clickCity})
+  const handleStyleClick = (e)=> {
+    setClickStyle(e.target.innerText);
+  }
+  
+  // console.log('card:',{clickStyle})
   
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
@@ -126,7 +133,7 @@ export default function Card({
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
               {uniqueFoodTags.map((foodTag, index) => (
-                <a className="tag-f" key={index}>
+                <a className="tag-f" key={index} onClick={handleStyleClick}>
                   {foodTag}
                 </a>
               ))}

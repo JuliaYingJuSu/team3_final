@@ -18,7 +18,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
   const [clickCity, setClickCity] = useState("");
-  
+  const [clickStyle, setClickStyle] = useState("");
+
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
     fetch(process.env.API_SERVER + "/")
@@ -105,7 +106,10 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     }).filter((style) => {
       if (selectedStyle) {
         return style.food_tag_names.indexOf(selectedStyle) >= 0;
-      } else {
+      }else if (clickStyle) {
+        return style.food_tag_names.indexOf(clickStyle) >= 0;
+      }
+       else {
         return true; // 如果没有選擇標籤，不過濾標籤
       }
     }).filter((post) => {
@@ -123,7 +127,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     })
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed,data, displayCount,clickCity]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed,data, displayCount,clickCity, clickStyle]);
   
   //接收加入收藏資料庫資料
   useEffect(() => {
@@ -216,6 +220,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
                   food_tag_name={food_tag_name}
                   clickCity={clickCity}
                   setClickCity={setClickCity}
+                  clickStyle={clickStyle}
+                  setClickStyle={setClickStyle}
+                
                 />
               );
             }
