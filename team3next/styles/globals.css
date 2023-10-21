@@ -440,3 +440,10 @@ textarea{
 outline: none;
 } */
 
+.card-img{
+    transform: scale(1,1);
+    transition: all 1s ease-out}
+.card-img:hover{
+    transform: scale(1.04,1.04)}
+
+    
