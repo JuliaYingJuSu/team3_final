@@ -128,12 +128,12 @@ export default function Card({
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
-              <a className="tag-i" onClick={handleCityClick}>
+              <a className="tag-i cities" onClick={handleCityClick}>
                 {restaurant_city}
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
               {uniqueFoodTags.map((foodTag, index) => (
-                <a className="tag-f" key={index} onClick={handleStyleClick}>
+                <a className="tag-f tags" key={index} onClick={handleStyleClick}>
                   {foodTag}
                 </a>
               ))}
@@ -173,6 +173,25 @@ export default function Card({
           </div>
         </div>
       </div>
+      <style jsx>
+        {`
+          .tags {
+            cursor: pointer;
+          }
+          .tags:hover {
+            background-color: #666666; 
+            color: #fff; 
+          }
+          .cities {
+            cursor: pointer;
+          }
+          .cities:hover{
+            background-color:#ae4818;
+            color: #fff; 
+          }
+
+        `}
+      </style>
     </>
   );
 }

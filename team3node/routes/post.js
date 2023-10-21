@@ -150,7 +150,7 @@ postRouter.post(
 //修改文章路由
 postRouter.get(
   "/edit-post/:uid/:pid",async(req, res)=>{
-    const user_id = parseInt(req.params.user_id) || 0;
+  const user_id = parseInt(req.params.user_id) || 0;
   const post_id = req.params.post_id;
   console.log(pid);
 
@@ -168,14 +168,13 @@ postRouter.get(
 
   postRouter.post(
     "/edit-post",
-  upload.any(),
   async (req, res) => {
     if (!res.locals.jwtData?.user_id) {
       return res.json({});
     }
     const loguid = res.locals.jwtData.user_id;
     // console.log(req.body);
-    let { post_title, post_content, post_restaurant_id, user_id, food_tag_id } =
+    let { post_title, post_content,  user_id,  } =
       req.body;
     console.log(food_tag_id);
     const output = {

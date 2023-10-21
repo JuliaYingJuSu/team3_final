@@ -80,6 +80,7 @@ export default function PostModal({
 
     if (Object.keys(newErrors).length === 0) {
       console.log("沒有錯誤");
+      setMessageVal({ message: "" });
     } else {
       console.log("---------有錯誤");
     }
