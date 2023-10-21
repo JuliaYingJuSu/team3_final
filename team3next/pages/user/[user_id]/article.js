@@ -9,7 +9,6 @@ import UserCard from "@/components/user/user-card";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/hooks/AuthContext";
 
-
 export default function Article() {
   const { auth } = useContext(AuthContext);
   const [article, setArticle] = useState([]);
@@ -26,39 +25,56 @@ export default function Article() {
       });
   }, [auth.user_id]);
   const [favs, setFavs] = useState([]);
+
   //接收加入收藏資料庫資料
   useEffect(() => {
-    if(auth && auth.token)
-    fetch(process.env.API_SERVER + "/api/post/fav",{
-      headers: {
-        Authorization: "Bearer " + auth.token,
-      },
-    })
-      .then((r) => r.json())
-      .then((f) => {
-        setFavs(f);
+    if (auth && auth.token)
+      fetch(process.env.API_SERVER + "/api/post/fav", {
+        headers: {
+          Authorization: "Bearer " + auth.token,
+        },
       })
-      .catch((ex) => console.log(ex));
+        .then((r) => r.json())
+        .then((f) => {
+          setFavs(f);
+        })
+        .catch((ex) => console.log(ex));
+  }, [auth]);
+
+  //接收加入追蹤資料庫資料
+  const [followed, setFollowed] = useState([]);
+  useEffect(() => {
+    if (auth && auth.token)
+      fetch(process.env.API_SERVER + "/api/post/follow", {
+        headers: {
+          Authorization: "Bearer " + auth.token,
+        },
+      })
+        .then((r) => r.json())
+        .then((f) => {
+          setFollowed(f);
+        })
+        .catch((ex) => console.log(ex));
   }, [auth]);
 
   return (
     <>
       <MyNavbar></MyNavbar>
-        <UserInfo></UserInfo>
+      <UserInfo></UserInfo>
       <UserNavbar />
       <div className={"container mb-5" + " " + `${Styles.wbc}`}>
         <div className={Styles.wma}>{article.length} 篇文章</div>
         <div className="row row-cols-1 row-cols-xl-3 container mx-1 my-3 px-5 mb-5 ">
-        {article.map((usercard, i) => {
-                return (
-                  <div className="col" key={i}>
-                    <UserCard usercard={usercard}
-                    favs={favs}
-                  setFavs={setFavs}></UserCard>
-                  </div>
-                );
-              })}
-         
+          {article.map((usercard, i) => {
+            return (
+              <div className="col" key={i}>
+                <UserCard
+                  usercard={usercard}
+                  favs={favs}
+                  followed={followed}></UserCard>
+              </div>
+            );
+          })}
         </div>
       </div>
       <Footer></Footer>
@@ -66,5 +82,6 @@ export default function Article() {
         <title>食食嗑嗑-收藏文章</title>
       </Head>
     </>
-  );+9
+  );
+  +9;
 }

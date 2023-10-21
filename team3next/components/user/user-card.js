@@ -12,9 +12,7 @@ import UserModal from "./user-modal";
 export default function UserCard({
   usercard,
   favs,
-  setFavs,
   followed,
-  setFollowed,
   likes,
   setLikes,
 }) {
@@ -25,19 +23,19 @@ export default function UserCard({
 
   // const [fav, setFav] = useState(false);
 
-  useEffect(() => {
-    if (auth && auth.token)
-      fetch(process.env.API_SERVER + "/api/post/fav", {
-        headers: {
-          Authorization: "Bearer " + auth.token,
-        },
-      })
-        .then((r) => r.json())
-        .then((f) => {
-          setFavs(f);
-        })
-        .catch((ex) => console.log(ex));
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth && auth.token)
+  //     fetch(process.env.API_SERVER + "/api/post/fav", {
+  //       headers: {
+  //         Authorization: "Bearer " + auth.token,
+  //       },
+  //     })
+  //       .then((r) => r.json())
+  //       .then((f) => {
+  //         setFavs(f);
+  //       })
+  //       .catch((ex) => console.log(ex));
+  // }, [auth]);
 
   useEffect(() => {
     fetch(process.env.API_SERVER + `/api/user/user_card/${usercard.post_id}`)
@@ -80,9 +78,7 @@ export default function UserCard({
       <UserModal
         usercard={usercard}
         favs={favs}
-        setFavs={setFavs}
         followed={followed}
-        setFollowed={setFollowed}
         likes={likes}
         setLikes={setLikes}
         artcard={artcard}
@@ -176,9 +172,9 @@ export default function UserCard({
               </p>
               <FollowButton
                 ifFollow={
-                  followed && followed?.includes(user_id) ? true : false
+                  followed && followed?.includes(artcard.user_id) ? true : false
                 }
-                user_id={user_id}
+                user_id={artcard.user_id}
               />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
