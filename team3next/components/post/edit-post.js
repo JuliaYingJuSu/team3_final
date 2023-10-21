@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState, useContext }from "react";
+import React, { useState, useContext, useEffect }from "react";
 import Head from "next/head";
 import { Upload, Form, Button, Input } from "antd";
 import PostRestaurant from "./post_restaurant";
@@ -8,9 +8,11 @@ import Swal from "sweetalert2";
 import AuthContext from "@/hooks/AuthContext";
 import router from "next/router";
 import { PictureOutlined } from "@ant-design/icons";
+import { Carousel } from "react-bootstrap";
 
 export default function EditPost() {
   const { auth } = useContext(AuthContext);
+  const [data, setData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   console.log({ selectedOption, selectedOptions });
@@ -56,10 +58,9 @@ export default function EditPost() {
     });
 
     try {
-      const response = await fetch("http://localhost:3002/api/post/add-post", {
+      const response = await fetch("http://localhost:3002/api/post/edit-post", {
         method: "POST",
         body: formData,
-        // headers:{"Content-Type": "multipart/form-data"}
       });
 
       const result = await response.json();
@@ -67,11 +68,7 @@ export default function EditPost() {
 
       if (result.success) {
         Swal.fire("文章發表成功", "", "success");
-        // Reset the form
-        // setSelectedOption("");
-        // setSelectedOptions([]);
-        // setTitle("");
-        // setContent("");
+
         router.push("/post");
       } else {
         Swal.fire("文章發表失敗", "", "error");
@@ -89,11 +86,32 @@ export default function EditPost() {
   const contentChanged = (e) => {
     setContent(e.target.value);
   };
-
+  // useEffect(()=>{
+  //   fetch(process.env.API_SERVER +"/edit-post/:uid/:pid")
+  //   .then((r)=> r.json())
+  //   .then((data)=>{
+  //     const groupedData ={};
+  //     data.forEach(({post_id, ...rest})=>{
+  //       if(groupedData[post_id]){
+  //         groupedData[post_id].food_tag_names.push(rest.food_tag_name);
+  //       }else{
+  //         groupedData[post_id]={
+  //           post_id,
+  //           ...rest,
+  //           food_tag_names:[rest.food_tag_name],
+  //         };
+  //       }
+  //     });
+  //     setData(data)
+  //   })
+  //   .catch((ex) => console.log(ex));
+  // },[]);
+  
+  
   return (
     <>
       <div className="container bg-color mb-2 d-flex justify-content-around">
-        <Form
+      <Form
           onFinish={onFinish}
           initialValues={{ title: title, content: content }}
           style={{
@@ -132,7 +150,6 @@ export default function EditPost() {
                   type="text"
                   value={title}
                   onChange={titleChanged}
-                  placeholder="新增標題"
                   style={{
                     width: 268
                   }}
@@ -150,9 +167,9 @@ export default function EditPost() {
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                   classNames={{
-    control: (state) =>
-      state.isFocused ? 'border-red-600' : 'border-grey-300',
-  }}
+                  control: (state) =>
+                  state.isFocused ? 'border-red-600' : 'border-grey-300',
+                  }}
                 />
               </div>
             </Form.Item>
@@ -218,6 +235,8 @@ export default function EditPost() {
             </Form.Item>
           </div>
         </Form>
+      
+        
       </div>
       <style jsx>
         {`

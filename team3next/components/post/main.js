@@ -10,6 +10,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   const [data, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [displayData, setDisplayData] = useState([]);
+  const [displayCount, setDisplayCount] = useState(24); // 顯示的卡片數量
   const [favs, setFavs] = useState([]);
   const [followed, setFollowed] = useState([]);
   const [likes, setLikes] = useState([]);
@@ -67,8 +68,32 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       .catch((ex) => console.log(ex));
   },[]);
 
+     // 加载更多卡片数据
+     const loadMoreData = () => {
+      setDisplayCount(displayCount + 24); // 增加显示的卡片数量
+    };
+  
+    // 滚动事件监听器，检测用户是否接近页面底部
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        loadMoreData(); // 当用户接近页面底部时加载更多数据
+      }
+    };
+    useEffect(() => {
+      // 添加滚动事件监听器
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        // 在组件卸载时移除事件监听器
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+
   useEffect(() => {
-    let newData = data.filter((city) => {
+    let newData = data
+      .slice(0, displayCount).filter((city) => {
       if (selectedCity) {
         return city.restaurant_city === selectedCity;
       } else {
@@ -95,7 +120,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
     });
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed,data, displayCount]);
   
   //接收加入收藏資料庫資料
   useEffect(() => {
@@ -141,6 +166,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       })
       .catch((ex) => console.log(ex));
   }, [auth]);
+
+
 
   return (
     <>

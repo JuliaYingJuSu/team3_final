@@ -149,7 +149,25 @@ postRouter.post(
 
 //修改文章路由
 postRouter.get(
-  "/edit-post",
+  "/edit-post/:uid/:pid",async(req, res)=>{
+    const user_id = parseInt(req.params.user_id) || 0;
+  const post_id = req.params.post_id;
+  console.log(pid);
+
+  let output = {
+    rows: [],
+  };
+
+  const sql = `select * from post join post_restaurant on post.post_restaurant_id = post_restaurant.post_restaurant_id join post_image on post.post_id = post_image.post_id join post_food_tag on post.post_id = post_food_tag.post_id JOIN food_tag on post_food_tag.food_tag_id = food_tag.food_tag_id where post.post_id=${post_id} And post.user_id=${user_id};`
+
+  const [[rows]] = await db.query(sql, [user_id]);
+  output.rows = rows;
+
+  res.json(output);
+  });
+
+  postRouter.post(
+    "/edit-post",
   upload.any(),
   async (req, res) => {
     if (!res.locals.jwtData?.user_id) {
@@ -166,7 +184,7 @@ postRouter.get(
       result: {},
       postData: {}, // 除錯檢查用
     };
-    const sqlPost = `INSERT INTO post ( post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, NOW(),  ?,  NOW(), 1)`;
+    const sqlPost = `UPDATE post SET post_content = '該拿這個會縮小的介面怎麼辦啊\r\n我揪竟能轉職成功' WHERE post.post_id = 64 INTO post ( post_title, post_content, post_restaurant_id, createTime, user_id, editingTime, postisValid) VALUES (?, ?, ?, NOW(),  ?,  NOW(), 1)`;
 
     let result;
 
