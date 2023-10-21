@@ -16,6 +16,7 @@ import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
 import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
+import Head from "next/head";
 
 export default function index() {
   //資料用
@@ -701,6 +702,9 @@ export default function index() {
       </div>
 
       <Footer />
+      <Head>
+        <title>食食嗑嗑-嗑零食</title>
+      </Head>
     </>
   );
 }
