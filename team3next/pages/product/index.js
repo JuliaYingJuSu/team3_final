@@ -220,12 +220,12 @@ export default function index() {
     //#endregion
     ws.onmessage = (res) => {
       console.log(JSON.parse(res.data));
-      const msg = JSON.parse(res.data).content;
-      console.log(msg, res.type);
+      const msgBack = JSON.parse(res.data);
+      console.log(msgBack, res.type);
 
       if (res.type === "message") {
         // console.log("res.data === message");
-        const newMsgs = [...msgs, msg];
+        const newMsgs = [...msgs, msgBack];
         console.log(newMsgs);
 
         setMsgs(newMsgs);
@@ -266,26 +266,33 @@ export default function index() {
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
-        style={{ position: "absolute", right: "0px", bottom: "120px" }}
+        style={{
+          position: "fixed",
+          right: "0px",
+          bottom: "30px",
+          zIndex: "11",
+        }}
       >
         找小編
       </button>
 
       <div
-        className="offcanvas offcanvas-bottom"
+        className="offcanvas offcanvas-end"
+        data-bs-scroll="true"
         tabIndex="-1"
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
+        style={{
+          width: "400px",
+          height: "600px",
+          borderRadius: "10px",
+          bottom: "30px",
+          right: "50px",
+          marginTop: "230px",
+        }}
       >
-        <h2 className="p-3">HELLO</h2>
         <div className="offcanvas-header">
-          {/* {msgs.map((msg) => {
-            return (
-              <p className="offcanvas-title" id="offcanvasBottomLabel">
-                {msg}
-              </p>
-            );
-          })} */}
+          <h2 className="p-3">HELLO</h2>
 
           <button
             type="button"
@@ -295,34 +302,45 @@ export default function index() {
           ></button>
         </div>
         <div className="offcanvas-body small ">
-          ...
-          <div>
+          <div
+            className="scrollbar px-2"
+            style={{
+              height: "70%",
+              overflow: "scroll",
+              overflowX: "hidden",
+            }}
+          >
             {msgs.map((m) => {
+              console.log(m.id, auth.user_id);
               return (
-                <p className="offcanvas-title" id="offcanvasBottomLabel">
-                  {m}
-                </p>
+                <div
+                  className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
+                >
+                  <p>{m.content}</p>
+                </div>
               );
             })}
           </div>
-          <input
-            type="text"
-            value={msg}
-            onChange={(e) => {
-              setMsg(e.target.value);
-            }}
-          />
-          <button
-            className="btn btn-warning"
-            onClick={() => {
-              // console.log("進sendMsg");
+          <div>
+            <input
+              type="text"
+              value={msg}
+              onChange={(e) => {
+                setMsg(e.target.value);
+              }}
+            />
+            <button
+              className="btn btn-warning"
+              onClick={() => {
+                // console.log("進sendMsg");
 
-              sendMsg();
-              setMsg("");
-            }}
-          >
-            送出
-          </button>
+                sendMsg();
+                setMsg("");
+              }}
+            >
+              送出
+            </button>
+          </div>
         </div>
       </div>
       {/* ---------------------------------- */}
@@ -705,6 +723,53 @@ export default function index() {
       <Head>
         <title>食食嗑嗑-嗑零食</title>
       </Head>
+      <style jsx>
+        {`
+          .scrollbar {
+            &::-webkit-scrollbar {
+              height: 5px;
+              width: 5px;
+            }
+            &::-webkit-scrollbar-track {
+              // background-color: transparent;
+              border-radius: 40px;
+              // margin: 20px;
+            }
+            &::-webkit-scrollbar-thumb {
+              border-radius: 40px;
+              background-color: rgba(102, 102, 102, 0.5);
+              // background-color: rgba(239, 214, 197, 0.55);
+            }
+          }
+
+          .myMsgBox {
+            display: flex;
+            justify-content: end;
+            // text-align: end;
+          }
+
+          .otherMsgBox {
+            display: flex;
+            justify-content: start;
+          }
+
+          .myMsgBox p {
+            background-color: #ebd8a9;
+            border-radius: 40px;
+            padding: 5px 10px;
+          }
+
+          .otherMsgBox p {
+            background-color: #b4c5d2;
+            border-radius: 40px;
+            padding: 5px 10px;
+          }
+          // .offcanvas {
+          //   position: fixed;
+          //   right: 100px;
+          // }
+        `}
+      </style>
     </>
   );
 }

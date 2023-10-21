@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LineShareButton, LineIcon } from "next-share";
+import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
@@ -656,6 +657,9 @@ export default function productDetail() {
         </main>
       </div>
       <Footer />
+      <Head>
+        <title>食食嗑嗑-嗑零食</title>
+      </Head>
     </>
   );
 }

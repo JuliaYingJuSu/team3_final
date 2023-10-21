@@ -2,6 +2,20 @@
 * {
   margin: 0;
   padding: 0;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fbf9ef;
+    /* border-radius: 40px; */
+  }
+  &::-webkit-scrollbar-thumb {
+    /* border-radius: 40px; */
+    /* background-color: rgba(239, 214, 197, 0.55);*/
+    background-color: #ebd8a9;
+  }
 }
 
 /* 地區按鈕 */
@@ -401,7 +415,7 @@ body {
   height: 45px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
-  background: #fff;;
+  background: #fff;
 }
 
 .input-res {
@@ -425,7 +439,7 @@ input[type="password"] {
   padding-left: 12px;
 }
 
-textarea{
+textarea {
   padding-left: 12px;
 }
 
@@ -440,10 +454,10 @@ textarea{
 outline: none;
 } */
 
-.card-img{
-    transform: scale(1,1);
-    transition: all 1s ease-out}
-.card-img:hover{
-    transform: scale(1.04,1.04)}
-
-    
+.card-img {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+}
+.card-img:hover {
+  transform: scale(1.04, 1.04);
+}
