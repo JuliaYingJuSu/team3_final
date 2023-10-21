@@ -35,7 +35,7 @@ export default function MyArticle({ article }) {
         .then((r) => r.json())
         .then((r) => {
           setImgs(r);
-          console.log(r);
+          // console.log(r);
         })
         .catch((ex) => {
           console.log(ex);
@@ -78,10 +78,10 @@ export default function MyArticle({ article }) {
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
                     <Link href="/user/user-my-article-i">
-                      {auth.user_img ? (
+                      {article.user_img ? (
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${auth.user_img}`}
+                          src={`http://localhost:3002/img/${article.user_img}`}
                         ></img>
                       ) : (
                         <img
