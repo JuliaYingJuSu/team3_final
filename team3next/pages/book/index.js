@@ -115,7 +115,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>食食嗑嗑-餐廳搜尋</title>
+        <title>食食嗑嗑-食在推</title>
       </Head>
       <Navbar></Navbar>
       <div className="container" style={{ marginTop: "225px" }}>

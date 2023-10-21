@@ -155,6 +155,9 @@ export default function EditPost() {
           }
         `}
       </style>
+      <Head>
+        <title>食食嗑嗑-編輯文章</title>
+      </Head>
     </>
   );
 }
