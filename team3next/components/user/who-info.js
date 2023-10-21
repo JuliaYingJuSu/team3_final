@@ -70,7 +70,7 @@ export default function WhoInfo() {
                   <h2 className="fw-bold pe-3">{whoinfo.nickname}</h2>
                   <FollowButton
                     ifFollow={
-                      followed && followed?.includes(user_id) ? true : false
+                      followed && followed?.includes(user_id) ? false : true
                     }
                     user_id={user_id}
                   />

@@ -12,9 +12,8 @@ import UserModal from "./user-modal";
 export default function UserCard({
   usercard,
   favs,
-  followed,
   likes,
-  setLikes,
+  followed,
 }) {
   const { auth } = useContext(AuthContext);
   // const [favs, setFavs] = useState([]);
@@ -49,27 +48,6 @@ export default function UserCard({
       });
   }, [usercard.post_id]);
 
-  // const [favs, setFavs] = useState([]);
-
-  // useEffect(() => {
-  //   if (user_id) {
-  //     fetch("http://localhost:3002/api/post/fav", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         user_id: user_id,
-  //         post_id: post_id,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((r) => r.json())
-  //     .then((r) => {
-  //       setSaved(r);
-  //     });
-  //   }
-  // }, []);
-
   //使用 Set 來去重除重複的 food_tag_names 數組
   // const uniqueFoodTags = [...new Set(usercard.food_tag_name)];
 
@@ -80,7 +58,6 @@ export default function UserCard({
         favs={favs}
         followed={followed}
         likes={likes}
-        setLikes={setLikes}
         artcard={artcard}
       ></UserModal>
       <div className="col mt-2 my-3">
@@ -172,9 +149,9 @@ export default function UserCard({
               </p>
               <FollowButton
                 ifFollow={
-                  followed && followed?.includes(artcard.user_id) ? true : false
+                  followed && followed?.includes(usercard.user_id) ? true : false
                 }
-                user_id={artcard.user_id}
+                user_id={usercard.user_id}
               />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
