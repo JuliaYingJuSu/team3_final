@@ -212,7 +212,7 @@ export default function PostModal({
                     </Link> */}
                   </div>
                   <p className="me-1">
-                    <a href="#" className="text-dark">
+                    <a className="text-dark">
                       {restaurant_city}
                     </a>
                   </p>
@@ -249,7 +249,7 @@ export default function PostModal({
               </span>
               <span className="middle">
                 <a className="btn btn-sm btn-i" href="#message">
-                  <i className="fa-regular fa-comment"></i>
+                  <i className="icon-msg"></i>
                 </a>
                 {/* <span>1</span> */}
               </span>

@@ -17,6 +17,7 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
   // console.log('main:', {selectedCity})
   // console.log('main:', {selectedStyle})
   // console.log('main:',{searchKeyword})
+  const [clickCity, setClickCity] = useState("");
   
   useEffect(() => {
     // 取得用戶資訊，這個 fetch 的示範
@@ -68,25 +69,25 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       .catch((ex) => console.log(ex));
   },[]);
 
-     // 加载更多卡片数据
-     const loadMoreData = () => {
-      setDisplayCount(displayCount + 24); // 增加显示的卡片数量
+     // 下載更多卡片
+    const loadMoreData = () => {
+      setDisplayCount(displayCount + 24); // 增加顯示的卡片數量
     };
   
-    // 滚动事件监听器，检测用户是否接近页面底部
+    // 滾動事件監聽器，檢測用戶是否接近頁面底部
     const handleScroll = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop ===
         document.documentElement.offsetHeight
       ) {
-        loadMoreData(); // 当用户接近页面底部时加载更多数据
+        loadMoreData(); // 當用戶接近頁面底部時下載更多卡片
       }
     };
     useEffect(() => {
-      // 添加滚动事件监听器
+      // 添加滾動事件監聽器
       window.addEventListener('scroll', handleScroll);
       return () => {
-        // 在组件卸载时移除事件监听器
+        // 在組件卸載時移除事件監聽器
         window.removeEventListener('scroll', handleScroll);
       };
     }, []);
@@ -96,7 +97,9 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       .slice(0, displayCount).filter((city) => {
       if (selectedCity) {
         return city.restaurant_city === selectedCity;
-      } else {
+      } else if (clickCity) { // 如果用户点击了 restaurant_city
+        return city.restaurant_city === clickCity; // 过滤选定的 restaurant_city
+      }else {
         return true; // 如果没有選擇城市，不過濾城市
       }
     }).filter((style) => {
@@ -117,10 +120,10 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
       } else {
         return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
       }
-    });
+    })
   
     setDisplayData(newData);
-  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed,data, displayCount]);
+  }, [selectedCity, selectedStyle, searchKeyword,favs,likes,followed,data, displayCount,clickCity]);
   
   //接收加入收藏資料庫資料
   useEffect(() => {
@@ -211,6 +214,8 @@ export default function Main({selectedCity, selectedStyle, searchKeyword}) {
                   nickname={nickname}
                   user_img={user_img}
                   food_tag_name={food_tag_name}
+                  clickCity={clickCity}
+                  setClickCity={setClickCity}
                 />
               );
             }
