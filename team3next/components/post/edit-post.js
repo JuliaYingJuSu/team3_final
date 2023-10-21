@@ -1,142 +1,223 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState, useContext }from "react";
+import Head from "next/head";
+import { Upload, Form, Button, Input } from "antd";
+import PostRestaurant from "./post_restaurant";
+import FoodTags from "./foodtags";
+import Swal from "sweetalert2";
+import AuthContext from "@/hooks/AuthContext";
+import router from "next/router";
+import { PictureOutlined } from "@ant-design/icons";
 
 export default function EditPost() {
+  const { auth } = useContext(AuthContext);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  console.log({ selectedOption, selectedOptions });
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const swalButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-middle",
+      cancelButton: "btn btn-middle",
+    },
+    buttonsStyling: false,
+  });
+  const props = {
+    name: "photo",
+    multiple: true,
+    listType: "picture-card",
+    maxCount: 10,
+    onChange({ file, fileList }) {
+      if (file.status !== "uploading") {
+        console.log(file, fileList);
+      }
+    },
+    style: {
+      backgroundColor: "#FBF9EF",
+      border: "none",
+    },
+  };
+
+  const onFinish = async (values) => {
+    const formData = new FormData();
+    if (values.photo && values.photo.length > 0) {
+      values.photo.forEach((file, index) => {
+        formData.append(`post_image${index + 1}`, file.originFileObj);
+      });
+    }
+
+    formData.append("user_id", auth.user_id);
+    formData.append("post_title", title);
+    formData.append("post_content", content);
+    formData.append("post_restaurant_id", selectedOption.value);
+    selectedOptions.forEach((value, index) => {
+      formData.append(`food_tag_id[${index}]`, value.value);
+    });
+
+    try {
+      const response = await fetch("http://localhost:3002/api/post/add-post", {
+        method: "POST",
+        body: formData,
+        // headers:{"Content-Type": "multipart/form-data"}
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (result.success) {
+        Swal.fire("文章發表成功", "", "success");
+        // Reset the form
+        // setSelectedOption("");
+        // setSelectedOptions([]);
+        // setTitle("");
+        // setContent("");
+        router.push("/post");
+      } else {
+        Swal.fire("文章發表失敗", "", "error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire("發表文章時發生錯誤", "", "error");
+    }
+  };
+
+  const titleChanged = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const contentChanged = (e) => {
+    setContent(e.target.value);
+  };
+
   return (
     <>
-      <div className="container d-flex justify-content-center bg-color mb-2">
-        <div className="my-3 object-fit-cover">
-          <div id="carouselExample" className="carousel slide mb-3">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img
-                  src="/images/post/3188.jpg"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
+      <div className="container bg-color mb-2 d-flex justify-content-around">
+        <Form
+          onFinish={onFinish}
+          initialValues={{ title: title, content: content }}
+          style={{
+          display: 'flex',
+          width: 600, // Adjust the width as needed
+        }}>
+          <div className="my-3" style={{ flex: 1, marginRight: '50px' }}>
+            <Form.Item
+              name="photo"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => {
+                if (Array.isArray(e)) {
+                  return e;
+                }
+                return e && e.fileList;
+              }}
+              noStyle>
+              <Upload.Dragger {...props}>
+                <div className="mt-5">
+                  <p className="ant-upload-drag-icon">
+                    <PictureOutlined style={{ color: "#ae4818" }} />
+                  </p>
+                  <p className="ant-upload-text">
+                    請從電腦選擇照片或拖曳到這裡
+                  </p>
+                  <p className="ant-upload-hint">可多選，最多十張</p>
+                </div>
+              </Upload.Dragger>
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item>
+              <div className="input-group mt-5">
+                <span className="input-group-text icon-edit"></span>
+                <Input
+                  type="text"
+                  value={title}
+                  onChange={titleChanged}
+                  placeholder="新增標題"
+                  style={{
+                    width: 268
+                  }}
+                  showCount
+                  maxLength={30}
+                  name="post_title"
+                  autoFocus
                 />
               </div>
-              <div className="carousel-item">
-                <img
-                  src="/images/post/3188.jpg"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
+            </Form.Item>
+            <Form.Item  >
+              <div className="input-group  w-100">
+                <span className="input-group-text icon-map"></span>
+                <PostRestaurant
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                  classNames={{
+    control: (state) =>
+      state.isFocused ? 'border-red-600' : 'border-grey-300',
+  }}
                 />
               </div>
-              <div className="carousel-item">
-                <img
-                  src="/images/post/ifood01.JPG"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
+            </Form.Item>
+            <Form.Item>
+              <div className="input-group w-100">
+                <span className="input-group-text icon-tag"></span>
+                <FoodTags
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
                 />
               </div>
-            </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
+            </Form.Item>
+            <Form.Item>
+              <div className="input-group ">
+                <span className="input-group-text icon-edit"></span>
+                <Input.TextArea
+                  value={content}
+                  onChange={contentChanged}
+                  placeholder="撰寫內文..."
+                  rows={10}
+                  maxLength={500}
+                  showCount
+                  style={{
+                    height: 120,
+                    resize: "none",
+                    width: 268,
+                  }}
+                  name="post_content"
+                  autoFocus
+                />
+              </div>
+            </Form.Item>
+            <Form.Item>
+              <a
+                className="btn btn-big me-3"
+                onClick={() => {
+                  swalButtons
+                    .fire({
+                      title: "確定要放棄這篇文章?",
+                      text: "放棄文章將不會被保留喔！",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText:
+                        '<i class="far fa-check-circle fs-5"></i>確定放棄',
+                      cancelButtonText: '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
+                      reverseButtons: true,
+                    })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire("放棄成功", "您已放棄發表", "success");
+                        router.push("/user/:user_id");
+                      } else if (result.dismiss == Swal.DismissReason.cancel) {
+                        swalButtons.fire("取消放棄", "請繼續編輯文章", "error");
+                      }
+                    });
+                }}
+              >
+                捨棄文章
+              </a>
+              <Button htmlType="submit" className="btn btn-big ">
+                發表文章
+              </Button>
+            </Form.Item>
           </div>
-        </div>
-        <form action="">
-          <div className="input-group my-3">
-            <input
-              type="file"
-              className="form-control"
-              id="inputGroupFile02"
-              multiple
-            />
-            {/* <label className="input-group-text" for="inputGroupFile02">
-              上傳圖片
-            </label> */}
-          </div>
-          <div className="input-group mb-3">
-            <span
-              className="input-group-text icon-edit"
-              id="basic-addon1"
-            ></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="選擇多元的義大利餐廳"
-              aria-label="Posttitle"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-map"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Cin Cin Osteria請請義大利餐廳 (慶城店)"
-              aria-label="Postlocation"
-              aria-describedby="button-addon2"
-            />
-            {/* <button
-              className="icon-arrow-s-right btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            ></button> */}
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-tag"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="義式、午餐、晚餐"
-              aria-label="Posttag"
-              aria-describedby="button-addon3"
-            />
-            <button
-              className="btn btn-outline-secondary icon-arrow-s-right"
-              type="button"
-              id="button-addon3"
-            ></button>
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-edit"></span>
-            <textarea
-              className="form-control"
-              aria-label="With textarea"
-              placeholder="公司附近的義大利餐廳\n
-                          餐廳的海鮮是從基隆港直接進貨非常新鮮
-                          今天點了四道
-                          酪梨醬辣味番茄莎莎海鮮披薩
-                          義式烤本島現流海魚
-                          烏魚子香蒜辣椒鯷魚炒白花椰
-                          松露奶醬烤菇燉飯
-                          每一道都好吃
-                          在南京復興附近不知道要吃什麼的話可以來試試看唷"
-              rows="10"
-            ></textarea>
-          </div>
-          <div className="d-flex justify-content-center mb-3">
-            <Link className="btn btn-big me-2" href="#">
-              放棄修改
-            </Link>
-            <button type="submit" className="btn btn-big">
-              修改文章
-            </button>
-          </div>
-        </form>
+        </Form>
       </div>
       <style jsx>
         {`

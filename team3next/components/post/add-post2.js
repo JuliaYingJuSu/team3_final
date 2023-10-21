@@ -199,7 +199,7 @@ export default function AddPost1() {
                       showCancelButton: true,
                       confirmButtonText:
                         '<i class="far fa-check-circle fs-5"></i>確定放棄',
-                      cancelButtonText: "先不要",
+                      cancelButtonText: '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
                       reverseButtons: true,
                     })
                     .then((result) => {
