@@ -261,7 +261,7 @@ export default function index() {
   return (
     <>
       <button
-        class="btn btn-primary"
+        class={"btn " + styles.typing}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
@@ -273,7 +273,9 @@ export default function index() {
           zIndex: "11",
         }}
       >
-        找小編
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
 
       <div
@@ -283,12 +285,11 @@ export default function index() {
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
         style={{
-          width: "400px",
-          height: "600px",
+          width: "350px",
+          height: "500px",
           borderRadius: "10px",
-          bottom: "30px",
-          right: "50px",
-          marginTop: "230px",
+          right: "70px",
+          marginTop: "215px",
         }}
       >
         <div className="offcanvas-header">
@@ -305,7 +306,8 @@ export default function index() {
           <div
             className="scrollbar px-2"
             style={{
-              height: "70%",
+              height: "80%",
+              marginBottom: "20px",
               overflow: "scroll",
               overflowX: "hidden",
             }}
@@ -323,6 +325,7 @@ export default function index() {
           </div>
           <div>
             <input
+              className="w-75 me-3"
               type="text"
               value={msg}
               onChange={(e) => {
@@ -330,7 +333,7 @@ export default function index() {
               }}
             />
             <button
-              className="btn btn-warning"
+              className="btn btn-sm btn-secondary rounded-pill"
               onClick={() => {
                 // console.log("進sendMsg");
 
@@ -345,7 +348,7 @@ export default function index() {
       </div>
       {/* ---------------------------------- */}
       <Navbar />
-      <div className="container" style={{ paddingTop: "225px" }}>
+      <div className="container" style={{ paddingTop: "203px" }}>
         <Bread typeList={typeList} data={data} />
 
         <div className="w-100 d-flex mb-3">
@@ -639,7 +642,9 @@ export default function index() {
                       return (
                         <div
                           key={product_id}
-                          className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                          className={
+                            " col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                          }
                         >
                           <div className={styles.cardP}>
                             <div className={styles.imgBox}>
@@ -647,7 +652,10 @@ export default function index() {
                                 <img
                                   src={"images/product/" + product_img}
                                   alt=""
-                                  className="w-100 h-100 object-fit-cover "
+                                  className={
+                                    styles.myImg +
+                                    " w-100 h-100 object-fit-cover"
+                                  }
                                 />
                               </Link>
                             </div>
@@ -731,13 +739,13 @@ export default function index() {
               width: 5px;
             }
             &::-webkit-scrollbar-track {
-              // background-color: transparent;
+              background-color: transparent;
               border-radius: 40px;
               // margin: 20px;
             }
             &::-webkit-scrollbar-thumb {
               border-radius: 40px;
-              background-color: rgba(102, 102, 102, 0.5);
+              background-color: #666666;
               // background-color: rgba(239, 214, 197, 0.55);
             }
           }
