@@ -1,11 +1,16 @@
 import React from "react";
 import RestaurantSidebar from "./restaurant-sidebar";
 import RestaurantNavbar from "./restaurant-navbar";
+import Head from "next/head";
 import Footer from "../layout/default-layout/footer";
+import PulseMascot from "./pulse";
 
 export default function RestaurantLayout({ children }) {
   return (
     <>
+      <Head>
+        <title>食食嗑嗑-餐廳業者首頁</title>
+      </Head>
       <section className="container-fluid d-flex w-100">
         <div className="row">
           <aside
@@ -20,7 +25,9 @@ export default function RestaurantLayout({ children }) {
             <nav className="bg-white sticky-top z-1">
               <RestaurantNavbar />
             </nav>
-            <section className="w-100 mt-5">{children}</section>
+            <section className="w-100 mt-5 position-relative">
+              {children}
+            </section>
           </div>
         </div>
       </section>

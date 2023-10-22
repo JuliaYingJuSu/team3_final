@@ -22,6 +22,7 @@ import {
 export default function RestaurantLogin() {
   const router = useRouter();
   const [inputType, setInputType] = useState("password");
+  const [errorMessage, setErrorMessage] = useState("");
   const { memberAuth, setMemberAuth, googleAuth, setGoogleAuth } =
     useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
@@ -56,7 +57,7 @@ export default function RestaurantLogin() {
     try {
       const result = await signInWithGoogle();
       const response = await axios.post(
-        "http://localhost:3002/firebase/google/verify-google-token",
+        process.env.API_SERVER + "/firebase/google/verify-google-token",
         result
       );
       console.log(response.data);
@@ -73,7 +74,7 @@ export default function RestaurantLogin() {
     // console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:3002/member-login",
+        process.env.API_SERVER + "/member-login",
         data
       );
       console.log("Server Response for Log In:", response.data);
@@ -82,6 +83,7 @@ export default function RestaurantLogin() {
         localStorage.setItem("token", JSON.stringify(response.data));
         // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
         setMemberAuth(response.data);
+        setErrorMessage(response.data.message);
         // 在這裡把登入時獲得的response token設定為auth;
         router.push(`/restaurant-member/${response.data.result.restaurant_id}`);
         // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
@@ -95,7 +97,7 @@ export default function RestaurantLogin() {
   return (
     <>
       <Head>
-        <title>餐廳業者登入</title>
+        <title>食食嗑嗑-餐廳業者登入</title>
       </Head>
       <div
         className="d-flex "
@@ -131,7 +133,7 @@ export default function RestaurantLogin() {
                   登入
                 </Link>
               </span>
-              {loginState && (
+              {/* {loginState && (
                 <button
                   onClick={() => {
                     authCheck();
@@ -139,7 +141,7 @@ export default function RestaurantLogin() {
                 >
                   Sunny
                 </button>
-              )}
+              )} */}
             </div>
             <div className="container mt-5">
               <Toggle></Toggle>
@@ -172,7 +174,7 @@ export default function RestaurantLogin() {
                       placeholder="請輸入密碼"
                     />
                     <span
-                      className="eye position-absolute mt-1 me-4 end-0"
+                      className="eye position-absolute mt-2 me-4 end-0 top-0"
                       style={{ fontSize: "20px", color: "#B4C5D2" }}
                       onClick={() => {
                         setInputType(
@@ -188,6 +190,7 @@ export default function RestaurantLogin() {
                     </span>
                   </div>
                 </div>
+                <div>{errorMessage}</div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
                     className="btn btn-big middle"

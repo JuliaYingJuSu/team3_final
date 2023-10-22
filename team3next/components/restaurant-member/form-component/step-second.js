@@ -27,7 +27,7 @@ export default function StepSecond() {
           type="text"
           {...register("name")}
           id="name"
-          placeholder=""
+          placeholder="請輸入商家名稱"
         />
       </div>
       <div className="d-flex flex-column mb-3">
@@ -73,6 +73,7 @@ export default function StepSecond() {
           type="text"
           {...register("phone")}
           id="phone"
+          placeholder="請輸入聯絡電話"
         />
       </div>
       <div className="d-flex flex-column mb-3">
@@ -91,6 +92,7 @@ export default function StepSecond() {
           {...register("description")}
           id="description"
           style={{ height: "150px" }}
+          placeholder="請填寫介紹，讓其他用戶更好認識您的餐廳"
         />
       </div>
     </>

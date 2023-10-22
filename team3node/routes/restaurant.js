@@ -211,7 +211,7 @@ restaurantRouter.put(
 restaurantRouter.get("/member-orders", async (req, res) => {
   const restaurantId = parseInt(req.id);
   const sql =
-    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC;";
+    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC ;";
   try {
     const [result] = await db.query(sql, [restaurantId]);
     // console.log(result);

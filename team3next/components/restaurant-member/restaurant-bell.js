@@ -14,7 +14,7 @@ export default function NotificationBell() {
     try {
       if (memberAuth && memberAuth.result.token) {
         const response = await axios.get(
-          "http://localhost:3002/api/restaurant/member-orders-less",
+          process.env.API_SERVER + "/api/restaurant/member-orders-less",
           {
             headers: {
               Authorization: "Bearer " + memberAuth.result.token,

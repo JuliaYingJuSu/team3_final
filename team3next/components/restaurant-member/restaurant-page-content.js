@@ -9,21 +9,21 @@ import CitySelector from "./form-component/city-selector";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { PictureOutlined } from "@ant-design/icons";
 import { Upload, Modal, Form } from "antd";
 
 export default function PageContent() {
   const router = useRouter();
   const [here, setHere] = useState("Hereeeeee");
-  const [fetchedData, setFetchedData] = useState("default");
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [fetchedData, setFetchedData] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const fetchData = async () => {
     try {
-      const authObj = JSON.parse(localStorage.getItem("token"));
       if (memberAuth && memberAuth.result.token) {
         const response = await axios.get(
-          "http://localhost:3002/api/restaurant/member-info",
+          process.env.API_SERVER + "/api/restaurant/member-info",
           {
             headers: {
               Authorization: "Bearer " + memberAuth.result.token,
@@ -41,14 +41,14 @@ export default function PageContent() {
 
   useEffect(() => {
     fetchData();
-  }, [memberAuth]);
-  useEffect(() => {
-    console.log(fetchedData);
-    if (!memberAuth.auth && dataLoaded) {
-      alert("請先登入");
-      router.push(`/restaurant-member/member-login`);
-    }
-  }, [memberAuth, dataLoaded]);
+  }, [memberAuth, refreshKey]);
+  // useEffect(() => {
+  //   console.log(fetchedData);
+  //   if (!memberAuth.auth && dataLoaded) {
+  //     alert("請先登入");
+  //     router.push(`/restaurant-member/member-login`);
+  //   }
+  // }, [memberAuth, dataLoaded]);
 
   const onSubmit = async (data) => {
     // 一個formdata物件
@@ -71,7 +71,7 @@ export default function PageContent() {
 
     try {
       const response = await axios.put(
-        "http://localhost:3002/api/restaurant/member-page-content-update",
+        process.env.API_SERVER + "/api/restaurant/member-page-content-update",
         formData,
         {
           headers: {
@@ -80,6 +80,7 @@ export default function PageContent() {
         }
       );
       console.log("Server Response:", response.data);
+      setRefreshKey((prevKey) => prevKey + 1);
       Swal.fire({
         icon: "success",
         title: "修改成功",
@@ -116,6 +117,9 @@ export default function PageContent() {
 
   return (
     <>
+      <Head>
+        <title>食食嗑嗑-餐廳資料維護</title>
+      </Head>
       <div className="row">
         <div className="col-3"></div>
         <div className="col-6">
@@ -139,7 +143,7 @@ export default function PageContent() {
                 type="text"
                 {...register("name")}
                 id="name"
-                placeholder=""
+                placeholder="請輸入商家名稱"
                 defaultValue={fetchedData[0].restaurant_name}
               />
             </div>
@@ -191,6 +195,7 @@ export default function PageContent() {
                 type="text"
                 {...register("phone", { required: "請輸入資料" })}
                 id="phone"
+                placeholder="請輸入聯絡電話"
                 defaultValue={fetchedData[0].restaurant_phone}
               />
             </div>
@@ -223,6 +228,7 @@ export default function PageContent() {
                 id="description"
                 style={{ height: "150px" }}
                 defaultValue={fetchedData[0].restaurant_info}
+                placeholder="請填寫介紹，讓其他用戶更好認識您的餐廳"
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -252,13 +258,13 @@ export default function PageContent() {
               >
                 <Upload.Dragger {...props}>
                   <p className="ant-upload-drag-icon">
-                    <InboxOutlined style={{ color: "#ae4818" }} />
+                    <PictureOutlined style={{ color: "#ae4818" }} />
                   </p>
                   <p className="ant-upload-text">
                     請從電腦選擇照片或拖曳到這裡
                   </p>
                   <p className="ant-upload-hint">
-                    可多選，最多五張,限.jpg/.png/.webp
+                    可多選，最多五張，限.jpg/.png/.webp，單張5Mb大小
                   </p>
                 </Upload.Dragger>
               </FormItem>

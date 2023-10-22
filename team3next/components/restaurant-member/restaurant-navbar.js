@@ -9,6 +9,32 @@ import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function RestaurantNavbar() {
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
+  const [fetchedData, setFetchedData] = useState("");
+  const fetchData = async () => {
+    if (memberAuth && memberAuth.result && memberAuth.result.token) {
+      try {
+        if (memberAuth && memberAuth.result.token) {
+          const response = await axios.get(
+            process.env.API_SERVER + "/api/restaurant/member-info",
+            {
+              headers: {
+                Authorization: "Bearer " + memberAuth.result.token,
+              },
+            }
+          );
+          console.log("fetch result:", response.data);
+          setFetchedData(response.data);
+          setDataLoaded(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [memberAuth]);
+
   return (
     <>
       <ul className="nav nav-underline d-flex align-items-center justify-content-between flex-nowrap">
@@ -31,7 +57,7 @@ export default function RestaurantNavbar() {
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
-              歡迎回來，{memberAuth.result.restaurant_name || "加載中..."}
+              歡迎回來，{fetchedData.result.restaurant_name || "加載中..."}
             </div>
           </div>
         </div>

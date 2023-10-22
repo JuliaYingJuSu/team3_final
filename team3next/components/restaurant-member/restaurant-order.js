@@ -8,13 +8,25 @@ import dayjs from "dayjs";
 
 export default function MemberOrders() {
   const [orders, setOrders] = useState([]);
-  const { memberAuth, setMemberAuth, googleAuth, setGoogleAuth } =
-    useMemberAuthContext();
+  const { memberAuth } = useMemberAuthContext();
+  // states，context
+  const [currentPage, setCurrentPage] = useState(1); // 當前頁碼
+  const [pageSize, setPageSize] = useState(5); // 每頁顯示的數量
+  const [totalPages, setTotalPages] = useState(1); // 總頁數
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  // 分頁邏輯
+  const { watch, register } = useForm();
+  const filteredOrders = orders.filter((order) => {
+    return order.book_name.includes(watch("search"));
+  });
+  const currentPageData = filteredOrders.slice(startIndex, endIndex);
   const fetchData = async () => {
     try {
       if (memberAuth && memberAuth.result.token) {
         const response = await axios.get(
-          "http://localhost:3002/api/restaurant/member-orders",
+          process.env.API_SERVER + "/api/restaurant/member-orders",
           {
             headers: {
               Authorization: "Bearer " + memberAuth.result.token,
@@ -29,6 +41,8 @@ export default function MemberOrders() {
           return newObj;
         });
         setOrders(formattedData);
+        const totalItems = filteredOrders.length; // 數據總數
+        setTotalPages(Math.ceil(totalItems / pageSize)); // 更新總頁數
         // 格式化日期
       }
     } catch (error) {
@@ -43,14 +57,22 @@ export default function MemberOrders() {
   // const dateFommater = (date) => dayjs(date,"YYYY-MM-DD")
 
   return (
-    // orders.map
     <>
+      <Head>
+        <title>食食嗑嗑-餐廳訂單管理</title>
+      </Head>
       <div className="row">
         <div className="col-2"></div>
         <div className="col-8">
           <h2 style={{ color: "#985637" }}>餐廳訂單管理</h2>
+          <input
+            className="mb-4"
+            type="text"
+            {...register("search")}
+            placeholder="搜索訂位人"
+          />
           <div className="accordion  " id="orders">
-            {orders.map((v, i) => {
+            {currentPageData.map((v, i) => {
               const date = dayjs(v.book_date, "YYYY-MM-DD");
               return (
                 <div className="accordion-item mb-1" key={i}>
@@ -91,6 +113,23 @@ export default function MemberOrders() {
                 </div>
               );
             })}
+            <div className="pagination mt-4">
+              <button
+                className="btn btn-big"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                上一頁
+              </button>
+              <span className="fs-5 mx-2">{currentPage}</span>
+              <button
+                className="btn btn-big"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                下一頁
+              </button>
+            </div>
           </div>
         </div>
         <div className="col-2"></div>
