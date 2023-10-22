@@ -14,6 +14,10 @@ import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { headers } from "@/next.config";
+import {
+  auth,
+  signInWithGoogle,
+} from "@/components/restaurant-member/firebase";
 
 export default function RestaurantLogin() {
   const router = useRouter();
@@ -47,26 +51,24 @@ export default function RestaurantLogin() {
     watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
-  // const redirectToGoogle = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3002/member-login",
-  //       data
-  //     );
-  //     console.log("Server Response for google:", response.data);
 
-  //     localStorage.setItem("googleToken", JSON.stringify(response.data));
-  //     // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
-  //     setGoogleAuth(response.data);
-  //     // 在這裡把登入時獲得的response token設定為auth;
-  //     router.push("http://localhost:3002/auth/google");
-  //     // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
-  //   } catch (err) {
-  //     console.error("Error:", err);
-  //     setLoginState(false);
-  //   }
-  // };
-  // // google
+  const handleGoogleSignin = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const response = await axios.post(
+        "http://localhost:3002/firebase/google/verify-google-token",
+        result
+      );
+      console.log(response.data);
+      if (response.data.auth) {
+        localStorage.setItem("token", JSON.stringify(response.data));
+        setMemberAuth(response.data);
+        router.push(`/restaurant-member/${response.data.result.restaurant_id}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const onSubmit = async (data) => {
     // console.log(data);
     try {
@@ -198,10 +200,11 @@ export default function RestaurantLogin() {
                 <div className="mb-3 hr-sect">或是 第三方 登入</div>
                 <div className="row mb-2 mt-3">
                   <div className="col-sm-12 text-start">
-                    <div className="d-flex justify-content-center">
-                      <Link href="http://localhost:3002/auth/google">
-                        <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
-                      </Link>
+                    <div
+                      onClick={handleGoogleSignin}
+                      className="d-flex justify-content-center"
+                    >
+                      <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
                     </div>
                   </div>
                 </div>
