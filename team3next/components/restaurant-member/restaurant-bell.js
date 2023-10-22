@@ -2,13 +2,41 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
+import dayjs from "dayjs";
+import Link from "next/link";
 
 export default function NotificationBell() {
-  
+  const [orders, setOrders] = useState([]);
   const [count, setCount] = useState(0);
   const [read, setRead] = useState(0);
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const fetchData = async () => {
+    try {
+      if (memberAuth && memberAuth.result.token) {
+        const response = await axios.get(
+          "http://localhost:3002/api/restaurant/member-orders-less",
+          {
+            headers: {
+              Authorization: "Bearer " + memberAuth.result.token,
+            },
+          }
+        );
+        console.log("fetch result:", response.data);
+        const formattedData = response.data.map((obj) => {
+          const newObj = { ...obj };
+          // 對book_date屬性進行修改並賦值
+          newObj.book_date = dayjs(obj.book_date).format("YYYY-MM-DD");
+          return newObj;
+        });
+        setOrders(formattedData);
+        // 格式化日期
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const orderCount = async () => {
     if (memberAuth && memberAuth.result.token) {
       const response = await axios.get(
         "http://localhost:3002/api/restaurant/member-orders-count",
@@ -30,20 +58,22 @@ export default function NotificationBell() {
 
   const NotificationRead = async () => {
     const response = await axios.put(
-      "http://localhost:3002/api/restaurant/member-orders-read",{off:0},
+      "http://localhost:3002/api/restaurant/member-orders-read",
+      { off: 0 },
       {
         headers: {
           Authorization: "Bearer " + memberAuth.result.token,
         },
       }
     );
-    console.log("read change",response.data.changedRows);
-    setRead(response.data.changedRows)
+    console.log("read change", response.data.changedRows);
+    setRead(response.data.changedRows);
   };
 
   useEffect(() => {
+    orderCount();
     fetchData();
-  }, [memberAuth,read]);
+  }, [memberAuth, read]);
 
   useEffect(() => {
     console.log(count);
@@ -79,21 +109,21 @@ export default function NotificationBell() {
         </button>
         <ul className="dropdown-menu">
           {/* start map */}
-          <li>
-            <a className="dropdown-item" href="#">
-              Action
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Action two
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Action three
-            </a>
-          </li>
+          {orders.map((v, i) => {
+            return (
+              <li style={{ border: "solid 1px lightgrey" }} key={i}>
+                <div className="me-4">日期：{v.book_date}</div>
+                <div className="me-4">時間：{v.book_time}</div>
+                <div className="me-4">訂位人：{v.book_name}</div>
+              </li>
+            );
+          })}
+          <Link
+            href={`/restaurant-member/${memberAuth.result.restaurant_id}/member-orders`}
+            className="link-unstyled"
+          >
+            更多訂單...
+          </Link>
         </ul>
       </div>
     </>

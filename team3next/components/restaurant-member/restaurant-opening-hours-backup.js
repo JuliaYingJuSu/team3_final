@@ -8,9 +8,8 @@ import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function openingHours() {
   const { memberAuth } = useMemberAuthContext();
-  const [openingHours, setOpeningHours] = useState([]);
+  const [openingHours, setopeningHours] = useState([]);
   const [checkedArray, setCheckedArray] = useState(Array(7).fill(false));
-  const [refreshKey, setRefreshKey] = useState(0);
   const toggleCheckboxStates = (index) => {
     const newcheckedArray = [...checkedArray];
     newcheckedArray[index] = !checkedArray[index];
@@ -36,31 +35,16 @@ export default function openingHours() {
       );
       console.log("openinghours fetch result", response.data);
 
-      setOpeningHours(response.data);
-    }
-  };
-
-  const deleteData = async () => {
-    if (memberAuth && memberAuth.result.token) {
-      const response = await axios.delete(
-        "http://localhost:3002/api/restaurant/member-opening-hours-delete",
-        {
-          headers: {
-            Authorization: "Bearer " + memberAuth.result.token,
-          },
-        }
-      );
-      console.log("delete result", response.data);
-
-      setOpeningHours(response.data);
+      setopeningHours(response.data);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [memberAuth, refreshKey]);
+  }, [memberAuth]);
 
   const onSubmit = async (data) => {
+    console.log("upload", entries);
     const submitStr = "";
     const updateStr = "-update";
 
@@ -68,19 +52,31 @@ export default function openingHours() {
       const response = await axios.post(
         "http://localhost:3002/api/restaurant/member-opening-hours" +
           (openingHours[0] ? updateStr : submitStr),
-        data,
+        { limit: data.limit, entries: entries }, // 修改为传递entries数组和其他数据
         {
           headers: {
             Authorization: "Bearer " + memberAuth.result.token,
           },
         }
       );
-      setRefreshKey((prevKey) => prevKey + 1);
       console.log("Server Response:", response.data);
     } catch (err) {
       console.error("Error:", err);
     }
   };
+
+  // useEffect(() => {
+  //   if (openingHours && openingHours.day_of_week) {
+  //     let tempCheckedArray = Array(7).fill(false);
+  //     for (let i = 0; i < 7; i++) {
+  //       if (openingHours.day_of_week[i]) {
+  //         tempCheckedArray[i] = true;
+  //       }
+  //     }
+  //     setCheckedArray(tempCheckedArray);
+  //   }
+  // }, [openingHours]);
+
   const daysOfWeek = [
     "星期日",
     "星期一",
@@ -107,39 +103,11 @@ export default function openingHours() {
             className="d-flex flex-column"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="d-flex row gy-2">
-              <div className="fs-5 mt-2">
-                目前人數上限：{openingHours[0]?.max_capacity}
-              </div>
-              {Array.isArray(openingHours) && openingHours.length > 0 ? (
-                openingHours.map((v, i) => {
-                  return (
-                    <ul className="col-3 list-group">
-                      <li
-                        className="me-5 list-group-item"
-                        style={{ backgroundColor: "#FBF9EF" }}
-                      >
-                        {daysOfWeek[v.day_of_week]}
-                      </li>
-                      <li className="me-5 list-group-item">
-                        開始營業時間：{v.start_time}
-                      </li>
-                      <li className="me-5 list-group-item">
-                        結束營業時間：{v.end_time}
-                      </li>
-                    </ul>
-                  );
-                })
-              ) : (
-                <p className="fs-5 mt-2">尚未設定營業時間</p>
-              )}
-            </div>
             <lable
               htmlFor="limit"
               style={{ color: "#666666", fontSize: "22px" }}
-              className="mt-3"
             >
-              設置該時段空位人數：
+              人數上限：
               <span>{watch("limit")}</span>
             </lable>
             <input
@@ -165,7 +133,11 @@ export default function openingHours() {
                     <input
                       type="checkbox"
                       onClick={() => toggleCheckboxStates(i)}
-                      checked={checkedArray[i]}
+                      checked={
+                        openingHours?.day_of_week?.[i]
+                          ? !checkedArray[i]
+                          : checkedArray[i]
+                      }
                       id={`day${i}`}
                       {...register(`weekday${i}`)}
                       value={i}
@@ -176,15 +148,15 @@ export default function openingHours() {
                     >
                       {v}
                     </span>
-                    <div className="col-4"></div>
-                    <div className="col-5 d-flex align-items-center justify-content-evenly flex-row">
+                    <div className="col-2"></div>
+                    <div className="col-7 d-flex align-items-center justify-content-evenly flex-row">
                       <div className="d-flex flex-column">
                         <span className="fs16g">開始營業時間：</span>
                         <select
                           className="selector"
                           {...register(`startTime${i}`)}
                         >
-                          <option value="">請選擇時間</option>
+                          <option value="">{"請選擇時間"}</option>
                           {/*修正bug： 因為 startime 名稱相同，所以只會傳送最後一筆名為 startTime 的資料。 */}
                           {hoursOption.map((v, i) => {
                             return (
@@ -201,7 +173,7 @@ export default function openingHours() {
                           className="selector"
                           {...register(`endTime${i}`)}
                         >
-                          <option value="">請選擇時間</option>
+                          <option value="">{"請選擇時間"}</option>
                           {hoursOption.map((v, i) => {
                             return (
                               <option key={i} value={v}>
@@ -216,18 +188,9 @@ export default function openingHours() {
                 </div>
               );
             })}
-            <div className="d-flex">
-              <button
-                onClick={deleteData}
-                className="btn btn-big mt-4"
-                type="button"
-              >
-                刪除營業時間
-              </button>
-              <button className="btn btn-big mt-4 ms-auto" type="submit">
-                {openingHours.length > 0 ? "確認修改" : "新增營業時間"}
-              </button>
-            </div>
+            <button className="btn btn-big mt-4 ms-auto" type="submit">
+              {openingHours.length > 0 ? "確認修改" : "新增營業時間"}
+            </button>
           </form>
         </div>
         <div className="col-2"></div>

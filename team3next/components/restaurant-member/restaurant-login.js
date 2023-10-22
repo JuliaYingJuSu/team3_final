@@ -100,7 +100,7 @@ export default function RestaurantLogin() {
         style={{ backgroundColor: "#EBD8A9", height: 923 }}
       >
         <div className="d-block w-100">
-          <span className="position-relativ">
+          <span className="position-relative">
             <img
               src="/images/薯哥去背.png"
               height={520}
@@ -163,7 +163,7 @@ export default function RestaurantLogin() {
                   </span>
                   <div className="withIcon position-relative">
                     <input
-                      className="input-res w-100 border-0 border-bottom rounded-0 fs-5"
+                      className="form-control input-res w-100 border-0 border-bottom rounded-0 fs-5"
                       type={inputType}
                       {...register("password")}
                       id="password"

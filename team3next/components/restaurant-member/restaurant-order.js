@@ -24,7 +24,7 @@ export default function MemberOrders() {
         console.log("fetch result:", response.data);
         const formattedData = response.data.map((obj) => {
           const newObj = { ...obj };
-          // 对book_date属性进行修改并赋值
+          // 對book_date屬性進行修改並賦值
           newObj.book_date = dayjs(obj.book_date).format("YYYY-MM-DD");
           return newObj;
         });

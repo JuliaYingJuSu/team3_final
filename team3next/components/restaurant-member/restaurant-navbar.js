@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 import NotificationBell from "./restaurant-bell";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
-import LetteredAvatar from 'react-lettered-avatar';
 
 export default function RestaurantNavbar() {
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
@@ -25,10 +24,10 @@ export default function RestaurantNavbar() {
           {/* 右側ICON區 */}
           <div className="col-3 d-flex" style={{ height: "50px" }}>
             <NotificationBell />
-            <LetteredAvatar name={"alex"} />
+
             <img
               className="rounded-circle"
-              src="https://placehold.co/50x50"
+              src={`https://ui-avatars.com/api/?name=${memberAuth.result.restaurant_name}&background=random`}
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
