@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import Head from "next/head";
 import axios from "axios";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import dayjs from "dayjs";

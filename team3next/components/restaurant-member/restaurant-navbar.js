@@ -2,14 +2,16 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
 import NotificationBell from "./restaurant-bell";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
+import axios from "axios";
 
 export default function RestaurantNavbar() {
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
-  const [fetchedData, setFetchedData] = useState("");
+  const [fetchedData, setFetchedData] = useState([]);
   const fetchData = async () => {
     if (memberAuth && memberAuth.result && memberAuth.result.token) {
       try {
@@ -24,7 +26,6 @@ export default function RestaurantNavbar() {
           );
           console.log("fetch result:", response.data);
           setFetchedData(response.data);
-          setDataLoaded(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -57,7 +58,7 @@ export default function RestaurantNavbar() {
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
-              歡迎回來，{fetchedData.result.restaurant_name || "加載中..."}
+              歡迎回來，{fetchedData[0]?.restaurant_name || "加載中..."}
             </div>
           </div>
         </div>

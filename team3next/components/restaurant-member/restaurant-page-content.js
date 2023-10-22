@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import infoSchema from "@/validation/info-validation";
@@ -144,7 +145,7 @@ export default function PageContent() {
                 {...register("name")}
                 id="name"
                 placeholder="請輸入商家名稱"
-                defaultValue={fetchedData[0].restaurant_name}
+                defaultValue={fetchedData[0]?.restaurant_name}
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -176,7 +177,7 @@ export default function PageContent() {
                   {...register("address", { required: "請輸入資料" })}
                   id="address"
                   placeholder="請輸入資料"
-                  defaultValue={fetchedData[0].restaurant_address}
+                  defaultValue={fetchedData[0]?.restaurant_address}
                 />
               </div>
             </div>
@@ -196,7 +197,7 @@ export default function PageContent() {
                 {...register("phone", { required: "請輸入資料" })}
                 id="phone"
                 placeholder="請輸入聯絡電話"
-                defaultValue={fetchedData[0].restaurant_phone}
+                defaultValue={fetchedData[0]?.restaurant_phone}
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -227,7 +228,7 @@ export default function PageContent() {
                 {...register("description")}
                 id="description"
                 style={{ height: "150px" }}
-                defaultValue={fetchedData[0].restaurant_info}
+                defaultValue={fetchedData[0]?.restaurant_info}
                 placeholder="請填寫介紹，讓其他用戶更好認識您的餐廳"
               />
             </div>
