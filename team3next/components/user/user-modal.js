@@ -278,7 +278,7 @@ export default function UserModal({
                           src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
-                    <div className="me-auto text-start">
+                    <div className="me-auto text-start mt-2">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>

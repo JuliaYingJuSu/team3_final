@@ -26,7 +26,7 @@ export default function MyNavbar() {
       .then((r) => r.json())
       .then((r) => {
         setUserInfo(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);

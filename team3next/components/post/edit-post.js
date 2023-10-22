@@ -1,160 +1,259 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import Head from "next/head";
+import { Upload, Form, Button, Input } from "antd";
+import PostRestaurant from "./post_restaurant";
+import FoodTags from "./foodtags";
+import Swal from "sweetalert2";
+import AuthContext from "@/hooks/AuthContext";
+import router from "next/router";
+import { PictureOutlined } from "@ant-design/icons";
+import { Carousel } from "react-bootstrap";
 
-export default function EditPost() {
+export default function EditPost({ post_id }) {
+  const { auth } = useContext(AuthContext);
+  const [data, setData] = useState([]);
+  const [imgs, setImgs] = useState([]);
+  // 初始化輪播的 activeIndex
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 處理輪播的下一張圖片
+  const handleSelect = (selectedIndex) => {
+    setActiveIndex(selectedIndex);
+  };
+  // 要照片
+  useEffect(() => {
+    if ((post_id = 1)) {
+      fetch(`http://localhost:3002/api/post/post-pid`, {
+        method: "POST",
+        body: JSON.stringify({
+        post_id: post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          setImgs(r);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if ((post_id = 1)) {
+      fetch(`http://localhost:3002/api/post/edit-post/:uid/:pid`, {
+        method: "POST",
+        body: JSON.stringify({
+        post_id: post_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          // console.log(r);
+          set(r);
+        })
+        .catch((ex) => {
+          console.log(ex);
+        });
+    }
+  }, []);
+
+  //sweetalert 設定
+  const swalButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-big",
+      cancelButton: "btn btn-big",
+    },
+    buttonsStyling: false,
+  });
+
+  const [title, setTitle] = useState({ title: "" });
+  const [content, setContent] = useState({ content: "" });
+  const titleChanged = (e) => {
+    const { id, value } = e.target;
+    // console.log({ id, value });
+    const newTitle = { ...title, [id]: value };
+    setTitle(newTitle);
+  };
+  const contentChanged = (e) => {
+    const { id, value } = e.target;
+    console.log({ id, value });
+    const newContent = { ...content, [id]: value };
+    setContent(newContent);
+  };
+
+  const updateArticle = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3002/api/post/edit-post", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: auth.user_id,
+        post_title: title.Posttitle,
+        post_content: content.content,
+      }),
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+      });
+  };
+
   return (
     <>
-      <div className="container d-flex justify-content-center bg-color mb-2">
-        <div className="my-3 object-fit-cover">
-          <div id="carouselExample" className="carousel slide mb-3">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img
-                  src="/images/post/3188.jpg"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
-                />
-              </div>
-              <div className="carousel-item">
-                <img
-                  src="/images/post/3188.jpg"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
-                />
-              </div>
-              <div className="carousel-item">
-                <img
-                  src="/images/post/ifood01.JPG"
-                  className="d-block w-100 object-fit-cover"
-                  alt="..."
-                />
+      <div className="container-sm  bg-color mb-2  ">
+        <div className="container mt-2">
+          <div className="row">
+            <div className="col-lg-6">
+              <Carousel
+                activeIndex={activeIndex}
+                onSelect={handleSelect}
+                interval={null} // 停用自動播放
+                className="image-radius my-3"
+              >
+                {imgs.map((v, i) => (
+                  <Carousel.Item key={i}>
+                    <img
+                      src={`http://localhost:3002/img/${v.post_image_name}`}
+                      className="d-block w-100 carousel-image"
+                      alt="..."
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </div>
+            <div className="col-lg-6">
+              <div>
+                <form onSubmit={updateArticle}>
+                  <div>
+                    <div className="input-group mb-3 mt-3 ">
+                      <span
+                        className="input-group-text icon-edit"
+                        id="basic-addon1"
+                      ></span>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="我是測試"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        id="Posttitle"
+                        onChange={titleChanged}
+                        value={title.Posttitle}
+                      />
+                    </div>
+                    <div className="input-group mb-3 w-100 ">
+                      <span className="input-group-text icon-map"></span>
+                      {/* <PostRestaurant
+                        className="input-group-text"
+                        selectedOption={selectedOption}
+                        setSelectedOption={setSelectedOption}
+                      /> */}
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="SABATINI CUCINA 深庭義式餐廳"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        disabled
+                      />
+                    </div>
+                    <div
+                      className="input-group mb-3 w-100"
+                      style={{ width: "310px" }}
+                    >
+                      <span className="input-group-text icon-tag"></span>
+                      {/* <FoodTags
+                        selectedOptions={selectedOptions}
+                        setSelectedOptions={setSelectedOptions}
+                      /> */}
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="義式、午餐、晚餐"
+                        aria-label="Posttitle"
+                        aria-describedby="basic-addon1"
+                        disabled
+                      />
+                    </div>
+                    <div className="input-group mb-3 ">
+                      <span className="input-group-text icon-edit"></span>
+                      <textarea
+                        className="form-control"
+                        aria-label="content"
+                        placeholder="該拿這個會縮小的介面怎麼辦啊
+                                                            我揪竟能轉職成功嗎"
+                        rows="10"
+                        cols="20"
+                        maxLength="500"
+                        id="content"
+                        onChange={contentChanged}
+                        value={content.content}
+                      ></textarea>
+                    </div>
+                    <div className="d-flex justify-content-center mb-3">
+                      <button
+                        className="btn btn-big me-2"
+                        onClick={() => {
+                          swalButtons
+                            .fire({
+                              title: "確定要放棄修改這篇文章?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              cancelButtonText:
+                                '<i class="fa-regular fa-circle-xmark fs-5"></i> 先不要',
+                              confirmButtonText:
+                                '<i class="far fa-check-circle fs-5"></i> 放棄',
+                            })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                swalButtons.fire("結束修改", "", "success");
+                              }
+                            });
+                        }}
+                      >
+                        放棄修改
+                      </button>
+                      <button type="submit" className="btn btn-big">
+                        修改文章
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExample"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
           </div>
         </div>
-        <form action="">
-          <div className="input-group my-3">
-            <input
-              type="file"
-              className="form-control"
-              id="inputGroupFile02"
-              multiple
-            />
-            {/* <label className="input-group-text" for="inputGroupFile02">
-              上傳圖片
-            </label> */}
-          </div>
-          <div className="input-group mb-3">
-            <span
-              className="input-group-text icon-edit"
-              id="basic-addon1"
-            ></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="選擇多元的義大利餐廳"
-              aria-label="Posttitle"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-map"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Cin Cin Osteria請請義大利餐廳 (慶城店)"
-              aria-label="Postlocation"
-              aria-describedby="button-addon2"
-            />
-            {/* <button
-              className="icon-arrow-s-right btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-            ></button> */}
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-tag"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="義式、午餐、晚餐"
-              aria-label="Posttag"
-              aria-describedby="button-addon3"
-            />
-            <button
-              className="btn btn-outline-secondary icon-arrow-s-right"
-              type="button"
-              id="button-addon3"
-            ></button>
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text icon-edit"></span>
-            <textarea
-              className="form-control"
-              aria-label="With textarea"
-              placeholder="公司附近的義大利餐廳\n
-                          餐廳的海鮮是從基隆港直接進貨非常新鮮
-                          今天點了四道
-                          酪梨醬辣味番茄莎莎海鮮披薩
-                          義式烤本島現流海魚
-                          烏魚子香蒜辣椒鯷魚炒白花椰
-                          松露奶醬烤菇燉飯
-                          每一道都好吃
-                          在南京復興附近不知道要吃什麼的話可以來試試看唷"
-              rows="10"
-            ></textarea>
-          </div>
-          <div className="d-flex justify-content-center mb-3">
-            <Link className="btn btn-big me-2" href="#">
-              放棄修改
-            </Link>
-            <button type="submit" className="btn btn-big">
-              修改文章
-            </button>
-          </div>
-        </form>
       </div>
+
       <style jsx>
         {`
           .btn {
             color: #ae4818;
           }
-          .object-fit-cover {
-            width: 600px;
-            height: 520px;
-          }
           .bg-color {
             background-color: #fbf9ef;
             border-radius: 10px 10px 10px 10px;
-            width: 850px;
-            height: 550px;
+          }
+          .carousel-image {
+            width: 100%;
+            height: 500px; 
+            object-fit: cover; 
           }
         `}
       </style>
+      <Head>
+        <title>食食嗑嗑-編輯文章</title>
+      </Head>
     </>
   );
 }

@@ -9,73 +9,65 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
 import UserModal from "./user-modal";
 
-export default function UserCard({ usercard, favs, setFavs }) {
-  const { auth, fav } = useContext(AuthContext);
+export default function UserCard({
+  usercard,
+  favs,
+  likes,
+  followed,
+}) {
+  const { auth } = useContext(AuthContext);
   // const [favs, setFavs] = useState([]);
-  const [saved, setSaved] = useState(false);
+ 
   const [artcard, setArtCard] = useState([]);
+  console.log([artcard]);
 
   // const [fav, setFav] = useState(false);
 
-  useEffect(() => {
-    if (auth && auth.token)
-      fetch(process.env.API_SERVER + "/api/post/fav", {
-        headers: {
-          Authorization: "Bearer " + auth.token,
-        },
-      })
-        .then((r) => r.json())
-        .then((f) => {
-          setFavs(f);
-        })
-        .catch((ex) => console.log(ex));
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth && auth.token)
+  //     fetch(process.env.API_SERVER + "/api/post/fav", {
+  //       headers: {
+  //         Authorization: "Bearer " + auth.token,
+  //       },
+  //     })
+  //       .then((r) => r.json())
+  //       .then((f) => {
+  //         setFavs(f);
+  //       })
+  //       .catch((ex) => console.log(ex));
+  // }, [auth]);
 
   useEffect(() => {
     fetch(process.env.API_SERVER + `/api/user/user_card/${usercard.post_id}`)
       .then((r) => r.json())
       .then((r) => {
         setArtCard(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
       });
   }, [usercard.post_id]);
 
-  // const [favs, setFavs] = useState([]);
-
-  // useEffect(() => {
-  //   if (user_id) {
-  //     fetch("http://localhost:3002/api/post/fav", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         user_id: user_id,
-  //         post_id: post_id,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((r) => r.json())
-  //     .then((r) => {
-  //       setSaved(r);
-  //     });
-  //   }
-  // }, []);
-
   //使用 Set 來去重除重複的 food_tag_names 數組
   // const uniqueFoodTags = [...new Set(usercard.food_tag_name)];
 
   return (
     <>
-      <UserModal usercard={usercard} favs={favs} setFavs={setFavs} artcard={artcard}></UserModal>
+      <UserModal
+        usercard={usercard}
+        favs={favs}
+        followed={followed}
+        likes={likes}
+        artcard={artcard}
+      ></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a
             href="#"
             data-bs-toggle="modal"
-            data-bs-target={"#exampleModal" + usercard.post_id}>
+            data-bs-target={"#exampleModal" + usercard.post_id}
+          >
             <img
               src={`http://localhost:3002/img/${usercard.post_image_name}`}
               className="card-img"
@@ -148,14 +140,20 @@ export default function UserCard({ usercard, favs, setFavs }) {
                 {artcard && artcard.length > 0 ? (
                   <Link
                     className="fs16b pt-3 text-dark"
-                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}>
+                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}
+                  >
                     {artcard[0].nickname}
                   </Link>
                 ) : (
                   ""
                 )}
               </p>
-              <FollowButton ifFollow={false} />
+              <FollowButton
+                ifFollow={
+                  followed && followed?.includes(usercard.user_id) ? true : false
+                }
+                user_id={usercard.user_id}
+              />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
               {usercard.createTime.substr(0, 10)}

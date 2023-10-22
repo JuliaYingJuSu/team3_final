@@ -88,7 +88,7 @@ export default function MyOrder() {
 
       <Footer></Footer>
       <Head>
-        <title>消費紀錄</title>
+        <title>食食嗑嗑-消費紀錄</title>
       </Head>
     </>
   );

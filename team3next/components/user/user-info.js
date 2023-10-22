@@ -26,7 +26,7 @@ export default function UserInfo() {
       .then((r) => r.json())
       .then((r) => {
         setFollowN(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);
@@ -40,7 +40,7 @@ export default function UserInfo() {
       .then((r) => r.json())
       .then((r) => {
         setUserInfo(r);
-        console.log(r);
+        // console.log(r);
       })
       .catch((ex) => {
         console.log(ex);

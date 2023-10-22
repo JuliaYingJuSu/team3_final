@@ -73,7 +73,11 @@ export default function UserMyArticleCard() {
 
       <Footer></Footer>
       <Head>
-        <title>XXX的文章</title>
+        <title>
+          食食嗑嗑-
+          {usermycard.length > 0 ? `${usermycard[0].nickname}` : "讀取中..."}
+          的文章
+        </title>
       </Head>
     </>
   );

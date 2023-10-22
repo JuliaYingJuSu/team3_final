@@ -262,7 +262,7 @@ export default function Login() {
           </div>
         </div> */}
       <Head>
-        <title>登入</title>
+        <title>食食嗑嗑-登入</title>
       </Head>
       <style jsx>
         {`

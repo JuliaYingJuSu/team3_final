@@ -98,7 +98,7 @@ userRouter.get("/:user_id/my-article", async (req, res) => {
 //我的追蹤---------------------
 userRouter.get("/:user_id/myauthor", async (req, res) => {
   const user_id_followed = parseInt(req.params.user_id) || 0; // 從動態路由參數中獲取user_id
-  const sql = `SELECT user.*, post.*, post_image.*, post_restaurant.*, post_food_tag.*, food_tag.*, followers.* FROM user JOIN post ON user.user_id = post.user_id JOIN post_image ON post.post_id = post_image.post_id JOIN post_restaurant ON post.post_restaurant_id = post_restaurant.post_restaurant_id JOIN post_food_tag ON post.post_id = post_food_tag.post_id JOIN food_tag ON food_tag.food_tag_id = post_food_tag.food_tag_id JOIN followers ON followers.user_id_following = user.user_id WHERE followers.user_id_followed = ? GROUP BY user.user_id;`;
+  const sql = `SELECT user.*, post.*, post_image.*, post_restaurant.*, post_food_tag.*, food_tag.*, followers.* FROM user JOIN post ON user.user_id = post.user_id JOIN post_image ON post.post_id = post_image.post_id JOIN post_restaurant ON post.post_restaurant_id = post_restaurant.post_restaurant_id JOIN post_food_tag ON post.post_id = post_food_tag.post_id JOIN food_tag ON food_tag.food_tag_id = post_food_tag.food_tag_id JOIN followers ON followers.user_id_followed = user.user_id WHERE followers.user_id_following = ? GROUP BY user.user_id;`;
 
   try {
     const [rows] = await db.query(sql, [user_id_followed]);

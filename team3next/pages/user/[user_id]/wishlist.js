@@ -191,7 +191,7 @@ export default function WishList() {
       </div>
       <Footer></Footer>
       <Head>
-        <title>收藏商品</title>
+        <title>食食嗑嗑-收藏商品</title>
       </Head>
     </>
   );

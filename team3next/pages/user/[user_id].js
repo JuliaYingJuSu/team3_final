@@ -16,7 +16,7 @@ export default function UserIndex() {
       <UserInformation />
       <Footer></Footer>
       <Head>
-        <title>會員資訊</title>
+        <title>食食嗑嗑-會員資訊</title>
     </Head>
     </>
   );
