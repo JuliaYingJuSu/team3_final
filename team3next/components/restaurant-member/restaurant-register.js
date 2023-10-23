@@ -31,7 +31,7 @@ export default function RestaurantRegister() {
       <Head>
         <title>食食嗑嗑-餐廳業者註冊</title>
       </Head>
-      <div className="backgs z-n1" style={{height:"300px"}}>
+      <div className="backgs z-n1" style={{height:"180px"}}>
       </div>
         <div className="container-fluid middle flex-column mb-4">
           <div className="position-absolute" style={{ top: 130 }}>
