@@ -48,12 +48,12 @@ export default function CardR3({
             </h5>
             <div
               className="truncation max-height card-title w-100 fs16 mb-0 mt-3"
-              style={{ color: "#666666" }}
+              style={{ color: "#666666", letterSpacing: "0.7px" }}
             >
               {avoidSplit}
             </div>
             <div className="d-flex w-100">
-              <div className="fs16b">
+              <div className="fs16b" style={{ letterSpacing: "0.8px" }}>
                 <div className="card-title w-100 fs16b mb-0 mt-2 mb-3">
                   更多內容...
                 </div>

@@ -332,7 +332,7 @@ const post = process.env.WEB_POST || 3001;
 const server = http.createServer(app);
 const wss = new WebSocketServer({ noServer: true });
 wss.on("connection", function connection(ws) {
-  console.log("connection");
+  // console.log("connection");
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
@@ -348,9 +348,9 @@ wss.on("connection", function connection(ws) {
     // );
 
     wss.clients.forEach((c) => {
-      console.log("forEach裡");
+      // console.log("forEach裡");
       if (c.readyState == 1) {
-        console.log("有開著");
+        // console.log("有開著");
         // c.send(JSON.stringify(JSON.parse(data).content));
         console.log("353", JSON.stringify(JSON.parse(data)));
 

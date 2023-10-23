@@ -179,7 +179,7 @@ export default function PageContent() {
               <FormItem control={control} name="photo" valuePropName="fileList">
                 <Upload.Dragger {...props} onPreview={handlePreview}>
                   <p className="ant-upload-drag-icon">
-                    <InboxOutlined style={{ color: "#ae4818" }} />
+                    <InboxOutlined style={{ color: "#985637" }} />
                   </p>
                   <p className="ant-upload-text">
                     Click or drag file to this area to upload
