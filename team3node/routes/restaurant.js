@@ -211,7 +211,7 @@ restaurantRouter.put(
 restaurantRouter.get("/member-orders", async (req, res) => {
   const restaurantId = parseInt(req.id);
   const sql =
-    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC ;";
+    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_id` DESC ;";
   try {
     const [result] = await db.query(sql, [restaurantId]);
     // console.log(result);
@@ -224,7 +224,7 @@ restaurantRouter.get("/member-orders", async (req, res) => {
 restaurantRouter.get("/member-orders-less", async (req, res) => {
   const restaurantId = parseInt(req.id);
   const sql =
-    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC LIMIT 3;";
+    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_id` DESC LIMIT 3;";
   try {
     const [result] = await db.query(sql, [restaurantId]);
     // console.log(result);
