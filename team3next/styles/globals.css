@@ -1,4 +1,8 @@
 /* 共用的樣式放這邊 */
+next-portal {
+  display: none;
+}
+
 * {
   margin: 0;
   padding: 0;
