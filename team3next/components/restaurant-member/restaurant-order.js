@@ -42,8 +42,7 @@ export default function MemberOrders() {
           return newObj;
         });
         setOrders(formattedData);
-        const totalItems = filteredOrders.length; // 數據總數
-        setTotalPages(Math.ceil(totalItems / pageSize)); // 更新總頁數
+
         // 格式化日期
       }
     } catch (error) {
@@ -53,7 +52,9 @@ export default function MemberOrders() {
 
   useEffect(() => {
     fetchData();
-  }, [memberAuth]);
+    const totalItems = filteredOrders.length; // 數據總數
+    setTotalPages(Math.ceil(totalItems / pageSize)); // 更新總頁數
+  }, [memberAuth,filteredOrders]);
 
   // const dateFommater = (date) => dayjs(date,"YYYY-MM-DD")
 
