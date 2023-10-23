@@ -26,24 +26,23 @@ export default function AddPost() {
     listType: "picture-card",
     maxCount: 10,
     onChange({ file, fileList }) {
-      if (file.status !== 'uploading') {
+      if (file.status !== "uploading") {
         console.log(file, fileList);
       }
     },
     style: {
       backgroundColor: "#FBF9EF",
       border: "none",
-
     },
   };
-    const [title, setTitle] = useState({ title: "" });
-    const [content, setContent] = useState({ content: "" });
-    const titleChanged = (e) => {
+  const [title, setTitle] = useState({ title: "" });
+  const [content, setContent] = useState({ content: "" });
+  const titleChanged = (e) => {
     const { id, value } = e.target;
     // console.log({ id, value });
     const newTitle = { ...title, [id]: value };
     setTitle(newTitle);
-    };
+  };
   const contentChanged = (e) => {
     const { id, value } = e.target;
     // console.log({ id, value });
@@ -54,7 +53,7 @@ export default function AddPost() {
   const sendArticle = (e) => {
     //console.log("submitting")
     e.preventDefault();
-    const selectedOptionValues = selectedOptions.map((v,i) => v.value) 
+    const selectedOptionValues = selectedOptions.map((v, i) => v.value);
     fetch("http://localhost:3002/api/post/add-post", {
       method: "POST",
       body: JSON.stringify({
@@ -62,7 +61,7 @@ export default function AddPost() {
         post_title: title.Posttitle,
         post_content: content.content,
         post_restaurant_id: selectedOption.value,
-        food_tag_id:selectedOptionValues,
+        food_tag_id: selectedOptionValues,
       }),
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -70,42 +69,39 @@ export default function AddPost() {
       .then((r) => {
         console.log(r);
       });
-
-
   };
   return (
     <>
       <div className="container-sm  bg-color mb-2 d-flex justify-content-around ">
-        
-          <Form>
-            <div className="my-3">
-              <Form.Item
-                control=""
-                name="photo"
-                valuePropName="fileList"
-                getValueFromEvent={(e) => {
-                  if (Array.isArray(e)) {
-                    return e;
-                  }
-                  return e && e.fileList;
-                }}
-                noStyle
-                // bug fixed用來解決filelist錯誤
-              >
-                <Upload.Dragger {...props}>
-                  <div className="mt-5">
-                    <p className="ant-upload-drag-icon">
-                      <PictureOutlined style={{ color: "#ae4818" }} />
-                    </p>
-                    <p className="ant-upload-text">
-                      請從電腦選擇照片或拖曳到這裡
-                    </p>
-                    <p className="ant-upload-hint">可多選，最多十張</p>
-                  </div>
-                </Upload.Dragger>
-              </Form.Item>
-            </div>
-          </Form>
+        <Form>
+          <div className="my-3">
+            <Form.Item
+              control=""
+              name="photo"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => {
+                if (Array.isArray(e)) {
+                  return e;
+                }
+                return e && e.fileList;
+              }}
+              noStyle
+              // bug fixed用來解決filelist錯誤
+            >
+              <Upload.Dragger {...props}>
+                <div className="mt-5">
+                  <p className="ant-upload-drag-icon">
+                    <PictureOutlined style={{ color: "#985637" }} />
+                  </p>
+                  <p className="ant-upload-text">
+                    請從電腦選擇照片或拖曳到這裡
+                  </p>
+                  <p className="ant-upload-hint">可多選，最多十張</p>
+                </div>
+              </Upload.Dragger>
+            </Form.Item>
+          </div>
+        </Form>
 
         <div>
           <form onSubmit={sendArticle}>
@@ -193,7 +189,7 @@ export default function AddPost() {
       <style jsx>
         {`
           .btn {
-            color: #ae4818;
+            color: #985637;
           }
           .bg-color {
             background-color: #fbf9ef;

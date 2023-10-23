@@ -27,7 +27,7 @@ export default function EditPost({ post_id }) {
       fetch(`http://localhost:3002/api/post/post-pid`, {
         method: "POST",
         body: JSON.stringify({
-        post_id: post_id,
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default function EditPost({ post_id }) {
       fetch(`http://localhost:3002/api/post/edit-post/:uid/:pid`, {
         method: "POST",
         body: JSON.stringify({
-        post_id: post_id,
+          post_id: post_id,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -238,7 +238,7 @@ export default function EditPost({ post_id }) {
       <style jsx>
         {`
           .btn {
-            color: #ae4818;
+            color: #985637;
           }
           .bg-color {
             background-color: #fbf9ef;
@@ -246,8 +246,8 @@ export default function EditPost({ post_id }) {
           }
           .carousel-image {
             width: 100%;
-            height: 500px; 
-            object-fit: cover; 
+            height: 500px;
+            object-fit: cover;
           }
         `}
       </style>

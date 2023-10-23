@@ -51,7 +51,7 @@ export default function StepThird() {
         >
           <Upload.Dragger {...props}>
             <p className="ant-upload-drag-icon">
-              <InboxOutlined style={{ color: "#ae4818" }} />
+              <InboxOutlined style={{ color: "#985637" }} />
             </p>
             <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
             <p className="ant-upload-hint">
