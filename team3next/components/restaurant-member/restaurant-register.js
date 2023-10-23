@@ -31,36 +31,34 @@ export default function RestaurantRegister() {
       <Head>
         <title>食食嗑嗑-餐廳業者註冊</title>
       </Head>
-      <div className="backgs z-n1" style={{height:"180px"}}>
-      </div>
-        <div className="container-fluid middle flex-column mb-4">
-          <div className="position-absolute" style={{ top: 130 }}>
-            <h1 className="fw-bold">會員註冊</h1>
-          </div>
-          <span className="bgi position-absolute opacity-25"></span>
-          <div
-            className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
-            style={{ paddingRight: 350 }}
-          >
-            有{" "}
-            <span className="px-1" style={{ color: "red" }}>
-              *
-            </span>{" "}
-            的欄位為必填
-          </div>
-          <FormLayout
-            prevPage={prevPage}
-            nextPage={nextPage}
-            page={page}
-            setPage={setPage}
-            currentField={currentField}
-            // 在這個頁面和模板頁面傳遞page，setpage，切頁function，目前欄位，讓模板頁面可以控制
-            // 可能可以直接寫入form之中，不用傳遞，看起來dave也是寫在form之中的，以後再改吧
-          >
-            {display[page]}
-          </FormLayout>
+      <div className="backgs z-n1" style={{ height: "180px" }}></div>
+      <div className="container-fluid middle flex-column mb-4">
+        <div className="position-absolute" style={{ top: 130 }}>
+          <h1 className="fw-bold">會員註冊</h1>
         </div>
-
+        <span className="bgi position-absolute opacity-25 z-n1"></span>
+        <div
+          className="fw-semibold fs-6 d-flex justify-content-end align-self-stretch"
+          style={{ paddingRight: 350 }}
+        >
+          有{" "}
+          <span className="px-1" style={{ color: "red" }}>
+            *
+          </span>{" "}
+          的欄位為必填
+        </div>
+        <FormLayout
+          prevPage={prevPage}
+          nextPage={nextPage}
+          page={page}
+          setPage={setPage}
+          currentField={currentField}
+          // 在這個頁面和模板頁面傳遞page，setpage，切頁function，目前欄位，讓模板頁面可以控制
+          // 可能可以直接寫入form之中，不用傳遞，看起來dave也是寫在form之中的，以後再改吧
+        >
+          {display[page]}
+        </FormLayout>
+      </div>
 
       <style jsx>
         {`
@@ -68,7 +66,7 @@ export default function RestaurantRegister() {
             background: #2980b9; /* fallback for old browsers */
             background: linear-gradient(
               to bottom,
-              #2980b9,        
+              #2980b9,
               #6dd5fa,
               #ffffff
             ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

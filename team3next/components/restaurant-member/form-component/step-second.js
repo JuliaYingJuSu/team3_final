@@ -8,12 +8,19 @@ export default function StepSecond() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
   return (
     <>
       <div className="d-flex flex-column my-3">
-        <label className="fs18b" htmlFor="name">
+        <label
+          className="fs18b"
+          htmlFor="name"
+          onClick={() => {
+            setValue("name", "貓町珈琲");
+          }}
+        >
           商家名稱
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -31,7 +38,13 @@ export default function StepSecond() {
         />
       </div>
       <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="address">
+        <label
+          className="fs18b"
+          htmlFor="address"
+          onClick={() => {
+            setValue("address", "義二路2巷4號");
+          }}
+        >
           商家地址
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -59,7 +72,13 @@ export default function StepSecond() {
         </div>
       </div>
       <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="phone">
+        <label
+          className="fs18b"
+          htmlFor="phone"
+          onClick={() => {
+            setValue("phone", "02-27654832");
+          }}
+        >
           聯絡電話
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -77,7 +96,16 @@ export default function StepSecond() {
         />
       </div>
       <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="description">
+        <label
+          className="fs18b"
+          htmlFor="description"
+          onClick={() => {
+            setValue(
+              "description",
+              "不同的咖啡豆有不同的作法和味道，一般人在喝咖啡的時候，多半只會說「好香」、「好苦」、「好澀」等簡單的形容詞。實際上咖啡味道形容是有多變化的，以下就來教你如何更專業的描述咖啡的味道。"
+            );
+          }}
+        >
           餐廳介紹
           <span className="ps-1" style={{ color: "red" }}>
             *
