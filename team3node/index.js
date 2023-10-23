@@ -19,7 +19,8 @@ import postRouter from "./routes/post.js";
 import productRouter from "./routes/product.js";
 import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
-import authRouter from "./routes/auth.js";
+import firebaseGoogleRouter from "./routes/firebase-google.js";
+// import authRouter from "./routes/auth.js";
 import passport from "./config/passport-setup.js";
 import passportSetup from "./config/passport-setup.js";
 // 最早為了authrouter裡的第一個路由就導入了，#8
@@ -131,7 +132,8 @@ app.use("/api/book", bookRouter);
 app.use("/api/restaurant", verifyJWT, restaurantRouter);
 app.use("/api/cart", cartRouter);
 // app.use('/ws',wsRouter)
-app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
+app.use("/firebase/google", firebaseGoogleRouter);
 
 // GET - 得到所有會員資料
 app.get("/", async function (req, res) {

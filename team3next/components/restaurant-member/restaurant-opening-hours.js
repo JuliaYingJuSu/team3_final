@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import dayjs from "dayjs";
+import Swal from "sweetalert2";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 
 export default function openingHours() {
@@ -27,7 +29,7 @@ export default function openingHours() {
   const fetchData = async () => {
     if (memberAuth && memberAuth.result.token) {
       const response = await axios.get(
-        "http://localhost:3002/api/restaurant/member-opening-hours",
+        process.env.API_SERVER + "/api/restaurant/member-opening-hours",
         {
           headers: {
             Authorization: "Bearer " + memberAuth.result.token,
@@ -43,7 +45,7 @@ export default function openingHours() {
   const deleteData = async () => {
     if (memberAuth && memberAuth.result.token) {
       const response = await axios.delete(
-        "http://localhost:3002/api/restaurant/member-opening-hours-delete",
+        process.env.API_SERVER + "/api/restaurant/member-opening-hours-delete",
         {
           headers: {
             Authorization: "Bearer " + memberAuth.result.token,
@@ -53,6 +55,11 @@ export default function openingHours() {
       console.log("delete result", response.data);
 
       setOpeningHours(response.data);
+      Swal.fire({
+        title: "刪除成功",
+        text: "已成功刪除",
+        icon: "success",
+      });
     }
   };
 
@@ -99,6 +106,9 @@ export default function openingHours() {
   // console.log(hoursOption);
   return (
     <>
+      <Head>
+        <title>食食嗑嗑-營業時間管理</title>
+      </Head>
       <div className="row">
         <div className="col-2"></div>
         <div className="col-8">
@@ -139,7 +149,7 @@ export default function openingHours() {
               style={{ color: "#666666", fontSize: "22px" }}
               className="mt-3"
             >
-              設置該時段空位人數：
+              設置人數上限：
               <span>{watch("limit")}</span>
             </lable>
             <input

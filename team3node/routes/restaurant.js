@@ -211,7 +211,7 @@ restaurantRouter.put(
 restaurantRouter.get("/member-orders", async (req, res) => {
   const restaurantId = parseInt(req.id);
   const sql =
-    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC;";
+    "SELECT * FROM `book` WHERE `restaurant_id` = ? ORDER BY `book_date` DESC ;";
   try {
     const [result] = await db.query(sql, [restaurantId]);
     // console.log(result);
@@ -328,14 +328,14 @@ restaurantRouter.post("/member-opening-hours-update", async (req, res) => {
       [restaurantId, day]
     );
 
-    // 如果该记录存在，则更新
+    // 記錄存在且時間選項不為空
     if (rows.length > 0 && startTime != "" && endTime != "") {
       [updateResult] = await db.query(
         "UPDATE `restaurant_opening_hours` SET `start_time` = ?, `end_time` = ?, `is_open` = ?, `max_capacity` = ? WHERE `restaurant_id` = ? AND `day_of_week` = ?",
         [startTime, endTime, isOpen, limit, restaurantId, day]
       );
     } else if (isOpen) {
-      // 如果该记录不存在且餐厅是开放的，则进行插入操作
+      // 記錄不存在且
       [insertResult] = await db.query(
         "INSERT INTO `restaurant_opening_hours`(`restaurant_id`, `day_of_week`, `start_time`, `end_time`,`is_open`,  `max_capacity`) VALUES (?, ?, ?, ?, ?, ?)",
         [restaurantId, day, startTime, endTime, isOpen, limit]
@@ -343,7 +343,6 @@ restaurantRouter.post("/member-opening-hours-update", async (req, res) => {
     }
   }
 
-  // 可以根据实际需求返回你想要的响应！
   res.json({ updateResult, insertResult });
 });
 

@@ -1,10 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
+import { useEffect } from "react";
+import axios from "axios";
+import Link from "next/link";
 
 export default function Carousel() {
+  const [recommendProduct, setRecommendProduct] = useState([]);
+  console.log(recommendProduct);
+  //取推薦商品資料
+  useEffect(() => {
+    axios
+      .post("http://localhost:3002/api/product/product-recommend")
+      .then((res) => {
+        console.log(res.data);
+        setRecommendProduct(res.data.rowsRecommendFront);
+      });
+  }, []);
+
   //修改左右箭頭樣式
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -12,7 +27,8 @@ export default function Carousel() {
       <div
         className={className}
         style={{ ...style, display: "block", fontSize: 33 }}
-        onClick={onClick}>
+        onClick={onClick}
+      >
         <span className="icon-arrow-s-right"></span>
       </div>
     );
@@ -28,7 +44,8 @@ export default function Carousel() {
           display: "block",
           fontSize: 33,
         }}
-        onClick={onClick}>
+        onClick={onClick}
+      >
         <span className="icon-arrow-s-left"></span>
       </div>
     );
@@ -38,9 +55,12 @@ export default function Carousel() {
   const settings = {
     className: "center",
     infinite: true,
-    centerPadding: "60px",
-    slidesToShow: 5,
+    // centerPadding: "100px",
+    slidesToShow: 6,
     swipeToSlide: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     afterChange: function (index) {
@@ -53,58 +73,27 @@ export default function Carousel() {
   return (
     <>
       <div className="container my-5">
-      <h4 className="h4-title mb-4">熱門商品</h4>
+        <h4 className="h4-title mb-4">熱門商品</h4>
         <div>
-        {/* 輪播牆區塊 */}
+          {/* 輪播牆區塊 */}
           <Slider {...settings}>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/chocolate.png"
-                    alt="商品1"
-                    className="c-card-img"></img>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/coffee01.jpg"
-                    alt="商品2"
-                    className="c-card-img"></img>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/cookie01.png"
-                    alt="商品3"
-                    className="c-card-img"></img>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/cookie02.png"
-                    alt="商品4"
-                    className="c-card-img"></img>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/granola.png"
-                    alt="商品5"
-                    className="c-card-img"></img>
-              </div>
-            </div>
-            <div className="middle">
-              <div className="middle mt-2">
-                  <img
-                    src="/images/product/spark.jpg"
-                    alt="商品6"
-                    className="c-card-img"></img>
-              </div>
-            </div>
+            {recommendProduct?.map((v, i) => {
+              return (
+                <div className="middle">
+                  <div
+                    className="middle mt-2 rounded-circle overflow-hidden "
+                    style={{ width: "160px", height: "160px" }}
+                  >
+                    <Link href={"/product/" + v.product_id}>
+                      <img
+                        src={"/images/product/" + v.product_img}
+                        className="c-card-img object-cover"
+                      ></img>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </Slider>
         </div>
       </div>

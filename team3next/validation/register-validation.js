@@ -1,6 +1,7 @@
 import * as yup from "yup";
 const phoneRegex =
   /(\d{2,3}-?|\(\d{2,3}\))\d{3,4}-?\d{4}|09\d{2}(\d{6}|-\d{3}-\d{3})/;
+const passwordRegex = /^(?=.*[a-z])(?=.*\d).+$/
 const fileTypeArray = ["image/jpeg", "image/png", "image/webp"];
 
 const registerSchema = yup.object().shape({
@@ -9,7 +10,8 @@ const registerSchema = yup.object().shape({
     .string()
     .required("請輸入密碼")
     .min(4, "最少為4位數")
-    .max(10, "最多為10位數"),
+    .max(10, "最多為10位數")
+    .matches(passwordRegex,"至少需要一個小寫的英文字母或者數字"),
   rePassword: yup
     .string()
     .required("請再次輸入密碼")
@@ -33,7 +35,7 @@ const registerSchema = yup.object().shape({
       return value && value.length;
     })
     .test("fileSize", "請檢查您的檔案大小", (value, context) => {
-      return value && value.every((file) => file.size <= 200000);
+      return value && value.every((file) => file.size <= 5000000);
     })
     .test("type", "請上傳支持的檔案類型", (value) => {
       return value && value.every((file) => fileTypeArray.includes(file.type));
