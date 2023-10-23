@@ -307,8 +307,8 @@ export default function OrderComplete() {
         <div className={styles.totalBox + " text-end"}>
           {/* {`小計NT$` + data.price * data.order_quantity } */}
           <p>小計NT${data.result && data.result[0].order_amount}</p>
-          <p>運費NT$60</p>
-          <p>合計NT${data.result && data.result[0].order_amount + 60}</p>
+          <p>運費NT$0</p>
+          <p>合計NT${data.result && data.result[0].order_amount}</p>
         </div>
 
         {/* 底下訂單資訊 */}
@@ -373,7 +373,7 @@ export default function OrderComplete() {
                 送貨方式：
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
-                宅配
+              7-11超商取貨
               </div>
               <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 py-1">
                 送貨狀態：
