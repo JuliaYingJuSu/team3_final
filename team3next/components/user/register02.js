@@ -20,12 +20,13 @@ export default function Register2({ handleClose = () => {} }) {
     }
   }
 
-  const food_tag_id=JSON.parse(localStorage.getItem("selectedFoodTagIds"))
-  
+  const food_tag_id = JSON.parse(localStorage.getItem("selectedFoodTagIds"));
+
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm();
   console.log(errors);
@@ -39,6 +40,19 @@ export default function Register2({ handleClose = () => {} }) {
       swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
+
+  // 一鍵輸入
+  const autoFillData = (e) => {
+    // 使用 setValue 方法来设置每个字段的值
+    e.preventDefault();
+    setValue("user_name", "陳番薯");
+    setValue("nickname", "薯哥");
+    setValue("user_email", "yam123@gmail.com");
+    setValue("user_password", "yam12345");
+    setValue("password2", "yam12345");
+    setValue("user_phone", "0912345678");
+    setValue("self_intr", "大家好，我是薯哥");
+  };
 
   //圖片上傳
   // 選擇的檔案
@@ -177,7 +191,7 @@ export default function Register2({ handleClose = () => {} }) {
                 </label>
               </div>
             </div>
-
+            <span type="button" className="position-absolute z-3 opacity-25" style={{fontSize:90,top:255,left:686,color: "#BEBEBE"}} onClick={autoFillData}>•</span>
             {/* 輸入區 */}
             <div className="mb-3">
               <label htmlFor="name" className="form-label fs18b">
