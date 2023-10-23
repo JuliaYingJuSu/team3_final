@@ -194,16 +194,16 @@ export default function Login() {
                     登入
                   </button>
                 </div>
-                <div className="mb-3 hr-sect">或是 第三方 登入</div>
+                {/* <div className="mb-3 hr-sect">或是 第三方 登入</div>
                 <div className="row mb-2 mt-3">
                   <div className="col-sm-12 text-start">
                     <div className="d-flex justify-content-center">
                       <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="row">
-                  <p className="middle mt-3">
+                  <p className="middle mt-5">
                     <span className="bottom-line-g fs-5 grey-ae middle">
                       沒有帳號？
                       <button
