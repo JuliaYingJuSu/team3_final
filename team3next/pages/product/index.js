@@ -318,9 +318,22 @@ export default function index() {
               console.log(m);
               return (
                 <div
-                  className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
+                  className={
+                    !auth.user_id || m.id === "stranger"
+                      ? "myMsgBox"
+                      : "otherMsgBox"
+                  }
+
+                  // className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
                 >
                   {/* <p className="">{m.name}</p> */}
+                  <p className="">
+                    {auth.user_id == 112
+                      ? "薯編"
+                      : auth.user_id
+                      ? m.name
+                      : "訪客"}
+                  </p>
                   <p>{m.content}</p>
                 </div>
               );
