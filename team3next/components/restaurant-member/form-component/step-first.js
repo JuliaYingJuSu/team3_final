@@ -11,11 +11,28 @@ export default function StepFirst() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
   return (
     <>
       <div className="d-flex flex-column my-3">
+        <button
+          type="button"
+          onClick={() => {
+            setValue(
+              [
+                {
+                  email: "alex123@gmail.com",
+                  password: "12345a",
+                  rePassword: "12345a",
+                },
+              ].forEach((name, value) => setValue(name, value))
+            );
+          }}
+        >
+          快速新增
+        </button>
         <label className="fs18b" htmlFor="email">
           電子信箱
           <span className="ps-1" style={{ color: "red" }}>
