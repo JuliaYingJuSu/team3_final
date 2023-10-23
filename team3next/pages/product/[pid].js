@@ -602,55 +602,57 @@ export default function productDetail() {
           </div>
           <div className={styles.recommendBox + " row pb-5"}>
             <p className={styles.head + " h4"}>推薦商品</p>
-            <div className={styles.test + " w-75"}>
+            <div className={styles.test + " w-100"}>
               {/* ------------推薦商品----------- */}
               <Swiper
                 spaceBetween={40}
-                slidesPerView={4}
+                slidesPerView={5}
                 navigation={true}
                 modules={[Navigation]}
-                className="mySwiper"
+                className={" mySwiper p-4"}
                 style={{
                   "--swiper-navigation-color": "#3f4c5c",
-                  "--swiper-navigation-size": "18px",
+                  "--swiper-navigation-size": "22px",
                 }}
               >
                 {recommend &&
-                  recommend.map((v, i) => {
-                    return (
-                      <SwiperSlide key={i}>
-                        {
-                          <div
-                            className="
+                  recommend
+                    .filter((v) => v.product_id != router.query.pid)
+                    .map((v, i) => {
+                      return (
+                        <SwiperSlide key={i}>
+                          {
+                            <div
+                              className="
                   justify-content-center align-items-center "
-                          >
-                            <div>
-                              <Link href={`/product/${v.product_id}`}>
-                                <img
-                                  src={"/images/product/" + v.product_img}
-                                  alt=""
-                                  className="object-fit-cover w-100 h-100"
-                                />
-                              </Link>
+                            >
+                              <div>
+                                <Link href={`/product/${v.product_id}`}>
+                                  <img
+                                    src={"/images/product/" + v.product_img}
+                                    alt=""
+                                    className="object-fit-cover w-100 h-100"
+                                  />
+                                </Link>
+                              </div>
+                              <div>
+                                <Link
+                                  href={`/product/${v.product_id}`}
+                                  style={{ color: "black" }}
+                                >
+                                  <span>{v.product_name}</span>
+                                </Link>
+                              </div>
+                              <div>
+                                <span>NT$</span>
+                                <span>{v.price}</span>
+                                {/* <span className="icon-cark"></span> */}
+                              </div>
                             </div>
-                            <div>
-                              <Link
-                                href={`/product/${v.product_id}`}
-                                style={{ color: "black" }}
-                              >
-                                <span>{v.product_name}</span>
-                              </Link>
-                            </div>
-                            <div>
-                              <span>NT$</span>
-                              <span>{v.price}</span>
-                              {/* <span className="icon-cark"></span> */}
-                            </div>
-                          </div>
-                        }
-                      </SwiperSlide>
-                    );
-                  })}
+                          }
+                        </SwiperSlide>
+                      );
+                    })}
               </Swiper>
             </div>
           </div>

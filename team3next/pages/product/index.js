@@ -247,7 +247,7 @@ export default function index() {
         JSON.stringify({
           type: "message",
           id: auth.user_id || "stranger",
-          name: auth.nickname,
+          name: auth.nickname || "stranger",
           content: msg,
         })
       );
@@ -295,7 +295,10 @@ export default function index() {
         }}
       >
         <div className="offcanvas-header">
-          <h2 className="p-3">HELLO</h2>
+          <h2 className="p-3 w-auto">HELLO </h2>
+          <span className="">
+            {auth.user_id == 112 ? "薯編" : auth.user_id ? m.name : "訪客"}
+          </span>
 
           <button
             type="button"
@@ -319,7 +322,8 @@ export default function index() {
               return (
                 <div
                   className={
-                    !auth.user_id || m.id === "stranger"
+                    (!auth.user_id && m.id === "stranger") ||
+                    m.id == auth.user_id
                       ? "myMsgBox"
                       : "otherMsgBox"
                   }
@@ -327,13 +331,7 @@ export default function index() {
                   // className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
                 >
                   {/* <p className="">{m.name}</p> */}
-                  <p className="">
-                    {auth.user_id == 112
-                      ? "薯編"
-                      : auth.user_id
-                      ? m.name
-                      : "訪客"}
-                  </p>
+
                   <p>{m.content}</p>
                 </div>
               );
