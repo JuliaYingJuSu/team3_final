@@ -138,6 +138,7 @@ export default function index() {
             console.log(r); //true
             if (r) {
               // location.reload();
+              console.log(run);
               setRun(!run);
             }
           })
@@ -186,7 +187,7 @@ export default function index() {
                 text: "已更新願望清單",
                 icon: "success",
               });
-
+              console.log(run);
               setRun(!run);
             }
           })
@@ -319,7 +320,7 @@ export default function index() {
                 <div
                   className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
                 >
-                  <p className="">{m.name}</p>
+                  {/* <p className="">{m.name}</p> */}
                   <p>{m.content}</p>
                 </div>
               );
