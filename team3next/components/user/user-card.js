@@ -9,17 +9,13 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "@/hooks/AuthContext";
 import UserModal from "./user-modal";
 
-export default function UserCard({
-  usercard,
-  favs,
-  likes,
-  followed,
-}) {
+export default function UserCard({ usercard, favs, likes, followed }) {
   const { auth } = useContext(AuthContext);
   // const [favs, setFavs] = useState([]);
- 
+
   const [artcard, setArtCard] = useState([]);
-  console.log([artcard]);
+  const [followid, setFollowID] = useState([]);
+  // console.log([artcard]);
 
   // const [fav, setFav] = useState(false);
 
@@ -49,6 +45,18 @@ export default function UserCard({
       });
   }, [usercard.post_id]);
 
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/follown`)
+      .then((r) => r.json())
+      .then((r) => {
+        setFollowID(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
+
   //使用 Set 來去重除重複的 food_tag_names 數組
   // const uniqueFoodTags = [...new Set(usercard.food_tag_name)];
 
@@ -59,15 +67,13 @@ export default function UserCard({
         favs={favs}
         followed={followed}
         likes={likes}
-        artcard={artcard}
-      ></UserModal>
+        artcard={artcard}></UserModal>
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
           <a
             href="#"
             data-bs-toggle="modal"
-            data-bs-target={"#exampleModal" + usercard.post_id}
-          >
+            data-bs-target={"#exampleModal" + usercard.post_id}>
             <img
               src={`http://localhost:3002/img/${usercard.post_image_name}`}
               className="card-img"
@@ -140,8 +146,7 @@ export default function UserCard({
                 {artcard && artcard.length > 0 ? (
                   <Link
                     className="fs16b pt-3 text-dark"
-                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}
-                  >
+                    href={`/user/${artcard[0].user_id}/user-my-article-i/`}>
                     {artcard[0].nickname}
                   </Link>
                 ) : (
@@ -150,9 +155,11 @@ export default function UserCard({
               </p>
               <FollowButton
                 ifFollow={
-                  followed && followed?.includes(usercard.user_id) ? true : false
+                  followed && followed?.includes(followid.user_id)
+                    ? true
+                    : false
                 }
-                user_id={usercard.user_id}
+                user_id={followid.user_id}
               />
             </div>
             <span className="fs12 mt-2 mb-3 text-start">
