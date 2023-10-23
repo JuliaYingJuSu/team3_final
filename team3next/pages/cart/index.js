@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import styles from "./cart-detail.module.css";
 import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
-import { json } from "@files-ui/core";
 import { useRouter } from "next/router";
+import {Helmet} from "react-helmet";
 import { useShip711StoreOpener } from "@/hooks/use-ship-711-store";
 
 export default function CartDetail() {
   const [data, setData] = useState([]);
-
+  // 運費
+  // const [shippingFee, setShippingFee] = useState(60);
+ 
   useEffect(() => {
     // localStorage 取資料
     const getCartItem = JSON.parse(localStorage.getItem("cart"));
@@ -41,9 +43,7 @@ export default function CartDetail() {
     // 計算所有商品的小計
     const subtotal = data.reduce((acc, v) => acc + v.price * v.quantity, 0);
 
-    // 運費
-    const shippingFee = 60;
-
+    const shippingFee = subtotal >= 600 ? 0 : 60;
     // 總計
     const total = subtotal + shippingFee;
 
@@ -190,8 +190,12 @@ export default function CartDetail() {
 
   return (
     <>
-      <MyNavbar />
 
+      <Helmet>
+        <title>食食嗑嗑-購物車</title>
+      </Helmet>
+      <MyNavbar />
+      <div className={styles.designTop}>
       {/* 購物進度條 */}
       <div className={styles.sectionBar + " mt-5"}>
         {/* <div className="w-75 d-flex justify-content-between"> */}
@@ -261,7 +265,9 @@ export default function CartDetail() {
                           minusCount(v.product_id, 1);
                         }}
                       ></button>
+                      <span className={styles.hey}>
                       {v.quantity}
+                      </span>
                       <button
                         className={styles.minus + " btn icon-plus ms-3"}
                         onClick={() => {
@@ -352,7 +358,8 @@ export default function CartDetail() {
                 <div className="col-6">小計</div>
                 <div className="col-6">{`NT$` + calculateTotal().subtotal}</div>
                 <div className="col-6 py-2">運費</div>
-                <div className="col-6 py-2">NT$60</div>
+                <div className="col-6 py-2">{`NT$` + calculateTotal().shippingFee}</div>
+                {/* <div className="col-12 py-2">已達NT.600免運門檻</div> */}
                 <div className="col-6 pt-2 border-top">總計</div>
                 <div className="col-6 pt-2 border-top">
                   {`NT$` + calculateTotal().total}
@@ -385,9 +392,11 @@ export default function CartDetail() {
               前往結帳
             </button>
           </div>
-        </a>
+         </a>
+        </div>
       </div>
       <Footer />
+     
     </>
   );
 }

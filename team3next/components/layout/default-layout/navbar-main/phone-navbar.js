@@ -1,21 +1,44 @@
 import Link from "next/link";
 import React from "react";
 import AuthContext from "@/hooks/AuthContext";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 export default function PhoneNavbar() {
   const { auth, logout } = useContext(AuthContext);
+  const [userinfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/user`)
+      .then((r) => r.json())
+      .then((r) => {
+        setUserInfo(r);
+        // console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
   return (
     <>
       <div className="container card card-body my-1" style={{ width: 375 }}>
         <div className="user-info-area mt-4">
           <div>
-            <img
-              src={`http://localhost:3002/img/${auth.user_img}`}
-              className="rounded-circle img-thumbnail headshot-middle"></img>
+            {userinfo && userinfo.length > 0 && userinfo[0].user_img ? (
+              <img
+                src={process.env.API_SERVER + `/img/${userinfo[0].user_img}`}
+                className="rounded-circle img-thumbnail headshot-middle"
+                alt="大頭照"
+              />
+            ) : (
+              <img
+                src="/images/logo.png"
+                className="rounded-circle img-thumbnail headshot-middle"
+                alt="大頭照"
+              />
+            )}
           </div>
           <div className="user-info-text">
-            <h4 className="fw-bolder">{}</h4>
+            <h4 className="fw-bolder">{auth.nickname}</h4>
             <Link className="btn btn-big" href="/user">
               編輯會員資訊
             </Link>

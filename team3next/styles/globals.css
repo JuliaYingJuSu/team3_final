@@ -461,3 +461,7 @@ outline: none;
 .card-img:hover {
   transform: scale(1.04, 1.04);
 }
+
+nextjs-portal {
+  display: none;
+}

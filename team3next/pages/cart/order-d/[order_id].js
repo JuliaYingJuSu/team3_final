@@ -4,10 +4,12 @@ import MyNavbar from "@/components/layout/default-layout/navbar-main/index";
 import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
+import {Helmet} from "react-helmet";
 import ProductComment from "@/components/cart/product-comment";
 import { useRouter } from "next/router";
 import RunContext from "@/hooks/RunContext";
 import Link from "next/link";
+
 
 export default function OrderComplete() {
   const { run, setRun } = useContext(RunContext);
@@ -15,9 +17,6 @@ export default function OrderComplete() {
 
   const [data, setData] = useState([]);
   const router = useRouter();
-  console.log(data);
-  // const order_id = data.order_id;
-  // const order_id = "4354";
   useEffect(() => {
     if (router.isReady) {
       const oid = router.query.order_id.split("-")[0];
@@ -64,7 +63,12 @@ export default function OrderComplete() {
 
   return (
     <>
+     <Helmet>
+        <title>食食嗑嗑-訂單細項</title>
+      </Helmet>
       <MyNavbar />
+     
+      <div  className={styles.designTop}>
       <div
         className={style.topBox + " container d-flex justify-content-around"}
       >
@@ -397,11 +401,11 @@ export default function OrderComplete() {
               </div>
               {/* 強迫col換行 */}
               {/* <div class="w-100"></div> */}
+              </div>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );

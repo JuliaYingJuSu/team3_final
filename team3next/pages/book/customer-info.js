@@ -297,12 +297,12 @@ export default function Index() {
         <br />
         <br />
         <div className="d-flex justify-content-center my-5">
-          <div onClick={sendForm} className="btn btn-middle me-3">
-            確認訂位
-          </div>
-          <Link href={`/book/${restaurant_id}`} className="btn btn-middle ms-3">
+          <Link href={`/book/${restaurant_id}`} className="btn btn-middle me-3">
             回上一頁
           </Link>
+          <div onClick={sendForm} className="btn btn-middle ms-3">
+            確認訂位
+          </div>
         </div>
         <br />
       </div>

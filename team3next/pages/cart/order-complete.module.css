@@ -1,24 +1,28 @@
+.designTop {
+    margin-top: 220px;
+}
+
 /* 購物進度條 */
 
-.sectionBar{
+.sectionBar {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     text-align: center;
     /* background-color: #9d7a7a; */
     width: 70%;
     padding-left: 550px;
-    
+
 }
 
-.step{
+.step {
     text-decoration: none;
     display: inline-block;
     text-align: center;
     width: 30%;
     position: relative;
     /* 用於重置css計數器 */
-   /* counter-reset: none; */
+    /* counter-reset: none; */
     color: #111;
 }
 
@@ -33,41 +37,41 @@
     border-radius: 50%;
     /* margin: 5px; */
     transition: transform 0.3s ease;
-    }
+}
 
 
-    /* 購物車進度條 --> 線 */
-    .step:after{
-      content: "";
-      width: 100%;
-      height: 2px;
-      background-color: #8e8e8e;
-      position: absolute;
-      left: 5%;
-      top: 16px;
-      z-index: -1;
-    }
+/* 購物車進度條 --> 線 */
+.step:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #8e8e8e;
+    position: absolute;
+    left: 5%;
+    top: 16px;
+    z-index: -1;
+}
 
-    .lastStep{
-        text-decoration: none;
-        display: inline-block;
-        text-align: center;
-        width: 30%;
-        position: relative;
-        /* 用於重置css計數器 */
-       /* counter-reset: none; */
-        color: #111;
-    }
+.lastStep {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 30%;
+    position: relative;
+    /* 用於重置css計數器 */
+    /* counter-reset: none; */
+    color: #111;
+}
 
-    .lastStep:before {
-        content: "";
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        display: block;
-        color: #9d7a7a;
-        font-size: 15px;
-        background-color: #8e8e8e;
-        border-radius: 50%;
-        /* margin: 5px; */
-        }
+.lastStep:before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    color: #9d7a7a;
+    font-size: 15px;
+    background-color: #8e8e8e;
+    border-radius: 50%;
+    /* margin: 5px; */
+}
