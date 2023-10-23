@@ -15,6 +15,7 @@ import ws from "ws";
 import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function index() {
   //資料用
@@ -60,7 +61,7 @@ export default function index() {
 
   // const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   // console.log(uid);
-
+  // const router = useRouter();
   // 取資料
   useEffect(() => {
     if (isCompositing) return;
@@ -375,10 +376,15 @@ export default function index() {
               {/* -----------分類選單---------- */}
               <div className={styles.left}>
                 <a href="/product">
-                  <button className={styles.leftA + " btn"} type="button">
+                  <button
+                    // onClick={() => {
+                    //   router.push("/product");
+                    // }}
+                    className={styles.leftA + " btn"}
+                    type="button"
+                  >
                     全部商品
                   </button>
-                  {/* <span className="icon-square"></span> */}
                 </a>
 
                 {data.rowsType &&

@@ -31,7 +31,8 @@ export default function Bread({ typeList, data }) {
           <>
             <span className="icon-arrow-s-right"></span>
             <span href={"/" + path}>
-              {typeList.split(",")[1] + `(${data.rows?.length})`}
+              {typeList.length &&
+                typeList.split(",")[1] + `(${data.rows?.length})`}
             </span>
           </>
         )}
