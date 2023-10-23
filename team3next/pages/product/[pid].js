@@ -69,11 +69,14 @@ export default function productDetail() {
           setWish(r.rowsWished);
 
           setScore(
-            Math.ceil(
+            // Math.ceil(
+            (
               r.rowsComment.reduce((a, b) => {
                 return a + parseInt(b.score);
               }, 0) / r.rowsComment.length
-            )
+            ).toFixed(1)
+
+            // )
           );
         });
     }
@@ -471,12 +474,12 @@ export default function productDetail() {
                   ></span>
                   {/* </Link> */}
                 </p>
-                <p className="ps-3">
+                <p className="">
                   <span>NT$ </span>
                   {data.rows?.price}
                 </p>
               </div>
-              <div className="fs-3 my-2 mb-auto">
+              <div className="fs-3 my-2 mb-auto d-flex align-items-center">
                 {Array(5)
                   .fill(1)
                   .map((v, i) => {
@@ -487,6 +490,16 @@ export default function productDetail() {
                       ></span>
                     );
                   })}
+                <span
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    color: "#666666",
+                    margin: "10px 8px 6px 8px",
+                  }}
+                >
+                  {score}
+                </span>
               </div>
 
               <div className={styles.btnBox}>
@@ -602,55 +615,57 @@ export default function productDetail() {
           </div>
           <div className={styles.recommendBox + " row pb-5"}>
             <p className={styles.head + " h4"}>推薦商品</p>
-            <div className={styles.test + " w-75"}>
+            <div className={styles.test + " w-100"}>
               {/* ------------推薦商品----------- */}
               <Swiper
                 spaceBetween={40}
-                slidesPerView={4}
+                slidesPerView={5}
                 navigation={true}
                 modules={[Navigation]}
-                className="mySwiper"
+                className={" mySwiper p-4"}
                 style={{
                   "--swiper-navigation-color": "#3f4c5c",
-                  "--swiper-navigation-size": "18px",
+                  "--swiper-navigation-size": "22px",
                 }}
               >
                 {recommend &&
-                  recommend.map((v, i) => {
-                    return (
-                      <SwiperSlide key={i}>
-                        {
-                          <div
-                            className="
+                  recommend
+                    .filter((v) => v.product_id != router.query.pid)
+                    .map((v, i) => {
+                      return (
+                        <SwiperSlide key={i}>
+                          {
+                            <div
+                              className="
                   justify-content-center align-items-center "
-                          >
-                            <div>
-                              <Link href={`/product/${v.product_id}`}>
-                                <img
-                                  src={"/images/product/" + v.product_img}
-                                  alt=""
-                                  className="object-fit-cover w-100 h-100"
-                                />
-                              </Link>
+                            >
+                              <div>
+                                <Link href={`/product/${v.product_id}`}>
+                                  <img
+                                    src={"/images/product/" + v.product_img}
+                                    alt=""
+                                    className="object-fit-cover w-100 h-100"
+                                  />
+                                </Link>
+                              </div>
+                              <div>
+                                <Link
+                                  href={`/product/${v.product_id}`}
+                                  style={{ color: "black" }}
+                                >
+                                  <span>{v.product_name}</span>
+                                </Link>
+                              </div>
+                              <div>
+                                <span>NT$</span>
+                                <span>{v.price}</span>
+                                {/* <span className="icon-cark"></span> */}
+                              </div>
                             </div>
-                            <div>
-                              <Link
-                                href={`/product/${v.product_id}`}
-                                style={{ color: "black" }}
-                              >
-                                <span>{v.product_name}</span>
-                              </Link>
-                            </div>
-                            <div>
-                              <span>NT$</span>
-                              <span>{v.price}</span>
-                              {/* <span className="icon-cark"></span> */}
-                            </div>
-                          </div>
-                        }
-                      </SwiperSlide>
-                    );
-                  })}
+                          }
+                        </SwiperSlide>
+                      );
+                    })}
               </Swiper>
             </div>
           </div>

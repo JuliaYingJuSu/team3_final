@@ -97,6 +97,7 @@ export default function PageContent() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(infoSchema) });
   console.log(errors);
@@ -130,7 +131,13 @@ export default function PageContent() {
             onFinish={handleSubmit(onSubmit)}
           >
             <div className="d-flex flex-column my-3">
-              <label className="fs18b" htmlFor="name">
+              <label
+                className="fs18b"
+                htmlFor="name"
+                onClick={() => {
+                  setValue("name", "晴木千層炸雞");
+                }}
+              >
                 商家名稱
                 <span className="ps-1" style={{ color: "red" }}>
                   *
@@ -149,7 +156,13 @@ export default function PageContent() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="address">
+              <label
+                className="fs18b"
+                htmlFor="address"
+                onClick={() => {
+                  setValue("address", "臺灣大道四十五段2068號");
+                }}
+              >
                 商家地址
                 <span className="ps-1" style={{ color: "red" }}>
                   *
@@ -201,7 +214,13 @@ export default function PageContent() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="opening">
+              <label
+                className="fs18b"
+                htmlFor="opening"
+                onClick={() => {
+                  setValue("opening", "週五公休");
+                }}
+              >
                 營業時間備註
               </label>
               <input
@@ -213,7 +232,16 @@ export default function PageContent() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label className="fs18b" htmlFor="description">
+              <label
+                className="fs18b"
+                htmlFor="description"
+                onClick={() => {
+                  setValue(
+                    "description",
+                    "亞伯拉罕·林肯告訴我們，你活了多少歲不算什麽，重要的是你過多少炸雞。這讓我深深地想到，我們都知道，只要有意義，那麽就必須慎重考慮。我們一般認為，抓住了問題的關鍵，其他一切則會迎刃而解。帶著這些問題，我們來審視一下炸雞好好吃。其實炸雞好好吃是非常值得我們深思的。炸雞好好吃真的是很值得探究，一般來說，弗洛伊德曾經說過，人生就象炸雞，一步失誤，全盤皆輸，這是令人悲哀之事;而且人生還不如弈棋，不可能再來一局，也不能悔棋。我希望諸位也能好好地體會這句話。"
+                  );
+                }}
+              >
                 餐廳介紹
                 <span className="ps-1" style={{ color: "red" }}>
                   *

@@ -11,12 +11,19 @@ export default function StepFirst() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
   return (
     <>
       <div className="d-flex flex-column my-3">
-        <label className="fs18b" htmlFor="email">
+        <label
+          className="fs18b"
+          htmlFor="email"
+          onClick={() => {
+            setValue("email", "alex123@gmail.com");
+          }}
+        >
           電子信箱
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -34,7 +41,13 @@ export default function StepFirst() {
         />
       </div>
       <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="password">
+        <label
+          className="fs18b"
+          htmlFor="password"
+          onClick={() => {
+            setValue("password", "12345");
+          }}
+        >
           密碼
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -63,7 +76,13 @@ export default function StepFirst() {
         </div>
       </div>
       <div className="d-flex flex-column mb-3">
-        <label className="fs18b" htmlFor="rePassword">
+        <label
+          className="fs18b"
+          htmlFor="rePassword"
+          onClick={() => {
+            setValue("rePassword", "12345a");
+          }}
+        >
           密碼確認
           <span className="ps-1" style={{ color: "red" }}>
             *

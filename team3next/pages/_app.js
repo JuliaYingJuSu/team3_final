@@ -14,14 +14,14 @@ export default function App({ Component, pageProps }) {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    // <WsContextProvider>
-    <RunContextProvider>
-      <MemberAuthProvider>
-        <AuthContextProvider>
-          <Component {...pageProps} />
-        </AuthContextProvider>
-      </MemberAuthProvider>
-    </RunContextProvider>
-    // </WsContextProvider>
+    <WsContextProvider>
+      <RunContextProvider>
+        <MemberAuthProvider>
+          <AuthContextProvider>
+            <Component {...pageProps} />
+          </AuthContextProvider>
+        </MemberAuthProvider>
+      </RunContextProvider>
+    </WsContextProvider>
   );
 }

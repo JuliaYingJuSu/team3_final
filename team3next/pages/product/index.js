@@ -3,20 +3,19 @@ import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
-import { Button, Form } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
 
 import Pagination from "@/components/product/pagination";
-import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
 import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function index() {
   //資料用
@@ -39,7 +38,7 @@ export default function index() {
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
   const [items, setItems] = useState([]);
-  console.log(items);
+  // console.log(items);
 
   //重渲染頁面用
   const { run, setRun } = useContext(RunContext);
@@ -62,7 +61,7 @@ export default function index() {
 
   // const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   // console.log(uid);
-
+  // const router = useRouter();
   // 取資料
   useEffect(() => {
     if (isCompositing) return;
@@ -199,11 +198,13 @@ export default function index() {
   };
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
-  console.log(msg);
-  const [msgs, setMsgs] = useState([]);
-  console.log(msgs);
+  // const [msgs, setMsgs] = useState([]);
+  // console.log(msg);
+
+  const { wsMsgs, setWsMsgs } = useContext(WsContext);
+  console.log(wsMsgs);
   const { auth } = useContext(AuthContext);
-  console.log(auth);
+  // console.log(auth);
 
   useEffect(() => {
     let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
@@ -222,32 +223,32 @@ export default function index() {
     ws.onmessage = (res) => {
       console.log(JSON.parse(res.data));
       const msgBack = JSON.parse(res.data);
-      console.log(msgBack, res.type);
+      // console.log(msgBack, res.type);
 
       if (res.type === "message") {
         // console.log("res.data === message");
-        const newMsgs = [...msgs, msgBack];
+        const newMsgs = [...wsMsgs, msgBack];
         console.log(newMsgs);
 
-        setMsgs(newMsgs);
+        setWsMsgs(newMsgs);
       }
     };
     ws.onclose = () => {
       console.log("close connection");
     };
-  }, [msgs]);
+  }, [wsMsgs]);
 
   function sendMsg() {
     let ws = wsRef.current;
-    console.log("進sendMsg");
+    // console.log("進sendMsg");
 
     if (ws.readyState == 1) {
-      console.log("ws.readyState === 1");
+      // console.log("ws.readyState === 1");
       ws.send(
         JSON.stringify({
           type: "message",
           id: auth.user_id || "stranger",
-          name: auth.nickname,
+          name: auth.nickname || "stranger",
           content: msg,
         })
       );
@@ -271,7 +272,7 @@ export default function index() {
         style={{
           position: "fixed",
           right: "0px",
-          bottom: "30px",
+          bottom: "150px",
           zIndex: "11",
         }}
       >
@@ -295,7 +296,18 @@ export default function index() {
         }}
       >
         <div className="offcanvas-header">
-          <h2 className="p-3">HELLO</h2>
+          <div style={{ borderBottom: "3px solid #b6705e" }}>
+            <span className="w-auto fw-bold " style={{ color: "#666666" }}>
+              HELLO{" "}
+            </span>
+            <span className="fs-5 fw-bold">
+              {auth.user_id == 112
+                ? "薯編"
+                : auth.user_id
+                ? auth.nickname
+                : "訪客"}
+            </span>
+          </div>
 
           <button
             type="button"
@@ -314,26 +326,17 @@ export default function index() {
               overflowX: "hidden",
             }}
           >
-            {msgs.map((m) => {
+            {wsMsgs.map((m) => {
               console.log(m);
               return (
                 <div
                   className={
-                    !auth.user_id || m.id === "stranger"
+                    (!auth.user_id && m.id === "stranger") ||
+                    m.id == auth.user_id
                       ? "myMsgBox"
                       : "otherMsgBox"
                   }
-
-                  // className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
                 >
-                  {/* <p className="">{m.name}</p> */}
-                  <p className="">
-                    {auth.user_id == 112
-                      ? "薯編"
-                      : auth.user_id
-                      ? m.name
-                      : "訪客"}
-                  </p>
                   <p>{m.content}</p>
                 </div>
               );
@@ -373,10 +376,15 @@ export default function index() {
               {/* -----------分類選單---------- */}
               <div className={styles.left}>
                 <a href="/product">
-                  <button className={styles.leftA + " btn"} type="button">
+                  <button
+                    // onClick={() => {
+                    //   router.push("/product");
+                    // }}
+                    className={styles.leftA + " btn"}
+                    type="button"
+                  >
                     全部商品
                   </button>
-                  {/* <span className="icon-square"></span> */}
                 </a>
 
                 {data.rowsType &&
