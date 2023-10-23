@@ -14,10 +14,15 @@ import { useMemberAuthContext } from "./hooks/use-memberauth-context";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { headers } from "@/next.config";
+import {
+  auth,
+  signInWithGoogle,
+} from "@/components/restaurant-member/firebase";
 
 export default function RestaurantLogin() {
   const router = useRouter();
   const [inputType, setInputType] = useState("password");
+  const [errorMessage, setErrorMessage] = useState("");
   const { memberAuth, setMemberAuth, googleAuth, setGoogleAuth } =
     useMemberAuthContext();
   const [loginState, setLoginState] = useState(false);
@@ -47,31 +52,29 @@ export default function RestaurantLogin() {
     watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
-  // const redirectToGoogle = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3002/member-login",
-  //       data
-  //     );
-  //     console.log("Server Response for google:", response.data);
 
-  //     localStorage.setItem("googleToken", JSON.stringify(response.data));
-  //     // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
-  //     setGoogleAuth(response.data);
-  //     // 在這裡把登入時獲得的response token設定為auth;
-  //     router.push("http://localhost:3002/auth/google");
-  //     // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
-  //   } catch (err) {
-  //     console.error("Error:", err);
-  //     setLoginState(false);
-  //   }
-  // };
-  // // google
+  const handleGoogleSignin = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const response = await axios.post(
+        process.env.API_SERVER + "/firebase/google/verify-google-token",
+        result
+      );
+      console.log(response.data);
+      if (response.data.auth) {
+        localStorage.setItem("token", JSON.stringify(response.data));
+        setMemberAuth(response.data);
+        router.push(`/restaurant-member/${response.data.result.restaurant_id}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const onSubmit = async (data) => {
     // console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:3002/member-login",
+        process.env.API_SERVER + "/member-login",
         data
       );
       console.log("Server Response for Log In:", response.data);
@@ -80,6 +83,7 @@ export default function RestaurantLogin() {
         localStorage.setItem("token", JSON.stringify(response.data));
         // 注意這裡只是存token是沒有意義的，要包含用戶資料，對於localstorage存入的都是json string
         setMemberAuth(response.data);
+        setErrorMessage(response.data.message);
         // 在這裡把登入時獲得的response token設定為auth;
         router.push(`/restaurant-member/${response.data.result.restaurant_id}`);
         // 跳轉行為請全部仰賴auth裡的資料，不然的話說不定會產生state的bug
@@ -93,14 +97,14 @@ export default function RestaurantLogin() {
   return (
     <>
       <Head>
-        <title>餐廳業者登入</title>
+        <title>食食嗑嗑-餐廳業者登入</title>
       </Head>
       <div
         className="d-flex "
         style={{ backgroundColor: "#EBD8A9", height: 923 }}
       >
         <div className="d-block w-100">
-          <span className="position-relativ">
+          <span className="position-relative">
             <img
               src="/images/薯哥去背.png"
               height={520}
@@ -129,7 +133,7 @@ export default function RestaurantLogin() {
                   登入
                 </Link>
               </span>
-              {loginState && (
+              {/* {loginState && (
                 <button
                   onClick={() => {
                     authCheck();
@@ -137,7 +141,7 @@ export default function RestaurantLogin() {
                 >
                   Sunny
                 </button>
-              )}
+              )} */}
             </div>
             <div className="container mt-5">
               <Toggle></Toggle>
@@ -163,14 +167,14 @@ export default function RestaurantLogin() {
                   </span>
                   <div className="withIcon position-relative">
                     <input
-                      className="input-res w-100 border-0 border-bottom rounded-0 fs-5"
+                      className="form-control input-res w-100 border-0 border-bottom rounded-0 fs-5"
                       type={inputType}
                       {...register("password")}
                       id="password"
                       placeholder="請輸入密碼"
                     />
                     <span
-                      className="eye position-absolute mt-1 me-4 end-0"
+                      className="eye position-absolute mt-2 me-4 end-0 top-0"
                       style={{ fontSize: "20px", color: "#B4C5D2" }}
                       onClick={() => {
                         setInputType(
@@ -186,6 +190,7 @@ export default function RestaurantLogin() {
                     </span>
                   </div>
                 </div>
+                <div>{errorMessage}</div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
                     className="btn btn-big middle"
@@ -198,10 +203,11 @@ export default function RestaurantLogin() {
                 <div className="mb-3 hr-sect">或是 第三方 登入</div>
                 <div className="row mb-2 mt-3">
                   <div className="col-sm-12 text-start">
-                    <div className="d-flex justify-content-center">
-                      <Link href="http://localhost:3002/auth/google">
-                        <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
-                      </Link>
+                    <div
+                      onClick={handleGoogleSignin}
+                      className="d-flex justify-content-center"
+                    >
+                      <GoogleLogo className="rounded-circle img-thumbnail"></GoogleLogo>
                     </div>
                   </div>
                 </div>

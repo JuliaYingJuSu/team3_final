@@ -5,7 +5,6 @@ import Like from "./like";
 import Saved from "./saved";
 import { Carousel } from "react-bootstrap";
 import AuthContext from "@/hooks/AuthContext";
-import router from "next/router";
 
 export default function PostModal({
   post_id,
@@ -22,6 +21,10 @@ export default function PostModal({
   ifSave,
   favs,
   setFavs,
+  followed,
+  setFollowed,
+  likes,
+  setLikes,
 }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
@@ -77,6 +80,7 @@ export default function PostModal({
 
     if (Object.keys(newErrors).length === 0) {
       console.log("沒有錯誤");
+      setMessageVal({ message: "" });
     } else {
       console.log("---------有錯誤");
     }
@@ -130,6 +134,21 @@ export default function PostModal({
 
   const { auth } = useContext(AuthContext);
 
+  //抓餐廳資料
+  const [restinfo, setRestInfo] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.API_SERVER + `/api/user/${post_id}/restinfo`)
+      .then((r) => r.json())
+      .then((r) => {
+        setRestInfo(r);
+        console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [post_id]);
+
   return (
     <>
       <div
@@ -137,19 +156,23 @@ export default function PostModal({
         id={"exampleModal" + post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + post_id}
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header position-relative">
+              <button
+                type="button"
+                className="btn-close position-absolute fs-5"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                style={{ top: 20, right: 20 }}></button>
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
-                    <Link href="/user/user-my-article-i">
+                    <Link href={`/user/${user_id}/user-my-article-i`}>
                       <img
                         className="rounded-circle headshot-sm img-thumbnail"
-                        src={`http://localhost:3002/img/${user_img}`}
-                      ></img>
+                        src={`http://localhost:3002/img/${user_img}`}></img>
                     </Link>
                   </div>
                   <p className="middle me-2">
@@ -157,27 +180,48 @@ export default function PostModal({
                       {nickname}
                     </a>
                   </p>
-                  <FollowButton />
+                  <FollowButton
+                    ifFollow={
+                      followed && followed?.includes(user_id) ? true : false
+                    }
+                    user_id={user_id}
+                  />
                 </div>
-                <div className="d-flex align-items-center p-1">
-                  <p className="icon-map me-1">
-                    <a className="me-1 restaurant" href="#">
+                <div className="d-flex align-items-center p-1 mt-1">
+                  <div className="dropdown d-flex">
+                    <span className="icon-map me-2 fs-4"></span>
+                    <p
+                      className="dropdown-toggle restaurant d-flex align-items-center pe-3"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       {restaurant_name}
-                    </a>
-                  </p>
-                  <p className="me-1">
+                    </p>
+                    <ul className="dropdown-menu">
+                      {restinfo.map((v, i) => (
+                        <li key={i}>
+                          <iframe
+                            className="dropdown-item"
+                            style={{ minHeight: 400, width: 500 }}
+                            src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${v.restaurant_city}
+              ${v.restaurant_district}
+              ${v.restaurant_address}&output=embed&t=`}></iframe>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  {/* <Link
+                      className="me-1 restaurant"
+                      href=>
+                      
+                    </Link> */}
+                  <p>
                     <a href="#" className="text-dark">
                       {restaurant_city}
                     </a>
                   </p>
                 </div>
               </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
               {/* 使用 Carousel 顯示多個圖片 */}
@@ -185,12 +229,11 @@ export default function PostModal({
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius"
-              >
+                className="image-radius">
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
-                      src={`/images/post/${v.post_image_name}`}
+                      src={`http://localhost:3002/img/${v.post_image_name}`}
                       className="d-block w-100 object-fit-cover"
                       alt="..."
                     />
@@ -200,12 +243,17 @@ export default function PostModal({
             </div>
             <div className="d-flex justify-content-end align-items-center fs14 grey me-3">
               <span className="middle">
-                <Like />
+                <Like
+                  ifLike={likes && likes?.includes(post_id) ? true : false}
+                  likes={likes}
+                  setLikes={setLikes}
+                  post_id={post_id}
+                />
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
                 <a className="btn btn-sm btn-i" href="#message">
-                  <i className="fa-regular fa-comment"></i>
+                  <i className="icon-msg"></i>
                 </a>
                 {/* <span>1</span> */}
               </span>
@@ -233,8 +281,7 @@ export default function PostModal({
                     href="#"
                     className="ms-2"
                     style={{ color: "#666666" }}
-                    key={index}
-                  >
+                    key={index}>
                     {foodTag}
                   </a>
                 ))}
@@ -248,16 +295,15 @@ export default function PostModal({
                   /* console.log(v);  */
                 }
                 return (
-                  <div className="info d-flex align-items-start ms-2" key={i}>
+                  <div className="info d-flex align-items-start ms-2 mb-2" key={i}>
                     <div className="me-2">
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${v.user_img}`}
-                        ></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
-                    <div className="me-auto">
+                    <div className="me-auto mt-2">
                       <a className="fs16b text-dark" href="#">
                         {v.nickname}
                       </a>
@@ -286,8 +332,7 @@ export default function PostModal({
               <button
                 className="btn btn-outline-secondary"
                 type="submit"
-                id="button-addon2"
-              >
+                id="button-addon2">
                 發送
               </button>
               <p className="form-text container warning">{errors.message}</p>

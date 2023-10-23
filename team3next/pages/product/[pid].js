@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LineShareButton, LineIcon } from "next-share";
+import Head from "next/head";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
 import styles from "./list.module.css";
-// import indexStyles from "./index.module.css";
 import Form from "react-bootstrap/Form";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -34,10 +34,12 @@ export default function productDetail() {
     product_img: [],
     showed_1st: "",
   });
+  console.log(data);
   const [wish, setWish] = useState(false);
   const [score, setScore] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [recommend, setRecommend] = useState([]);
+
   const { run, setRun } = useContext(RunContext);
 
   const router = useRouter();
@@ -56,14 +58,13 @@ export default function productDetail() {
   useEffect(() => {
     if (router.isReady) {
       const pid = router.query.pid; //***
-      console.log(`http://localhost:3080${router.asPath}`);
+      // console.log(`http://localhost:3080${router.asPath}`);
 
       const uid = JSON.parse(localStorage.getItem("auth"))?.user_id || "";
       console.log(pid, uid);
       fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
-          console.log(r);
           setData(r);
           setWish(r.rowsWished);
 
@@ -76,13 +77,13 @@ export default function productDetail() {
           );
         });
     }
-  }, [router.isReady, run]);
+  }, [router.query.pid, run]);
 
-  const descSplit = data.rows?.product_description.split("\\n").map((v) => {
-    return <p>{v}</p>;
+  const descSplit = data.rows?.product_description.split("\\n").map((v, i) => {
+    return <p key={i}>{v}</p>;
   });
-  const specSplit = data.rows?.specification.split("\\n").map((v) => {
-    return <p>{v}</p>;
+  const specSplit = data.rows?.specification.split("\\n").map((v, i) => {
+    return <p key={i}>{v}</p>;
   });
 
   // 取推薦商品
@@ -254,7 +255,7 @@ export default function productDetail() {
   return (
     <>
       <Navbar />
-      <div className="container ">
+      <div className="container  " style={{ paddingTop: "208px" }}>
         <Bread />
         <div
           className={styles.topBox + " container d-flex justify-content-around"}
@@ -481,6 +482,7 @@ export default function productDetail() {
                   .map((v, i) => {
                     return (
                       <span
+                        key={i}
                         className={i < score ? "icon-Star-fill" : "icon-Star"}
                       ></span>
                     );
@@ -502,21 +504,20 @@ export default function productDetail() {
                     {Array(10)
                       .fill(1)
                       .map((v, i) => {
-                        return <option value={i + 1}>{i + 1}</option>;
+                        return (
+                          <option key={i} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        );
                       })}
                   </Form.Select>
                   <button
                     className="btn btn-big d-flex justify-content-center align-items-center w-100"
-                    onClick={
-                      // <handleAddCart />
-                      () => {
-                        handleAddCart();
-                        // ------------------------------------
-                        setRun(!run);
-
-                        // ------------------------------------
-                      }
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleAddCart();
+                      setRun(!run);
+                    }}
                   >
                     加入購物車
                   </button>
@@ -524,6 +525,7 @@ export default function productDetail() {
                     className="btn btn-big d-flex justify-content-center w-100 overflow-hidden"
                     onClick={() => {
                       handleAddCart();
+                      setRun(!run);
                     }}
                   >
                     {data.rows && localStorage.getItem("auth") ? (
@@ -579,13 +581,13 @@ export default function productDetail() {
             <div className={styles.infoItem}>
               <p className={styles.head + " h4"}>商品評論</p>
               {data.rows &&
-                data.rowsComment.map((v) => {
+                data.rowsComment.map((v, i) => {
                   return (
-                    <div className={styles.commentBox}>
-                      <div className={styles.pic}>
+                    <div key={i} className={styles.commentBox}>
+                      <div className={styles.pic + " "}>
                         <img
-                          className="w-100 h-100 object-fit-cover"
-                          src="/images/logo.png"
+                          className="w-100 h-100 object-fit-cover img-thumbnail rounded-circle"
+                          src={`/images/user/${v.user_img}`}
                           alt=""
                         />
                       </div>
@@ -623,14 +625,21 @@ export default function productDetail() {
                   justify-content-center align-items-center "
                           >
                             <div>
-                              <img
-                                src={"/images/product/" + v.product_img}
-                                alt=""
-                                className="object-fit-cover w-100 h-100"
-                              />
+                              <Link href={`/product/${v.product_id}`}>
+                                <img
+                                  src={"/images/product/" + v.product_img}
+                                  alt=""
+                                  className="object-fit-cover w-100 h-100"
+                                />
+                              </Link>
                             </div>
                             <div>
-                              <span>{v.product_name}</span>
+                              <Link
+                                href={`/product/${v.product_id}`}
+                                style={{ color: "black" }}
+                              >
+                                <span>{v.product_name}</span>
+                              </Link>
                             </div>
                             <div>
                               <span>NT$</span>
@@ -648,6 +657,9 @@ export default function productDetail() {
         </main>
       </div>
       <Footer />
+      <Head>
+        <title>食食嗑嗑-嗑零食</title>
+      </Head>
     </>
   );
 }

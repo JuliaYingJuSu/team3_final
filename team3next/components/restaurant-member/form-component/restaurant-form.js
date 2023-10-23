@@ -40,7 +40,7 @@ export default function FormLayout({
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/member-register",
+        process.env.API_SERVER + "/member-register",
         formData
       );
       console.log("Server Response:", response.data);

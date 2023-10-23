@@ -18,6 +18,24 @@ export default function CartDetail() {
     }
   }, []);
 
+
+//   if(localStorage.getItem('store711')){
+// // localStorage取711資料
+//   const getAd = JSON.parse(localStorage.getItem('store711'))
+//   console.log('在這呢')
+//   console.log(getAd)
+//    // 711 storeid & storename
+//   const a = `${getAd.storeid } ${getAd.storename}` 
+//   setA(a)
+//   // 711 storeaddress
+//   const b = getAd.storeaddress
+//   setB(b)
+//   }
+  
+
+
+
+
   // 購物車小計
   const calculateTotal = () => {
     // 計算所有商品的小計
@@ -95,10 +113,13 @@ export default function CartDetail() {
   const insertDatabase = () => {
     const getUserid = JSON.parse(localStorage.getItem("auth"));
     const getUser = getUserid.user_id;
-    const orderTotal = total;
-    // const orderTotal = calculateTotal().total;
-
-    console.log(getUser);
+    // const orderTotal = total;
+    const orderTotal = calculateTotal().total;
+    const a = `${store711.storename}`
+    console.log(a)
+    const b = `${store711.storeaddress}`
+    console.log('妍寶')
+    console.log(b)
     if (getUser) {
       fetch("http://localhost:3002/api/cart", {
         method: "post",
@@ -107,6 +128,9 @@ export default function CartDetail() {
           user_id: getUser,
           order_amount: orderTotal,
           delivery_method: delivery,
+          // 1020新增
+          delivery_address: `${a} ${b}`,
+        
         }),
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +177,15 @@ export default function CartDetail() {
   // 7-11
   const { store711, openWindow, closeWindow } = useShip711StoreOpener(
     "http://localhost:3002/api/cart/711",
-    { autoCloseMins: 3 } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
+    { autoCloseMins: 3,
+      title: '7-11運送店家選擇視窗', //跳出視窗標題
+      h : 680, //跳出視窗高度
+      w : 950, //跳出視窗寬度
+      autoCloseMins : 5, //自動關閉
+      enableLocalStorage : true, //是否didMount時要讀取localStorage中資料
+      keyLocalStorage : 'store711', // localStorage中的key
+  
+    } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
   );
 
   return (
@@ -210,15 +242,13 @@ export default function CartDetail() {
                     className={styles.productDetail + " container"}
                     key={v.product_id}
                   >
-                    <td className={styles.imgWidth + " w-20"}>
-                      <imgs
-                        className=" rounded-1"
-                        src={
-                          "http://localhost:3080/images/product/" +
-                          v.product_img
-                        }
+                    <td className={styles.imgWidth + " w-20r"}>
+                      <img
+                        className=" rounded-1 w-100 h-100 "
+                        src={`images/product/${v.product_img}`}
                         alt=""
                       />
+                      {/* <p>123</p> */}
                     </td>
                     <td className={styles.cutBorder + " align-middle"}>
                       {v.product_name}
@@ -294,14 +324,20 @@ export default function CartDetail() {
 
               <div className={styles.chooseStore}>
                 {delivery == "7-11超商取貨" ? (
+                  <>
                   <button
-                    className="btn btn-sm"
+                    className="btn btn-sm me-3"
                     onClick={() => {
                       openWindow();
                     }}
                   >
                     選擇超商
                   </button>
+                 <br />
+         <input type="text" value={store711.storename}  className="input-group border-0 mt-1" style={{ backgroundColor: '#FBF9EF, width: 50%' }} disabled/>
+       
+        <input type="text" value={store711.storeaddress} className="input-group border-0" style={{ backgroundColor: '#FBF9EF , width: 50%' }} disabled />
+                 </>
                 ) : (
                   ""
                 )}
@@ -335,7 +371,6 @@ export default function CartDetail() {
               {delivery == "7-11超商取貨"
                 ? "當包裹送達您指定之7-11門市時，隔日將會發送簡訊到貨通知。門市純取貨之訂單，收件人務必填寫與身分證上相符的姓名，並攜帶證件至門市領取包裹"
                 : ""}
-              {console.log(delivery)}
             </div>
           </div>
         </div>

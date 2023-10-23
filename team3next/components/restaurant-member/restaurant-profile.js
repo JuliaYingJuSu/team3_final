@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "@/validation/profile-validation";
@@ -12,40 +13,42 @@ export default function Profile() {
   const router = useRouter();
   const [fetchedData, setFetchedData] = useState("default");
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
   const [inputType, setInputType] = useState("password");
   const [reInputType, reSetInputType] = useState("password");
   const fetchData = async () => {
-    try {
-      const authObj = JSON.parse(localStorage.getItem("token"));
-      if (memberAuth && memberAuth.result.token) {
-        const response = await axios.get(
-          "http://localhost:3002/api/restaurant/member-info",
-          {
-            headers: {
-              Authorization: "Bearer " + memberAuth.result.token,
-            },
-          }
-        );
-        console.log("fetch result:", response.data);
-        setFetchedData(response.data);
-        setDataLoaded(true);
+    if (memberAuth && memberAuth.result && memberAuth.result.token) {
+      try {
+        if (memberAuth && memberAuth.result.token) {
+          const response = await axios.get(
+            process.env.API_SERVER + "/api/restaurant/member-info",
+            {
+              headers: {
+                Authorization: "Bearer " + memberAuth.result.token,
+              },
+            }
+          );
+          console.log("fetch result:", response.data);
+          setFetchedData(response.data);
+          setDataLoaded(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
     fetchData();
-  }, [memberAuth]);
+  }, [memberAuth, refreshKey]);
 
   // 要加上auth作為依賴，否則多刷新幾次就不request了，不知道為什麼
-  useEffect(() => {
-    if (!memberAuth.auth && dataLoaded) {
-      alert("請先登入");
-      router.push(`/restaurant-member/member-login`);
-    }
-  }, [memberAuth, dataLoaded]);
+  // useEffect(() => {
+  //   if (!memberAuth.auth && dataLoaded) {
+  //     alert("請先登入");
+  //     router.push(`/restaurant-member/member-login`);
+  //   }
+  // }, [memberAuth, dataLoaded]);
 
   // eyeopened
   const {
@@ -63,7 +66,7 @@ export default function Profile() {
       // const isValid = await profileSchema.isValid(data)
       // console.log(isValid)
       const response = await axios.put(
-        "http://localhost:3002/api/restaurant/member-info-update",
+        process.env.API_SERVER + "/api/restaurant/member-info-update",
         data,
         {
           headers: {
@@ -72,6 +75,7 @@ export default function Profile() {
         }
       );
       console.log("Updated Response:", response.data);
+      setRefreshKey((prevKey) => prevKey + 1);
       Swal.fire({
         icon: "success",
         title: "修改成功",
@@ -85,10 +89,13 @@ export default function Profile() {
 
   return (
     <>
+      <Head>
+        <title>食食嗑嗑-會員資料管理</title>
+      </Head>
       <div className="row">
         <div className="col-3"></div>
         <div className="col-6">
-          <h2 style={{ color: "#985637" }}>餐廳資料維護</h2>
+          <h2 style={{ color: "#985637" }}>會員資料管理</h2>
           <form
             className="d-flex flex-column justify-content-center"
             onSubmit={handleSubmit(onSubmit)}
@@ -128,6 +135,7 @@ export default function Profile() {
                   type={inputType}
                   {...register("password")}
                   id="password"
+                  placeholder="請輸入新密碼"
                 />
                 <span
                   className="eye position-absolute mt-1 me-2 end-0"
@@ -158,6 +166,7 @@ export default function Profile() {
                   type={reInputType}
                   {...register("rePassword")}
                   id="rePassword"
+                  placeholder="請再次輸入新密碼"
                 />
                 <span
                   className="eye position-absolute mt-1 me-2 end-0"

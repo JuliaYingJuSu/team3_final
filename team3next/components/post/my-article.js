@@ -11,7 +11,7 @@ export default function MyArticle({ article }) {
   const [imgs, setImgs] = useState([]);
   const [comments, setComments] = useState([]);
   const contentParagraphs = article.post_content.split("\n");
-  console.log({ article });
+  // console.log({ article });
 
   // 初始化輪播的 activeIndex
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,7 +35,7 @@ export default function MyArticle({ article }) {
         .then((r) => r.json())
         .then((r) => {
           setImgs(r);
-          console.log(r);
+          // console.log(r);
         })
         .catch((ex) => {
           console.log(ex);
@@ -69,33 +69,24 @@ export default function MyArticle({ article }) {
         id={"exampleModal" + article.post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + article.post_id}
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
-                    <Link href="/user/user-my-article-i">
-                      {auth.user_img ? (
-                        <img
-                          className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${auth.user_img}`}
-                        ></img>
-                      ) : (
-                        <img
-                          className="rounded-circle headshot-sm img-thumbnail"
-                          src="/images/logo.png"
-                        ></img>
-                      )}
-                    </Link>
+                    {article.user_img ? (
+                      <img
+                        className="rounded-circle headshot-sm img-thumbnail"
+                        src={`http://localhost:3002/img/${article.user_img}`}></img>
+                    ) : (
+                      <img
+                        className="rounded-circle headshot-sm img-thumbnail"
+                        src="/images/logo.png"></img>
+                    )}
                   </div>
-                  <p className="middle me-2">
-                    <a className="fs16b pt-3 text-dark" href="#">
-                      {auth.nickname}
-                    </a>
-                  </p>
+                  <p className="middle me-2 fs16b pt-3 text-dark">{auth.nickname}</p>
                   {/* <button className="btn btn-little ms-auto">追蹤</button> */}
                 </div>
 
@@ -116,8 +107,7 @@ export default function MyArticle({ article }) {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+                aria-label="Close"></button>
             </div>
             <div className="modal-body overflow-x-hidden">
               {/* 使用 Carousel 顯示多個圖片 */}
@@ -125,8 +115,7 @@ export default function MyArticle({ article }) {
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius"
-              >
+                className="image-radius">
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
@@ -169,15 +158,16 @@ export default function MyArticle({ article }) {
             <hr />
             {comments &&
               comments.map((v, i) => {
-                console.log(v);
+                {
+                  /* console.log(v); */
+                }
                 return (
                   <div className="d-flex align-items-start ms-2" key={i}>
                     <div className="me-2">
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${v.user_img}`}
-                        ></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}></img>
                       </Link>
                     </div>
                     <div className="me-auto mb-3 text-start">

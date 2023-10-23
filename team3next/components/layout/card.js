@@ -24,30 +24,27 @@ export default function Card({
   food_tag_name,
   favs,
   setFavs,
+  followed,
+  setFollowed,
+  likes,
+  setLikes,
+  clickCity, 
+  setClickCity,
+  clickStyle, 
+  setClickStyle,
+
 }) {
-  const { auth,fav } = useContext(AuthContext);
-  const [saved, setSaved] = useState(false);
-
-  // const [fav, setFav] = useState(false);
-
-  // useEffect(() => {
-  //   if (user_id) {
-  //     fetch("http://localhost:3002/api/post/fav", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         user_id: user_id,
-  //         post_id: post_id,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((r) => r.json())
-  //     .then((r) => {
-  //       setSaved(r);
-  //     });
-  //   }
-  // }, []);
+  const { auth } = useContext(AuthContext);
+  const handleCityClick = (e) => {
+    setClickCity(e.target.innerText);
+  };
+  // console.log('card:',{clickCity})
+  const handleStyleClick = (e)=> {
+    setClickStyle(e.target.innerText);
+  }
+  
+  // console.log('card:',{clickStyle})
+  
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -61,7 +58,7 @@ export default function Card({
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
-
+// if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
   return (
     <>
       <PostModal
@@ -80,6 +77,12 @@ export default function Card({
         food_tag_name={food_tag_name}
         favs={favs}
         setFavs={setFavs}
+        followed={followed}
+        setFollowed={setFollowed}
+        likes={likes}
+        setLikes={setLikes}
+        clickCity={clickCity}
+        setClickCity={setClickCity}
       />
       <div className="col mt-2 my-3">
         <div className="card h-100 overflow-hidden">
@@ -97,7 +100,10 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <Like />
+                <Like 
+                  ifLike={likes && likes?.includes(post_id) ? true : false}
+                  post_id={post_id}
+                />
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
@@ -107,10 +113,9 @@ export default function Card({
                 {/* <span>1</span> */}
               </span>
               <span className="middle">
-                <Saved ifSave={(favs && favs?.includes(post_id)) ? true : false}
-                favs={favs}
-                setFavs={setFavs}
-                post_id={post_id}
+                <Saved
+                  ifSave={favs && (favs?.includes(post_id)) ? true : false}
+                  post_id={post_id}
                 />
                 {/* <button
                   className="btn btn-sm btn-i"
@@ -123,12 +128,12 @@ export default function Card({
               </span>
             </div>
             <div className="d-flex fs14 gap-2 mt-2">
-              <a href="#" className="tag-i">
+              <a className="tag-i cities" onClick={handleCityClick}>
                 {restaurant_city}
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
               {uniqueFoodTags.map((foodTag, index) => (
-                <a href="#" className="tag-f" key={index}>
+                <a className="tag-f tags" key={index} onClick={handleStyleClick}>
                   {foodTag}
                 </a>
               ))}
@@ -161,12 +166,32 @@ export default function Card({
                   {nickname}
                 </Link>
               </p>
-              <FollowButton ifFollow={false}/>
+              <FollowButton ifFollow={followed && (followed?.includes(user_id)) ? true : false}
+                  user_id={user_id}/>
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>
         </div>
       </div>
+      <style jsx>
+        {`
+          .tags {
+            cursor: pointer;
+          }
+          .tags:hover {
+            background-color: #666666; 
+            color: #fff; 
+          }
+          .cities {
+            cursor: pointer;
+          }
+          .cities:hover{
+            background-color:#ae4818;
+            color: #fff; 
+          }
+
+        `}
+      </style>
     </>
   );
 }

@@ -6,11 +6,11 @@ import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import swal from "sweetalert2";
 import Pay from '@/components/cart/LoadingLinePay'
-
+import { useRouter } from "next/router";
 
 export default function OrderComplete() {
   const [data, setData] = useState([]);
-
+  const router = useRouter();
 
   // const sweet = () => {
   //   new swal({
@@ -28,7 +28,29 @@ export default function OrderComplete() {
         setData(obj);
         console.log(obj);
       });
+      
   }, []);
+
+  const { transactionId, orderId } = router.query;
+      console.log('--------------')
+      console.log('35----------',transactionId)
+      console.log('36----------',orderId)
+  useEffect(() => {
+
+    if (router.isReady) {
+
+      
+      // 裡面放變數, 外面一定要是``, 不能是""
+    fetch(`http://localhost:3002/api/cart/linePay/confirm/'${transactionId}'/${orderId}`)
+      .then((r) => r.json())
+      .then((obj) => {
+        setData(obj);
+        console.log('出現喔')
+        console.log(obj);
+      });
+}}, [router.isReady]);
+
+
 
 //---------------- 做linePay Loading ---------------------
 const [loading, setLoading] = useState(false);
@@ -36,17 +58,16 @@ const [loading, setLoading] = useState(false);
 useEffect(() => {
   setTimeout(() => {
     setLoading(true);
-  }, 1200000);
+  }, 3000);
 }, []);
 //---------------- 做linePay Loading end ---------------------
 
 
 
-  return (
-    <>
-      <MyNavbar />
+  return (loading?
+    <> ( <MyNavbar />
 
-      {/* 商城bar */}
+      
       <div
         className={style.topBox + " container d-flex justify-content-around"}
       >
@@ -205,9 +226,9 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* 購物進度條 */}
+      
       <div className={styles.sectionBar + " mt-5"}>
-        {/* <div className="w-75 d-flex justify-content-between"> */}
+       
         <a href="" className={styles.step}>
           <p className="text-start ">顧客</p>
         </a>
@@ -224,19 +245,18 @@ useEffect(() => {
           <p className="text-start">檢視</p>
         </a>
 
-        {/* </div> */}
+    
       </div>
 
       <div className="container text-center">
-        {/* check文字 */}
-        {/* <div className="icon-check mt-4"></div> */}
+      
 
         <div className="my-5 h5">謝謝您！您的訂單已經成立！</div>
-        {/* <button onClick={sweet}> 送出</button> */}
+       
       </div>
-{/* linePay-Loading畫面 */}
-{loading ?   
-data.map((v, i) => {
+
+
+{data.map((v, i) => {
         return (
           <>
             <div
@@ -254,8 +274,7 @@ data.map((v, i) => {
                 <div className="col-sm-6 py-1">{v.payment_method}</div>
                 <div className="col-sm-6 py-1">收件資訊</div>
                 <div className="col-sm-6 py-1">{v.delivery_address}</div>
-                {/* 強迫col換行 */}
-                {/* <div class="w-100"></div> */}
+              
               </div>
 
               <div className="row justify-content-center d-flex w-25">
@@ -269,14 +288,16 @@ data.map((v, i) => {
                   <p>訂單金額 </p>
                   <p>{"NT$" + v.order_amount}</p>
                 </div>
-                {/* <div className="col-6 col-sm-6 py-1"></div> */}
+               
               </div>
             </div>
           </>
         );
-      }):<Pay />}
+      })}
 
-      <Footer />
-    </>
+      <Footer />)
+
+     
+    </>:(<Pay />)
   );
-}
+    }

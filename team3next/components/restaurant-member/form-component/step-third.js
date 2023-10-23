@@ -27,7 +27,6 @@ export default function StepThird() {
     <>
       <div className="d-flex flex-column mb-3">
         <label className="fs18b" htmlFor="photo">
-          {" "}
           餐廳照片
           <span className="ps-1" style={{ color: "red" }}>
             *
@@ -49,14 +48,15 @@ export default function StepThird() {
           }}
           noStyle
           // bug fixed用來解決filelist錯誤
-
         >
           <Upload.Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined style={{ color: "#ae4818" }} />
             </p>
             <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
-            <p className="ant-upload-hint">可多選，最多五張</p>
+            <p className="ant-upload-hint">
+              可多選，最多五張，限.jpg/.png/.webp，單張5Mb大小
+            </p>
           </Upload.Dragger>
         </FormItem>
       </div>

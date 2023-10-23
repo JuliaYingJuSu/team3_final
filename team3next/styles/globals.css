@@ -2,6 +2,20 @@
 * {
   margin: 0;
   padding: 0;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fbf9ef;
+    /* border-radius: 40px; */
+  }
+  &::-webkit-scrollbar-thumb {
+    /* border-radius: 40px; */
+    /* background-color: rgba(239, 214, 197, 0.55);*/
+    background-color: #ebd8a9;
+  }
 }
 
 /* 地區按鈕 */
@@ -329,8 +343,8 @@ body {
 /* 大頭照-小 */
 .headshot-small {
   display: flex;
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -339,8 +353,8 @@ body {
 }
 /* 大頭照-中小 */
 .headshot-sm {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
 }
 
@@ -401,7 +415,7 @@ body {
   height: 45px;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
-  background: #fff;;
+  background: #fff;
 }
 
 .input-res {
@@ -425,7 +439,7 @@ input[type="password"] {
   padding-left: 12px;
 }
 
-textarea{
+textarea {
   padding-left: 12px;
 }
 
@@ -440,3 +454,10 @@ textarea{
 outline: none;
 } */
 
+.card-img {
+  transform: scale(1, 1);
+  transition: all 1s ease-out;
+}
+.card-img:hover {
+  transform: scale(1.04, 1.04);
+}

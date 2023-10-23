@@ -19,7 +19,8 @@ import postRouter from "./routes/post.js";
 import productRouter from "./routes/product.js";
 import bookRouter from "./routes/book.js";
 import restaurantRouter from "./routes/restaurant.js";
-import authRouter from "./routes/auth.js";
+import firebaseGoogleRouter from "./routes/firebase-google.js";
+// import authRouter from "./routes/auth.js";
 import passport from "./config/passport-setup.js";
 import passportSetup from "./config/passport-setup.js";
 // 最早為了authrouter裡的第一個路由就導入了，#8
@@ -100,7 +101,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 const verifyJWT = (req, res, next) => {
   // 製作jwt驗證中間件
@@ -115,7 +116,7 @@ const verifyJWT = (req, res, next) => {
       next(); // 继续处理下一個中間件或者路由
     } catch (err) {
       // console.log(req.headers["authorization"]);
-      res.json({ message: "token is not ok" });
+      res.json({ message: "token is not ok or no response. please check." });
     }
   }
 };
@@ -131,7 +132,8 @@ app.use("/api/book", bookRouter);
 app.use("/api/restaurant", verifyJWT, restaurantRouter);
 app.use("/api/cart", cartRouter);
 // app.use('/ws',wsRouter)
-app.use("/auth", authRouter);
+// app.use("/auth", authRouter);
+app.use("/firebase/google", firebaseGoogleRouter);
 
 // GET - 得到所有會員資料
 app.get("/", async function (req, res) {
@@ -186,7 +188,6 @@ app.post("/login-jwt", async (req, res) => {
       user_email: user.user_email,
       nickname: user.nickname,
       user_phone: user.user_phone,
-      user_img: user.user_img,
       self_intr: user.self_intr,
       isVaild: user.isValid,
       user_password: user.user_password,
@@ -335,16 +336,28 @@ wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
-    console.log("前端來的");
-    console.log("received: %s", JSON.parse(data));
-  });
+    console.log("337 received: %s", JSON.parse(data));
 
-  ws.send(
-    JSON.stringify({
-      type: "message",
-      data: "test",
-    })
-  );
+    // wss.send(
+    //   JSON.stringify(
+    //     //{ type: "message",
+    //     // data: JSON.parse(data).constent,}
+
+    //     JSON.parse(data).content
+    //   )
+    // );
+
+    wss.clients.forEach((c) => {
+      console.log("forEach裡");
+      if (c.readyState == 1) {
+        console.log("有開著");
+        // c.send(JSON.stringify(JSON.parse(data).content));
+        console.log("353", JSON.stringify(JSON.parse(data)));
+
+        c.send(JSON.stringify(JSON.parse(data)));
+      }
+    });
+  });
 });
 
 server.on("upgrade", function upgrade(request, socket, head) {

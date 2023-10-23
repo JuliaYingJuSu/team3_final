@@ -1,10 +1,25 @@
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import { useContext, useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function UserInfo() {
   const { auth } = useContext(AuthContext);
   const [follown, setFollowN] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imgServerUrl, setImgServerUrl] = useState("");
+  const [isFilePicked, setIsFilePicked] = useState(false);
+
+  // sweetalert設定
+  const swalTest1 = Swal.mixin({
+    showConfirmButton: false,
+    timer: 800,
+    timerProgressBar: true,
+    didOpen: (swalTest1) => {
+      swalTest1.addEventListener("mouseenter", Swal.stopTimer);
+      swalTest1.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
 
   useEffect(() => {
     fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/follown`)
@@ -18,69 +33,88 @@ export default function UserInfo() {
       });
   }, [auth.user_id]);
 
-  //圖片上傳
-  // 選擇的檔案
-  const [selectedFile, setSelectedFile] = useState(null);
-  // 是否有檔案被挑選
-  const [isFilePicked, setIsFilePicked] = useState(false);
-  // 預覽圖片
-  const [preview, setPreview] = useState("");
-  // server上的圖片網址
-  const [imgServerUrl, setImgServerUrl] = useState("");
+  const [userinfo, setUserInfo] = useState({});
 
-  // 當選擇檔案更動時建立預覽圖
   useEffect(() => {
-    if (!selectedFile) {
-      setPreview("");
-      return;
+    fetch(process.env.API_SERVER + `/api/user/${auth.user_id}/user`)
+      .then((r) => r.json())
+      .then((r) => {
+        setUserInfo(r);
+        // console.log(r);
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }, [auth.user_id]);
+
+  useEffect(() => {
+    if (selectedFile) {
+      const newFilename = `${auth.user_id}_${Date.now()}_${selectedFile.name}`;
+      handleSubmission(newFilename);
     }
-
-    const objectUrl = URL.createObjectURL(selectedFile);
-    console.log(objectUrl);
-    setPreview(objectUrl);
-
-    // 當元件unmounted時清除記憶體
-    return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
   const changeHandler = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      setIsFilePicked(true);
+      console.log("File selected:", file);
       setSelectedFile(file);
-      setImgServerUrl("");
+      setImgServerUrl(""); // 清除先前的服务器 URL
+      // setIsFilePicked(true);
+      // handleSubmission();
 
-      // 觸發上傳
-      handleSubmission(file);
+      const newFilename = `${auth.user_id}_${Date.now()}_${file.name}`;
+      handleSubmission(newFilename);
     }
   };
 
-  const handleSubmission = (file) => {
-    const formData = new FormData();
-    formData.append("user_id", auth.user_id);
-    formData.append("user_img", file);
+  const handleSubmission = async (newFilename) => {
+    if (selectedFile) {
+      console.log("Uploading file:", selectedFile);
+      const formData = new FormData();
+      formData.append("user_id", auth.user_id);
+      formData.append("user_img", selectedFile);
+      formData.append("new_filename", newFilename); // 传递新的文件名
 
-    //對照server上的檔案名稱 req.files.avatar
-    formData.append("user_img", selectedFile);
+      try {
+        const response = await fetch(
+          process.env.API_SERVER + "/api/user/update-img",
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
+        if (response.ok) {
+          const result = await response.json();
+          console.log("成功:", result);
+          setImgServerUrl(result.imgServerUrl);
 
-    fetch(
-      process.env.API_SERVER + "/api/user/update-img", 
-      {
-        method: "PUT",
-        body: formData,
+          // 更新使用者資訊
+          const userResponse = await fetch(
+            process.env.API_SERVER + `/api/user/${auth.user_id}/user`
+          );
+          if (userResponse.ok) {
+            const userResult = await userResponse.json();
+            setUserInfo(userResult);
+          } else {
+            console.error("無法獲取更新的用戶資訊");
+          }
+
+          // 设置 isFilePicked 为 true，表示已成功上传
+          setIsFilePicked(true);
+          swalTest1.fire({
+            title: "更改大頭照成功",
+            icon: "success",
+          });
+        } else {
+          console.error("失敗:", response.statusText);
+        }
+      } catch (error) {
+        console.error("錯誤:", error);
       }
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-        setImgServerUrl(result.imgServerUrl);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    }
   };
-
   return (
     <>
       <main
@@ -102,26 +136,23 @@ export default function UserInfo() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmission();
+              const newFilename = `${auth.user_id}_${Date.now()}_${
+                selectedFile.name
+              }`;
+              handleSubmission(newFilename);
             }}
             encType="multipart/form-data">
             <input name="user_id" type="hidden" value={auth.user_id} />
             <div className="middle ms-5">
               <div className="position-relative">
-                {selectedFile ? (
-                  (auth.user_img&& !imgServerUrl) ? (
-                    <img
-                      src={process.env.API_SERVER + `/img/${auth.user_img}`}
-                      alt="大頭照"
-                      className="rounded-circle headshot-big img-thumbnail"
-                    />
-                  ) : (
-                    <img
-                      src={preview}
-                      alt="大頭照"
-                      className="rounded-circle headshot-big img-thumbnail"
-                    />
-                  )
+                {userinfo && userinfo.length > 0 && userinfo[0].user_img ? (
+                  <img
+                    src={
+                      process.env.API_SERVER + `/img/${userinfo[0].user_img}`
+                    }
+                    alt="大頭照"
+                    className="rounded-circle headshot-big img-thumbnail"
+                  />
                 ) : (
                   <img
                     src="/images/logo.png"
@@ -129,11 +160,22 @@ export default function UserInfo() {
                     className="rounded-circle headshot-big img-thumbnail"
                   />
                 )}
+                {/* <img
+                  src={
+                    imgServerUrl ||
+                    (userinfo.user_img
+                      ? `${process.env.API_SERVER}/img/${userinfo[0].user_img}}`
+                      : "/images/logo.png")
+                  }
+                  alt="大頭照"
+                  className="rounded-circle headshot-big img-thumbnail"
+                /> */}
                 <label className="img-thumbnail rounded-circle position-absolute bottom-0 end-0">
                   <input
                     style={{ display: "none" }}
                     type="file"
                     onChange={changeHandler}
+                    accept="image/*"
                   />
                   <span className="fs-3 icon-pan"></span>
                 </label>

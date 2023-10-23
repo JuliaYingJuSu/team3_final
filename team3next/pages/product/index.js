@@ -8,19 +8,23 @@ import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
+
 import Pagination from "@/components/product/pagination";
 import axios from "axios";
 import TestInput from "./test";
 import LoadingCard from "@/components/product/loading-card";
 import ws from "ws";
+import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
+import Head from "next/head";
 
 export default function index() {
   //資料用
   const [data, setData] = useState([]);
-  console.log(data.rows?.length);
+  // console.log(data.rows?.length);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
+  const wsRef = useRef();
 
   const [inputText, setInputText] = useState("");
   const [fullText, setFullText] = useState("");
@@ -197,10 +201,12 @@ export default function index() {
   console.log(msg);
   const [msgs, setMsgs] = useState([]);
   console.log(msgs);
+  const { auth } = useContext(AuthContext);
+  console.log(auth);
 
-  let ws;
   useEffect(() => {
-    ws = new WebSocket("ws://localhost:3002/ws");
+    let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
+
     ws.onopen = () => {
       console.log("open connection");
     };
@@ -213,32 +219,36 @@ export default function index() {
     //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
     //#endregion
     ws.onmessage = (res) => {
-      console.log("res");
-      const msg = JSON.parse(res.data);
-      if (msg.type === "message") {
-        setMsgs([...msgs, msg.data]);
+      console.log(JSON.parse(res.data));
+      const msgBack = JSON.parse(res.data);
+      console.log(msgBack, res.type);
+
+      if (res.type === "message") {
+        // console.log("res.data === message");
+        const newMsgs = [...msgs, msgBack];
+        console.log(newMsgs);
+
+        setMsgs(newMsgs);
       }
     };
     ws.onclose = () => {
       console.log("close connection");
     };
-  }, []);
+  }, [msgs]);
 
   function sendMsg() {
+    let ws = wsRef.current;
     console.log("進sendMsg");
 
-    // -------------------
-
-    // 錯誤訊息 "Uncaught TypeError: Cannot read properties of undefined (reading 'send')" 意味著在你的前端程式碼中，WebSocket 的連接 ws 是 undefined。這可能是因為在 sendMsg 函數被呼叫時，ws 變數尚未被正確初始化。
-
-    // 在你的程式碼中，ws 變數是在 useEffect 內部聲明的，並且只在 useEffect 的作用域內有效。這意味著在 sendMsg 函數中無法正確訪問到 ws。
-
-    // 為了解決這個問題，你可以將 ws 變數保存在 useRef 中，這樣它的作用域就不會受限於 useEffect 了。
-    // ---------------------
-
-    if (ws.readyState === 1) {
+    if (ws.readyState == 1) {
       console.log("ws.readyState === 1");
-      ws.send(JSON.stringify({ type: "message", constent: msg }));
+      ws.send(
+        JSON.stringify({
+          type: "message",
+          id: auth.user_id || "stranger",
+          content: msg,
+        })
+      );
     } else {
       console.log("ws.readyState不等於 1");
     }
@@ -246,67 +256,99 @@ export default function index() {
     // if (!ws) return;
     // ws.send(JSON.stringify({ constent: msg }));
   }
+
   //------------------------------------------------
   return (
     <>
-      {/* <button
-        class="btn btn-primary"
+      <button
+        class={"btn " + styles.typing}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
         aria-controls="offcanvasBottom"
-        style={{ position: "absolute", right: "0px", bottom: "300px" }}
+        style={{
+          position: "fixed",
+          right: "0px",
+          bottom: "30px",
+          zIndex: "11",
+        }}
       >
-        找小編
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
 
       <div
-        className="offcanvas offcanvas-bottom"
+        className="offcanvas offcanvas-end"
+        data-bs-scroll="true"
         tabIndex="-1"
         id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel"
+        style={{
+          width: "350px",
+          height: "500px",
+          borderRadius: "10px",
+          right: "70px",
+          marginTop: "215px",
+        }}
       >
         <div className="offcanvas-header">
-          {msgs.map((msg) => {
-            return (
-              <h5 className="offcanvas-title" id="offcanvasBottomLabel">
-                {msg}
-              </h5>
-            );
-          })}
+          <h2 className="p-3">HELLO</h2>
 
           <button
             type="button"
-            className="btn-close"
+            className="btn-close ms-auto"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
         <div className="offcanvas-body small ">
-          ...
-          <div></div>
-          <input
-            type="text"
-            value={msg}
-            onChange={(e) => {
-              setMsg(e.target.value);
-            }}
-          />
-          <button
-            className="btn btn-warning"
-            onClick={() => {
-              console.log("進sendMsg");
-
-              sendMsg();
+          <div
+            className="scrollbar px-2"
+            style={{
+              height: "80%",
+              marginBottom: "20px",
+              overflow: "scroll",
+              overflowX: "hidden",
             }}
           >
-            送出
-          </button>
-        </div>
-      </div> */}
+            {msgs.map((m) => {
+              console.log(m.id, auth.user_id);
+              return (
+                <div
+                  className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
+                >
+                  <p>{m.content}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            <input
+              className="w-75 me-3"
+              type="text"
+              value={msg}
+              onChange={(e) => {
+                setMsg(e.target.value);
+              }}
+            />
+            <button
+              className="btn btn-sm btn-secondary rounded-pill"
+              onClick={() => {
+                // console.log("進sendMsg");
 
+                sendMsg();
+                setMsg("");
+              }}
+            >
+              送出
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* ---------------------------------- */}
       <Navbar />
-      <div className="container" style={{ paddingTop: "225px" }}>
+      <div className="container" style={{ paddingTop: "203px" }}>
         <Bread typeList={typeList} data={data} />
 
         <div className="w-100 d-flex mb-3">
@@ -402,16 +444,18 @@ export default function index() {
                   {typeList
                     ? data.items
                         ?.filter((v) => {
-                          console.log("data.items");
-                          console.log(data.items);
+                          // console.log("data.items");
+                          // console.log(data.items);
                           return v.product_type_list_id
                             .split(",")
                             .includes(typeList.split(",")[0]);
                         })
                         .map((v, i) => {
-                          console.log("items");
-                          console.log(items);
-                          console.log(items.includes(v.item_id));
+                          //動態篩選條件
+
+                          // console.log("items");
+                          // console.log(items);
+                          // console.log(items.includes(v.item_id));
 
                           return (
                             <label key={i}>
@@ -419,13 +463,13 @@ export default function index() {
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-1"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
                                   if (!items.includes(v.item_id)) {
                                     const newItems = [...items, v.item_id];
-                                    console.log(newItems);
+                                    // console.log(newItems);
 
                                     setItems(newItems);
                                   } else {
@@ -454,13 +498,14 @@ export default function index() {
                       data.items
                         // .filter((v) => v.price_range == 1)
                         .map((v, i) => {
+                          //預設篩選條件
                           return (
                             <label key={i}>
                               <input
                                 checked={
                                   items.includes(v.item_id) ? true : false
                                 }
-                                className="mb-4"
+                                className="mb-3"
                                 type="checkbox"
                                 value={v.item_id}
                                 onChange={() => {
@@ -509,7 +554,7 @@ export default function index() {
                   // console.log(v);
                   return (
                     // 畫面渲染後不會再變動key才能用索引
-                    <label key={i} className="w-100 ps-2 my-2">
+                    <label key={i} className="w-100 ps-2 my-1">
                       <input
                         className="me-2"
                         // className="----------------------------"
@@ -597,7 +642,9 @@ export default function index() {
                       return (
                         <div
                           key={product_id}
-                          className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                          className={
+                            " col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 d-flex justify-content-center align-items-center "
+                          }
                         >
                           <div className={styles.cardP}>
                             <div className={styles.imgBox}>
@@ -605,7 +652,10 @@ export default function index() {
                                 <img
                                   src={"images/product/" + product_img}
                                   alt=""
-                                  className="w-100 h-100 object-fit-cover "
+                                  className={
+                                    styles.myImg +
+                                    " w-100 h-100 object-fit-cover"
+                                  }
                                 />
                               </Link>
                             </div>
@@ -678,6 +728,56 @@ export default function index() {
       </div>
 
       <Footer />
+      <Head>
+        <title>食食嗑嗑-嗑零食</title>
+      </Head>
+      <style jsx>
+        {`
+          .scrollbar {
+            &::-webkit-scrollbar {
+              height: 5px;
+              width: 5px;
+            }
+            &::-webkit-scrollbar-track {
+              background-color: transparent;
+              border-radius: 40px;
+              // margin: 20px;
+            }
+            &::-webkit-scrollbar-thumb {
+              border-radius: 40px;
+              background-color: #666666;
+              // background-color: rgba(239, 214, 197, 0.55);
+            }
+          }
+
+          .myMsgBox {
+            display: flex;
+            justify-content: end;
+            // text-align: end;
+          }
+
+          .otherMsgBox {
+            display: flex;
+            justify-content: start;
+          }
+
+          .myMsgBox p {
+            background-color: #ebd8a9;
+            border-radius: 40px;
+            padding: 5px 10px;
+          }
+
+          .otherMsgBox p {
+            background-color: #b4c5d2;
+            border-radius: 40px;
+            padding: 5px 10px;
+          }
+          // .offcanvas {
+          //   position: fixed;
+          //   right: 100px;
+          // }
+        `}
+      </style>
     </>
   );
 }

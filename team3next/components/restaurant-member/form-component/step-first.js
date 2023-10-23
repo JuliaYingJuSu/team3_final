@@ -49,6 +49,7 @@ export default function StepFirst() {
             type={inputType}
             {...register("password")}
             id="password"
+            placeholder="請輸入密碼"
           />
           <span
             className="eye position-absolute mt-1 me-2 end-0"
@@ -77,6 +78,7 @@ export default function StepFirst() {
             type={reInputType}
             {...register("rePassword")}
             id="rePassword"
+            placeholder="請再次輸入密碼"
           />
           <span
             className="eye position-absolute mt-1 me-2 end-0"

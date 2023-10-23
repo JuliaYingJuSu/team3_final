@@ -55,20 +55,33 @@ const corsOptions = {
 // });
 
 // ----------------------消費紀錄 my-order,寫死user_id=36 ----------------------
-cartRouter.get("/my-order", async (req, res) => {
-  let output = {
-    success: false,
-    rows: [],
-  };
+cartRouter.get("/:user_id/my-order", async (req, res) => {
+  const user_id = parseInt(req.params.user_id) || 0;
+  // let output = {
+  //   success: false,
+  //   rows: [],
+  // };
+  // const sql = `SELECT * FROM order_general WHERE 
+  // user_id = ${user_id} ORDER BY order_date DESC `;
+  // const [rows] = await db.query(sql);
+  // for (let r of rows) {
+  //   r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
+  // }
 
-  const sql = `SELECT * FROM order_general WHERE user_id = 22 ORDER BY order_date DESC `;
+ const sql = `SELECT * FROM order_general WHERE 
+  user_id = ${user_id} ORDER BY order_date DESC `;
+
+  try{ 
   const [rows] = await db.query(sql);
+  console.log('這裡')
+  console.log(rows);
   for (let r of rows) {
     r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
   }
-
-  console.log(rows);
-  res.json(rows);
+   res.json(rows);
+}catch(ex){console.log(ex)}
+ 
+  
 });
 
 // ---------------------- order-complete -------------------------------
@@ -145,7 +158,12 @@ cartRouter.post("/", async (req, res) => {
   try {
     // 注意：user_id寫死 10
 
-    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
+    //1020--
+    // const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
+    // console.log(sql);
+
+    const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, '${delivery_address}', '備貨中')`;
+    console.log('看這裡ㄚ')
     console.log(sql);
 
     const [result] = await db.query(sql);
@@ -183,7 +201,7 @@ cartRouter.post("/", async (req, res) => {
 
 cartRouter.post("/del-detail", async (req, res) => {
   console.log("nnice");
-  let { delivery_name, delivery_phone, delivery_address } = req.body;
+  let { delivery_name, delivery_phone} = req.body;
   console.log(req.body);
 
   let output = {
@@ -195,9 +213,11 @@ cartRouter.post("/del-detail", async (req, res) => {
     const [[sql3]] = await db.query(
       `SELECT order_id FROM order_general ORDER BY order_date DESC LIMIT 1`
     );
-    const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
+    // const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
+    // order_id='${sql3.order_id}'`;
+    const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}' WHERE 
     order_id='${sql3.order_id}'`;
-    console.log(sql);
+    // console.log(sql);
     const [result] = await db.query(sql);
     res.json({
       success: !!result.affectedRows,
@@ -426,7 +446,7 @@ cartRouter.get("/payMethod", async (req, res) => {
 
     // 格式化 packages 1-1
     function formatData(result) {
-      const b = toString(result[0].order_date);
+      const b = result[0].order_date;
       console.log(b);
       return [
         {
@@ -474,7 +494,7 @@ cartRouter.get("/payMethod", async (req, res) => {
           // confirmUrl: "http:localhost:3080/cart",
           // cancelUrl: "http:localhost:3080/cart",
           // 1018 --> "http:localhost:3080/cart/order-complete"
-          confirmUrl: "http:localhost:3080/cart/order-complete",
+          confirmUrl: "linePay/confirm",
           cancelUrl: "linePay/cancel",
         },
       },
@@ -492,8 +512,8 @@ cartRouter.get("/payMethod", async (req, res) => {
 
 
 // 1018
-const trans = toLine?.body?.info?.transactionId
-console.log(trans)
+// const trans = toLine?.body?.info?.transactionId
+// console.log(trans)
 
     // solution3
 
@@ -514,13 +534,50 @@ console.log(trans)
 
 
 // 這段有需要嗎？
-cartRouter.get("http:localhost:3080/cart/order-complete", (req, res) => {
-  const { transactionId, orderId } = req.query;
-  console.log(transactionId, orderId);
-  res.end();
-});
+
 
 // --------------confirm--------------------------
+
+cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
+  // router.use(cors(corsOptions));
+  console.log('523----------',req.params)
+  console.log('開始')
+  let output = {
+  success: false,
+  result: [],
+  };
+  console.log('back')
+const tran = req.params.transactionId
+const orderId = req.params.orderId
+//hahahha
+const confirmRequest = {
+  transactionId: tran,
+  orderId: orderId, // 与支付请求时的 orderId 相同
+  amount: 1160, // 与支付请求时的 amount 相同
+};
+
+
+  try {
+      const lastLine = await createLinePayClient.confirm.send(
+        {confirmRequest},
+        {
+        transactionId: tran,
+        body: {
+          currency: "TWD",
+          // amount需要查資料庫的訂單
+          amount: 1160,
+        },
+      }
+      );
+      console.log('我成功了')
+      console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
+      console.log("hihihi")
+    } catch (e) {
+      console.log("error", e);
+    }
+});
+
+
 
 // 1016註掉
 // try {

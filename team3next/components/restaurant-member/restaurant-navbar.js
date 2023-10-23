@@ -2,12 +2,40 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "@/public/images/薯哥去背.png";
+import NotificationBell from "./restaurant-bell";
 import { useMemberAuthContext } from "./hooks/use-memberauth-context";
+import axios from "axios";
 
 export default function RestaurantNavbar() {
   const { memberAuth, setMemberAuth } = useMemberAuthContext();
+  const [fetchedData, setFetchedData] = useState([]);
+  const fetchData = async () => {
+    if (memberAuth && memberAuth.result && memberAuth.result.token) {
+      try {
+        if (memberAuth && memberAuth.result.token) {
+          const response = await axios.get(
+            process.env.API_SERVER + "/api/restaurant/member-info",
+            {
+              headers: {
+                Authorization: "Bearer " + memberAuth.result.token,
+              },
+            }
+          );
+          console.log("fetch result:", response.data);
+          setFetchedData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [memberAuth]);
+
   return (
     <>
       <ul className="nav nav-underline d-flex align-items-center justify-content-between flex-nowrap">
@@ -21,45 +49,16 @@ export default function RestaurantNavbar() {
           </div>
           <div className="col-3"></div>
           {/* 右側ICON區 */}
-          <div className="col-3 d-flex align-item" style={{ height: "50px" }}>
-            <div className="dropdown">
-              <button
-                type="button"
-                className="btn position-relative me-3 "
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <span className="icon-bell" style={{ fontSize: "32px" }}></span>
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  <span style={{ fontSize: "6px", color: "white" }}>2</span>
-                  <span className="visually-hidden">New alerts</span>
-                </span>
-              </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action two
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action three
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="col-3 d-flex" style={{ height: "50px" }}>
+            <NotificationBell />
+
             <img
               className="rounded-circle"
-              src="https://placehold.co/50x50"
+              src={`https://ui-avatars.com/api/?name=${memberAuth.result.restaurant_name}&background=random`}
               alt=""
             />
             <div className=" ms-3 align-self-center" style={{}}>
-              歡迎回來，{memberAuth.result?.restaurant_name || "加載中..."}
+              歡迎回來，{fetchedData[0]?.restaurant_name || "加載中..."}
             </div>
           </div>
         </div>

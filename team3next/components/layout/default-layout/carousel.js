@@ -4,18 +4,17 @@ import React from "react";
 import Link from "next/link";
 import Slider from "react-slick";
 
-export default function Carousel({selectedStyle,
-  setSelectedStyle,}) {
+export default function Carousel({ selectedStyle, setSelectedStyle }) {
+  const handleTagSelect = (e) => {
+    // 查找包含"台式"文本的父元素
+    const parentSpan = e.target
+      .closest(".c-card")
+      .querySelector(".c-card-text");
+    if (parentSpan) {
+      setSelectedStyle(parentSpan.textContent);
+    }
+  };
 
-
-    const handleTagSelect = (e) => {
-      // 查找包含"台式"文本的父元素
-      const parentSpan = e.target.closest('.c-card').querySelector('.c-card-text');
-      if (parentSpan) {
-        setSelectedStyle(parentSpan.textContent);
-      }
-    };
-    
   //修改左右箭頭樣式
   function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -23,7 +22,8 @@ export default function Carousel({selectedStyle,
       <div
         className={className}
         style={{ ...style, display: "block", fontSize: 33 }}
-        onClick={onClick}>
+        onClick={onClick}
+      >
         <span className="icon-arrow-s-right"></span>
       </div>
     );
@@ -39,7 +39,8 @@ export default function Carousel({selectedStyle,
           display: "block",
           fontSize: 33,
         }}
-        onClick={onClick}>
+        onClick={onClick}
+      >
         <span className="icon-arrow-s-left"></span>
       </div>
     );
@@ -58,7 +59,6 @@ export default function Carousel({selectedStyle,
     nextArrow: <NextArrow />,
   };
 
-
   return (
     <>
       <div className="container my-4">
@@ -72,7 +72,8 @@ export default function Carousel({selectedStyle,
                     <img
                       src="/images/food-1106513_1920.jpg"
                       className="w-100 c-card-img rounded-circle"
-                      alt="台式"></img>
+                      alt="台式"
+                    ></img>
                   </Link>
                 </div>
                 <div>
@@ -82,11 +83,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/c1.jpg"
                     alt="中式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div className="middle">
                   <span className="c-card-text fs18b pb-4">中式</span>
@@ -95,11 +97,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle c-card ">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/j1.jpg"
                     alt="日式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">日式</span>
@@ -108,11 +111,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/k1.jpg"
                     alt="韓式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">韓式</span>
@@ -121,11 +125,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/h1.jpg"
                     alt="港式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">港式</span>
@@ -134,11 +139,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/a1.jpg"
                     alt="美式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">美式</span>
@@ -147,11 +153,12 @@ export default function Carousel({selectedStyle,
             </div>
             <div className="middle">
               <div className="c-card middle">
-                <div className="mt-2" onClick={handleTagSelect}>
+                <div className="mt-2" type="button" onClick={handleTagSelect}>
                   <img
                     src="/images/test/i1.jpg"
                     alt="義式"
-                    className="w-100 c-card-img rounded-circle"></img>
+                    className="w-100 c-card-img rounded-circle"
+                  ></img>
                 </div>
                 <div>
                   <span className="c-card-text fs18b pb-4">義式</span>
@@ -163,13 +170,21 @@ export default function Carousel({selectedStyle,
       </div>
       <style global jsx>
         {`
-          {
+           {
             /* 輪播牆卡片樣式 */
           }
           .c-card-img {
             width: 160px;
             height: 160px;
             object-fit: cover;
+            transform: scale(1, 1);
+            transition: all 1s ease-out;
+          }
+          .c-card-img:focus {
+            border: none;
+          }
+          .c-card-img:hover {
+            transform: scale(1.08, 1.08);
           }
           .c-card {
             height: 220px;

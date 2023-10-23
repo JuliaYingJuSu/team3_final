@@ -23,7 +23,7 @@ const infoSchema = yup.object().shape({
       return value && value.length;
     })
     .test("fileSize", "請檢查您的檔案大小", (value, context) => {
-      return value && value.every((file) => file.size <= 200000);
+      return value && value.every((file) => file.size <= 5000000);
     })
     .test("type", "請上傳支持的檔案類型", (value) => {
       return value && value.every((file) => fileTypeArray.includes(file.type));

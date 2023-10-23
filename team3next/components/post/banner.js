@@ -6,8 +6,8 @@ export default function Banner({
   setSelectedCity,
   selectedStyle,
   setSelectedStyle,
-  searchKeyword, 
-  setSearchKeyword
+  searchKeyword,
+  setSearchKeyword,
 }) {
   const handleCityChange = (e) => {
     setSelectedCity(e.target.innerText);
@@ -19,6 +19,12 @@ export default function Banner({
 
   const handleSearch = (e) => {
     setDisplayData(e.target.innerText);
+  };
+
+  const handleReset = () => {
+    setSelectedCity("");
+    setSelectedStyle("");
+    setSearchKeyword("");
   };
 
   return (
@@ -51,6 +57,7 @@ export default function Banner({
           </ul>
         </div>
       </div>
+
       <div className="container d-flex justify-content-center">
         {/* 搜尋條 */}
         <div className="row">
@@ -69,6 +76,7 @@ export default function Banner({
           </div>
         </div>
       </div>
+
       <div className=" container d-flex justify-content-center mb-3">
         {/* 搜尋條 */}
         <button
@@ -163,6 +171,15 @@ export default function Banner({
           晚餐
         </button>
       </div>
+      <div className="container d-flex justify-content-center">
+        <button
+          type="button"
+          className="btn btn-sm reset-button reset mb-3"
+          onClick={handleReset}
+        >
+          重置篩選條件
+        </button>
+      </div>
 
       <style jsx>
         {`
@@ -173,9 +190,10 @@ export default function Banner({
             margin: 20px 0px;
           }
           .search-banner {
-            position: relative;
+            position: absolute;
             font-size: 24px;
             margin: 20px 0px;
+            right: 640px;
           }
           .search-banner:before {
             position: absolute;
@@ -185,9 +203,26 @@ export default function Banner({
           .tags {
             border-radius: 40px;
             border: 0.5px solid #666666;
-            margin-right: 5px;
+            margin-right: 10px;
             color: #666666;
             font-size: 16px;
+            cursor: pointer;
+          }
+          .tags:hover {
+            background-color: #666666;
+            color: #fff;
+          }
+          .reset {
+            background-color: #ebd8a9;
+            border-radius: 40px;
+            border: 1px solid #ebd8a9;
+            padding: "10px";
+            font-size: "12px";
+            color: "#3f4c5c";
+            cursor: "pointer";
+          }
+          .reset:hover {
+            color: #ae4818;
           }
           @media screen and (max-width: 500px) {
             .tags {

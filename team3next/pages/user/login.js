@@ -108,14 +108,18 @@ export default function Login() {
         });
     } else {
       console.log("有錯喔");
+      Swal.fire({
+        title: "登入失敗",
+        text: "電子郵件或密碼有錯喔!",
+        icon: "error",
+      });
     }
   };
   return (
     <>
       <div
         className="d-flex "
-        style={{ backgroundColor: "#EBD8A9", height: 923 }}
-      >
+        style={{ backgroundColor: "#EBD8A9", height: 923 }}>
         <div className="d-block w-100">
           <span className="position-relativ">
             <img
@@ -123,8 +127,7 @@ export default function Login() {
               height={520}
               width={660}
               className="position-absolute"
-              style={{ left: 200, top: 150 }}
-            ></img>
+              style={{ left: 200, top: 150 }}></img>
           </span>
         </div>
         <div
@@ -133,8 +136,7 @@ export default function Login() {
             backgroundColor: "white",
             height: 923,
             borderTopLeftRadius: 241,
-          }}
-        >
+          }}>
           <div className="container" style={{ marginTop: 100 }}>
             <div className="mt-5 w-100" style={{ paddingLeft: 100 }}>
               <Link href={"/"}>
@@ -182,15 +184,13 @@ export default function Login() {
                   <i
                     type="button"
                     className="far fa-eye-slash no-see-eye"
-                    style={{ color: "#787878" }}
-                  ></i>
+                    style={{ color: "#787878" }}></i>
                 </div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
                     className="btn btn-big middle"
                     type="submit"
-                    style={{ height: 60, width: 500, fontSize: 25 }}
-                  >
+                    style={{ height: 60, width: 500, fontSize: 25 }}>
                     登入
                   </button>
                 </div>
@@ -210,8 +210,7 @@ export default function Login() {
                         type="button"
                         className="red-i btn fs-5"
                         data-bs-toggle="modal"
-                        data-bs-target="#modal1"
-                      >
+                        data-bs-target="#modal1">
                         註冊
                       </button>
                     </span>
@@ -263,7 +262,7 @@ export default function Login() {
           </div>
         </div> */}
       <Head>
-        <title>登入</title>
+        <title>食食嗑嗑-登入</title>
       </Head>
       <style jsx>
         {`

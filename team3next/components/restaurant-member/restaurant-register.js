@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import Wave01 from "@/components/icons/wave01";
 import Wave02 from "@/components/icons/wave02";
 import FormLayout from "./form-component/restaurant-form";
@@ -27,6 +28,9 @@ export default function RestaurantRegister() {
 
   return (
     <>
+      <Head>
+        <title>食食嗑嗑-餐廳業者註冊</title>
+      </Head>
       <div className="backgs">
         <span className="z-1">
           <Wave01></Wave01>
