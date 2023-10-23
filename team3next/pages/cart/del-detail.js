@@ -7,6 +7,7 @@ import style from "@/pages/product/list.module.css";
 import { object } from "prop-types";
 import Link from "next/link";
 import { clearConfigCache } from "prettier";
+import {Helmet} from "react-helmet";
 import { useRouter } from "next/router";
 
 // 想引入,but..........................
@@ -21,14 +22,29 @@ export default function DelDetail() {
     // purchaserAddress: "",
     // receiveAddress: "",
   });
-  const handleCLick = ()=>{
-    setPurchaser({purchaserName: "碩紅",
-      purchaserPhone: "0953868686",
-      purchaserEmail: "wait4321@gmail",}
+
+  const [receiver, setReceiver] = useState({
+    receiveName: "",
+    receivePhone: "",
+  });
+ 
+   const handleCLick = ()=>{
+    setPurchaser({purchaserName: "蘇映如",
+      purchaserPhone: "0912345678",
+      purchaserEmail: "yingjumr@gmail.com",}
+      
+    )
+  }
+
+   
+  const receiverClick = ()=>{
+    setReceiver({receiveName: "田家瑞",
+    receivePhone: "0972051835",}
       
     )
   }
   console.log(purchaser);
+ 
   const router = useRouter();
   // useEffect(() => {
   //   fetch("http://localhost:3002/api/cart/del-detail")
@@ -63,8 +79,6 @@ export default function DelDetail() {
   const aaa = (e) => {
     const formData = new FormData(e.currentTarget);
     const values = [...formData.values()];
-    console.log(formData);
-    console.log(values);
     // formData.append("purchaserAddress", purchaser.purchaserAddress);
     // console.log(purchaser);
     // console.log(city);
@@ -81,7 +95,6 @@ export default function DelDetail() {
     const aaa = values.slice(6);
     const bbb = aaa.join("");
     const getCity = bbb;
-    console.log(getUser);
 
     if (getUser) {
       fetch("http://localhost:3002/api/cart/del-detail", {
@@ -633,7 +646,11 @@ export default function DelDetail() {
 
   return (
     <>
+      <Helmet>
+        <title>食食嗑嗑-購物車</title>
+      </Helmet>
       <MyNavbar />
+      <div className={styles.designTop}>
       {/* 商城分類bar */}
       <div
         className={style.topBox + " container d-flex justify-content-around"}
@@ -820,9 +837,21 @@ export default function DelDetail() {
         className={styles.buyerinfo + " container mt-5 w-50"}
         onSubmit={aaa}
       >
-        <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
+
+<div className= {styles.buyertitle + " d-flex align-item-center justify-content-between"}>
+<div className="pb-1 float-left">訂購人資訊</div>
+  <div className="float-right">
+      <div className="controls-item custom-ui">
+            <input type="checkbox" id="update-info" className="me-1" />
+            <label htmlFor="update-info">
+            <span onClick={handleCLick}>同會員資料</span>
+            </label>
+      </div>
+  </div>
+</div>
+
+        
         <div className="row mt-3 mb-2">
-        <span onClick={handleCLick}>1234</span>
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
            
@@ -964,8 +993,21 @@ export default function DelDetail() {
         </div>
 
         {/* part2 */}
+ <div className= {styles.buyertitle + " d-flex align-item-center justify-content-between"}>     
+<div className="pb-1 float-left">收件人資訊</div>
+  <div className="float-right">
+      <div className="controls-item custom-ui">
+            <input type="checkbox" id="update-info" className="ms-2 me-1" />
+            <label htmlFor="update-info">
+            <span onClick={receiverClick}>點我</span>
+            </label>
+      </div>
+  </div>
+</div>
 
-        <div className={styles.buyertitle + " mt-3 pb-1"}>收件人資訊</div>
+
+
+
         <div className="row mt-3 mb-2">
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
@@ -980,6 +1022,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
+            value={receiver.receiveName}
               type="text"
               name="receiveName"
               className={styles.inputframe + " purchaserName"}
@@ -1009,6 +1052,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
+            value={receiver.receivePhone}
               type="text"
               // name="receivePhone"
               name="receivePhone"
@@ -1116,8 +1160,10 @@ export default function DelDetail() {
        </a>
         </div>
       </form>
+      </div>
 
       <Footer />
+      
     </>
   );
 }

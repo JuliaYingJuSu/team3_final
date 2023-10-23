@@ -123,10 +123,10 @@
   text-align: center;
   border-bottom: 3px #808080 solid;
 }
-
-/* .test > div div:nth-child(3) {
-  size: 100px;
+/* 
+.test > div div:nth-child(3) {
+  margin-left: 50px;
 }
 .test > div div:nth-child(2) {
-  size: 100px;
+  margin-right: 50px;
 } */

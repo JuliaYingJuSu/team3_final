@@ -1,4 +1,8 @@
 /* 共用的樣式放這邊 */
+next-portal {
+  display: none;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -84,11 +88,11 @@
 /* 追蹤按鈕 */
 .btn-follow {
   border-radius: 40px;
-  border-color: #ae4818;
+  border-color: #985637;
   padding: 5px 10px;
   background: white;
   font-size: 14px;
-  color: #ae4818;
+  color: #985637;
   text-align: center;
   font-weight: bolder;
 }
@@ -109,7 +113,7 @@
 .btn-middle:hover,
 .btn-small:hover,
 .btn-little:hover {
-  color: #ae4818;
+  color: #985637;
   background: #ebd8a9;
   border-color: #ebd8a9;
 }
@@ -131,7 +135,7 @@
 .btn-middle:active,
 .btn-small:active,
 .btn-little:active {
-  color: #ae4818 !important;
+  color: #985637 !important;
   background: #ebd8a9 !important;
   border-color: #ebd8a9 !important;
 }
@@ -143,13 +147,13 @@
 
 /* 食物標籤按鈕 */
 .btn-outline-warning {
-  color: #ae4818;
-  border-color: #ae4818;
+  color: #985637;
+  border-color: #985637;
 }
 
 .btn-outline-warning {
-  color: #ae4818;
-  border-color: #ae4818;
+  color: #985637;
+  border-color: #985637;
 }
 
 .btn-check:active + .btn-outline-warning,
@@ -158,19 +162,19 @@
 .btn-outline-warning.dropdown-toggle.show,
 .btn-outline-warning:active {
   color: #fff;
-  background-color: #ae4818;
-  border-color: #ae4818 !important;
+  background-color: #985637;
+  border-color: #985637 !important;
 }
 
 /* 食物標籤按鈕 */
 .btn-outline-warning {
-  color: #ae4818;
-  border-color: #ae4818;
+  color: #985637;
+  border-color: #985637;
 }
 
 .btn-outline-warning {
-  color: #ae4818;
-  border-color: #ae4818;
+  color: #985637;
+  border-color: #985637;
 }
 
 .btn-check:active + .btn-outline-warning,
@@ -179,8 +183,8 @@
 .btn-outline-warning.dropdown-toggle.show,
 .btn-outline-warning:active {
   color: #fff;
-  background-color: #ae4818;
-  border-color: #ae4818 !important;
+  background-color: #985637;
+  border-color: #985637 !important;
 }
 
 .h1 {
@@ -257,7 +261,7 @@
 
 /* 32首頁標題 */
 .h4-title {
-  color: var(--985637, #ae4818);
+  color: var(--985637, #985637);
   text-align: center;
 }
 
@@ -272,7 +276,7 @@
 
 /* 重要紅標 */
 .red-i {
-  color: #ae4818;
+  color: #985637;
 }
 
 .w1200 {
@@ -376,10 +380,10 @@ body {
 .tag-i {
   height: 20px;
   border-radius: 5px;
-  border: 1px solid #ae4818;
+  border: 1px solid #985637;
   display: flex;
   justify-content: center;
-  color: #ae4818;
+  color: #985637;
   align-items: center;
   padding: 0 5px;
 }
@@ -460,4 +464,8 @@ outline: none;
 }
 .card-img:hover {
   transform: scale(1.04, 1.04);
+}
+
+nextjs-portal {
+  display: none;
 }

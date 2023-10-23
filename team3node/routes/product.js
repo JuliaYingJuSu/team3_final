@@ -133,12 +133,12 @@ productRouter.post("/product-recommend", async (req, res) => {
   };
 
   if (req.body.tid) {
-    const sqlRecommend = `SELECT * FROM product JOIN product_img ON product_img.product_id = product.product_id WHERE product_img.showed_1st = 1 AND product_type_list_id = ${req.body.tid} LIMIT 6`;
+    const sqlRecommend = `SELECT * FROM product JOIN product_img ON product_img.product_id = product.product_id WHERE product_img.showed_1st = 1 AND product_type_list_id = ${req.body.tid} LIMIT 10`;
 
     const [rowsRecommend] = await db.query(sqlRecommend);
     output.rowsRecommend = rowsRecommend;
   } else {
-    const sqlRecommendFront = `SELECT oder_detail.product_id, product_img.product_img, SUM(order_quantity) FROM oder_detail JOIN product_img ON product_img.product_id = oder_detail.product_id WHERE product_img.showed_1st = 1 GROUP BY oder_detail.product_id LIMIT 8;`;
+    const sqlRecommendFront = `SELECT oder_detail.product_id, product_img.product_img, SUM(order_quantity) FROM oder_detail JOIN product_img ON product_img.product_id = oder_detail.product_id WHERE product_img.showed_1st = 1 GROUP BY oder_detail.product_id LIMIT 10;`;
     const [rowsRecommendFront] = await db.query(sqlRecommendFront);
     output.rowsRecommendFront = rowsRecommendFront;
   }

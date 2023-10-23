@@ -5,11 +5,13 @@ import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import productDetail from "@/pages/product/[pid]";
 import swal from "sweetalert2";
+import {Helmet} from "react-helmet";
 import Pay from '@/components/cart/LoadingLinePay'
 import { useRouter } from "next/router";
 
 export default function OrderComplete() {
   const [data, setData] = useState([]);
+  const [lineData, setLineData] = useState("");
   const router = useRouter();
 
   // const sweet = () => {
@@ -32,16 +34,16 @@ export default function OrderComplete() {
   }, []);
 
   const { transactionId, orderId } = router.query;
-      console.log('--------------')
-      console.log('35----------',transactionId)
-      console.log('36----------',orderId)
+  // const aaaa = router.asPath
+  //     console.log('--------------')
+  //     console.log(aaaa)
+  //     console.log('35----------',transactionId)
+  //     console.log('36----------',orderId)
   useEffect(() => {
 
     if (router.isReady) {
-
-      
-      // 裡面放變數, 外面一定要是``, 不能是""
-    fetch(`http://localhost:3002/api/cart/linePay/confirm/'${transactionId}'/${orderId}`)
+    // 裡面放變數, 外面一定要是``, 不能是""
+    fetch(`http://localhost:3002/api/cart/order-complete/${'transactionId=' + transactionId}/${'orderId=' + orderId}`)
       .then((r) => r.json())
       .then((obj) => {
         setData(obj);
@@ -58,16 +60,16 @@ const [loading, setLoading] = useState(false);
 useEffect(() => {
   setTimeout(() => {
     setLoading(true);
-  }, 3000);
+  }, 5000);
 }, []);
 //---------------- 做linePay Loading end ---------------------
-
-
-
   return (loading?
     <> ( <MyNavbar />
+     <Helmet>
+        <title>食食嗑嗑-購物車</title>
+      </Helmet>
+      <div className={styles.designTop}>
 
-      
       <div
         className={style.topBox + " container d-flex justify-content-around"}
       >
@@ -294,7 +296,7 @@ useEffect(() => {
           </>
         );
       })}
-
+</div>
       <Footer />)
 
      

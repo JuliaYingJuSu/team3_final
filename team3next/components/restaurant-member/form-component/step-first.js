@@ -47,7 +47,7 @@ export default function StepFirst() {
           type="text"
           {...register("email")}
           id="email"
-          placeholder="test@gmail.com"
+          placeholder="請輸入正確的email格式"
         />
       </div>
       <div className="d-flex flex-column mb-3">

@@ -44,7 +44,10 @@ export default function CardR2({
             <h5 className="card-title w-100 mt-3 mb-0 fw-bolder">
               {restaurant_name}
             </h5>
-            <div className="truncation max-height card-title w-100 grey fs16 mb-0 mt-3">
+            <div
+              className="truncation max-height card-title w-100 fs16 mb-0 mt-3"
+              style={{ color: "#666666", letterSpacing: "0.7px" }}
+            >
               {avoidSplit}
             </div>
             <div
@@ -53,7 +56,7 @@ export default function CardR2({
             >
               更多內容...
             </div>
-            <div className="fs16b">
+            <div className="fs16b" style={{ letterSpacing: "0.8px" }}>
               <div className="d-flex">
                 <span className="pe-2">
                   <span className="icon-map"></span>

@@ -101,7 +101,7 @@ export default function RestaurantLogin() {
       </Head>
       <div
         className="d-flex "
-        style={{ backgroundColor: "#EBD8A9", height: 923 }}
+        style={{ backgroundColor: "#869AAA", height: 923 }}
       >
         <div className="d-block w-100">
           <span className="position-relative">
@@ -193,7 +193,7 @@ export default function RestaurantLogin() {
                 <div>{errorMessage}</div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
-                    className="btn btn-big middle"
+                    className="btn btn-big middle mt-4"
                     type="submit"
                     style={{ height: 60, width: 500, fontSize: 25 }}
                   >

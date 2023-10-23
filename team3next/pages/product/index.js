@@ -39,7 +39,7 @@ export default function index() {
     ["300以下", "300 - 500", "500 - 800", "800 - 1000", "1000以上"],
   ];
   const [items, setItems] = useState([]);
-  // console.log(items);
+  console.log(items);
 
   //重渲染頁面用
   const { run, setRun } = useContext(RunContext);
@@ -138,6 +138,7 @@ export default function index() {
             console.log(r); //true
             if (r) {
               // location.reload();
+              console.log(run);
               setRun(!run);
             }
           })
@@ -186,7 +187,7 @@ export default function index() {
                 text: "已更新願望清單",
                 icon: "success",
               });
-
+              console.log(run);
               setRun(!run);
             }
           })
@@ -246,6 +247,7 @@ export default function index() {
         JSON.stringify({
           type: "message",
           id: auth.user_id || "stranger",
+          name: auth.nickname || "stranger",
           content: msg,
         })
       );
@@ -293,7 +295,10 @@ export default function index() {
         }}
       >
         <div className="offcanvas-header">
-          <h2 className="p-3">HELLO</h2>
+          <h2 className="p-3 w-auto">HELLO </h2>
+          <span className="">
+            {auth.user_id == 112 ? "薯編" : auth.user_id ? m.name : "訪客"}
+          </span>
 
           <button
             type="button"
@@ -313,11 +318,20 @@ export default function index() {
             }}
           >
             {msgs.map((m) => {
-              console.log(m.id, auth.user_id);
+              console.log(m);
               return (
                 <div
-                  className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
+                  className={
+                    (!auth.user_id && m.id === "stranger") ||
+                    m.id == auth.user_id
+                      ? "myMsgBox"
+                      : "otherMsgBox"
+                  }
+
+                  // className={m.id == auth.user_id ? "myMsgBox" : "otherMsgBox"}
                 >
+                  {/* <p className="">{m.name}</p> */}
+
                   <p>{m.content}</p>
                 </div>
               );

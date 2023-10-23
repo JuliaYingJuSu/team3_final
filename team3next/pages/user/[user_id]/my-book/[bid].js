@@ -191,8 +191,11 @@ export default function Detail() {
         </div>
         <br />
         <div className="container d-flex justify-content-center my-5">
+          <Link href="/user/:user_id/my-book" className="btn btn-middle me-3">
+            回上一頁
+          </Link>
           <div
-            className="btn btn-middle me-3"
+            className="btn btn-middle ms-3"
             onClick={() => {
               swalDelete
                 .fire({
@@ -230,9 +233,6 @@ export default function Detail() {
           >
             取消訂位
           </div>
-          <Link href="/user/:user_id/my-book" className="btn btn-middle ms-3">
-            回上一頁
-          </Link>
         </div>
       </div>
       <Footer></Footer>

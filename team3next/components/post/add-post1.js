@@ -29,7 +29,7 @@ export default function AddPost1() {
     listType: "picture-card",
     maxCount: 10,
     onChange({ file, fileList }) {
-      if (file.status !== 'uploading') {
+      if (file.status !== "uploading") {
         console.log(file, fileList);
       }
     },
@@ -46,7 +46,7 @@ export default function AddPost1() {
         formData.append(`post_image${index + 1}`, file.originFileObj);
       });
     }
-    
+
     formData.append("user_id", auth.user_id);
     formData.append("post_title", title);
     formData.append("post_content", content);
@@ -111,9 +111,11 @@ export default function AddPost1() {
               <Upload.Dragger {...props}>
                 <div className="mt-5">
                   <p className="ant-upload-drag-icon">
-                    <PictureOutlined style={{ color: "#ae4818" }} />
+                    <PictureOutlined style={{ color: "#985637" }} />
                   </p>
-                  <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
+                  <p className="ant-upload-text">
+                    請從電腦選擇照片或拖曳到這裡
+                  </p>
                   <p className="ant-upload-hint">可多選，最多十張</p>
                 </div>
               </Upload.Dragger>
@@ -144,8 +146,10 @@ export default function AddPost1() {
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                 /> */}
-                <AntdRestaurant selectedOption={selectedOption}
-                  setSelectedOption={setSelectedOption}/>
+                <AntdRestaurant
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                />
               </div>
             </Form.Item>
             <Form.Item>
@@ -155,8 +159,10 @@ export default function AddPost1() {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 /> */}
-                <AntdFoodtag selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}/>
+                <AntdFoodtag
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                />
               </div>
             </Form.Item>
             <Form.Item>
@@ -173,14 +179,13 @@ export default function AddPost1() {
                     height: 120,
                     resize: "none",
                     width: 387,
-                    
                   }}
                   name="post_content"
                 />
               </div>
             </Form.Item>
             <Form.Item>
-            {/* <Button htmlType="submit" className="btn btn-big" onClick={() => {
+              {/* <Button htmlType="submit" className="btn btn-big" onClick={() => {
                     swalButtons
                       .fire({
                         title: "確定要放棄這篇文章?",
@@ -209,7 +214,7 @@ export default function AddPost1() {
       <style jsx>
         {`
           .btn {
-            color: #ae4818;
+            color: #985637;
           }
           .bg-color {
             background-color: #fbf9ef;

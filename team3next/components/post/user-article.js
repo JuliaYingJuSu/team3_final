@@ -69,22 +69,25 @@ export default function UserArticle({ userinfo }) {
         id={"exampleModal" + userinfo.post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + userinfo.post_id}
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
-                      {userinfo.user_img ? (
-                        <img
-                          className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${userinfo.user_img}`}></img>
-                      ) : (
-                        <img
-                          className="rounded-circle headshot-sm img-thumbnail"
-                          src="/images/logo.png"></img>
-                      )}
+                    {userinfo.user_img ? (
+                      <img
+                        className="rounded-circle headshot-sm img-thumbnail"
+                        src={`http://localhost:3002/img/${userinfo.user_img}`}
+                      ></img>
+                    ) : (
+                      <img
+                        className="rounded-circle headshot-sm img-thumbnail"
+                        src="/images/logo.png"
+                      ></img>
+                    )}
                   </div>
                   <p className="middle me-2">
                     <span className="fs-5 pt-3 text-dark ps-2">
@@ -111,7 +114,8 @@ export default function UserArticle({ userinfo }) {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
               {/* 使用 Carousel 顯示多個圖片 */}
@@ -119,7 +123,8 @@ export default function UserArticle({ userinfo }) {
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius">
+                className="image-radius"
+              >
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
@@ -169,7 +174,8 @@ export default function UserArticle({ userinfo }) {
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${v.user_img}`}></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}
+                        ></img>
                       </Link>
                     </div>
                     <div className="me-auto mb-3 text-start">
@@ -192,10 +198,10 @@ export default function UserArticle({ userinfo }) {
       <style jsx>
         {`
           .icon-map:before {
-            color: #ae4818;
+            color: #985637;
           }
           .restaurant {
-            color: #ae4818;
+            color: #985637;
           }
           .object-fit-cover {
             width: 500px;

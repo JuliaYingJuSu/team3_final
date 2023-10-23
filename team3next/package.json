@@ -39,6 +39,7 @@
     "react-bootstrap-sidebar-menu": "^2.0.3",
     "react-datepicker": "^4.20.0",
     "react-dom": "18.2.0",
+    "react-helmet": "^6.1.0",
     "react-hook-form": "^7.46.2",
     "react-hook-form-antd": "^0.0.2",
     "react-icons": "^4.11.0",
