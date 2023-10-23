@@ -12,6 +12,7 @@ export default function Index() {
   const [displayData, setDisplayData] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedToggle, setSelectedToggle] = useState("tag");
 
   // node
   useEffect(() => {
@@ -63,36 +64,34 @@ export default function Index() {
   useEffect(() => {
     let newData = data
       .filter((city) => {
-        if (selectedCity) {
-          if (selectedCity === "不分地區") {
-            return true;
-          } else {
-            return city.restaurant_city === selectedCity;
-          }
+        if (!selectedCity || selectedCity === "不分地區") {
+          return true;
         } else {
-          return true; // 如果没有選擇城市，不過濾城市
+          return city.restaurant_city === selectedCity;
         }
       })
       .filter((restaurant) => {
         if (searchKeyword) {
-          // 使用 includes 方法檢查標題或標籤是否包含關鍵字（不區分大小寫）
-          return (
-            restaurant.restaurant_name
-              .toLowerCase()
-              .includes(searchKeyword.toLowerCase()) ||
-            restaurant.food_tag_names.includes(searchKeyword) ||
-            restaurant.restaurant_info
-              .toLowerCase()
-              .includes(searchKeyword.toLowerCase()) ||
-            restaurant.restaurant_district
-              .toLowerCase()
-              .includes(searchKeyword.toLowerCase()) ||
-            restaurant.restaurant_address
-              .toLowerCase()
-              .includes(searchKeyword.toLowerCase())
-          );
+          return selectedToggle === "tag"
+            ? restaurant.food_tag_names.includes(searchKeyword)
+            : restaurant.restaurant_name
+                .toLowerCase()
+                .includes(searchKeyword.toLowerCase()) ||
+                restaurant.food_tag_names.includes(searchKeyword) ||
+                restaurant.restaurant_info
+                  .toLowerCase()
+                  .includes(searchKeyword.toLowerCase()) ||
+                restaurant.restaurant_city
+                  .toLowerCase()
+                  .includes(searchKeyword.toLowerCase()) ||
+                restaurant.restaurant_district
+                  .toLowerCase()
+                  .includes(searchKeyword.toLowerCase()) ||
+                restaurant.restaurant_address
+                  .toLowerCase()
+                  .includes(searchKeyword.toLowerCase());
         } else {
-          return true; // 如果没有輸入搜索關鍵字，不過濾關鍵字
+          return true;
         }
       });
 
@@ -102,9 +101,6 @@ export default function Index() {
   // handle
   const handleCityChange = (e) => {
     setSelectedCity(e.target.innerText);
-  };
-  const handleTagSelect = (e) => {
-    setSearchKeyword(e.target.innerText);
   };
   const handleSearch = (e) => {
     setDisplayData(e.target.innerText);
@@ -165,123 +161,36 @@ export default function Index() {
               <span className="icon-search search-banner"></span>
             </form>
             {/* toggle */}
-            {/* <div className="ms-4 mt-1 fs16 d-flex">
+            <div className="ms-3 mt-3 fs16 d-flex">
               <div className="form-check">
                 <input
                   className="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
-                  checked
+                  checked={selectedToggle === "tag"}
+                  onChange={() => setSelectedToggle("tag")}
                 />
                 <label className="form-check-label" for="flexRadioDefault1">
                   搜尋標籤
                 </label>
               </div>
-              <div className="form-check">
+              <div className="form-check ms-4">
                 <input
-                  className="form-check-input ms-1"
+                  className="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
+                  checked={selectedToggle === "content"}
+                  onChange={() => setSelectedToggle("content")}
                 />
-                <label
-                  className="form-check-label ms-1"
-                  for="flexRadioDefault2"
-                >
+                <label className="form-check-label" for="flexRadioDefault2">
                   搜尋內容
                 </label>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
-      </div>
-      {/* foodtag標籤 */}
-      <div className="cellp container d-flex justify-content-center mt-4 mb-5">
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          台式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          中式
-        </button>
-        <button
-          type="button"
-          className="btn  btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          日式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          韓式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          泰式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          西式
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          火鍋
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          早午餐
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          午餐
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          晚餐
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          素食
-        </button>
-        <button
-          type="button"
-          className="btn btn-sm tags"
-          onClick={handleTagSelect}
-        >
-          下午茶
-        </button>
       </div>
       {/* <div className="container d-flex justify-content-center">
         <div className="d-flex" style={{ width: "80%" }}>
@@ -289,43 +198,55 @@ export default function Index() {
           <h6 className="align-self-end ms-2">{displayData.length} 筆結果</h6>
         </div>
       </div> */}
-      <div style={{ marginTop: "60px" }}>
-        {displayData.map(
-          ({
-            restaurant_id,
-            restaurant_name,
-            restaurant_city,
-            restaurant_district,
-            restaurant_address,
-            restaurant_phone,
-            restaurant_info,
-            r_img_route,
-            food_tag_names,
-            restaurant_opening,
-            food_tag_name,
-          }) => {
-            return (
-              <CardR3
-                key={restaurant_id}
-                restaurant_id={restaurant_id}
-                restaurant_name={restaurant_name}
-                restaurant_city={restaurant_city}
-                restaurant_district={restaurant_district}
-                restaurant_address={restaurant_address}
-                restaurant_phone={restaurant_phone}
-                restaurant_info={restaurant_info}
-                r_img_route={r_img_route}
-                food_tag_names={food_tag_names}
-                restaurant_opening={restaurant_opening}
-                food_tag_name={food_tag_name}
-              />
-            );
-          }
+      <div
+        style={{ marginTop: "60px", marginBottom: "100px", minHeight: "860px" }}
+      >
+        {displayData.length > 0 ? (
+          displayData.map(
+            ({
+              restaurant_id,
+              restaurant_name,
+              restaurant_city,
+              restaurant_district,
+              restaurant_address,
+              restaurant_phone,
+              restaurant_info,
+              r_img_route,
+              food_tag_names,
+              restaurant_opening,
+              food_tag_name,
+            }) => {
+              return (
+                <CardR3
+                  key={restaurant_id}
+                  restaurant_id={restaurant_id}
+                  restaurant_name={restaurant_name}
+                  restaurant_city={restaurant_city}
+                  restaurant_district={restaurant_district}
+                  restaurant_address={restaurant_address}
+                  restaurant_phone={restaurant_phone}
+                  restaurant_info={restaurant_info}
+                  r_img_route={r_img_route}
+                  food_tag_names={food_tag_names}
+                  restaurant_opening={restaurant_opening}
+                  food_tag_name={food_tag_name}
+                />
+              );
+            }
+          )
+        ) : (
+          <p className="noResult">
+            目前沒有符合您條件的搜尋結果, 要不要換換別的關鍵字呢?
+          </p>
         )}
       </div>
-      <Link href={"/"} className="middle grey fs18b mt-5 py-3 mb-4">
+      {/* <Link
+        href={"#"}
+        className="middle grey fs18b mt-5 py-3"
+        style={{ marginBottom: "280px" }}
+      >
         看更多
-      </Link>
+      </Link> */}
       <Footer></Footer>
       <style jsx>
         {`
@@ -351,6 +272,10 @@ export default function Index() {
             position: absolute;
             right: 25px;
             top: 18px;
+          }
+          .noResult {
+            text-align: center;
+            margin-top: 100px;
           }
           @media screen and (max-width: 500px) {
             .searchbar {
