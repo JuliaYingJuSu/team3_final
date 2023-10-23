@@ -69,11 +69,14 @@ export default function productDetail() {
           setWish(r.rowsWished);
 
           setScore(
-            Math.ceil(
+            // Math.ceil(
+            (
               r.rowsComment.reduce((a, b) => {
                 return a + parseInt(b.score);
               }, 0) / r.rowsComment.length
-            )
+            ).toFixed(1)
+
+            // )
           );
         });
     }
@@ -471,12 +474,12 @@ export default function productDetail() {
                   ></span>
                   {/* </Link> */}
                 </p>
-                <p className="ps-3">
+                <p className="">
                   <span>NT$ </span>
                   {data.rows?.price}
                 </p>
               </div>
-              <div className="fs-3 my-2 mb-auto">
+              <div className="fs-3 my-2 mb-auto d-flex align-items-center">
                 {Array(5)
                   .fill(1)
                   .map((v, i) => {
@@ -487,6 +490,16 @@ export default function productDetail() {
                       ></span>
                     );
                   })}
+                <span
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    color: "#666666",
+                    margin: "10px 8px 6px 8px",
+                  }}
+                >
+                  {score}
+                </span>
               </div>
 
               <div className={styles.btnBox}>
