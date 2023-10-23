@@ -5,6 +5,7 @@ import Footer from "@/components/layout/default-layout/footer";
 import style from "@/pages/product/list.module.css";
 import secstyle from "@/pages/cart/del-detail.module.css";
 import productDetail from "@/pages/product/[pid]";
+import {Helmet} from "react-helmet";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -55,8 +56,11 @@ export default function PayMethod() {
   console.log(data);
   return (
     <>
+      <Helmet>
+        <title>食食嗑嗑-購物車</title>
+      </Helmet>
       <MyNavbar />
-
+      <div className={styles.designTop}>
       {/* 商城bar */}
       <div
         className={style.topBox + " container d-flex justify-content-around"}
@@ -403,6 +407,7 @@ export default function PayMethod() {
         <Link href={data}>
           <button className="btn btn-middle">前往結帳</button>
         </Link>
+      </div>
       </div>
       <Footer />
     </>

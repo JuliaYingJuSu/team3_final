@@ -21,7 +21,6 @@ const corsOptions = {
   },
 };
 
-// ---------------------- 專題cart ---------------------------------
 
 // ------------------------編輯訂單-------------------------
 
@@ -54,7 +53,7 @@ const corsOptions = {
 //   res.json(output);
 // });
 
-// ----------------------消費紀錄 my-order,寫死user_id=36 ----------------------
+// ----------------------消費紀錄 my-order ----------------------
 cartRouter.get("/:user_id/my-order", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0;
   // let output = {
@@ -200,9 +199,7 @@ cartRouter.post("/", async (req, res) => {
 // ---------------------- 寄送資訊寫入資料庫 ---------------------------
 
 cartRouter.post("/del-detail", async (req, res) => {
-  console.log("nnice");
   let { delivery_name, delivery_phone} = req.body;
-  console.log(req.body);
 
   let output = {
     success: false,
@@ -417,13 +414,11 @@ cartRouter.get("/create-Order", async (req, res) => {
 
 // ------------------------- test linepay ------------------------
 // "/createOrder/:oid"
-// 1018 --> "/payMethod/:oid"
 cartRouter.get("/payMethod", async (req, res) => {
   let output = {
     success: false,
     result: [],
   };
-  // const order_id = parseInt(req.params.oid);
   //1018註掉
   // const order_id = req.params.oid;
   // console.log(order_id);
@@ -447,7 +442,7 @@ cartRouter.get("/payMethod", async (req, res) => {
     // 格式化 packages 1-1
     function formatData(result) {
       const b = result[0].order_date;
-      console.log(b);
+      // console.log(b);
       return [
         {
           id: b,
@@ -467,7 +462,7 @@ cartRouter.get("/payMethod", async (req, res) => {
     const formattedData = formatData(result);
     // 看packages 1-2格式化的樣子
     // console.log(), 使用JSON.stringify, 因若不用json.stringify, 它可能以[Object]的形式顯示，而不是展開嵌套對象的詳細內容。這是一種簡化的表示方法，防止在控制台中顯示大量的嵌套數據。
-    console.log(JSON.stringify(formattedData, null, 2));
+    // console.log(JSON.stringify(formattedData, null, 2));
 
     const linePayClient = createLinePayClient({
       channelId: "2001065647",
@@ -479,7 +474,6 @@ cartRouter.get("/payMethod", async (req, res) => {
     // const b = result[0].order_date;
     // console.log(b);
     const toLine = await linePayClient.request.send({
-      // body: req,
       body: {
         amount: result[0].order_amount,
         currency: "TWD",
@@ -494,7 +488,7 @@ cartRouter.get("/payMethod", async (req, res) => {
           // confirmUrl: "http:localhost:3080/cart",
           // cancelUrl: "http:localhost:3080/cart",
           // 1018 --> "http:localhost:3080/cart/order-complete"
-          confirmUrl: "linePay/confirm",
+          confirmUrl: "http:localhost:3080/cart/order-complete",
           cancelUrl: "linePay/cancel",
         },
       },
@@ -510,17 +504,10 @@ cartRouter.get("/payMethod", async (req, res) => {
       // console.log(webPaymentUrl);
     }
 
-
-// 1018
-// const trans = toLine?.body?.info?.transactionId
-// console.log(trans)
-
     // solution3
 
     // const aa = util.inspect(toLine, { depth: Infinity, colors: true });
     // console.log(aa);
-
-    // res.json({ success: !!result.affectedRows });
 
     // ------ 1017 add -------
     // 使用可選串連 --> 『?.』 因line pay回覆結構每次不相同, 使用這運算符讓我們在讀取深度嵌套的對象屬性時，不必明確檢查每一個層級是否存在。如果某個層級不存在，它會返回 undefined，而不會拋出錯誤
@@ -533,39 +520,39 @@ cartRouter.get("/payMethod", async (req, res) => {
 });
 
 
-// 這段有需要嗎？
-
-
 // --------------confirm--------------------------
 
-cartRouter.get("/linePay/confirm/:transactionId/:orderId", async(req, res) => {
-  // router.use(cors(corsOptions));
-  console.log('523----------',req.params)
+cartRouter.get("/order-complete/:transactionId/:orderId", async(req, res) => {
+  const [[sql3]] = await db.query(
+    `SELECT order_amount FROM order_general ORDER BY order_date DESC LIMIT 1`
+  );
+
+  console.log(sql3)
+  const orderAmount = sql3.order_amount
+  console.log('527----------',req.params)
   console.log('開始')
   let output = {
   success: false,
   result: [],
   };
-  console.log('back')
-const tran = req.params.transactionId
-const orderId = req.params.orderId
-//hahahha
-const confirmRequest = {
-  transactionId: tran,
-  orderId: orderId, // 与支付请求时的 orderId 相同
-  amount: 1160, // 与支付请求时的 amount 相同
-};
+const tran = req.params.transactionId.replace('transactionId=', '');
 
+const linePayClient = createLinePayClient({
+  channelId: "2001065647",
+  channelSecretKey: "5325621a629813e1a10602cc06f96db5",
+  env: "development",
+});
 
   try {
-      const lastLine = await createLinePayClient.confirm.send(
-        {confirmRequest},
+      const lastLine = await linePayClient.confirm
+      .send(
+        // {confirmRequest},
         {
         transactionId: tran,
         body: {
           currency: "TWD",
           // amount需要查資料庫的訂單
-          amount: 1160,
+          amount: orderAmount,
         },
       }
       );
