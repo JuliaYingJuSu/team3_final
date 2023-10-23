@@ -101,7 +101,7 @@ export default function RestaurantLogin() {
       </Head>
       <div
         className="d-flex "
-        style={{ backgroundColor: "#EBD8A9", height: 923 }}
+        style={{ backgroundColor: "#869AAA", height: 923 }}
       >
         <div className="d-block w-100">
           <span className="position-relative">
