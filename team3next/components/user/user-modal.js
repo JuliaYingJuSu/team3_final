@@ -157,7 +157,8 @@ export default function UserModal({
         id={"exampleModal" + usercard.post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + usercard.post_id}
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -165,10 +166,13 @@ export default function UserModal({
                 {artcard && artcard.length > 0 ? (
                   <div className="d-flex align-items-center p-1">
                     <div className="me-2">
-                      <Link href={`/user/${artcard[0].user_id}user-my-article-i`}>
+                      <Link
+                        href={`/user/${artcard[0].user_id}user-my-article-i`}
+                      >
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${artcard[0].user_img}`}></img>
+                          src={`http://localhost:3002/img/${artcard[0].user_img}`}
+                        ></img>
                       </Link>
                     </div>
                     <p className="middle me-2">
@@ -198,7 +202,8 @@ export default function UserModal({
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body overflow-x-hidden">
               {/* 使用 Carousel 顯示多個圖片 */}
@@ -206,7 +211,8 @@ export default function UserModal({
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius">
+                className="image-radius"
+              >
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
@@ -275,7 +281,8 @@ export default function UserModal({
                       <Link href={`/user/${v.user_id}user-my-article-i`}>
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${v.user_img}`}></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}
+                        ></img>
                       </Link>
                     </div>
                     <div className="me-auto text-start mt-2">
@@ -307,7 +314,8 @@ export default function UserModal({
               <button
                 className="btn btn-outline-secondary"
                 type="submit"
-                id="button-addon2">
+                id="button-addon2"
+              >
                 發送
               </button>
               <p className="form-text container warning">{errors.message}</p>
@@ -319,10 +327,10 @@ export default function UserModal({
       <style jsx>
         {`
           .icon-map:before {
-            color: #ae4818;
+            color: #985637;
           }
           .restaurant {
-            color: #ae4818;
+            color: #985637;
           }
           .object-fit-cover {
             width: 500px;

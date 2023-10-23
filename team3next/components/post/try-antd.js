@@ -9,7 +9,7 @@ import AntdFoodtag from "./antd_foodtag";
 export default function TryAntd() {
   const { auth } = useContext(AuthContext);
   const [form] = Form.useForm(); //新增表單
-  
+
   //sweetalert 設定
   const swalButtons = Swal.mixin({
     customClass: {
@@ -112,89 +112,81 @@ export default function TryAntd() {
     <>
       <div className="container-sm bg-color mb-2 d-flex justify-content-center ">
         <Form form={form} onFinish={onFinish}>
-          
-            <Form.Item
-              control=""
-              name="post_image"
-              valuePropName="fileList"
-              getValueFromEvent={(e) => {
-                if (Array.isArray(e)) {
-                  return e;
-                }
-                return e && e.fileList;
-              }}
-              noStyle
-              // bug fixed用來解決filelist錯誤
-            >
-              <Upload.Dragger {...props}>
-                <div className="mt-5">
-                  <p className="ant-upload-drag-icon">
-                    <PictureOutlined style={{ color: "#ae4818" }} />
-                  </p>
-                  <p className="ant-upload-text">
-                    請從電腦選擇照片或拖曳到這裡
-                  </p>
-                  <p className="ant-upload-hint">可多選，最多十張</p>
-                </div>
-              </Upload.Dragger>
-            </Form.Item>
-         
-          
-            <Form.Item>
-              <div className="input-group mb-3 mt-5 w-100">
-                <span
-                  className="input-group-text icon-edit"
-                ></span>
-                <Input
-                  style={{
-                    width: 387,
-                  }}
-                  showCount
-                  maxLength={30}
-                  onChange={onChange}
-                  placeholder="新增標題"
-                  name="post_title"
-                  label="文章標題"
-                />
+          <Form.Item
+            control=""
+            name="post_image"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => {
+              if (Array.isArray(e)) {
+                return e;
+              }
+              return e && e.fileList;
+            }}
+            noStyle
+            // bug fixed用來解決filelist錯誤
+          >
+            <Upload.Dragger {...props}>
+              <div className="mt-5">
+                <p className="ant-upload-drag-icon">
+                  <PictureOutlined style={{ color: "#985637" }} />
+                </p>
+                <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
+                <p className="ant-upload-hint">可多選，最多十張</p>
               </div>
-            </Form.Item>
-            <Form.Item>
-              <div className="input-group mb-3 w-100 ">
-                <span className="input-group-text icon-map"></span>
-                <AntdRestaurant name="post_restaurant"  
-                  label="餐廳名稱"/>
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div className="input-group mb-3 w-100">
-                <span className="input-group-text icon-tag"></span>
-                <AntdFoodtag name="food_tag" label="食物標籤"/>
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div className="input-group mb-3 w-100">
-                <span className="input-group-text icon-edit"></span>
-                <TextArea
-                  showCount
-                  maxLength={500}
-                  style={{
-                    height: 120,
-                    resize: "none",
-                    width: 387,
-                    
-                  }}
-                  onChange={onChange}
-                  placeholder="撰寫內文..."
-                  name="post_content"
-                  label="文章內容"
-                />
-              </div>
-            </Form.Item>
-            <Form.Item><Button htmlType="submit" className="btn btn-big">
+            </Upload.Dragger>
+          </Form.Item>
+
+          <Form.Item>
+            <div className="input-group mb-3 mt-5 w-100">
+              <span className="input-group-text icon-edit"></span>
+              <Input
+                style={{
+                  width: 387,
+                }}
+                showCount
+                maxLength={30}
+                onChange={onChange}
+                placeholder="新增標題"
+                name="post_title"
+                label="文章標題"
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <div className="input-group mb-3 w-100 ">
+              <span className="input-group-text icon-map"></span>
+              <AntdRestaurant name="post_restaurant" label="餐廳名稱" />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <div className="input-group mb-3 w-100">
+              <span className="input-group-text icon-tag"></span>
+              <AntdFoodtag name="food_tag" label="食物標籤" />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <div className="input-group mb-3 w-100">
+              <span className="input-group-text icon-edit"></span>
+              <TextArea
+                showCount
+                maxLength={500}
+                style={{
+                  height: 120,
+                  resize: "none",
+                  width: 387,
+                }}
+                onChange={onChange}
+                placeholder="撰寫內文..."
+                name="post_content"
+                label="文章內容"
+              />
+            </div>
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit" className="btn btn-big">
               發表文章
-            </Button></Form.Item>
-            
-          
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     </>

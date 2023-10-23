@@ -222,7 +222,7 @@ export default function Banner({
             cursor: "pointer";
           }
           .reset:hover {
-            color: #ae4818;
+            color: #985637;
           }
           @media screen and (max-width: 500px) {
             .tags {

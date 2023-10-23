@@ -193,7 +193,7 @@ export default function RestaurantLogin() {
                 <div>{errorMessage}</div>
                 <div style={{ marginTop: 100 }} className="middle">
                   <button
-                    className="btn btn-big middle"
+                    className="btn btn-big middle mt-4"
                     type="submit"
                     style={{ height: 60, width: 500, fontSize: 25 }}
                   >

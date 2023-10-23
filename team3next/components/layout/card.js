@@ -28,23 +28,21 @@ export default function Card({
   setFollowed,
   likes,
   setLikes,
-  clickCity, 
+  clickCity,
   setClickCity,
-  clickStyle, 
+  clickStyle,
   setClickStyle,
-
 }) {
   const { auth } = useContext(AuthContext);
   const handleCityClick = (e) => {
     setClickCity(e.target.innerText);
   };
   // console.log('card:',{clickCity})
-  const handleStyleClick = (e)=> {
+  const handleStyleClick = (e) => {
     setClickStyle(e.target.innerText);
-  }
-  
+  };
+
   // console.log('card:',{clickStyle})
-  
 
   // 使用 Set 來去重除重複的 food_tag_names 數組
   const uniqueFoodTags = [...new Set(food_tag_names)];
@@ -58,7 +56,7 @@ export default function Card({
 
   // 格式化為 "YYYY.MM.DD" 格式
   const formattedDate = `${year}.${month}.${day}`;
-// if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
+  // if(post_id==40){console.log({likes:likes});console.log({fromCard:favs})}
   return (
     <>
       <PostModal
@@ -100,7 +98,7 @@ export default function Card({
           <div className="card-body d-flex flex-column w-100">
             <div className="d-flex w-100 justify-content-end align-items-center fs14 grey mt-1">
               <span className="middle">
-                <Like 
+                <Like
                   ifLike={likes && likes?.includes(post_id) ? true : false}
                   post_id={post_id}
                 />
@@ -114,7 +112,7 @@ export default function Card({
               </span>
               <span className="middle">
                 <Saved
-                  ifSave={favs && (favs?.includes(post_id)) ? true : false}
+                  ifSave={favs && favs?.includes(post_id) ? true : false}
                   post_id={post_id}
                 />
                 {/* <button
@@ -133,7 +131,11 @@ export default function Card({
               </a>
               {/* 遍歷去重複後的 uniqueFoodTags 數組並呈現每個 food_tag_name */}
               {uniqueFoodTags.map((foodTag, index) => (
-                <a className="tag-f tags" key={index} onClick={handleStyleClick}>
+                <a
+                  className="tag-f tags"
+                  key={index}
+                  onClick={handleStyleClick}
+                >
                   {foodTag}
                 </a>
               ))}
@@ -166,8 +168,12 @@ export default function Card({
                   {nickname}
                 </Link>
               </p>
-              <FollowButton ifFollow={followed && (followed?.includes(user_id)) ? true : false}
-                  user_id={user_id}/>
+              <FollowButton
+                ifFollow={
+                  followed && followed?.includes(user_id) ? true : false
+                }
+                user_id={user_id}
+              />
             </div>
             <span className="fs12 mt-2 mb-3">{formattedDate}</span>
           </div>
@@ -179,17 +185,16 @@ export default function Card({
             cursor: pointer;
           }
           .tags:hover {
-            background-color: #666666; 
-            color: #fff; 
+            background-color: #666666;
+            color: #fff;
           }
           .cities {
             cursor: pointer;
           }
-          .cities:hover{
-            background-color:#ae4818;
-            color: #fff; 
+          .cities:hover {
+            background-color: #985637;
+            color: #fff;
           }
-
         `}
       </style>
     </>
