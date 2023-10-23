@@ -171,7 +171,7 @@ export default function BookCalendar({ now, onBookMonth, onBookDate }) {
           }
           .chosen-date {
             color: #fff;
-            background-color: #ae4818;
+            background-color: #985637;
           }
 
           .selectable {

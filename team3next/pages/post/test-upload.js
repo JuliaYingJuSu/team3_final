@@ -67,7 +67,7 @@ export default function TestUpload() {
             <Upload.Dragger {...props}>
               <div className="mt-5">
                 <p className="ant-upload-drag-icon">
-                  <PictureOutlined style={{ color: "#ae4818" }} />
+                  <PictureOutlined style={{ color: "#985637" }} />
                 </p>
                 <p className="ant-upload-text">請從電腦選擇照片或拖曳到這裡</p>
                 <p className="ant-upload-hint">可多選，最多十張</p>

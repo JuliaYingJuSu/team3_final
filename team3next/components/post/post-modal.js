@@ -156,7 +156,8 @@ export default function PostModal({
         id={"exampleModal" + post_id}
         tabIndex="-1"
         aria-labelledby={"exampleModalLabel" + post_id}
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header position-relative">
@@ -165,14 +166,16 @@ export default function PostModal({
                 className="btn-close position-absolute fs-5"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                style={{ top: 20, right: 20 }}></button>
+                style={{ top: 20, right: 20 }}
+              ></button>
               <h5 className="modal-title" id="exampleModalLabel">
                 <div className="d-flex align-items-center p-1">
                   <div className="me-2">
                     <Link href={`/user/${user_id}/user-my-article-i`}>
                       <img
                         className="rounded-circle headshot-sm img-thumbnail"
-                        src={`http://localhost:3002/img/${user_img}`}></img>
+                        src={`http://localhost:3002/img/${user_img}`}
+                      ></img>
                     </Link>
                   </div>
                   <p className="middle me-2">
@@ -194,7 +197,8 @@ export default function PostModal({
                       className="dropdown-toggle restaurant d-flex align-items-center pe-3"
                       type="button"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false">
+                      aria-expanded="false"
+                    >
                       {restaurant_name}
                     </p>
                     <ul className="dropdown-menu">
@@ -205,7 +209,8 @@ export default function PostModal({
                             style={{ minHeight: 400, width: 500 }}
                             src={`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${v.restaurant_city}
               ${v.restaurant_district}
-              ${v.restaurant_address}&output=embed&t=`}></iframe>
+              ${v.restaurant_address}&output=embed&t=`}
+                          ></iframe>
                         </li>
                       ))}
                     </ul>
@@ -229,7 +234,8 @@ export default function PostModal({
                 activeIndex={activeIndex}
                 onSelect={handleSelect}
                 interval={null} // 停用自動播放
-                className="image-radius">
+                className="image-radius"
+              >
                 {imgs.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
@@ -281,7 +287,8 @@ export default function PostModal({
                     href="#"
                     className="ms-2"
                     style={{ color: "#666666" }}
-                    key={index}>
+                    key={index}
+                  >
                     {foodTag}
                   </a>
                 ))}
@@ -295,12 +302,16 @@ export default function PostModal({
                   /* console.log(v);  */
                 }
                 return (
-                  <div className="info d-flex align-items-start ms-2 mb-2" key={i}>
+                  <div
+                    className="info d-flex align-items-start ms-2 mb-2"
+                    key={i}
+                  >
                     <div className="me-2">
                       <Link href="/user/user-my-article-i">
                         <img
                           className="rounded-circle headshot-sm img-thumbnail"
-                          src={`http://localhost:3002/img/${v.user_img}`}></img>
+                          src={`http://localhost:3002/img/${v.user_img}`}
+                        ></img>
                       </Link>
                     </div>
                     <div className="me-auto mt-2">
@@ -332,7 +343,8 @@ export default function PostModal({
               <button
                 className="btn btn-outline-secondary"
                 type="submit"
-                id="button-addon2">
+                id="button-addon2"
+              >
                 發送
               </button>
               <p className="form-text container warning">{errors.message}</p>
@@ -344,10 +356,10 @@ export default function PostModal({
       <style jsx>
         {`
           .icon-map:before {
-            color: #ae4818;
+            color: #985637;
           }
           .restaurant {
-            color: #ae4818;
+            color: #985637;
           }
           .object-fit-cover {
             width: 500px;

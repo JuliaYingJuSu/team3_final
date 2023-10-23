@@ -21,13 +21,13 @@ export default function DelDetail() {
     // purchaserAddress: "",
     // receiveAddress: "",
   });
-  const handleCLick = ()=>{
-    setPurchaser({purchaserName: "碩紅",
+  const handleCLick = () => {
+    setPurchaser({
+      purchaserName: "蘇映如",
       purchaserPhone: "0953868686",
-      purchaserEmail: "wait4321@gmail",}
-      
-    )
-  }
+      purchaserEmail: "wait4321@gmail",
+    });
+  };
   console.log(purchaser);
   const router = useRouter();
   // useEffect(() => {
@@ -99,15 +99,13 @@ export default function DelDetail() {
         .then((r) => r.json())
         .then((obj) => {
           console.log(obj);
-           // 資料寫入成功，進行轉址
+          // 資料寫入成功，進行轉址
           window.location.href = "http://localhost:3080/cart/payMethod";
         })
         .catch((ex) => {
           console.log(ex);
         });
-
     }
-  
   };
   const handleSubmit = (e) => {
     //阻擋表單預設的送出行為
@@ -168,7 +166,6 @@ export default function DelDetail() {
     aaa(e);
     // 認證通過
 
-    
     setIsAuth(true);
   };
 
@@ -822,10 +819,9 @@ export default function DelDetail() {
       >
         <div className={styles.buyertitle + " pb-1"}>訂購人資訊</div>
         <div className="row mt-3 mb-2">
-        <span onClick={handleCLick}>1234</span>
+          <span onClick={handleCLick}>1234</span>
           <label htmlFor="buyer" className="form-label col-2 col-form-label">
             姓名
-           
           </label>
           {/* 錯誤訊息 */}
           <div
@@ -838,7 +834,7 @@ export default function DelDetail() {
           </div>
           <div className="col-12">
             <input
-            value={purchaser.purchaserName}
+              value={purchaser.purchaserName}
               name="purchaserName"
               type="text"
               className={styles.inputframe + " purchaserName"}
@@ -868,7 +864,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
-            value={purchaser.purchaserPhone}
+              value={purchaser.purchaserPhone}
               name="purchaserPhone"
               type="text"
               className={styles.inputframe + " purchaserPhone"}
@@ -894,7 +890,7 @@ export default function DelDetail() {
           </span>
           <div className="col-12">
             <input
-            value={purchaser.purchaserEmail}
+              value={purchaser.purchaserEmail}
               name="purchaserEmail"
               type="text"
               className={styles.inputframe + " purchaserEmail"}
@@ -1103,17 +1099,16 @@ export default function DelDetail() {
         </div>
 
         <div className="container d-flex justify-content-center">
-         
-            <button className="btn btn-middle mt-5 mb-5 me-3">修改訂單</button>
-            {/* onClick={()=>{
+          <button className="btn btn-middle mt-5 mb-5 me-3">修改訂單</button>
+          {/* onClick={()=>{
             window.location.href = " "
           }} */}
           {/* <a href="/cart/pay-method"></a> */}
-         <a href="http://localhost:3080/cart/payMethod">
+          <a href="http://localhost:3080/cart/payMethod">
             <button className="btn btn-middle mt-5 mb-5 ms-3" type="submit">
               前往付款方式
             </button>
-       </a>
+          </a>
         </div>
       </form>
 

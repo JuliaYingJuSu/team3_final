@@ -24,30 +24,30 @@ export default function Toggle() {
     if (!checked) {
       router.push("/restaurant-member/member-login");
     } else {
-      router.push("/user/login"); 
+      router.push("/user/login");
     }
   };
 
   return (
     <>
       <div className="middle">
-          <span className="user-login me-2">會員登入</span>
-          <Switch
-            onChange={handleChange}
-            checked={checked}
-            className="react-switch"
-            onColor="rgb(205, 205, 205)"
-            onHandleColor="#3F4C5C"
-            offHandleColor="#AE4818"
-            handleDiameter={30}
-            uncheckedIcon={false}
-            checkedIcon={false}
-            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-            height={20}
-            width={48}
-          />
-          <span className="member-login ms-2">廠商登入</span>
+        <span className="user-login me-2">會員登入</span>
+        <Switch
+          onChange={handleChange}
+          checked={checked}
+          className="react-switch"
+          onColor="rgb(205, 205, 205)"
+          onHandleColor="#3F4C5C"
+          offHandleColor="#985637"
+          handleDiameter={30}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+          height={20}
+          width={48}
+        />
+        <span className="member-login ms-2">廠商登入</span>
       </div>
       <style jsx>
         {`
@@ -55,15 +55,15 @@ export default function Toggle() {
             vertical-align: middle;
             margin-left: 4px;
           }
-          .user-login{
-            color: #AE4818;
+          .user-login {
+            color: #985637;
             font-size: 32px;
             font-weight: 700;
           }
-          .member-login{
+          .member-login {
             font-size: 32px;
             font-weight: 700;
-            color: #3F4C5C;
+            color: #3f4c5c;
           }
         `}
       </style>

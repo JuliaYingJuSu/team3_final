@@ -73,7 +73,7 @@ export default function Pagination({
           width: 30px;
           height: 30px;
           border-radius: 50%;
-          color: #ae4818;
+          color: #985637;
           font-size: 18px;
           background: white;
           font-weight: bold;
@@ -83,7 +83,7 @@ export default function Pagination({
           justify-content: center;
         }
         .btn-page:hover {
-          background: #ae4818;
+          background: #985637;
           color: white;
         }
         .btn-page:active {

@@ -99,10 +99,11 @@ export default function AddPost1() {
           onFinish={onFinish}
           initialValues={{ title: title, content: content }}
           style={{
-          display: 'flex',
-          width: 600, // Adjust the width as needed
-        }}>
-          <div className="my-3" style={{ flex: 1, marginRight: '50px' }}>
+            display: "flex",
+            width: 600, // Adjust the width as needed
+          }}
+        >
+          <div className="my-3" style={{ flex: 1, marginRight: "50px" }}>
             <Form.Item
               name="photo"
               valuePropName="fileList"
@@ -112,11 +113,12 @@ export default function AddPost1() {
                 }
                 return e && e.fileList;
               }}
-              noStyle>
+              noStyle
+            >
               <Upload.Dragger {...props}>
                 <div className="mt-5">
                   <p className="ant-upload-drag-icon">
-                    <PictureOutlined style={{ color: "#ae4818" }} />
+                    <PictureOutlined style={{ color: "#985637" }} />
                   </p>
                   <p className="ant-upload-text">
                     請從電腦選擇照片或拖曳到這裡
@@ -136,7 +138,7 @@ export default function AddPost1() {
                   onChange={titleChanged}
                   placeholder="新增標題"
                   style={{
-                    width: 268
+                    width: 268,
                   }}
                   showCount
                   maxLength={30}
@@ -145,16 +147,16 @@ export default function AddPost1() {
                 />
               </div>
             </Form.Item>
-            <Form.Item  >
+            <Form.Item>
               <div className="input-group  w-100">
                 <span className="input-group-text icon-map"></span>
                 <PostRestaurant
                   selectedOption={selectedOption}
                   setSelectedOption={setSelectedOption}
                   classNames={{
-    control: (state) =>
-      state.isFocused ? 'border-red-600' : 'border-grey-300',
-  }}
+                    control: (state) =>
+                      state.isFocused ? "border-red-600" : "border-grey-300",
+                  }}
                 />
               </div>
             </Form.Item>
@@ -199,7 +201,8 @@ export default function AddPost1() {
                       showCancelButton: true,
                       confirmButtonText:
                         '<i class="far fa-check-circle fs-5"></i>確定放棄',
-                      cancelButtonText: '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
+                      cancelButtonText:
+                        '<i class="fa-regular fa-circle-xmark fs-5"></i>先不要',
                       reverseButtons: true,
                     })
                     .then((result) => {
@@ -224,7 +227,7 @@ export default function AddPost1() {
       <style jsx>
         {`
           .btn {
-            color: #ae4818;
+            color: #985637;
           }
           .bg-color {
             background-color: #fbf9ef;
