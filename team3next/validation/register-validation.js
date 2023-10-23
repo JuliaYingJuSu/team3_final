@@ -35,7 +35,7 @@ const registerSchema = yup.object().shape({
       return value && value.length;
     })
     .test("fileSize", "請檢查您的檔案大小", (value, context) => {
-      return value && value.every((file) => file.size <= 1000000);
+      return value && value.every((file) => file.size <= 300000);
     })
     .test("type", "請上傳支持的檔案類型", (value) => {
       return value && value.every((file) => fileTypeArray.includes(file.type));

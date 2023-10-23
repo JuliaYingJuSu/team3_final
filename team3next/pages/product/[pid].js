@@ -34,7 +34,7 @@ export default function productDetail() {
     product_img: [],
     showed_1st: "",
   });
-  console.log(data);
+  // console.log(data);
   const [wish, setWish] = useState(false);
   const [score, setScore] = useState(0);
   const [quantity, setQuantity] = useState(1);
