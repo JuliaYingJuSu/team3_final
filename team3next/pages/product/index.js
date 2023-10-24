@@ -26,6 +26,7 @@ export default function index() {
   const wsRef = useRef();
 
   const [inputText, setInputText] = useState("");
+
   const [fullText, setFullText] = useState("");
   const [isCompositing, setIsCompositing] = useState(false);
 
@@ -264,7 +265,7 @@ export default function index() {
   return (
     <>
       <button
-        class={"btn " + styles.typing}
+        className={"btn " + styles.typing}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom"
@@ -609,9 +610,9 @@ export default function index() {
                 {/* ------------------dropdown------------------- */}
                 {/* ------------------dropdown------------------- */}
 
-                <form class="col-auto d-flex " role="search">
+                <form className="col-auto d-flex " role="search">
                   <input
-                    class="form-control me-1"
+                    className="form-control me-1"
                     type="text"
                     placeholder="搜尋"
                     aria-label="Search"
@@ -632,7 +633,7 @@ export default function index() {
                   onChange={(e) => {
                     setOrder(e.target.value);
                   }}
-                  class=" col-2 form-select form-select-sm"
+                  className=" col-2 form-select form-select-sm"
                   aria-label="Small select example"
                 >
                   <option value="new">最新商品</option>
