@@ -498,7 +498,7 @@ export default function productDetail() {
                     margin: "10px 8px 6px 8px",
                   }}
                 >
-                  {score}
+                  {typeof score === Number ? { score } : 0}
                 </span>
               </div>
 
