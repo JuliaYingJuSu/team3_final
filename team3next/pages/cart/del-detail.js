@@ -43,7 +43,7 @@ export default function DelDetail() {
       
     )
   }
-  console.log(purchaser);
+  // console.log(purchaser);
  
   const router = useRouter();
   // useEffect(() => {
@@ -997,8 +997,8 @@ export default function DelDetail() {
 <div className="pb-1 float-left">收件人資訊</div>
   <div className="float-right">
       <div className="controls-item custom-ui">
-            <input type="checkbox" id="update-info" className="ms-2 me-1" />
-            <label htmlFor="update-info">
+            <input type="checkbox" id="here" className="ms-2 me-1" />
+            <label htmlFor="here">
             <span onClick={receiverClick}>點我</span>
             </label>
       </div>
