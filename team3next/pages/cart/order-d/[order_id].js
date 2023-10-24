@@ -53,13 +53,13 @@ export default function OrderComplete() {
   //   return accumulator;
   // }, {});
 
-  const orderTotals = Array.isArray(data)
-    ? data.reduce((accumulator, currentOrder) => {
-        const { order_id, order_quantity } = currentOrder;
-        accumulator[order_id] = (accumulator[order_id] || 0) + order_quantity;
-        return accumulator;
-      }, {})
-    : {};
+  // const orderTotals = Array.isArray(data)
+  //   ? data.reduce((accumulator, currentOrder) => {
+  //       const { order_id, order_quantity } = currentOrder;
+  //       accumulator[order_id] = (accumulator[order_id] || 0) + order_quantity;
+  //       return accumulator;
+  //     }, {})
+  //   : {};
 
   return (
     <>

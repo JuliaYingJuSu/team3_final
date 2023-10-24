@@ -20,24 +20,6 @@ export default function CartDetail() {
     }
   }, []);
 
-
-//   if(localStorage.getItem('store711')){
-// // localStorage取711資料
-//   const getAd = JSON.parse(localStorage.getItem('store711'))
-//   console.log('在這呢')
-//   console.log(getAd)
-//    // 711 storeid & storename
-//   const a = `${getAd.storeid } ${getAd.storename}` 
-//   setA(a)
-//   // 711 storeaddress
-//   const b = getAd.storeaddress
-//   setB(b)
-//   }
-  
-
-
-
-
   // 購物車小計
   const calculateTotal = () => {
     // 計算所有商品的小計
@@ -145,34 +127,6 @@ export default function CartDetail() {
         });
     }
   };
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3002/api/cart")
-  //     .then((r) => r.json())
-  //     .then((obj) => {
-  //       setData(obj);
-  //       console.log(obj);
-  //     });
-  // }, []);
-  //
-  // const delProduct = (id) => {
-  //   console.log("---------");
-  //   // const product_id = router.query.product_id;
-  //   console.log(id);
-  //   fetch(`http://localhost:3002/api/cart/${id}`, { method: "get" })
-  //     .then((r) => r.json())
-  //     .then((obj) => {
-  //       if (obj.success) {
-  //         location.reload();
-  //       } else {
-  //         alert("刪除發生錯誤");
-  //       }
-  //       // console.log(obj);
-  //     })
-  //     .catch((ex) => {
-  //       console.log(123);
-  //     });
-  // };
 
   // 7-11
   const { store711, openWindow, closeWindow } = useShip711StoreOpener(

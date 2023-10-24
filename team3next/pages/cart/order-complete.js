@@ -280,8 +280,9 @@ useEffect(() => {
               </div>
 
               <div className="row justify-content-center d-flex w-25">
+           
                 <a
-                  href="http://localhost:3080/user/:user_id/my-order"
+                  href={`http://localhost:3080/cart/order-d/${v.order_id}`}
                   className="col-12 col-sm-12 py-1"
                 >
                   <button className="btn btn-middle w-100">訂單詳情</button>
