@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 export default function index() {
   //資料用
   const [data, setData] = useState([]);
-  // console.log(data.rows?.length);
+  console.log(data);
   const [wish, setWish] = useState([]);
   const [order, setOrder] = useState("new");
   const wsRef = useRef();
@@ -63,6 +63,7 @@ export default function index() {
   // const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
   // console.log(uid);
   // const router = useRouter();
+
   // 取資料
   useEffect(() => {
     if (isCompositing) return;
@@ -203,7 +204,7 @@ export default function index() {
   // console.log(msg);
 
   const { wsMsgs, setWsMsgs } = useContext(WsContext);
-  console.log(wsMsgs);
+  // console.log(wsMsgs);
   const { auth } = useContext(AuthContext);
   // console.log(auth);
 
@@ -376,17 +377,20 @@ export default function index() {
             <div className={styles.leftBox}>
               {/* -----------分類選單---------- */}
               <div className={styles.left}>
-                <a href="/product">
-                  <button
-                    // onClick={() => {
-                    //   router.push("/product");
-                    // }}
-                    className={styles.leftA + " btn"}
-                    type="button"
-                  >
-                    全部商品
-                  </button>
-                </a>
+                {/* <a href="/product"> */}
+                <button
+                  onClick={() => {
+                    setInputText("");
+                    setTypeList("");
+                    setPrice([]);
+                    setItems([]);
+                  }}
+                  className={styles.leftA + " btn"}
+                  type="button"
+                >
+                  全部商品
+                </button>
+                {/* </a> */}
 
                 {data.rowsType &&
                   data.rowsType.map((v, i) => {
