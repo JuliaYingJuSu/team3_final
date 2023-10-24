@@ -37,8 +37,11 @@ export default function productDetail() {
   // console.log(data);
   const [wish, setWish] = useState(false);
   const [score, setScore] = useState(0);
+  // console.log(score, typeof score);
+
   const [quantity, setQuantity] = useState(1);
   const [recommend, setRecommend] = useState([]);
+  // console.log(recommend);
 
   const { run, setRun } = useContext(RunContext);
 
@@ -61,22 +64,34 @@ export default function productDetail() {
       // console.log(`http://localhost:3080${router.asPath}`);
 
       const uid = JSON.parse(localStorage.getItem("auth"))?.user_id || "";
-      console.log(pid, uid);
+      // console.log(pid, uid);
       fetch(`http://localhost:3002/api/product/${pid}/${uid}`)
         .then((r) => r.json())
         .then((r) => {
+          const scoreList = r.rowsComment
+            .filter((v) => v.score)
+            .map((v) => v.score);
+          // console.log(scoreList);
+
           setData(r);
           setWish(r.rowsWished);
 
           setScore(
-            // Math.ceil(
-            (
-              r.rowsComment.reduce((a, b) => {
-                return a + parseInt(b.score);
-              }, 0) / r.rowsComment.length
-            ).toFixed(1)
+            scoreList.length
+              ? (
+                  scoreList.reduce((a, b) => {
+                    return a + parseInt(b);
+                  }, 0) / scoreList.length
+                ).toFixed(1)
+              : ""
 
-            // )
+            // r.rowsComment.filter((v) => v.score)
+            //   ? (
+            //       r.rowsComment.reduce((a, b) => {
+            //         return a + parseInt(b.score);
+            //       }, 0) / r.rowsComment.length
+            //     ).toFixed(1)
+            //   : 0
           );
         });
     }
@@ -103,7 +118,7 @@ export default function productDetail() {
       })
         .then((r) => r.json())
         .then((r) => {
-          console.log(r);
+          // console.log(r);
           setRecommend(r.rowsRecommend);
         });
     }
@@ -498,7 +513,13 @@ export default function productDetail() {
                     margin: "10px 8px 6px 8px",
                   }}
                 >
-                  {typeof score === Number ? { score } : 0}
+                  {/* {data.rowsComment
+                    ?.filter((v) => v.product_id)
+                    .includes(data.rows?.product_id)
+                    ? parseFloat(score)
+                    : 0} */}
+                  {/* {recommend?.length ? parseFloat(score) : 0} */}
+                  {score}
                 </span>
               </div>
 
