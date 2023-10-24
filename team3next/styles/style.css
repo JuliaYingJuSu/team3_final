@@ -13,7 +13,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -109,7 +108,7 @@
 }
 .icon-square:before {
   content: "\e916";
-  color: #ebd8a9;
+  color: #3f4c5c;
 }
 .icon-arrow-big-left:before {
   content: "\e918";
@@ -169,4 +168,19 @@
 }
 .icon-msg-circle:before {
   content: "\e921";
+}
+.icon-square:hover::before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list:hover::before {
+  content: "\e91d";
+  color: #ebd8a9;}
+.icon-square-active:before {
+  content: "\e916";
+  color: #ebd8a9;
+}
+.icon-list-active:before {
+  content: "\e91d";
+  color: #ebd8a9;
 }
