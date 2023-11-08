@@ -347,12 +347,12 @@ wss.on("connection", function connection(ws) {
   });
 });
 
-// 伺服器收到前端HTTP升級為WebSocket連接請求
+// HTTP伺服器將前端HTTP升級為WebSocket連接請求 vvv
 server.on("upgrade", function upgrade(request, socket, head) {
   const { pathname } = parse(request.url);
 
   if (pathname === "/ws") {
-    //使用.handleUpgrade 方法來進行WebSocket連接的升級
+    // ^^^ 交給WebSocket伺服器使用 .handleUpgrade 方法處理
     wss.handleUpgrade(request, socket, head, function done(ws) {
       wss.emit("connection", ws, request);
     });
