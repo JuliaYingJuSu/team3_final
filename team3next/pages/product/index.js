@@ -200,13 +200,8 @@ export default function index() {
   };
   //ws-------------------------------------------
   const [msg, setMsg] = useState("");
-  // const [msgs, setMsgs] = useState([]);
-  // console.log(msg);
-
   const { wsMsgs, setWsMsgs } = useContext(WsContext);
-  // console.log(wsMsgs);
   const { auth } = useContext(AuthContext);
-  // console.log(auth);
 
   useEffect(() => {
     let ws = (wsRef.current = new WebSocket("ws://localhost:3002/ws"));
@@ -242,8 +237,6 @@ export default function index() {
 
   function sendMsg() {
     let ws = wsRef.current;
-    // console.log("進sendMsg");
-
     if (ws.readyState == 1) {
       // console.log("ws.readyState === 1");
       ws.send(
@@ -257,9 +250,6 @@ export default function index() {
     } else {
       console.log("ws.readyState不等於 1");
     }
-
-    // if (!ws) return;
-    // ws.send(JSON.stringify({ constent: msg }));
   }
 
   //------------------------------------------------
@@ -356,8 +346,6 @@ export default function index() {
             <button
               className="btn btn-sm btn-secondary rounded-pill"
               onClick={() => {
-                // console.log("進sendMsg");
-
                 sendMsg();
                 setMsg("");
               }}

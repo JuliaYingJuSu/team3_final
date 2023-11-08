@@ -329,41 +329,30 @@ app.use((req, res) => {
 const post = process.env.WEB_POST || 3001;
 
 // ws------------------------------
+
+//創建一個HTTP伺服器，並通過 wss.handleUpgrade方法處理WebSocket的升級過程
 const server = http.createServer(app);
+//建立WebSocket伺服器         依賴外部的HTTP伺服器(非自己創建)，靈活整合WebSocket功能到現有的Node.js
 const wss = new WebSocketServer({ noServer: true });
 wss.on("connection", function connection(ws) {
-  // console.log("connection");
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
-    console.log("337 received: %s", JSON.parse(data));
-
-    // wss.send(
-    //   JSON.stringify(
-    //     //{ type: "message",
-    //     // data: JSON.parse(data).constent,}
-
-    //     JSON.parse(data).content
-    //   )
-    // );
-
     wss.clients.forEach((c) => {
-      // console.log("forEach裡");
       if (c.readyState == 1) {
-        // console.log("有開著");
-        // c.send(JSON.stringify(JSON.parse(data).content));
-        console.log("353", JSON.stringify(JSON.parse(data)));
-
+        // console.log(JSON.stringify(JSON.parse(data)));
         c.send(JSON.stringify(JSON.parse(data)));
       }
     });
   });
 });
 
+// 伺服器收到前端HTTP升級為WebSocket連接請求
 server.on("upgrade", function upgrade(request, socket, head) {
   const { pathname } = parse(request.url);
 
   if (pathname === "/ws") {
+    //使用.handleUpgrade 方法來進行WebSocket連接的升級
     wss.handleUpgrade(request, socket, head, function done(ws) {
       wss.emit("connection", ws, request);
     });
