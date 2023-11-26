@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, useRouter } from "react";
 import Navbar from "@/components/layout/default-layout/navbar-main";
 import styles from "./index.module.css";
 import Bread from "@/components/product/bread";
 import Footer from "@/components/layout/default-layout/footer";
-import { Dropdown } from "react-bootstrap";
+
 import Link from "next/link";
 import AuthContext from "@/hooks/AuthContext";
 import RunContext from "@/hooks/RunContext";
@@ -15,7 +15,7 @@ import ws from "ws";
 import WsContext from "@/hooks/WsContext";
 import Swal from "sweetalert2";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import {} from "next/router";
 
 export default function index() {
   //資料用
@@ -51,18 +51,12 @@ export default function index() {
     }, 1000);
   }, []);
 
-  // console.log(run);
-
   //分頁用
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = data.rows?.slice(firstItemIndex, lastItemIndex);
-
-  // const uid = data.rows ? JSON.parse(localStorage.getItem("auth")).user_id : "";
-  // console.log(uid);
-  // const router = useRouter();
 
   // 取資料
   useEffect(() => {
@@ -88,15 +82,6 @@ export default function index() {
         const a = r.json();
         return a;
       })
-      //#region (promise運作)
-
-      //then的第一次:接收到的r >>> fetch的結果(Response {type: 'cors', url: 'http://localhost:3002/product', redirected: false, status: 200, ok: true, …})
-      //r.json() >>> response的json()會得到 >>> Promise {<pending>}
-      // [[Prototype]]: Promise [[PromiseState]]:"fulfilled" [[PromiseResult]]:Array(34)
-
-      //then的第二次:會自動把結果[[PromiseResult]]:Array(34)傳下去
-
-      //#endregion
 
       .then((data) => {
         setData(data);
@@ -119,7 +104,6 @@ export default function index() {
       return;
     } else {
       if (!wish.includes(product_id)) {
-        // console.log(product_id);
         fetch("http://localhost:3002/api/product/add-wish", {
           method: "POST",
           body: JSON.stringify({
@@ -130,15 +114,10 @@ export default function index() {
             "Content-Type": "application/json",
           },
         })
-          // .then((r) => console.log(r)) //Response {type: 'cors', url: 'http://localhost:3002/product/add-wish', redirected: false, status: 200, ok: true, …}
-          // .then((r) => {
-          //   console.log(r); //defined
-          // })
           .then((r) => r.json())
           .then((r) => {
-            console.log(r); //true
+            console.log(r);
             if (r) {
-              // location.reload();
               console.log(run);
               setRun(!run);
             }
@@ -156,18 +135,6 @@ export default function index() {
           }),
           headers: {
             "Content-Type": "application/json",
-            //#region (有無"Content-Type": "application/json"與req.body的關聯)
-
-            //"Content-Type": "application/json" 表示你將向後端傳送 JSON 格式的資料。當你註解掉這一行，即不設定 Content-Type，瀏覽器預設會使用 "Content-Type": "application/x-www-form-urlencoded"。這會導致資料以表單形式傳送，而不是 JSON 格式。
-
-            // 在後端的程式碼中，你期望接收的是 JSON 格式的資料：(const pid = req.body.pid;)
-
-            //當你的前端程式碼中的 Content-Type 設為 "application/json" 時，Express（或其他後端框架）會使用中間件來解析 JSON 格式的請求主體，將其轉換為 JavaScript 物件，並可以透過 req.body 存取。
-
-            //但是，當你註解掉 "Content-Type": "application/json"，瀏覽器預設會將資料以表單形式傳送。在這種情況下，Express 不會自動解析 JSON 資料，而是將其視為表單資料。因此，你需要使用中間件，例如 body-parser 來解析表單資料。這樣才能夠正確地從 req.body 中取得 pid。
-
-            //如果你想繼續使用 JSON 格式的資料傳送，請確保前端的 Content-Type 設為 "application/json"，並確保後端使用相應的中間件來解析 JSON 資料。如果你想使用表單形式傳送資料，則可以註解掉 "Content-Type" 行，但需要在後端使用表單資料的解析中間件。
-            //#endregion
           },
         })
           .then((r) => r.json())
@@ -209,14 +176,7 @@ export default function index() {
     ws.onopen = () => {
       console.log("open connection");
     };
-    //#region (onmessage)
-    //  這個程式碼片段是一個 WebSocket 的事件監聽器，當從後端接收到訊息時，會觸發 onmessage 事件。在這段程式碼中：
 
-    //  res 是從後端接收到的訊息物件。
-    //  JSON.parse(res.data) 解析接收到的訊息，將其轉換成 JavaScript 物件。
-    //  接著程式碼檢查訊息的 type 屬性是否為 "message"。如果是，代表這是一則正常的訊息。
-    //  然後，它將這條訊息的 data 屬性（假設 msg.data 包含了訊息的內容）加入到原本的 msgs 狀態陣列中，並更新狀態。這樣做的效果是將新的訊息加到舊有的訊息列表中，保留了之前的訊息。
-    //#endregion
     ws.onmessage = (res) => {
       console.log(JSON.parse(res.data));
       const msgBack = JSON.parse(res.data);
@@ -238,7 +198,6 @@ export default function index() {
   function sendMsg() {
     let ws = wsRef.current;
     if (ws.readyState == 1) {
-      // console.log("ws.readyState === 1");
       ws.send(
         JSON.stringify({
           type: "message",
@@ -365,7 +324,6 @@ export default function index() {
             <div className={styles.leftBox}>
               {/* -----------分類選單---------- */}
               <div className={styles.left}>
-                {/* <a href="/product"> */}
                 <button
                   onClick={() => {
                     setInputText("");
@@ -378,7 +336,6 @@ export default function index() {
                 >
                   全部商品
                 </button>
-                {/* </a> */}
 
                 {data.rowsType &&
                   data.rowsType.map((v, i) => {
@@ -461,18 +418,12 @@ export default function index() {
                   {typeList
                     ? data.items
                         ?.filter((v) => {
-                          // console.log("data.items");
-                          // console.log(data.items);
                           return v.product_type_list_id
                             .split(",")
                             .includes(typeList.split(",")[0]);
                         })
                         .map((v, i) => {
                           //動態篩選條件
-
-                          // console.log("items");
-                          // console.log(items);
-                          // console.log(items.includes(v.item_id));
 
                           return (
                             <label key={i}>
@@ -495,54 +446,38 @@ export default function index() {
                                     );
                                     setItems(newItems);
                                   }
-                                  // setItems(items.push(v));
-                                  //**在setItems之前push就已試圖直接變items
                                 }}
                               />
                               {v.item_name}
                             </label>
-                            // <TestInput
-                            //   key={v.item_id}
-                            //   item_id={v.item_id}
-                            //   items={items}
-                            //   setItems={setItems}
-                            // />
-
-                            // <div key={v.item_id}>?????</div>
                           );
                         })
                     : data.items &&
-                      data.items
-                        // .filter((v) => v.price_range == 1)
-                        .map((v, i) => {
-                          //預設篩選條件
-                          return (
-                            <label key={i}>
-                              <input
-                                checked={
-                                  items.includes(v.item_id) ? true : false
+                      data.items.map((v, i) => {
+                        //預設篩選條件
+                        return (
+                          <label key={i}>
+                            <input
+                              checked={items.includes(v.item_id) ? true : false}
+                              className="mb-3"
+                              type="checkbox"
+                              value={v.item_id}
+                              onChange={() => {
+                                if (!items.includes(v.item_id)) {
+                                  const newItems = [...items, v.item_id];
+                                  setItems(newItems);
+                                } else {
+                                  const newItems = items.filter(
+                                    (a) => a != v.item_id
+                                  );
+                                  setItems(newItems);
                                 }
-                                className="mb-3"
-                                type="checkbox"
-                                value={v.item_id}
-                                onChange={() => {
-                                  if (!items.includes(v.item_id)) {
-                                    const newItems = [...items, v.item_id];
-                                    setItems(newItems);
-                                  } else {
-                                    const newItems = items.filter(
-                                      (a) => a != v.item_id
-                                    );
-                                    setItems(newItems);
-                                  }
-                                  // setItems(items.push(v));
-                                  //**在setItems之前push就已試圖直接變items
-                                }}
-                              />
-                              {v.item_name}
-                            </label>
-                          );
-                        })}
+                              }}
+                            />
+                            {v.item_name}
+                          </label>
+                        );
+                      })}
                 </form>
               </div>
               {/* ------------價格範圍----------- */}
@@ -568,20 +503,15 @@ export default function index() {
                 </p>
 
                 {priceList[1].map((v, i) => {
-                  // console.log(v);
                   return (
-                    // 畫面渲染後不會再變動key才能用索引
                     <label key={i} className="w-100 ps-2 my-1">
                       <input
                         className="me-2"
-                        // className="----------------------------"
                         type="radio"
                         // 用目前選中的food狀態來比較，決定是否呈現選中的樣子
                         checked={price === v}
-                        // 一樣可以使用value屬性，用e.target.value在事件觸發後得到值
                         value={v}
                         onChange={(e) => {
-                          //  狀態中記錄的是每個選項被選中的值
                           setPrice(e.target.value);
                         }}
                       />
@@ -599,9 +529,6 @@ export default function index() {
                   " row d-flex justify-content-end align-items-center"
                 }
               >
-                {/* ------------------dropdown------------------- */}
-                {/* ------------------dropdown------------------- */}
-
                 <form className="col-auto d-flex " role="search">
                   <input
                     className="form-control me-1"
@@ -699,13 +626,10 @@ export default function index() {
                                 onClick={() => {
                                   Swal.fire({
                                     toast: true,
-                                    // className: "yyy",
-                                    // backdrop: "false",
                                     showConfirmButton: false,
                                     timer: 1500,
                                     position: "top",
                                     width: "250px",
-                                    // height: "20px",
                                     text: "已更新願望清單",
                                     icon: "success",
                                   });

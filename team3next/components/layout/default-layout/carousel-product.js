@@ -15,7 +15,7 @@ export default function Carousel() {
     axios
       .post("http://localhost:3002/api/product/product-recommend")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setRecommendProduct(res.data.rowsRecommendFront);
       });
   }, []);
