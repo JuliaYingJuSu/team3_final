@@ -7,7 +7,7 @@ import style from "@/pages/product/list.module.css";
 import { object } from "prop-types";
 import Link from "next/link";
 import { clearConfigCache } from "prettier";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import { useRouter } from "next/router";
 
 // 想引入,but..........................
@@ -15,77 +15,92 @@ import { useRouter } from "next/router";
 
 export default function DelDetail() {
   //  ------------------------------ 訂購人資訊 (初始化) ------------------------------
+  // 訂購人
   const [purchaser, setPurchaser] = useState({
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
-    // purchaserAddress: "",
-    // receiveAddress: "",
   });
 
+  // 收件人
   const [receiver, setReceiver] = useState({
     receiveName: "",
     receivePhone: "",
   });
- 
-   const handleCLick = ()=>{
-    setPurchaser({purchaserName: "蘇映如",
-      purchaserPhone: "0912345678",
-      purchaserEmail: "yingjumr@gmail.com",}
-      
-    )
-  }
 
-   
-  const receiverClick = ()=>{
-    setReceiver({receiveName: "田家瑞",
-    receivePhone: "0972051835",}
-      
-    )
-  }
-  // console.log(purchaser);
- 
+  // 勾選狀態
+  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(false);
+
+  // 快速按鈕
+  const handleCLick = () => {
+    setIsChecked(!isChecked);
+    if (!isChecked) {
+      const auth = JSON.parse(localStorage.getItem("auth"));
+      const { user_name, user_phone, user_email } = auth;
+      const pur = {
+        purchaserName: user_name,
+        purchaserPhone: user_phone,
+        purchaserEmail: user_email,
+      };
+      setPurchaser(pur);
+    } else {
+      // 如未勾選
+      setPurchaser({
+        purchaserName: "",
+        purchaserPhone: "",
+        purchaserEmail: "",
+      });
+    }
+  };
+
+  // 快速按鈕
+  const receiverClick = () => {
+    setIsChecked2(!isChecked2);
+    if (!isChecked2) {
+      const info = JSON.parse(localStorage.getItem(`auth`));
+      const { user_name, user_phone } = info;
+      const receiver = { receiveName: user_name, receivePhone: user_phone };
+      setReceiver(receiver);
+    } else {
+      setReceiver({ receiveName: "", receivePhone: "" });
+    }
+  };
+
   const router = useRouter();
-  // useEffect(() => {
-  //   fetch("http://localhost:3002/api/cart/del-detail")
-  //     .then((r) => r.json())
-  //     .then((obj) => {
-  //       setPurchaser(obj);
-  //       console.log(obj);
-  //     });
-  // }, []);
 
   // ------------------------------ 錯誤用初始狀態 ------------------------------
   const originErrors = {
     purchaserName: "",
     purchaserPhone: "",
     purchaserEmail: "",
-    purchaserPhone2: "",
   };
-
   const [errors, setErrors] = useState(originErrors);
-  // console.log(errors);
-  // 認証通過信號用
-  const [isAuth, setIsAuth] = useState(false);
+
+  // -----------------error try----------------------
+
+  const originerror2 = {
+    receiveName: "",
+    receivePhone: "",
+  };
+  const [error2, setError2] = useState(originerror2);
 
   // 所有欄位共用的事件處理函示
   const handleFieldChange = (e) => {
     // e.target.name --> 選到你目前所在的輸入匡
     const newPurchaser = { ...purchaser, [e.target.name]: e.target.value };
-
     setPurchaser(newPurchaser);
   };
 
+  const handleFieldChange2 = (e) => {
+    const newReceiver = { ...receiver, [e.target.name]: e.target.value };
+    setReceiver(newReceiver);
+  };
+
   const aaa = (e) => {
+    // 少人用formData, 換種方式寫
     const formData = new FormData(e.currentTarget);
     const values = [...formData.values()];
-    // formData.append("purchaserAddress", purchaser.purchaserAddress);
-    // console.log(purchaser);
-    // console.log(city);
-    // console.log(township);
-    // const inputData = purchaser.fromEntries(formData);
-    // console.log(inputData);
-
     const getUserid = JSON.parse(localStorage.getItem("auth"));
     const getUser = getUserid.user_id;
     const getName = formData.get("receiveName");
@@ -103,7 +118,6 @@ export default function DelDetail() {
           user_id: getUser,
           delivery_name: getName,
           delivery_phone: getPhone,
-          // delivery_address: getCity,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -112,15 +126,13 @@ export default function DelDetail() {
         .then((r) => r.json())
         .then((obj) => {
           console.log(obj);
-           // 資料寫入成功，進行轉址
+          // 資料寫入成功，進行轉址
           window.location.href = "http://localhost:3080/cart/payMethod";
         })
         .catch((ex) => {
           console.log(ex);
         });
-
     }
-  
   };
   const handleSubmit = (e) => {
     //阻擋表單預設的送出行為
@@ -129,60 +141,65 @@ export default function DelDetail() {
     // 信號值
     let hasError = false;
     const newErrors = { ...originErrors };
+    const newErrors2 = { ...originerror2 };
 
     // 訂購人名字沒填
     if (!purchaser.purchaserName) {
-      newErrors.purchaserName = "*請填寫訂購者姓名";
-      // hasError, 設定的目的？
       hasError = true;
+      newErrors.purchaserName = "*請填寫訂購者姓名";
     }
-
+    // 收件人名字沒填
+    if (!receiver.receiveName) {
+      hasError = true;
+      newErrors2.receiveName = "*請填寫收件者姓名";
+    }
     // 驗證電話號碼
     if (!purchaser.purchaserPhone) {
+      hasError = true;
       newErrors.purchaserPhone = "*請填寫電話號碼";
-      hasError = true;
+    } else {
+      if (!/09\d{8}/.test(purchaser.purchaserPhone)) {
+        hasError = true;
+        newErrors.purchaserPhone =
+          "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
+      }
     }
 
-    if (!/09\d{8}/.test(purchaser.purchaserPhone)) {
-      newErrors.purchaserPhone =
-        "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
-      hasError = true;
-    }
     // 驗證電話號碼
-    if (!purchaser.purchaserPhone2) {
-      newErrors.purchaserPhone2 = "*請填寫電話號碼";
+    if (!receiver.receivePhone) {
       hasError = true;
-    }
-
-    if (!/09\d{8}/.test(purchaser.purchaserPhone2)) {
-      newErrors.purchaserPhone2 =
-        "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
-      hasError = true;
+      newErrors2.receivePhone = "*請填寫電話號碼";
+    } else {
+      if (!/09\d{8}/.test(receiver.receivePhone)) {
+        hasError = true;
+        newErrors2.receivePhone =
+          "*「手機號碼」格式有誤!請輸入09開頭10碼數字不含其他符號!";
+      }
     }
 
     if (!purchaser.purchaserEmail) {
+      hasError = true;
       newErrors.purchaserEmail = "*請填寫電子信箱";
-      hasError = true;
-    }
+    } else {
+      const mailCheck =
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-    const mailCheck =
-      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
-    if (!mailCheck.test(purchaser.purchaserEmail)) {
-      newErrors.purchaserEmail = "*電子信箱格式驗證錯誤";
-      hasError = true;
+      if (!mailCheck.test(purchaser.purchaserEmail)) {
+        hasError = true;
+        newErrors.purchaserEmail = "*電子信箱格式驗證錯誤";
+      }
     }
 
     if (hasError) {
       setErrors(newErrors);
-
+      // --------try-----
+      setError2(newErrors2);
       return;
     }
     aaa(e);
     // 認證通過
 
-    
-    setIsAuth(true);
+    // setIsAuth(true);
   };
 
   // --------------------------- 下拉式地址選單 ------------------------------
@@ -651,519 +668,481 @@ export default function DelDetail() {
       </Helmet>
       <MyNavbar />
       <div className={styles.designTop}>
-      {/* 商城分類bar */}
-      <div
-        className={style.topBox + " container d-flex justify-content-around"}
-      >
-        <button class="btn" type="button">
-          全部商品
-        </button>
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle "
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            飲品/沖泡類
+        {/* 商城分類bar */}
+        <div
+          className={style.topBox + " container d-flex justify-content-around"}
+        >
+          <button class="btn" type="button">
+            全部商品
           </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#">
-                茶葉/水果茶
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                咖啡
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                果汁/蔬果汁
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                醋/水果醋
-              </a>
-            </li>
-          </ul>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle "
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              飲品/沖泡類
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  茶葉/水果茶
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  咖啡
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  果汁/蔬果汁
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  醋/水果醋
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              烘焙食品/甜點
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  蛋糕/派
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  手工餅乾
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  麵包/吐司
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  奶酪/布丁/果凍
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              休閒零食
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  零食
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  糖果/巧克力
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  果醬/抹醬
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  水果乾
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  堅果/穀物
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              烹料料理
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  熟食/冷藏、冷凍食品
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  米/麵條
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  調理包/料理包
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  調味料/醬料
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              其他
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">
+                  其他
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            烘焙食品/甜點
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#">
-                蛋糕/派
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                手工餅乾
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                麵包/吐司
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                奶酪/布丁/果凍
-              </a>
-            </li>
-          </ul>
+
+        {/* 購物進度條 */}
+        <div className={styles.sectionBar + " mt-5"}>
+          {/* <div className="w-75 d-flex justify-content-between"> */}
+          <a href="" className={styles.firstStep}>
+            <p className="text-start ">顧客</p>
+          </a>
+
+          <a href="" className={styles.firstStep}>
+            <p className="text-start">配送</p>
+          </a>
+
+          <a href="" className={styles.step}>
+            <p className="text-start">付款</p>
+          </a>
+
+          <a href="" className={styles.lastStep}>
+            <p className="text-start">檢視</p>
+          </a>
+
+          {/* </div> */}
         </div>
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            休閒零食
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#">
-                零食
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                糖果/巧克力
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                果醬/抹醬
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                水果乾
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                堅果/穀物
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            烹料料理
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#">
-                熟食/冷藏、冷凍食品
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                米/麵條
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                調理包/料理包
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                調味料/醬料
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            其他
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="#">
-                其他
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
 
-      {/* 購物進度條 */}
-      <div className={styles.sectionBar + " mt-5"}>
-        {/* <div className="w-75 d-flex justify-content-between"> */}
-        <a href="" className={styles.firstStep}>
-          <p className="text-start ">顧客</p>
-        </a>
-
-        <a href="" className={styles.firstStep}>
-          <p className="text-start">配送</p>
-        </a>
-
-        <a href="" className={styles.step}>
-          <p className="text-start">付款</p>
-        </a>
-
-        <a href="" className={styles.lastStep}>
-          <p className="text-start">檢視</p>
-        </a>
-
-        {/* </div> */}
-      </div>
-
-      {/* 訂購人資訊 */}
-      <form
-        className={styles.buyerinfo + " container mt-5 w-50"}
-        onSubmit={aaa}
-      >
-
-<div className= {styles.buyertitle + " d-flex align-item-center justify-content-between"}>
-<div className="pb-1 float-left">訂購人資訊</div>
-  <div className="float-right">
-      <div className="controls-item custom-ui">
-            <input type="checkbox" id="update-info" className="me-1" />
-            <label htmlFor="update-info">
-            <span onClick={handleCLick}>同會員資料</span>
-            </label>
-      </div>
-  </div>
-</div>
-
-        
-        <div className="row mt-3 mb-2">
-          <label htmlFor="buyer" className="form-label col-2 col-form-label">
-            姓名
-           
-          </label>
-          {/* 錯誤訊息 */}
+        {/* 訂購人資訊 */}
+        <form
+          className={styles.buyerinfo + " container mt-5 w-50"}
+          onSubmit={handleSubmit}
+        >
           <div
-            style={{
-              color: "red",
-              fontSize: "13px",
-            }}
+            className={
+              styles.buyertitle +
+              " d-flex align-item-center justify-content-between"
+            }
           >
-            {errors.purchaserName}
-          </div>
-          <div className="col-12">
-            <input
-            value={purchaser.purchaserName}
-              name="purchaserName"
-              type="text"
-              className={styles.inputframe + " purchaserName"}
-              id="buyer"
-              placeholder=" 請輸入姓名"
-              autoFocus
-              onChange={handleFieldChange}
-            />
-          </div>
-        </div>
-
-        {/* 手機號碼 */}
-        <div className="row mb-2">
-          <label
-            htmlFor="telnumber"
-            className="form-label col-2 col-form-label"
-          >
-            手機號碼
-          </label>
-          <span
-            style={{
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            {/* {errors.purchaserPhone} */}
-          </span>
-          <div className="col-12">
-            <input
-            value={purchaser.purchaserPhone}
-              name="purchaserPhone"
-              type="text"
-              className={styles.inputframe + " purchaserPhone"}
-              id="telnumber"
-              placeholder=" 請輸入09開頭共10碼的數字"
-              onChange={handleFieldChange}
-            />
-          </div>
-        </div>
-
-        {/* 電子信箱 */}
-        <div className="row mb-2" onSubmit={handleSubmit}>
-          <label htmlFor="email" className="form-label col-2 col-form-label">
-            電子信箱
-          </label>
-          <span
-            style={{
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            {errors.purchaserEmail}
-          </span>
-          <div className="col-12">
-            <input
-            value={purchaser.purchaserEmail}
-              name="purchaserEmail"
-              type="text"
-              className={styles.inputframe + " purchaserEmail"}
-              id="email"
-              placeholder=" 請輸入e-mail"
-              onChange={(e) => {
-                handleFieldChange(e);
-              }}
-            />
-          </div>
-        </div>
-
-        {/* 地址 */}
-        <div className="row mb-2">
-          <label
-            htmlFor="readdress"
-            className="form-label col-12 col-form-label"
-          >
-            地址
-          </label>
-          <div className={styles.sortaddress}>
-            <select
-              className={styles.selectbox}
-              onChange={(e) => {
-                setFirstCity(e.target.value);
-              }}
-            >
-              <option value="">選擇縣市</option>
-              {cityOptions.map((v, i) => {
-                return (
-                  <option key={i} value={v}>
-                    {v}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className={styles.sortaddress + " me-3"}>
-            <select
-              className={styles.selectbox}
-              onChange={(e) => {
-                setTownship2(e.target.value);
-              }}
-              value={township2}
-            >
-              <option value="">請選擇鄉鎮區</option>
-              {firstCity &&
-                townshipOptions[cityOptions.indexOf(firstCity)].map((v, i) => {
-                  return (
-                    <option key={i} value={v}>
-                      {v}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-
-          <div className={styles.sortaddress2}>
-            <input
-              name="purchaserAddress"
-              type="text"
-              className={styles.addressdetail}
-              id="readdress"
-              placeholder=" 請輸入地址"
-            />
-          </div>
-        </div>
-
-        {/* part2 */}
- <div className= {styles.buyertitle + " d-flex align-item-center justify-content-between"}>     
-<div className="pb-1 float-left">收件人資訊</div>
-  <div className="float-right">
-      <div className="controls-item custom-ui">
-            <input type="checkbox" id="here" className="ms-2 me-1" />
-            <label htmlFor="here">
-            <span onClick={receiverClick}>點我</span>
-            </label>
-      </div>
-  </div>
-</div>
-
-
-
-
-        <div className="row mt-3 mb-2">
-          <label htmlFor="buyer" className="form-label col-2 col-form-label">
-            姓名
-          </label>
-          <div
-            style={{
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            {errors.purchaserName}
-          </div>
-          <div className="col-12">
-            <input
-            value={receiver.receiveName}
-              type="text"
-              name="receiveName"
-              className={styles.inputframe + " purchaserName"}
-              id="buyer"
-              placeholder=" 請填寫真實姓名，以免無法取貨"
-              autoFocus
-              onChange={handleFieldChange}
-            />
-          </div>
-        </div>
-
-        {/* 手機號碼 */}
-        <div className="row mb-2">
-          <label
-            htmlFor="telnumber"
-            className="form-label col-2 col-form-label"
-          >
-            手機號碼
-          </label>
-          <div
-            style={{
-              color: "red",
-              fontSize: "13px",
-            }}
-          >
-            {errors.purchaserPhone2}
-          </div>
-          <div className="col-12">
-            <input
-            value={receiver.receivePhone}
-              type="text"
-              // name="receivePhone"
-              name="receivePhone"
-              className={styles.inputframe + " purchaserPhone2"}
-              id="telnumber"
-              placeholder=" 請輸入手機號碼"
-              onChange={handleFieldChange}
-            />
-          </div>
-        </div>
-
-        {/* 地址 */}
-        {/* <div className="row mb-2">
-          <label
-            htmlFor="readdress"
-            className="form-label col-12 col-form-label"
-          >
-            地址
-          </label>
-          <div className={styles.sortaddress}>
-            <select
-              name="receiveCity"
-              className={styles.selectbox}
-              onChange={(e) => {
-                setCity(e.target.value);
-              }}
-            >
-              <option value="">選擇縣市</option>
-              {cityOptions.map((v, i) => {
-                return (
-                  <option key={i} value={v}>
-                    {v}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className={styles.sortaddress + " me-3"}>
-            <select
-              name="receiveCounty"
-              className={styles.selectbox}
-              onChange={(e) => {
-                setTownship(e.target.value);
-              }}
-              value={township}
-            >
-              <option value="">請選擇鄉鎮區</option>
-              {city &&
-                townshipOptions[cityOptions.indexOf(city)].map((v, i) => {
-                  return (
-                    <option key={i} value={v}>
-                      {v}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-
-          <div className={styles.sortaddress2}>
-            <input
-              name="receiveAddress"
-              type="text"
-              className={styles.addressdetail}
-              id="readdress"
-              placeholder=" 請輸入地址"
-            />
-          </div>
-        </div> */}
-        {/* part3 */}
-        <div className={styles.buyertitle + " mt-3 pb-1"}>配送資訊</div>
-        <div className="row mt-3 mb-2">
-          <label htmlFor="buyer" className="form-label col-2 col-form-label">
-            配送時間
-          </label>
-          <div className="col-12">
-            <input
-              type="text"
-              className={styles.inputframe}
-              id="buyer"
-              value=" 不指定"
-              onChange={handleFieldChange}
-            />
-          </div>
-        </div>
-
-        <div className="container mt-5 d-flex justify-content-center">
-          <div className="row">
-            <div className="col-12">
-              ※下單前請再次確認您的購買明細及配送資訊，訂單成立後無法異動訂單內容
+            <div className="pb-1 float-left">訂購人資訊</div>
+            <div className="float-right">
+              <div className="controls-item custom-ui">
+                <input
+                  type="checkbox"
+                  id="update-info"
+                  className="me-1"
+                  onChange={() => {
+                    // setIsChecked(e.target.checked);
+                    handleCLick();
+                  }}
+                  checked={isChecked}
+                />
+                <label htmlFor="update-info">
+                  <span id="update-info">同會員資料</span>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="container d-flex justify-content-center">
-         
+          <div className="row mt-3 mb-2">
+            <label htmlFor="buyer" className="form-label col-2 col-form-label">
+              姓名
+            </label>
+            {/* 錯誤訊息 */}
+            <div
+              style={{
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              {errors.purchaserName}
+            </div>
+            <div className="col-12">
+              <input
+                value={purchaser.purchaserName}
+                name="purchaserName"
+                type="text"
+                className={styles.inputframe + " purchaserName"}
+                id="buyer"
+                placeholder=" 請輸入姓名"
+                autoFocus
+                onChange={handleFieldChange}
+              />
+            </div>
+          </div>
+
+          {/* 手機號碼 */}
+          <div className="row mb-2">
+            <label
+              htmlFor="telnumber"
+              className="form-label col-2 col-form-label"
+            >
+              手機號碼
+            </label>
+            <span
+              style={{
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              {errors.purchaserPhone}
+            </span>
+            <div className="col-12">
+              <input
+                value={purchaser.purchaserPhone}
+                name="purchaserPhone"
+                type="text"
+                className={styles.inputframe + " purchaserPhone"}
+                id="telnumber"
+                placeholder=" 請輸入09開頭共10碼的數字"
+                onChange={handleFieldChange}
+              />
+            </div>
+          </div>
+
+          {/* 電子信箱 */}
+          <div className="row mb-2" onSubmit={handleSubmit}>
+            <label htmlFor="email" className="form-label col-2 col-form-label">
+              電子信箱
+            </label>
+            <span
+              style={{
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              {errors.purchaserEmail}
+            </span>
+            <div className="col-12">
+              <input
+                value={purchaser.purchaserEmail}
+                name="purchaserEmail"
+                type="text"
+                className={styles.inputframe + " purchaserEmail"}
+                id="email"
+                placeholder=" 請輸入e-mail"
+                onChange={(e) => {
+                  handleFieldChange(e);
+                }}
+              />
+            </div>
+          </div>
+
+          {/* 地址 */}
+          <div className="row mb-2">
+            <label
+              htmlFor="readdress"
+              className="form-label col-12 col-form-label"
+            >
+              地址
+            </label>
+            <div className={styles.sortaddress}>
+              <select
+                className={styles.selectbox}
+                onChange={(e) => {
+                  setFirstCity(e.target.value);
+                }}
+              >
+                <option value="">選擇縣市</option>
+                {cityOptions.map((v, i) => {
+                  return (
+                    <option key={i} value={v}>
+                      {v}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.sortaddress + " me-3"}>
+              <select
+                className={styles.selectbox}
+                onChange={(e) => {
+                  setTownship2(e.target.value);
+                }}
+                value={township2}
+              >
+                <option value="">請選擇鄉鎮區</option>
+                {firstCity &&
+                  townshipOptions[cityOptions.indexOf(firstCity)].map(
+                    (v, i) => {
+                      return (
+                        <option key={i} value={v}>
+                          {v}
+                        </option>
+                      );
+                    }
+                  )}
+              </select>
+            </div>
+
+            <div className={styles.sortaddress2}>
+              <input
+                name="purchaserAddress"
+                type="text"
+                className={styles.addressdetail}
+                id="readdress"
+                placeholder=" 請輸入地址"
+              />
+            </div>
+          </div>
+
+          {/* part2 */}
+          <div
+            className={
+              styles.buyertitle +
+              " d-flex align-item-center justify-content-between"
+            }
+          >
+            <div className="pb-1 float-left">收件人資訊</div>
+            <div className="float-right">
+              <div className="controls-item custom-ui">
+                <input
+                  type="checkbox"
+                  id="here"
+                  className="ms-2 me-1"
+                  checked={isChecked2}
+                  onChange={() => {
+                    receiverClick();
+                  }}
+                />
+                <label htmlFor="here">
+                  <span>同會員資料</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt-3 mb-2">
+            <label htmlFor="buyer" className="form-label col-2 col-form-label">
+              姓名
+            </label>
+            <div
+              style={{
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              {error2.receiveName}
+            </div>
+            <div className="col-12">
+              <input
+                value={receiver.receiveName}
+                type="text"
+                name="receiveName"
+                className={styles.inputframe + " receiveName"}
+                id="buyer"
+                placeholder=" 請填寫真實姓名，以免無法取貨"
+                autoFocus
+                onChange={handleFieldChange2}
+              />
+            </div>
+          </div>
+
+          {/* 手機號碼 */}
+          <div className="row mb-2">
+            <label
+              htmlFor="telnumber"
+              className="form-label col-2 col-form-label"
+            >
+              手機號碼
+            </label>
+            <div
+              style={{
+                color: "red",
+                fontSize: "13px",
+              }}
+            >
+              {error2.receivePhone}
+            </div>
+            <div className="col-12">
+              <input
+                value={receiver.receivePhone}
+                type="text"
+                name="receivePhone"
+                className={styles.inputframe + " receivePhone"}
+                id="telnumber"
+                placeholder=" 請輸入手機號碼"
+                onChange={handleFieldChange2}
+              />
+            </div>
+          </div>
+          {/* part3 */}
+          <div className={styles.buyertitle + " mt-3 pb-1"}>配送資訊</div>
+          <div className="row mt-3 mb-2">
+            <label htmlFor="buyer" className="form-label col-2 col-form-label">
+              配送時間
+            </label>
+            <div className="col-12">
+              <input
+                type="text"
+                className={styles.inputframe}
+                id="buyer"
+                value=" 不指定"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className="container mt-5 d-flex justify-content-center">
+            <div className="row">
+              <div className="col-12">
+                ※下單前請再次確認您的購買明細及配送資訊，訂單成立後無法異動訂單內容
+              </div>
+            </div>
+          </div>
+
+          <div className="container d-flex justify-content-center">
             <button className="btn btn-middle mt-5 mb-5 me-3">修改訂單</button>
             {/* onClick={()=>{
             window.location.href = " "
           }} */}
-          {/* <a href="/cart/pay-method"></a> */}
-         <a href="http://localhost:3080/cart/payMethod">
-            <button className="btn btn-middle mt-5 mb-5 ms-3" type="submit">
-              前往付款方式
-            </button>
-       </a>
-        </div>
-      </form>
+            {/* <a href="/cart/pay-method"></a> */}
+            <a href="http://localhost:3080/cart/payMethod">
+              <button className="btn btn-middle mt-5 mb-5 ms-3" type="submit">
+                前往付款方式
+              </button>
+            </a>
+          </div>
+        </form>
       </div>
 
       <Footer />
-      
     </>
   );
 }

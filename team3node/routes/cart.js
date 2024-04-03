@@ -21,38 +21,6 @@ const corsOptions = {
   },
 };
 
-
-// ------------------------編輯訂單-------------------------
-
-// cartRouter.put("/edit/:order_id", async (req, res) => {
-//   const output = {
-//     success: false,
-//     errors: {},
-//     result: {},
-//     postData: req.body,
-//   };
-//   // todo: 檢查格式, 修改的資料送出前一樣要檢查
-//   //   let isPass = true;
-
-//   let result;
-//   try {
-//     const sql =
-//       "UPDATE `address_book` SET `name`=?,`email`=?,`mobile`=?,`birthday`=?,`address`=? WHERE `sid`=? ";
-//     const sql2 =
-//       "UPDATE `order_general` SET `delivery_address` = ? WHERE `order_general`.`order_id` =? ";
-
-//     [result] = await db.query(sql, [delivery_address, order_id]);
-//     output.success = !!result.changedRows;
-//     // 把資料庫的result, 放到output中的result
-//     output.result = result;
-//   } catch (ex) {
-//     output.error = "SQL 錯誤";
-//     output.ex = ex;
-//   }
-
-//   res.json(output);
-// });
-
 // ----------------------消費紀錄 my-order ----------------------
 cartRouter.get("/:user_id/my-order", async (req, res) => {
   const user_id = parseInt(req.params.user_id) || 0;
@@ -60,27 +28,27 @@ cartRouter.get("/:user_id/my-order", async (req, res) => {
   //   success: false,
   //   rows: [],
   // };
-  // const sql = `SELECT * FROM order_general WHERE 
+  // const sql = `SELECT * FROM order_general WHERE
   // user_id = ${user_id} ORDER BY order_date DESC `;
   // const [rows] = await db.query(sql);
   // for (let r of rows) {
   //   r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
   // }
 
- const sql = `SELECT * FROM order_general WHERE 
+  const sql = `SELECT * FROM order_general WHERE 
   user_id = ${user_id} ORDER BY order_date DESC `;
 
-  try{ 
-  const [rows] = await db.query(sql);
-  console.log('這裡')
-  console.log(rows);
-  for (let r of rows) {
-    r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
+  try {
+    const [rows] = await db.query(sql);
+    console.log("這裡");
+    console.log(rows);
+    for (let r of rows) {
+      r.order_date = dayjs(r.order_date).format("YYYY/MM/DD");
+    }
+    res.json(rows);
+  } catch (ex) {
+    console.log(ex);
   }
-   res.json(rows);
-}catch(ex){console.log(ex)}
- 
-  
 });
 
 // ---------------------- order-complete -------------------------------
@@ -90,7 +58,6 @@ cartRouter.get("/order-complete", async (req, res) => {
     rows: [],
   };
 
-  // const sql = `SELECT * FROM order_general JOIN user on user.user_id = order_general.user_id WHERE order_general.user_id = 10`;
   // 選出最新一筆的order_id
   const [[sql3]] = await db.query(
     `SELECT order_id FROM order_general ORDER BY order_date DESC LIMIT 1`
@@ -155,14 +122,8 @@ cartRouter.post("/", async (req, res) => {
 
   const uuid = uuidv4();
   try {
-    // 注意：user_id寫死 10
-
-    //1020--
-    // const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, NULL, '備貨中')`;
-    // console.log(sql);
-
     const sql = `INSERT INTO order_general(order_id, payment_status, user_id, payment_method, order_amount, delivery_method, delivery_name, delivery_phone, delivery_address, delivery_status) VALUES ('${uuid}', '已付款', ${user_id}, 'LINE PAY', ${order_amount}, '${delivery_method}', NULL, NULL, '${delivery_address}', '備貨中')`;
-    console.log('看這裡ㄚ')
+    console.log("看這裡ㄚ");
     console.log(sql);
 
     const [result] = await db.query(sql);
@@ -199,7 +160,7 @@ cartRouter.post("/", async (req, res) => {
 // ---------------------- 寄送資訊寫入資料庫 ---------------------------
 
 cartRouter.post("/del-detail", async (req, res) => {
-  let { delivery_name, delivery_phone} = req.body;
+  let { delivery_name, delivery_phone } = req.body;
 
   let output = {
     success: false,
@@ -210,7 +171,7 @@ cartRouter.post("/del-detail", async (req, res) => {
     const [[sql3]] = await db.query(
       `SELECT order_id FROM order_general ORDER BY order_date DESC LIMIT 1`
     );
-    // const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE 
+    // const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}',delivery_address='${delivery_address}' WHERE
     // order_id='${sql3.order_id}'`;
     const sql = `UPDATE order_general SET delivery_name='${delivery_name}',delivery_phone='${delivery_phone}' WHERE 
     order_id='${sql3.order_id}'`;
@@ -510,7 +471,7 @@ cartRouter.get("/payMethod", async (req, res) => {
     // console.log(aa);
 
     // ------ 1017 add -------
-    // 使用可選串連 --> 『?.』 因line pay回覆結構每次不相同, 使用這運算符讓我們在讀取深度嵌套的對象屬性時，不必明確檢查每一個層級是否存在。如果某個層級不存在，它會返回 undefined，而不會拋出錯誤
+    // 使用可選串連 --> 『?.』 因line pay回覆結構每次不相同, 使用站位運算符讓我們在讀取深度嵌套的對象屬性時，不必明確檢查每一個層級是否存在。如果某個層級不存在，它會返回 undefined，而不會拋出錯誤
     // if (res?.body?.returnCode === "0000") {
     //   res.redirect(res?.body.info.paymentUrl.web);
     // }
@@ -519,35 +480,32 @@ cartRouter.get("/payMethod", async (req, res) => {
   }
 });
 
-
 // --------------confirm--------------------------
 
-cartRouter.get("/order-complete/:transactionId/:orderId", async(req, res) => {
+cartRouter.get("/order-complete/:transactionId/:orderId", async (req, res) => {
   const [[sql3]] = await db.query(
     `SELECT order_amount FROM order_general ORDER BY order_date DESC LIMIT 1`
   );
 
-  console.log(sql3)
-  const orderAmount = sql3.order_amount
-  console.log('527----------',req.params)
-  console.log('開始')
+  console.log(sql3);
+  const orderAmount = sql3.order_amount;
+  console.log("527----------", req.params);
   let output = {
-  success: false,
-  result: [],
+    success: false,
+    result: [],
   };
-const tran = req.params.transactionId.replace('transactionId=', '');
+  const tran = req.params.transactionId.replace("transactionId=", "");
 
-const linePayClient = createLinePayClient({
-  channelId: "2001065647",
-  channelSecretKey: "5325621a629813e1a10602cc06f96db5",
-  env: "development",
-});
+  const linePayClient = createLinePayClient({
+    channelId: "2001065647",
+    channelSecretKey: "5325621a629813e1a10602cc06f96db5",
+    env: "development",
+  });
 
   try {
-      const lastLine = await linePayClient.confirm
-      .send(
-        // {confirmRequest},
-        {
+    const lastLine = await linePayClient.confirm.send(
+      // {confirmRequest},
+      {
         transactionId: tran,
         body: {
           currency: "TWD",
@@ -555,42 +513,53 @@ const linePayClient = createLinePayClient({
           amount: orderAmount,
         },
       }
-      );
-      console.log('我成功了')
-      console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
-      console.log("hihihi")
-    } catch (e) {
-      console.log("error", e);
-    }
+    );
+    console.log("我成功了");
+    console.log(util.inspect(lastLine, { depth: Infinity, colors: true }));
+    console.log("hihihi");
+  } catch (e) {
+    console.log("error", e);
+  }
 });
-
-
-
-// 1016註掉
-// try {
-//   const res = await linePayClient.confirm.send({
-//     transactionId: "2023100802022614510",
-//     body: {
-//       currency: "TWD",
-//       // amount需要查資料庫的訂單
-//       amount: result[0].order_amount,
-//     },
-//   });
-//   console.log(util.inspect(res, { depth: Infinity, colors: true }));
-// } catch (e) {
-//   console.log("error", e);
-// }
-
 
 // -------------------------------- 7-11 ----------------------------------------
 const callback_url = process.env.SHIP_711_STORE_CALLBACK_URL;
 
 // POST
 cartRouter.post("/711", function (req, res, next) {
-  console.log(callback_url)
+  console.log(callback_url);
   //console.log(req.body)
   let searchParams = new URLSearchParams(req.body);
   res.redirect(callback_url + "?" + searchParams.toString());
+});
+
+// -------------------------------- 願望清單 --------------------------------
+
+cartRouter.post("/wishList", async (req, res) => {
+  const pid = req.body.pid;
+  const uid = req.body.uid;
+
+  const sql = `INSERT INTO collection (collection_id,user_id, product_id) VALUES (NULL, ${parseInt(
+    uid
+  )}, ${parseInt(pid)})`;
+
+  const [result] = await db.query(sql);
+  // console.log(result);
+  // result 長這樣
+  // ResultSetHeader {
+  //   fieldCount: 0,
+  //   affectedRows: 1,
+  //   insertId: 153,
+  //   info: '',
+  //   serverStatus: 2,
+  //   warningStatus: 0,
+  //   changedRows: 0}
+
+  if (result.affectedRows) {
+    const success = true;
+    res.send(success);
+    console.log(success);
+  }
 });
 
 export default cartRouter;

@@ -135,13 +135,15 @@
     /* margin: 5px; */
 }
 
-.hey {
-    width: 48px;
-}
+/* 想固定數量的box */
+/* .hey {
+    width: 45px;
+} */
 
 .cutBorder {
     /* 去掉表格的框線 <table> / <tr> / <td>都需要下 */
     border: none;
+    white-space: nowrap;
 }
 
 .cartContainer {
@@ -150,6 +152,7 @@
 
 .cartNum {
     font-size: 20px;
+    white-space: nowrap;
 }
 
 .productTitle {
@@ -181,6 +184,7 @@
     padding-bottom: 50px;
     padding-left: 74px;
     padding-right: 74px;
+    white-space: nowrap;
 }
 
 .delContent {
@@ -195,7 +199,7 @@
     border-left: none;
     border-bottom: 1px #D9D9D9 solid;
     background-color: #FBF9EF;
-    width: 400px;
+    width: 80%;
 }
 
 /* 中按鈕 */
@@ -220,3 +224,53 @@
     background-color: #FBF9EF;
     width: 400px;
 }
+
+/* RWD */
+
+
+
+@media screen and (min-width:780px) and (max-width: 1225px){
+    .sectionBar{
+        display: none;
+    }
+
+  }
+  
+  @media screen and (min-width:360px) and (max-width: 780px){
+    .sectionBar{
+        display: none;
+    }
+
+    .cartNum {
+        font-size:17px;
+    }
+
+    .productTitle {
+        font-size: 15px;
+    }
+    .cutBorder {
+        font-size: 13px;
+  
+        width: 45px;
+    }
+    .countBox{
+        display: flex;
+        width: 10px;
+
+    }
+
+    .delAllContent {
+     
+        box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25);
+        white-space: nowrap;
+        font-size: 15px;
+    }
+    .delBackground{
+        background-color: #fbf9ef;
+    }
+
+  }
+  
+  
+  
+  
